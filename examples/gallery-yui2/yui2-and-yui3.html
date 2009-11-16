@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+<head>
+	<title>Combining YUI2 and YUI3</title>
+	<!-- YUI 3 Seed //-->
+	<script type="text/javascript" src="http://yui.yahooapis.com/3.0.0/build/yui/yui-min.js"></script>
+	<!-- Initialization process //-->
+	<script type="text/javascript">
+		// initialization (optional)
+		YAHOO_config = {
+		    modules: {
+				'foo': {
+					fullpath: './yui2-foo.js',
+					requires: ['event']
+				}
+			}
+		};
+	</script>
+</head>
+<body class="yui-skin-sam">
+	
+    <div id="doc">
+
+		<div id="demo">
+			<h3 class="title">Result: </h3>
+		</div>
+
+    </div>
+
+	<script type="text/javascript">
+		// First Block: using YUI 2 modules within a YUI 3 sandbox object
+		YUI({ /* config */ }).use('node', 'gallery-yui2', function (Y) {
+			
+		    Y.yui2().use('dom', 'tabview', function () {
+
+				YAHOO.util.Dom.get('demo').innerHTML += '<p>First Block: Ready...</p>';
+
+			});
+			
+		});
+	</script>
+
+	<script type="text/javascript">
+		// Second Block: using YUI 2 modules within a YUI 3 sandbox object, and combining functionalities
+		YUI({ /* config */ }).use('gallery-yui2', function (Y) {
+			
+		    Y.yui2().use('event', 'dom', 'connection', function () {
+			
+				Y.get('#demo').append('<p>Second Block: Ready...</p>');
+				
+			});
+			
+		});
+	</script>
+	
+	<script type="text/javascript">
+		// Third Block: combining YUI 2.x modules with a custom module defined inline
+		YUI({ /* config */ }).use('gallery-yui2', function (Y) {
+			
+		    Y.yui2({
+				modules: {
+					'bar': {
+						fullpath: './yui2-bar.js',
+						requires: ['tabview']
+					}
+				}
+			}).use('animation', 'bar', function () {
+
+				Y.get('#demo').append('<p>Third Block: Ready...</p>');
+
+			});
+			
+		});	
+	</script>
+
+	<script type="text/javascript">
+		// Fourth Block: nested approach, loading a first set of yui2 modules, then 
+		// loading the rest of the modules
+		YUI({ /* config */ }).use('gallery-yui2', function (Y1) {
+			
+		    Y.yui2().use('dom', 'tabview', function () {
+				
+				Y.yui2().use('anim', 'overlay', function () {
+				
+					Y.get('#demo').append('<p>Fourth Block: Ready...</p>');
+					
+				});	
+				
+			});
+			
+		});
+	</script>
+	
+</body>
+</html>
