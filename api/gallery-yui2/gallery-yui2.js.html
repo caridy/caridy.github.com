@@ -1,0 +1,300 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns:yui="http://yuilibrary.com/rdf/1.0/yui.rdf#">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<title>API: gallery-yui2   gallery-yui2.js  (YUI Library)</title>
+
+	<link rel="stylesheet" type="text/css" href="assets/reset-fonts-grids-min.css" />
+	<link rel="stylesheet" type="text/css" href="assets/api.css" />
+
+    <script type="text/javascript" src="assets/api-js"></script>
+    <script type="text/javascript" src="assets/ac-js"></script>
+</head>
+
+<body id="yahoo-com">
+
+<div id="doc3" class="yui-t2">
+	<div id="hd">
+        <h1><a href="http://developer.yahoo.com/yui/" title="Yahoo! UI Library">Yahoo! UI Library</a></h1>
+        <h3>gallery-yui2&nbsp; <span class="subtitle">3.0.0</span></h3>
+        <a href="./index.html" title="Yahoo! UI Library">Yahoo! UI Library</a> 
+            &gt; <a href="./module_gallery-yui2.html" title="gallery-yui2">gallery-yui2</a>
+                
+                 &gt; gallery-yui2.js (source view) 
+        <form onsubmit="return false">
+            <div id="propertysearch">
+                Search: <input autocomplete="off" id="searchinput" />
+                <div id="searchresults">
+                    &nbsp;
+                </div>
+            </div>
+        </form>
+	</div>
+
+	<div id="bd">
+		<div id="yui-main">
+			<div class="yui-b">
+            <form action="#" name="yui-classopts-form" method="get" id="yui-classopts-form">
+                <fieldset>
+                    <legend>Filters</legend>
+                <span class="classopts"><input type="checkbox" name="show_private" id="show_private" /> <label for="show_private">Show Private</label></span>
+                <span class="classopts"><input type="checkbox" name="show_protected" id="show_protected" /> <label for="show_protected">Show Protected</label></span>
+                <span class="classopts"><input type="checkbox" name="show_deprecated" id="show_deprecated" /> <label for="show_deprecated">Show Deprecated</label></span>
+                </fieldset>
+            </form>
+
+                    <div id="srcout">
+                        <style>
+                            #doc3 .classopts { display:none; }
+                        </style>
+<div class="highlight"><pre><span class="c">/**</span>
+<span class="c">* &lt;p&gt;The YUI 2 wrapper makes it easy to transform existing YUI 2 code into YUI 3 compatible code, </span>
+<span class="c">* using lazy load to include the required yui2 modules, Leveraging YUI Loader Utility.&lt;/p&gt;</span>
+<span class="c">* </span>
+<span class="c">* &lt;p&gt;</span>
+<span class="c">* &lt;code&gt;</span>
+<span class="c">* &amp;#60;script type=&quot;text/javascript&quot;&amp;#62; &lt;br&gt;</span>
+<span class="c">* &lt;br&gt;</span>
+<span class="c">* 		//	Call the &quot;use&quot; method, passing in &quot;gallery-yui2&quot;.  This will &lt;br&gt;</span>
+<span class="c">* 		//	load a wrapper for YUI 2 code. This wrapper will allow you to define&lt;br&gt;</span>
+<span class="c">*       //  yui 2 dependencies, and wrapping yui 2 code using lazy load using YUI 2 Loader&lt;br&gt;</span>
+<span class="c">*       //  to include those dependencies. &lt;br&gt;</span>
+<span class="c">* &lt;br&gt;</span>
+<span class="c">* 		YUI().use(&quot;gallery-yui2&quot;, function(Y) { &lt;br&gt;</span>
+<span class="c">* &lt;br&gt;</span>
+<span class="c">* 			Y.yui2().use(&quot;tabview&quot;, function () { &lt;br&gt;</span>
+<span class="c">* &lt;br&gt;</span>
+<span class="c">* 				//	The scope of the callback will be a reference to Y &lt;br&gt;</span>
+<span class="c">* &lt;br&gt;			</span>
+<span class="c">* 				var myTabs = new YAHOO.widget.TabView(&quot;demo&quot;); &lt;br&gt;</span>
+<span class="c">* &lt;br&gt;</span>
+<span class="c">* 			}); &lt;br&gt;</span>
+<span class="c">* &lt;br&gt;		</span>
+<span class="c">* 		}); &lt;br&gt;</span>
+<span class="c">* &lt;br&gt;	</span>
+<span class="c">* 	&amp;#60;/script&amp;#62; &lt;br&gt;</span>
+<span class="c">* &lt;/code&gt;</span>
+<span class="c">* &lt;/p&gt;</span>
+<span class="c">* </span>
+<span class="c">* @module gallery-yui2</span>
+<span class="c">*/</span>
+
+
+<span class="c">//	Util shortcuts</span>
+
+<span class="kd">var</span> <span class="nx">Env</span> <span class="o">=</span> <span class="nx">Y</span><span class="p">.</span><span class="nx">Env</span><span class="o">,</span>
+	<span class="nx">_config</span> <span class="o">=</span> <span class="p">((</span><span class="k">typeof</span> <span class="nx">YAHOO_config</span> <span class="o">==</span> <span class="s2">&quot;undefined&quot;</span> <span class="o">||</span> <span class="o">!</span><span class="nx">YAHOO_config</span><span class="p">)</span><span class="o">?</span><span class="p">{}</span><span class="o">:</span><span class="nx">YAHOO_config</span><span class="p">)</span><span class="o">,</span>
+	<span class="nx">_base</span> <span class="o">=</span> <span class="nx">_config</span><span class="p">.</span><span class="nx">base</span> <span class="o">||</span> <span class="s1">&#39;http://yui.yahooapis.com/2.8.0/build/&#39;</span><span class="o">,</span>
+	<span class="nx">_seed</span> <span class="o">=</span> <span class="nx">_config</span><span class="p">.</span><span class="nx">seed</span> <span class="o">||</span> <span class="s1">&#39;yuiloader/yuiloader-min.js&#39;</span><span class="o">,</span>
+	<span class="nx">_ready</span> <span class="o">=</span> <span class="o">!</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">YAHOO</span> <span class="o">==</span> <span class="s2">&quot;undefined&quot;</span> <span class="o">||</span> <span class="o">!</span><span class="nx">YAHOO</span> <span class="o">||</span> <span class="o">!</span><span class="nx">YAHOO</span><span class="p">.</span><span class="nx">util</span> <span class="o">||</span> <span class="o">!</span><span class="nx">YAHOO</span><span class="p">.</span><span class="nx">util</span><span class="p">.</span><span class="nx">YUILoader</span><span class="p">)</span><span class="o">,</span>
+	<span class="nx">_loader</span><span class="o">,</span>
+	<span class="nx">_useQueue</span><span class="o">;</span>
+
+<span class="c">/**</span>
+<span class="c"> * The yui2 is a utility to load YUI 2 modules within a YUI 3 Sandbox object. This utility is very handy</span>
+<span class="c"> * for incremental migration. It provides an easy way to bring YUI 2 code into YUI 3 world,</span>
+<span class="c"> * relying in YUI 3 lazy loading system and organization, and providing an easy way to mashup</span>
+<span class="c"> * yui2 and yui3 code. It uses a YUI 2 Loader under the hook so you don&#39;t need to worry about dependencies,</span>
+<span class="c"> * and it also provides a pipeline to add custom YUI 2 modules, and a filter by type (css or JS) during the</span>
+<span class="c"> * loading process.</span>
+<span class="c"> *</span>
+<span class="c"> * @class yui2</span>
+<span class="c"> * @constructor</span>
+<span class="c"> * @public</span>
+<span class="c"> * @param o Optional configuration object.  Options:</span>
+<span class="c"> * &lt;ul&gt;</span>
+<span class="c"> *  &lt;li&gt;type:</span>
+<span class="c"> *  js or css, by default the loader will include both&lt;/li&gt;</span>
+<span class="c"> *  &lt;li&gt;timeout:</span>
+<span class="c"> *  number of milliseconds before a timeout occurs when dynamically loading nodes.  in not set, there is no timeout&lt;/li&gt;</span>
+<span class="c"> *  &lt;li&gt;modules:</span>
+<span class="c"> *  A list of module definitions.  See Loader.addModule for the supported module metadata&lt;/li&gt;</span>
+<span class="c"> * &lt;/ul&gt;</span>
+<span class="c"> */</span>
+
+<span class="c">/**</span>
+<span class="c"> * Initialization process for the YUI Loader obj. In YUI 2.x we should</span>
+<span class="c"> * have a single instance to control everything.</span>
+<span class="c"> * @method _initLoader</span>
+<span class="c"> * @private</span>
+<span class="c"> * @static</span>
+<span class="c"> * @param l configuration object, normally a reference to YAHOO_config</span>
+<span class="c"> * @return object</span>
+<span class="c"> */</span>
+<span class="kd">function</span> <span class="nx">_initLoader</span> <span class="p">(</span><span class="nx">l</span><span class="p">)</span> <span class="p">{</span>
+	<span class="c">/* creating the loader object */</span>
+	<span class="nx">l</span><span class="p">.</span><span class="nx">combine</span> <span class="o">=</span> <span class="nx">l</span><span class="p">.</span><span class="nx">combine</span> <span class="o">||</span> <span class="kc">true</span><span class="o">;</span> <span class="c">/* using the Combo Handle by default */</span>
+	<span class="nx">l</span><span class="p">.</span><span class="nx">filter</span> <span class="o">=</span> <span class="nx">l</span><span class="p">.</span><span class="nx">filter</span> <span class="o">||</span> <span class="s1">&#39;min&#39;</span><span class="o">;</span>  <span class="c">/* using production mode by default */</span>
+	<span class="k">return</span> <span class="p">(</span><span class="k">new</span> <span class="nx">YAHOO</span><span class="p">.</span><span class="nx">util</span><span class="p">.</span><span class="nx">YUILoader</span><span class="p">(</span><span class="nx">l</span><span class="p">));</span>	
+<span class="p">}</span>
+
+<span class="c">/**</span>
+<span class="c"> * Add a module to the queue. When the loader become available, the module will be added to the loader list automatically, </span>
+<span class="c"> * this method also normalize the module information before include it</span>
+<span class="c"> * @method _register</span>
+<span class="c"> * @private</span>
+<span class="c"> * @static</span>
+<span class="c"> * @param name {string} name of the module</span>
+<span class="c"> * @param m {string|object} module meta-data</span>
+<span class="c"> * @return void</span>
+<span class="c"> */</span>
+<span class="kd">function</span> <span class="nx">_register</span> <span class="p">(</span><span class="nx">name</span><span class="o">,</span> <span class="nx">m</span><span class="p">)</span> <span class="p">{</span>
+	<span class="c">// adding a module to the queue </span>
+	<span class="k">if</span> <span class="p">(</span><span class="nx">Y</span><span class="p">.</span><span class="nx">isObject</span><span class="p">(</span><span class="nx">m</span><span class="p">))</span> <span class="p">{</span>
+		<span class="nx">m</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">m</span><span class="p">.</span><span class="nx">name</span> <span class="o">||</span> <span class="nx">name</span><span class="o">;</span>
+		<span class="nx">m</span><span class="p">.</span><span class="nx">type</span> <span class="o">=</span> <span class="nx">m</span><span class="p">.</span><span class="nx">type</span> <span class="o">||</span> <span class="p">((</span><span class="nx">m</span><span class="p">.</span><span class="nx">fullpath</span> <span class="o">||</span> <span class="nx">m</span><span class="p">.</span><span class="nx">path</span><span class="p">).</span><span class="nx">indexOf</span><span class="p">(</span><span class="s1">&#39;.css&#39;</span><span class="p">)</span><span class="o">&gt;=</span><span class="mi">0</span><span class="o">?</span><span class="s1">&#39;css&#39;</span><span class="o">:</span><span class="s1">&#39;js&#39;</span><span class="p">);</span>
+		<span class="nx">Env</span><span class="p">.</span><span class="nx">_legacy</span><span class="p">.</span><span class="nx">_useQueue</span><span class="p">.</span><span class="nx">add</span> <span class="p">({</span>
+			<span class="nx">fn</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+				<span class="nx">Y</span><span class="p">.</span><span class="nx">log</span> <span class="p">(</span><span class="s1">&#39;Registering a module: &#39;</span><span class="o">+</span> <span class="nx">m</span><span class="p">.</span><span class="nx">name</span><span class="o">,</span> <span class="nx">m</span><span class="p">);</span>
+				<span class="nx">Env</span><span class="p">.</span><span class="nx">_legacy</span><span class="p">.</span><span class="nx">_loader</span><span class="p">.</span><span class="nx">addModule</span> <span class="p">(</span><span class="nx">m</span><span class="p">);</span>
+			<span class="p">}</span><span class="o">,</span>
+			<span class="nx">autoContinue</span><span class="o">:</span> <span class="kc">true</span>
+		<span class="p">});</span>
+	<span class="p">}</span>
+<span class="p">}</span> 
+
+<span class="c">/**</span>
+<span class="c"> * Verify if the current configuration object just defines new modules. If that&#39;s the case, </span>
+<span class="c"> * we will use &quot;_config&quot; as the computed configuration, and &quot;o&quot; as the list of modules to add.</span>
+<span class="c"> * @method _filterConf</span>
+<span class="c"> * @param o {object} currrent configuration object</span>
+<span class="c"> * @private</span>
+<span class="c"> * @static</span>
+<span class="c"> * @return void</span>
+<span class="c"> */</span>
+<span class="kd">function</span> <span class="nx">_filterConf</span><span class="p">(</span><span class="nx">o</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">o</span> <span class="o">=</span> <span class="nx">o</span> <span class="o">||</span> <span class="p">{};</span>
+	<span class="kd">var</span> <span class="nx">m</span> <span class="o">=</span> <span class="nx">o</span><span class="p">.</span><span class="nx">modules</span> <span class="o">||</span> <span class="p">{}</span><span class="o">,</span>
+		<span class="nx">i</span><span class="o">;</span>
+	<span class="k">for</span> <span class="p">(</span><span class="nx">i</span> <span class="k">in</span> <span class="nx">m</span><span class="p">)</span> <span class="p">{</span>
+	  	<span class="k">if</span> <span class="p">(</span><span class="nx">m</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="nx">i</span><span class="p">))</span> <span class="p">{</span>
+	  		<span class="nx">_register</span><span class="p">(</span><span class="nx">i</span><span class="o">,</span> <span class="nx">m</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+	<span class="k">return</span> <span class="nx">o</span><span class="o">;</span>
+<span class="p">}</span>
+
+<span class="c">// preparing the queue and loading yui2 loader if needed</span>
+<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">Env</span><span class="p">.</span><span class="nx">_legacy</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">Env</span><span class="p">.</span><span class="nx">_legacy</span> <span class="o">=</span> <span class="p">{</span><span class="nx">_useQueue</span><span class="o">:</span> <span class="k">new</span> <span class="nx">Y</span><span class="p">.</span><span class="nx">AsyncQueue</span><span class="p">()};</span>
+	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">_ready</span><span class="p">)</span> <span class="p">{</span>
+		<span class="c">// loading the loader</span>
+		<span class="nx">Y</span><span class="p">.</span><span class="nx">log</span> <span class="p">(</span><span class="s1">&#39;Including YUI 2 Loader&#39;</span><span class="p">);</span>
+		<span class="nx">Env</span><span class="p">.</span><span class="nx">_legacy</span><span class="p">.</span><span class="nx">_useQueue</span><span class="p">.</span><span class="nx">add</span> <span class="p">({</span>
+			<span class="nx">fn</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+				<span class="nx">YUI</span> <span class="p">({</span>
+					<span class="nx">modules</span><span class="o">:</span> <span class="p">{</span>
+						<span class="s1">&#39;yui2-yuiloader&#39;</span><span class="o">:</span> <span class="p">{</span>
+							<span class="nx">fullpath</span><span class="o">:</span> <span class="nx">_base</span><span class="o">+</span><span class="nx">_seed</span>
+						<span class="p">}</span>
+					<span class="p">}</span>
+				<span class="p">}).</span><span class="nx">use</span> <span class="p">(</span><span class="s1">&#39;yui2-yuiloader&#39;</span><span class="o">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">X</span><span class="o">,</span> <span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
+					<span class="k">if</span> <span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">success</span><span class="p">)</span> <span class="p">{</span>
+						<span class="nx">Env</span><span class="p">.</span><span class="nx">_legacy</span><span class="p">.</span><span class="nx">_loader</span> <span class="o">=</span> <span class="nx">_initLoader</span><span class="p">(</span><span class="nx">_config</span><span class="p">);</span>
+						<span class="nx">Env</span><span class="p">.</span><span class="nx">_legacy</span><span class="p">.</span><span class="nx">_useQueue</span><span class="p">.</span><span class="nx">run</span><span class="p">();</span>
+					<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+						<span class="nx">Y</span><span class="p">.</span><span class="nx">log</span> <span class="p">(</span><span class="s1">&#39;Error trying to include yui 2 loader in the page&#39;</span><span class="p">);</span>
+					<span class="p">}</span>
+				<span class="p">});</span>
+			<span class="p">}</span><span class="o">,</span>
+			<span class="nx">autoContinue</span><span class="o">:</span> <span class="kc">false</span>
+		<span class="p">}).</span><span class="nx">run</span><span class="p">();</span>
+	<span class="p">}</span>
+	<span class="c">// registering the default set of modules defined by YAHOO_config</span>
+	<span class="nx">_config</span> <span class="o">=</span> <span class="nx">_filterConf</span><span class="p">(</span><span class="nx">_config</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nx">Y</span><span class="p">.</span><span class="nx">yui2</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">o</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">o</span> <span class="o">=</span> <span class="nx">_filterConf</span><span class="p">(</span><span class="nx">o</span><span class="p">);</span>
+	<span class="k">return</span> <span class="p">{</span>
+		<span class="c">/**</span>
+<span class="c">	     * Load a set of modules and notify thru the callback method.</span>
+<span class="c">	     * @method use</span>
+<span class="c">	     * @param modules* {string} 1-n modules to bind (uses arguments array)</span>
+<span class="c">	     * @param *callback {function} callback function executed when </span>
+<span class="c">	     * the instance has the required functionality.  If included, it</span>
+<span class="c">	     * must be the last parameter.</span>
+<span class="c">	     *</span>
+<span class="c">	     * Y.yui2().use(&#39;tabview&#39;, callback)</span>
+<span class="c">	     *</span>
+<span class="c">	     * @return void</span>
+<span class="c">	     */</span>
+		<span class="nx">use</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+			<span class="kd">var</span> <span class="nx">a</span><span class="o">=</span><span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">slice</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">arguments</span><span class="o">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">,</span>
+				<span class="nx">callback</span> <span class="o">=</span> <span class="nx">a</span><span class="p">.</span><span class="nx">pop</span> <span class="p">()</span><span class="o">,</span>
+				<span class="nx">_queue</span> <span class="o">=</span> <span class="nx">Env</span><span class="p">.</span><span class="nx">_legacy</span><span class="p">.</span><span class="nx">_useQueue</span><span class="o">;</span>
+
+			<span class="nx">_queue</span><span class="p">.</span><span class="nx">add</span> <span class="p">({</span>
+				<span class="nx">fn</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+					<span class="kd">var</span> <span class="nx">_loader</span> <span class="o">=</span> <span class="nx">Env</span><span class="p">.</span><span class="nx">_legacy</span><span class="p">.</span><span class="nx">_loader</span><span class="o">;</span>
+					<span class="nx">_loader</span><span class="p">.</span><span class="nx">require</span><span class="p">(</span><span class="nx">a</span><span class="p">);</span>
+					<span class="nx">_loader</span><span class="p">.</span><span class="nx">insert</span><span class="p">({</span>
+						<span class="nx">onSuccess</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">o</span><span class="p">)</span> <span class="p">{</span>
+							<span class="nx">_queue</span><span class="p">.</span><span class="nx">run</span><span class="p">();</span>
+							<span class="nx">callback</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">Y</span><span class="o">,</span> <span class="p">[</span><span class="nx">Y</span><span class="o">,</span> <span class="p">{</span><span class="nx">success</span><span class="o">:</span> <span class="nx">o</span><span class="p">}]);</span>
+						<span class="p">}</span><span class="o">,</span>
+						<span class="nx">onFailure</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">o</span><span class="p">){</span>
+							<span class="nx">_queue</span><span class="p">.</span><span class="nx">run</span><span class="p">();</span>
+							<span class="nx">callback</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">Y</span><span class="o">,</span> <span class="p">[</span><span class="nx">Y</span><span class="o">,</span> <span class="p">{</span><span class="nx">failure</span><span class="o">:</span> <span class="nx">o</span><span class="p">}]);</span>
+						<span class="p">}</span><span class="o">,</span>
+						<span class="nx">onTimeout</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+							<span class="nx">_queue</span><span class="p">.</span><span class="nx">run</span><span class="p">();</span>
+							<span class="nx">callback</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">Y</span><span class="o">,</span> <span class="p">[</span><span class="nx">Y</span><span class="o">,</span> <span class="p">{</span><span class="nx">failure</span><span class="o">:</span> <span class="p">{</span> <span class="nx">timeout</span><span class="o">:</span> <span class="kc">true</span> <span class="p">}}]);</span>
+						<span class="p">}</span>
+					<span class="p">}</span><span class="o">,</span> <span class="nx">o</span><span class="p">.</span><span class="nx">type</span><span class="p">);</span>
+				<span class="p">}</span><span class="o">,</span>
+				<span class="nx">autoContinue</span><span class="o">:</span> <span class="kc">false</span>
+			<span class="p">});</span>
+			<span class="c">// verifying if the loader is ready in the page, if not, it will be </span>
+			<span class="c">// included automatically and then the process will continue.</span>
+			<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">_queue</span><span class="p">.</span><span class="nx">isRunning</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="nx">_queue</span><span class="p">.</span><span class="nx">size</span><span class="p">()</span><span class="o">===</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+				<span class="nx">_queue</span><span class="p">.</span><span class="nx">run</span> <span class="p">();</span>
+			<span class="p">}</span>
+		<span class="p">}</span>
+	<span class="p">};</span>
+<span class="p">};</span>
+</pre></div>
+                    </div>
+			</div>
+		</div>
+		<div class="yui-b">
+            <div class="nav">
+
+                    <div id="moduleList" class="module">
+                        <h4>Modules</h4>
+                        <ul class="content">
+                                <li class="selected"><a href="module_gallery-yui2.html" title="gallery-yui2">gallery-yui2</a></li>
+                        </ul>
+                    </div>
+
+                    <div id="classList" class="module">
+                        <h4>Classes</h4>
+                        <ul class="content">
+                                <li class=""><a href="yui2.html" title="yui2">yui2</a></li>
+                        </ul>
+                    </div>
+
+                    <div id="fileList" class="module">
+                        <h4>Files</h4>
+                        <ul class="content">        
+                                <li class="selected"><a href="gallery-yui2.js.html" title="gallery-yui2.js">gallery-yui2.js</a></li>
+                        </ul>
+                    </div>
+
+
+
+
+
+            </div>
+		</div>
+	</div>
+	<div id="ft">
+        <hr />
+        Copyright &copy; 2009 Yahoo! Inc. All rights reserved.
+	</div>
+</div>
+<script type="text/javascript">
+    ALL_YUI_PROPS = [{"url": "yui2.html#method_use", "access": "", "host": "yui2", "type": "method", "name": "use"}];
+</script>
+</body>
+</html>
