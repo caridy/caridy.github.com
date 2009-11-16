@@ -1,0 +1,48 @@
+@charset "UTF-8";
+/*
+Theme Name: Caridy
+Theme URI: http://caridy.github.com/
+Description: Projects
+Author: Caridy Patino
+Author URI: http://www.caridy.name/
+
+This theme was designed and built by <a href="http://www.caridy.name/">Caridy</a>.
+*/
+
+a:link,a:visited,a:active{color:#00749E;text-decoration:none;}
+a:hover{color:#000;text-decoration:underline;}
+.entry{border:1px solid #dadada;background:#fff url() repeat-x left top;margin:0 0 10px;padding:10px;}
+.alignright{float:right;margin-top:10px;}
+.alignleft{float:left;margin-top:10px;}
+.postmetadata{border-top:1px #eee solid;font-size:10px;margin:0;padding:5px;}
+.boxcomments{border-top:0px solid #ddd;border-bottom:0px solid #ddd;margin-bottom:20px;width:48em;}
+.aligncenter {display:block;margin-left:auto;margin-right:auto;}
+.by {font-size: 70%;font-style: italic;}
+/* This needs to be first because FF3 is now supporting this */
+.clearfix {display: inline-block;}
+.clearfix:after {
+    content: " ";
+    display: block;
+    height: 0;
+    clear: both;
+    font-size: 0;
+    visibility: hidden; 
+}
+/* Hides from IE-mac \*/
+* html .clearfix {height: 1%;}
+.clearfix {display: block;}
+/* End hide from IE-mac */
+
+pre {
+	overflow-x: auto;
+	overflow-y: hidden;
+	font-size: 80%;
+	font-family: "Courier New", Courier, monospace;
+}
+pre.cmd {
+	background-color:#444444;
+	border:1px solid #CCCCCC;
+	color:#FFFFFF;
+	margin:1em;
+	padding:1em;
+}
