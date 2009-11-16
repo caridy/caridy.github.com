@@ -1,0 +1,686 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns:yui="http://yuilibrary.com/rdf/1.0/yui.rdf#">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<title>API: gallery-node-accordion   gallery-node-accordion.js  (YUI Library)</title>
+
+	<link rel="stylesheet" type="text/css" href="assets/reset-fonts-grids-min.css" />
+	<link rel="stylesheet" type="text/css" href="assets/api.css" />
+
+    <script type="text/javascript" src="assets/api-js"></script>
+    <script type="text/javascript" src="assets/ac-js"></script>
+</head>
+
+<body id="yahoo-com">
+
+<div id="doc3" class="yui-t2">
+	<div id="hd">
+        <h1><a href="http://developer.yahoo.com/yui/" title="Yahoo! UI Library">Yahoo! UI Library</a></h1>
+        <h3>gallery-node-accordion&nbsp; <span class="subtitle">3.0.0</span></h3>
+        <a href="./index.html" title="Yahoo! UI Library">Yahoo! UI Library</a> 
+            &gt; <a href="./module_gallery-node-accordion.html" title="gallery-node-accordion">gallery-node-accordion</a>
+                
+                 &gt; gallery-node-accordion.js (source view) 
+        <form onsubmit="return false">
+            <div id="propertysearch">
+                Search: <input autocomplete="off" id="searchinput" />
+                <div id="searchresults">
+                    &nbsp;
+                </div>
+            </div>
+        </form>
+	</div>
+
+	<div id="bd">
+		<div id="yui-main">
+			<div class="yui-b">
+            <form action="#" name="yui-classopts-form" method="get" id="yui-classopts-form">
+                <fieldset>
+                    <legend>Filters</legend>
+                <span class="classopts"><input type="checkbox" name="show_private" id="show_private" /> <label for="show_private">Show Private</label></span>
+                <span class="classopts"><input type="checkbox" name="show_protected" id="show_protected" /> <label for="show_protected">Show Protected</label></span>
+                <span class="classopts"><input type="checkbox" name="show_deprecated" id="show_deprecated" /> <label for="show_deprecated">Show Deprecated</label></span>
+                </fieldset>
+            </form>
+
+                    <div id="srcout">
+                        <style>
+                            #doc3 .classopts { display:none; }
+                        </style>
+<div class="highlight"><pre><span class="c">/**</span>
+<span class="c">* &lt;p&gt;The Accordion Node Plugin makes it easy to transform existing </span>
+<span class="c">* markup into an accordion element with expandable and collapsable elements, </span>
+<span class="c">* elements are  easy to customize, and only require a small set of dependencies.&lt;/p&gt;</span>
+<span class="c">* </span>
+<span class="c">* </span>
+<span class="c">* &lt;p&gt;To use the Accordion Node Plugin, simply pass a reference to the plugin to a </span>
+<span class="c">* Node instance&#39;s &lt;code&gt;plug&lt;/code&gt; method.&lt;/p&gt;</span>
+<span class="c">* </span>
+<span class="c">* &lt;p&gt;</span>
+<span class="c">* &lt;code&gt;</span>
+<span class="c">* &amp;#60;script type=&quot;text/javascript&quot;&amp;#62; &lt;br&gt;</span>
+<span class="c">* &lt;br&gt;</span>
+<span class="c">* 		//	Call the &quot;use&quot; method, passing in &quot;gallery-node-accordion&quot;.  This will &lt;br&gt;</span>
+<span class="c">* 		//	load the script and CSS for the Accordion Node Plugin and all of &lt;br&gt;</span>
+<span class="c">* 		//	the required dependencies. &lt;br&gt;</span>
+<span class="c">* &lt;br&gt;</span>
+<span class="c">* 		YUI().use(&quot;gallery-node-accordion&quot;, function(Y) { &lt;br&gt;</span>
+<span class="c">* &lt;br&gt;</span>
+<span class="c">* 			//	Use the &quot;contentready&quot; event to initialize the accordion when &lt;br&gt;</span>
+<span class="c">* 			//	the element that represente the accordion &lt;br&gt;</span>
+<span class="c">* 			//	(&amp;#60;div id=&quot;accordion-1&quot;&amp;#62;) is ready to be scripted. &lt;br&gt;</span>
+<span class="c">* &lt;br&gt;</span>
+<span class="c">* 			Y.on(&quot;contentready&quot;, function () { &lt;br&gt;</span>
+<span class="c">* &lt;br&gt;</span>
+<span class="c">* 				//	The scope of the callback will be a Node instance &lt;br&gt;</span>
+<span class="c">* 				//	representing the accordion (&amp;#60;div id=&quot;accordion-1&quot;&amp;#62;). &lt;br&gt;</span>
+<span class="c">* 				//	Therefore, since &quot;this&quot; represents a Node instance, it &lt;br&gt;</span>
+<span class="c">* 				//	is possible to just call &quot;this.plug&quot; passing in a &lt;br&gt;</span>
+<span class="c">*				//	reference to the Accordion Node Plugin. &lt;br&gt;</span>
+<span class="c">* &lt;br&gt;</span>
+<span class="c">* 				this.plug(Y.Plugin.NodeAccordion); &lt;br&gt;</span>
+<span class="c">* &lt;br&gt;</span>
+<span class="c">* 			}, &quot;#accordion-1&quot;); &lt;br&gt;</span>
+<span class="c">* &lt;br&gt;		</span>
+<span class="c">* 		}); &lt;br&gt;</span>
+<span class="c">* &lt;br&gt;	</span>
+<span class="c">* 	&amp;#60;/script&amp;#62; &lt;br&gt;</span>
+<span class="c">* &lt;/code&gt;</span>
+<span class="c">* &lt;/p&gt;</span>
+<span class="c">*</span>
+<span class="c">* &lt;p&gt;The Accordion Node Plugin has several configuration properties that can be </span>
+<span class="c">* set via an object literal that is passed as a second argument to a Node </span>
+<span class="c">* instance&#39;s &lt;code&gt;plug&lt;/code&gt; method.</span>
+<span class="c">* &lt;/p&gt;</span>
+<span class="c">*</span>
+<span class="c">* &lt;p&gt;</span>
+<span class="c">* &lt;code&gt;</span>
+<span class="c">* &amp;#60;script type=&quot;text/javascript&quot;&amp;#62; &lt;br&gt;</span>
+<span class="c">* &lt;br&gt;</span>
+<span class="c">* 		//	Call the &quot;use&quot; method, passing in &quot;gallery-node-accordion&quot;.  This will &lt;br&gt;</span>
+<span class="c">* 		//	load the script and CSS for the Accordion Node Plugin and all of &lt;br&gt;</span>
+<span class="c">* 		//	the required dependencies. &lt;br&gt;</span>
+<span class="c">* &lt;br&gt;</span>
+<span class="c">* 		YUI().use(&quot;gallery-node-accordion&quot;, function(Y) { &lt;br&gt;</span>
+<span class="c">* &lt;br&gt;</span>
+<span class="c">* 			//	Use the &quot;contentready&quot; event to initialize the accordion when &lt;br&gt;</span>
+<span class="c">* 			//	the element that represente the accordion &lt;br&gt;</span>
+<span class="c">* 			//	(&amp;#60;div id=&quot;accordion-1&quot;&amp;#62;) is ready to be scripted. &lt;br&gt;</span>
+<span class="c">* &lt;br&gt;</span>
+<span class="c">* 			Y.on(&quot;contentready&quot;, function () { &lt;br&gt;</span>
+<span class="c">* &lt;br&gt;</span>
+<span class="c">* 				//	The scope of the callback will be a Node instance &lt;br&gt;</span>
+<span class="c">* 				//	representing the accordion (&amp;#60;div id=&quot;accordion-1&quot;&amp;#62;). &lt;br&gt;</span>
+<span class="c">* 				//	Therefore, since &quot;this&quot; represents a Node instance, it &lt;br&gt;</span>
+<span class="c">* 				//	is possible to just call &quot;this.plug&quot; passing in a &lt;br&gt;</span>
+<span class="c">*				//	reference to the Accordion Node Plugin. &lt;br&gt;</span>
+<span class="c">* &lt;br&gt;</span>
+<span class="c">* 				this.plug(Y.Plugin.NodeAccordion, { anim: true, effect: Y.Easing.backIn });</span>
+<span class="c">* &lt;br&gt;&lt;br&gt;</span>
+<span class="c">* 			}, &quot;#accordion-1&quot;); &lt;br&gt;</span>
+<span class="c">* &lt;br&gt;		</span>
+<span class="c">* 		}); &lt;br&gt;</span>
+<span class="c">* &lt;br&gt;	</span>
+<span class="c">* 	&amp;#60;/script&amp;#62; &lt;br&gt;</span>
+<span class="c">* &lt;/code&gt;</span>
+<span class="c">* &lt;/p&gt;</span>
+<span class="c">* </span>
+<span class="c">* @module gallery-node-accordion</span>
+<span class="c">*/</span>
+
+
+<span class="c">//	Util shortcuts</span>
+
+<span class="kd">var</span> <span class="nx">UA</span> <span class="o">=</span> <span class="nx">Y</span><span class="p">.</span><span class="nx">UA</span><span class="o">,</span>
+	<span class="nx">getClassName</span> <span class="o">=</span> <span class="nx">Y</span><span class="p">.</span><span class="nx">ClassNameManager</span><span class="p">.</span><span class="nx">getClassName</span><span class="o">,</span>
+    <span class="nx">anims</span> <span class="o">=</span> <span class="p">{}</span><span class="o">,</span>
+    <span class="nx">wheels</span> <span class="o">=</span> <span class="p">{</span><span class="nx">fast</span><span class="o">:</span><span class="mf">0.1</span><span class="o">,</span><span class="nx">slow</span><span class="o">:</span><span class="mf">0.6</span><span class="o">,</span><span class="nx">normal</span><span class="o">:</span><span class="mf">0.4</span><span class="p">}</span><span class="o">,</span>
+
+	<span class="c">//	Frequently used strings</span>
+	<span class="nx">ACCORDION</span> <span class="o">=</span> <span class="s2">&quot;accordion&quot;</span><span class="o">,</span>
+	<span class="nx">ACCORDIONITEM</span> <span class="o">=</span> <span class="s2">&quot;item&quot;</span><span class="o">,</span>
+	<span class="nx">SCROLL_HEIGHT</span> <span class="o">=</span> <span class="s2">&quot;scrollHeight&quot;</span><span class="o">,</span>
+	<span class="nx">SCROLL_WIDTH</span> <span class="o">=</span> <span class="s2">&quot;scrollWidth&quot;</span><span class="o">,</span>
+	<span class="nx">WIDTH</span> <span class="o">=</span> <span class="s2">&quot;width&quot;</span><span class="o">,</span>
+	<span class="nx">HEIGHT</span> <span class="o">=</span> <span class="s2">&quot;height&quot;</span><span class="o">,</span>
+	<span class="nx">PX</span> <span class="o">=</span> <span class="s2">&quot;px&quot;</span><span class="o">,</span>
+	<span class="nx">PERIOD</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span><span class="o">,</span>
+	<span class="nx">HOST</span> <span class="o">=</span> <span class="s2">&quot;host&quot;</span><span class="o">,</span>
+
+	<span class="c">//	Attribute keys</span>
+	<span class="nx">ATTR_ORIENTATION</span> <span class="o">=</span> <span class="s1">&#39;orientation&#39;</span><span class="o">,</span>
+	<span class="nx">ATTR_FADE</span> 		 <span class="o">=</span> <span class="s1">&#39;fade&#39;</span><span class="o">,</span>
+	<span class="nx">ATTR_MULTIPLE</span> 	 <span class="o">=</span> <span class="s1">&#39;multiple&#39;</span><span class="o">,</span>
+	<span class="nx">ATTR_PERSISTENT</span>  <span class="o">=</span> <span class="s1">&#39;persistent&#39;</span><span class="o">,</span>
+	<span class="nx">ATTR_SPEED</span>  	 <span class="o">=</span> <span class="s1">&#39;speed&#39;</span><span class="o">,</span>
+	<span class="nx">ATTR_ANIM</span>		 <span class="o">=</span> <span class="s1">&#39;anim&#39;</span><span class="o">,</span>
+	<span class="nx">ATTR_ITEMS</span>		 <span class="o">=</span> <span class="s1">&#39;items&#39;</span><span class="o">,</span>
+	
+	<span class="c">//	CSS class names</span>
+	<span class="nx">CLASS_ACCORDION</span> 			 <span class="o">=</span> <span class="nx">getClassName</span><span class="p">(</span><span class="nx">ACCORDION</span><span class="p">)</span><span class="o">,</span>
+	<span class="nx">CLASS_ACCORDION_HIDDEN</span> 		 <span class="o">=</span> <span class="nx">getClassName</span><span class="p">(</span><span class="nx">ACCORDION</span><span class="o">,</span> <span class="s1">&#39;hidden&#39;</span><span class="p">)</span><span class="o">,</span>
+	<span class="nx">CLASS_ACCORDION_ITEM</span> 		 <span class="o">=</span> <span class="nx">getClassName</span><span class="p">(</span><span class="nx">ACCORDION</span><span class="o">,</span> <span class="nx">ACCORDIONITEM</span><span class="p">)</span><span class="o">,</span>
+	<span class="nx">CLASS_ACTIVE</span> 				 <span class="o">=</span> <span class="nx">getClassName</span><span class="p">(</span><span class="nx">ACCORDION</span><span class="o">,</span> <span class="nx">ACCORDIONITEM</span><span class="o">,</span> <span class="s2">&quot;active&quot;</span><span class="p">)</span><span class="o">,</span>
+    <span class="nx">CLASS_SLIDING</span> 				 <span class="o">=</span> <span class="nx">getClassName</span><span class="p">(</span><span class="nx">ACCORDION</span><span class="o">,</span> <span class="nx">ACCORDIONITEM</span><span class="o">,</span> <span class="s2">&quot;sliding&quot;</span><span class="p">)</span><span class="o">,</span>
+	<span class="nx">CLASS_ACCORDION_ITEM_HD</span> 	 <span class="o">=</span> <span class="nx">getClassName</span><span class="p">(</span><span class="nx">ACCORDION</span><span class="o">,</span> <span class="nx">ACCORDIONITEM</span><span class="o">,</span> <span class="s2">&quot;hd&quot;</span><span class="p">)</span><span class="o">,</span>
+	<span class="nx">CLASS_ACCORDION_ITEM_BD</span> 	 <span class="o">=</span> <span class="nx">getClassName</span><span class="p">(</span><span class="nx">ACCORDION</span><span class="o">,</span> <span class="nx">ACCORDIONITEM</span><span class="o">,</span> <span class="s2">&quot;bd&quot;</span><span class="p">)</span><span class="o">,</span>
+	<span class="nx">CLASS_ACCORDION_ITEM_FT</span> 	 <span class="o">=</span> <span class="nx">getClassName</span><span class="p">(</span><span class="nx">ACCORDION</span><span class="o">,</span> <span class="nx">ACCORDIONITEM</span><span class="o">,</span> <span class="s2">&quot;ft&quot;</span><span class="p">)</span><span class="o">,</span>
+	<span class="nx">CLASS_ACCORDION_ITEM_TRIGGER</span> <span class="o">=</span> <span class="nx">getClassName</span><span class="p">(</span><span class="nx">ACCORDION</span><span class="o">,</span> <span class="nx">ACCORDIONITEM</span><span class="o">,</span> <span class="s2">&quot;trigger&quot;</span><span class="p">)</span><span class="o">,</span>
+   	
+	<span class="c">//	CSS selectors</span>
+	<span class="nx">SELECTOR_ACCORDION_ITEM</span> <span class="o">=</span> <span class="nx">PERIOD</span> <span class="o">+</span> <span class="nx">CLASS_ACCORDION_ITEM</span><span class="o">,</span>
+	<span class="nx">SELECTOR_ACCORDION_ITEM_BD</span> <span class="o">=</span> <span class="nx">PERIOD</span> <span class="o">+</span> <span class="nx">CLASS_ACCORDION_ITEM_BD</span><span class="o">,</span>
+	<span class="c">// few more just in case...</span>
+	<span class="c">//SELECTOR_ACCORDION = PERIOD + CLASS_ACCORDION,</span>
+	<span class="c">//SELECTOR_ACCORDION_ITEM_TRIGGER = PERIOD + CLASS_ACCORDION_ITEM_TRIGGER,</span>
+	
+	<span class="nx">FC</span> <span class="o">=</span> <span class="s1">&#39;&gt;.&#39;</span><span class="o">,</span>
+	<span class="nx">ITEM_QUERY</span> 			<span class="o">=</span> <span class="nx">FC</span> <span class="o">+</span> <span class="nx">CLASS_ACCORDION_ITEM</span><span class="o">,</span>
+	<span class="nx">ITEM_TRIGGER_QUERY</span> 	<span class="o">=</span> <span class="nx">FC</span> <span class="o">+</span> <span class="nx">CLASS_ACCORDION_ITEM</span> <span class="o">+</span> <span class="nx">PERIOD</span> <span class="o">+</span> <span class="nx">CLASS_ACCORDION_ITEM_TRIGGER</span> <span class="o">+</span> <span class="s1">&#39;,&#39;</span> <span class="o">+</span>
+							<span class="nx">FC</span> <span class="o">+</span> <span class="nx">CLASS_ACCORDION_ITEM</span> <span class="o">+</span> <span class="nx">FC</span> <span class="o">+</span> <span class="nx">CLASS_ACCORDION_ITEM_HD</span> <span class="o">+</span> <span class="nx">FC</span> <span class="o">+</span> <span class="nx">CLASS_ACCORDION_ITEM_TRIGGER</span> <span class="o">+</span> <span class="s1">&#39;,&#39;</span> <span class="o">+</span>
+							<span class="nx">FC</span> <span class="o">+</span> <span class="nx">CLASS_ACCORDION_ITEM</span> <span class="o">+</span> <span class="nx">FC</span> <span class="o">+</span> <span class="nx">CLASS_ACCORDION_ITEM_FT</span> <span class="o">+</span> <span class="nx">FC</span> <span class="o">+</span> <span class="nx">CLASS_ACCORDION_ITEM_TRIGGER</span><span class="o">,</span>
+	<span class="c">// few more just in case...</span>
+	<span class="c">//ITEM_HD_QUERY = FC+CLASS_ACCORDION_ITEM+FC+CLASS_ACCORDION_ITEM_HD,</span>
+	<span class="c">//ITEM_BD_QUERY = FC+CLASS_ACCORDION_ITEM+FC+CLASS_ACCORDION_ITEM_BD,</span>
+	<span class="c">//ITEM_FT_QUERY = FC+CLASS_ACCORDION_ITEM+FC+CLASS_ACCORDION_ITEM_FT,</span>
+	
+	<span class="c">//	Utility functions</span>
+	<span class="c">/**</span>
+<span class="c">	* The NodeAccordion class is a plugin for a Node instance.  The class is used via  </span>
+<span class="c">	* the &lt;a href=&quot;Node.html#method_plug&quot;&gt;&lt;code&gt;plug&lt;/code&gt;&lt;/a&gt; method of Node and </span>
+<span class="c">	* should not be instantiated directly.</span>
+<span class="c">	* @namespace plugin</span>
+<span class="c">	* @class NodeAccordion</span>
+<span class="c">	*/</span>
+	<span class="nx">NodeAccordion</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+	
+		<span class="nx">NodeAccordion</span><span class="p">.</span><span class="nx">superclass</span><span class="p">.</span><span class="nx">constructor</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="o">,</span> <span class="nx">arguments</span><span class="p">);</span>
+	
+	<span class="p">};</span>
+
+<span class="nx">NodeAccordion</span><span class="p">.</span><span class="nx">NAME</span> <span class="o">=</span> <span class="s2">&quot;NodeAccordion&quot;</span><span class="o">;</span>
+<span class="nx">NodeAccordion</span><span class="p">.</span><span class="nx">NS</span> <span class="o">=</span> <span class="nx">ACCORDION</span><span class="o">;</span>
+
+<span class="nx">NodeAccordion</span><span class="p">.</span><span class="nx">ATTRS</span> <span class="o">=</span> <span class="p">{</span>
+	<span class="c">/**</span>
+<span class="c">	* Nodes representing the list of active items.</span>
+<span class="c">	*</span>
+<span class="c">	* @attribute activeItems</span>
+<span class="c">	* @type Y.NodeList</span>
+<span class="c">	*/</span>
+	<span class="nx">activeItems</span><span class="o">:</span> <span class="p">{</span>
+		<span class="nx">readOnly</span><span class="o">:</span> <span class="kc">true</span><span class="o">,</span>
+		<span class="nx">getter</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+			<span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">_root</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span><span class="nx">FC</span><span class="o">+</span><span class="nx">CLASS_ACTIVE</span><span class="p">);</span>
+		<span class="p">}</span>
+	<span class="p">}</span><span class="o">,</span>
+	<span class="c">/**</span>
+<span class="c">	* Nodes representing the list of items.</span>
+<span class="c">	*</span>
+<span class="c">	* @attribute items</span>
+<span class="c">	* @type Y.NodeList</span>
+<span class="c">	*/</span>
+	<span class="nx">items</span><span class="o">:</span> <span class="p">{</span>
+		<span class="nx">readOnly</span><span class="o">:</span> <span class="kc">true</span><span class="o">,</span>
+		<span class="nx">getter</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+			<span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">_root</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span><span class="nx">ITEM_QUERY</span><span class="p">);</span>
+		<span class="p">}</span>
+	<span class="p">}</span><span class="o">,</span>
+	
+	<span class="c">/**</span>
+<span class="c">	* orientation defines if the accordion will use width or height to expand and collapse items.</span>
+<span class="c">	*</span>
+<span class="c">	* @attribute orientation</span>
+<span class="c">	* @writeOnce</span>
+<span class="c">	* @default height</span>
+<span class="c">	* @type string</span>
+<span class="c">	*/</span>
+	<span class="nx">orientation</span><span class="o">:</span> <span class="p">{</span>
+		<span class="nx">value</span><span class="o">:</span> <span class="nx">HEIGHT</span><span class="o">,</span>
+		<span class="nx">writeOnce</span><span class="o">:</span> <span class="kc">true</span>
+	<span class="p">}</span><span class="o">,</span>
+	<span class="c">/**</span>
+<span class="c">	* Boolean indicating that animation should include opacity to fade in/out the content of the item.</span>
+<span class="c">	*</span>
+<span class="c">	* @attribute fade</span>
+<span class="c">	* @default false</span>
+<span class="c">	* @type boolean</span>
+<span class="c">	*/</span>	
+	<span class="nx">fade</span><span class="o">:</span> <span class="p">{</span>
+		<span class="nx">value</span><span class="o">:</span> <span class="kc">false</span>
+	<span class="p">}</span><span class="o">,</span>
+	<span class="c">/**</span>
+<span class="c">	* Boolean indicating that Y.Anim should be used to expand and collapse items.</span>
+<span class="c">	* It also supports a function with an specific effect.</span>
+<span class="c">	* &lt;p&gt;</span>
+<span class="c">	* &lt;code&gt;</span>
+<span class="c">	* &amp;#60;script type=&quot;text/javascript&quot;&amp;#62; &lt;br&gt;</span>
+<span class="c">	* &lt;br&gt;</span>
+<span class="c">	* 		//	Call the &quot;use&quot; method, passing in &quot;anim&quot; and &quot;gallery-node-accordion&quot;. &lt;br&gt;</span>
+<span class="c">	* &lt;br&gt;</span>
+<span class="c">	* 		YUI().use(&quot;anim&quot;, &quot;gallery-node-accordion&quot;, function(Y) { &lt;br&gt;</span>
+<span class="c">	* &lt;br&gt;</span>
+<span class="c">	* 			Y.one(&quot;#myaccordion&quot;).plug(Y.Plugin.NodeAccordion, {&lt;br&gt;</span>
+<span class="c">	* 				anim: Y.Easing.backIn&lt;br&gt;</span>
+<span class="c">	* 			}); &lt;br&gt;</span>
+<span class="c">	* &lt;br&gt;	</span>
+<span class="c">	* 	&amp;#60;/script&amp;#62; &lt;br&gt;</span>
+<span class="c">	* &lt;/code&gt;</span>
+<span class="c">	* &lt;/p&gt;</span>
+<span class="c">	* </span>
+<span class="c">	* @attribute anim</span>
+<span class="c">	* @default false</span>
+<span class="c">	* @type {boolean|function}</span>
+<span class="c">	*/</span>
+	<span class="nx">anim</span><span class="o">:</span> <span class="p">{</span>
+		<span class="nx">value</span><span class="o">:</span> <span class="kc">false</span><span class="o">,</span>
+		<span class="nx">validator</span> <span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">v</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="o">!</span><span class="nx">Y</span><span class="p">.</span><span class="nx">Lang</span><span class="p">.</span><span class="nx">isUndefined</span><span class="p">(</span><span class="nx">Y</span><span class="p">.</span><span class="nx">Anim</span><span class="p">);</span>
+        <span class="p">}</span>
+	<span class="p">}</span><span class="o">,</span>
+	<span class="c">/**</span>
+<span class="c">	* Boolean indicating that more than one item can be opened at the same time.</span>
+<span class="c">	*</span>
+<span class="c">	* @attribute multiple</span>
+<span class="c">	* @default true</span>
+<span class="c">	* @type boolean</span>
+<span class="c">	*/</span>
+	<span class="nx">multiple</span><span class="o">:</span> <span class="p">{</span>
+		<span class="nx">value</span><span class="o">:</span> <span class="kc">true</span>
+	<span class="p">}</span><span class="o">,</span>
+	<span class="c">/**</span>
+<span class="c">	* Boolean indicating that one of the items should be open at any given time.</span>
+<span class="c">	*</span>
+<span class="c">	* @attribute persistent</span>
+<span class="c">	* @default false</span>
+<span class="c">	* @type boolean</span>
+<span class="c">	*/</span>	
+	<span class="nx">persistent</span><span class="o">:</span> <span class="p">{</span>
+		<span class="nx">value</span><span class="o">:</span> <span class="kc">false</span>
+	<span class="p">}</span><span class="o">,</span>
+	<span class="c">/**</span>
+<span class="c">	* Numeric value indicating the speed in mili-seconds for the animation process.</span>
+<span class="c">	* Also support three predefined strings in lowercase:</span>
+<span class="c">	* &lt;ol&gt;</span>
+<span class="c">	* &lt;li&gt;fast = 0.1&lt;/li&gt;</span>
+<span class="c">	* &lt;li&gt;normal = 0.4&lt;/li&gt;</span>
+<span class="c">	* &lt;li&gt;slow = 0.6&lt;/li&gt;</span>
+<span class="c">	* &lt;/ol&gt;</span>
+<span class="c">	* </span>
+<span class="c">	* @attribute speed</span>
+<span class="c">	* @readOnly</span>
+<span class="c">	* @default 0.4</span>
+<span class="c">	* @type numeric</span>
+<span class="c">	*/</span>	
+	<span class="nx">speed</span><span class="o">:</span> <span class="p">{</span>
+		<span class="nx">value</span><span class="o">:</span> <span class="mf">0.4</span><span class="o">,</span>
+		<span class="nx">validator</span> <span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">v</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="p">(</span><span class="nx">Y</span><span class="p">.</span><span class="nx">Lang</span><span class="p">.</span><span class="nx">isNumber</span><span class="p">(</span><span class="nx">v</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="nx">Y</span><span class="p">.</span><span class="nx">Lang</span><span class="p">.</span><span class="nx">isString</span><span class="p">(</span><span class="nx">v</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="nx">wheels</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="nx">v</span><span class="p">)));</span>
+        <span class="p">}</span><span class="o">,</span>
+        <span class="nx">setter</span> <span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">v</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="p">(</span><span class="nx">wheels</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="nx">v</span><span class="p">)</span><span class="o">?</span><span class="nx">wheels</span><span class="p">[</span><span class="nx">v</span><span class="p">]</span><span class="o">:</span><span class="nx">v</span><span class="p">);</span>
+        <span class="p">}</span>
+	<span class="p">}</span>
+
+<span class="p">};</span>
+
+
+<span class="nx">Y</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">NodeAccordion</span><span class="o">,</span> <span class="nx">Y</span><span class="p">.</span><span class="nx">Plugin</span><span class="p">.</span><span class="nx">Base</span><span class="o">,</span> <span class="p">{</span>
+
+	<span class="c">//	Protected properties</span>
+
+	<span class="c">/** </span>
+<span class="c">	* @property _root</span>
+<span class="c">	* @description Node instance representing the root node in the accordion.</span>
+<span class="c">	* @default null</span>
+<span class="c">	* @protected</span>
+<span class="c">	* @type Node</span>
+<span class="c">	*/</span>
+	<span class="nx">_root</span><span class="o">:</span> <span class="kc">null</span><span class="o">,</span>
+
+	<span class="c">//	Public methods</span>
+
+    <span class="nx">initializer</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">config</span><span class="p">)</span> <span class="p">{</span>
+		<span class="kd">var</span> <span class="nx">_root</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">HOST</span><span class="p">)</span><span class="o">,</span>
+			<span class="nx">aHandlers</span> <span class="o">=</span> <span class="p">[];</span>
+		<span class="k">if</span> <span class="p">(</span><span class="nx">_root</span><span class="p">)</span> <span class="p">{</span>
+
+			<span class="k">this</span><span class="p">.</span><span class="nx">_root</span> <span class="o">=</span> <span class="nx">_root</span><span class="o">;</span>
+			
+			<span class="c">//	close all items and open the actived ones</span>
+			<span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">ATTR_ITEMS</span><span class="p">).</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">item</span><span class="p">)</span> <span class="p">{</span>
+				<span class="k">if</span> <span class="p">(</span><span class="nx">item</span><span class="p">.</span><span class="nx">hasClass</span><span class="p">(</span><span class="nx">CLASS_ACTIVE</span><span class="p">))</span> <span class="p">{</span>
+					<span class="k">this</span><span class="p">.</span><span class="nx">expandItem</span><span class="p">(</span><span class="nx">item</span><span class="p">);</span>
+				<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+					<span class="k">this</span><span class="p">.</span><span class="nx">collapseItem</span><span class="p">(</span><span class="nx">item</span><span class="p">);</span>
+				<span class="p">}</span>
+			<span class="p">}</span><span class="o">,</span> <span class="k">this</span><span class="p">);</span>
+
+			<span class="c">//	Wire up all event handlers</span>
+			<span class="nx">aHandlers</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">_root</span><span class="p">.</span><span class="nx">delegate</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="o">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+				<span class="nx">Y</span><span class="p">.</span><span class="nx">log</span> <span class="p">(</span><span class="s1">&#39;Accordion Trigger: &#39;</span> <span class="o">+</span> <span class="nx">e</span><span class="p">);</span>
+				<span class="k">this</span><span class="p">.</span><span class="nx">toggleItem</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">currentTarget</span><span class="p">);</span> <span class="c">// probably is better to pass the ancestor for the item</span>
+				<span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">blur</span><span class="p">();</span>
+				<span class="nx">e</span><span class="p">.</span><span class="nx">halt</span><span class="p">();</span>
+			<span class="p">}</span><span class="o">,</span> <span class="nx">ITEM_TRIGGER_QUERY</span><span class="o">,</span> <span class="k">this</span><span class="p">));</span>
+			<span class="nx">aHandlers</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_eventHandlers</span><span class="o">;</span>
+
+			<span class="nx">_root</span><span class="p">.</span><span class="nx">removeClass</span><span class="p">(</span><span class="nx">CLASS_ACCORDION_HIDDEN</span><span class="p">);</span>
+		<span class="p">}</span>
+    <span class="p">}</span><span class="o">,</span>
+
+	<span class="nx">destructor</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+		<span class="kd">var</span> <span class="nx">aHandlers</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_eventHandlers</span><span class="o">;</span>
+		<span class="k">if</span> <span class="p">(</span><span class="nx">aHandlers</span><span class="p">)</span> <span class="p">{</span>
+			<span class="nx">Y</span><span class="p">.</span><span class="nb">Array</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">aHandlers</span><span class="o">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">handle</span><span class="p">)</span> <span class="p">{</span>
+				<span class="nx">handle</span><span class="p">.</span><span class="nx">detach</span><span class="p">();</span>
+			<span class="p">});</span>
+			<span class="k">this</span><span class="p">.</span><span class="nx">_eventHandlers</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="p">}</span>
+    <span class="p">}</span><span class="o">,</span>
+
+	<span class="c">//	Protected methods</span>
+	<span class="c">/**</span>
+<span class="c">	 * @method _getItem</span>
+<span class="c">	 * @description Searching for an item based on a node reference or an index order.</span>
+<span class="c">	 * @protected</span>
+<span class="c">	 * @param {Node|Number} node Node reference or Node index.</span>
+<span class="c">	 * @return {Node} The matching DOM node or null if none found.</span>
+<span class="c">	 */</span>
+	<span class="nx">_getItem</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">node</span><span class="p">)</span> <span class="p">{</span>
+		<span class="k">if</span> <span class="p">(</span><span class="nx">Y</span><span class="p">.</span><span class="nx">Lang</span><span class="p">.</span><span class="nx">isNumber</span><span class="p">(</span><span class="nx">node</span><span class="p">))</span> <span class="p">{</span>
+			<span class="nx">node</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">ATTR_ITEMS</span><span class="p">).</span><span class="nx">item</span><span class="p">(</span><span class="nx">node</span><span class="p">);</span>	
+		<span class="p">}</span>
+		<span class="kd">var</span> <span class="nx">fn</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">n</span><span class="p">)</span> <span class="p">{</span> 
+			<span class="k">return</span> <span class="nx">n</span><span class="p">.</span><span class="nx">hasClass</span><span class="p">(</span><span class="nx">CLASS_ACCORDION_ITEM</span><span class="p">);</span> 
+		<span class="p">};</span>
+		<span class="k">if</span> <span class="p">(</span><span class="nx">node</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">node</span><span class="p">.</span><span class="nx">hasClass</span><span class="p">(</span><span class="nx">CLASS_ACCORDION_ITEM</span><span class="p">))</span> <span class="p">{</span>
+			<span class="k">return</span> <span class="nx">node</span><span class="p">.</span><span class="nx">ancestor</span><span class="p">(</span> <span class="nx">fn</span> <span class="p">);</span>
+		<span class="p">}</span>
+		<span class="k">return</span> <span class="nx">node</span><span class="o">;</span>
+	<span class="p">}</span><span class="o">,</span>	
+	
+	<span class="c">/**</span>
+<span class="c">	 * @method _animate</span>
+<span class="c">	 * @description Using Y.Anim to expand or collapse an item.</span>
+<span class="c">	 * @protected</span>
+<span class="c">	 * @param {String} id Global Unique ID for the animation.</span>
+<span class="c">	 * @param {Object} conf Configuration object for the animation.</span>
+<span class="c">	 * @param {Function} fn callback function that should be executed after the end of the anim.</span>
+<span class="c">	 * @return {Object} Animation handler.</span>
+<span class="c">	 */</span>
+	<span class="nx">_animate</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">id</span><span class="o">,</span> <span class="nx">conf</span><span class="o">,</span> <span class="nx">fn</span><span class="p">)</span> <span class="p">{</span>
+		<span class="kd">var</span> <span class="nx">anim</span> <span class="o">=</span> <span class="nx">anims</span><span class="p">[</span><span class="nx">id</span><span class="p">];</span>
+		<span class="nx">Y</span><span class="p">.</span><span class="nx">log</span> <span class="p">(</span><span class="s1">&#39;Anim Conf: &#39;</span> <span class="o">+</span> <span class="nx">conf</span><span class="p">);</span>
+		<span class="c">// if the animation is underway: we need to stop it...</span>
+		<span class="k">if</span> <span class="p">((</span><span class="nx">anim</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="nx">anim</span><span class="p">.</span><span class="nx">get</span> <span class="p">(</span><span class="s1">&#39;running&#39;</span><span class="p">)))</span> <span class="p">{</span>
+        	<span class="nx">anim</span><span class="p">.</span><span class="nx">stop</span><span class="p">();</span>
+        <span class="p">}</span>
+	    <span class="k">if</span> <span class="p">(</span><span class="nx">Y</span><span class="p">.</span><span class="nx">Lang</span><span class="p">.</span><span class="nx">isFunction</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">ATTR_ANIM</span><span class="p">)))</span> <span class="p">{</span>
+			<span class="nx">conf</span><span class="p">.</span><span class="nx">easing</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">ATTR_ANIM</span><span class="p">);</span>
+	    <span class="p">}</span>
+	    <span class="nx">anim</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Y</span><span class="p">.</span><span class="nx">Anim</span><span class="p">(</span><span class="nx">conf</span><span class="p">);</span>
+	    <span class="nx">anim</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;end&#39;</span><span class="o">,</span> <span class="nx">fn</span><span class="o">,</span> <span class="k">this</span><span class="p">);</span>
+		<span class="nx">anim</span><span class="p">.</span><span class="nx">run</span><span class="p">();</span>
+	    <span class="nx">anims</span><span class="p">[</span><span class="nx">id</span><span class="p">]</span> <span class="o">=</span> <span class="nx">anim</span><span class="o">;</span>
+	    <span class="k">return</span> <span class="nx">anim</span><span class="o">;</span>
+	<span class="p">}</span><span class="o">,</span>
+		
+	<span class="c">/**</span>
+<span class="c">	* @method _openItem</span>
+<span class="c">	* @description Open an item.</span>
+<span class="c">	* @protected</span>
+<span class="c">	* @param {Node} item Node instance representing an item.</span>
+<span class="c">	*/</span>
+	<span class="nx">_openItem</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">item</span><span class="p">)</span> <span class="p">{</span>
+		<span class="kd">var</span> <span class="nx">bd</span><span class="o">,</span> 
+			<span class="nx">id</span><span class="o">,</span> 
+			<span class="nx">fn</span><span class="o">,</span> 
+			<span class="nx">fs</span><span class="o">,</span>
+			<span class="nx">i</span><span class="o">,</span>
+			<span class="nx">list</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">ATTR_ITEMS</span><span class="p">)</span><span class="o">,</span>
+			<span class="nx">o</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">get</span> <span class="p">(</span><span class="nx">ATTR_ORIENTATION</span><span class="p">)</span><span class="o">,</span>
+			<span class="nx">conf</span> <span class="o">=</span> <span class="p">{</span>
+				<span class="nx">duration</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">ATTR_SPEED</span><span class="p">)</span><span class="o">,</span>
+				<span class="nx">to</span><span class="o">:</span> <span class="p">{</span>
+					<span class="nx">scroll</span><span class="o">:</span> <span class="p">[]</span>
+				<span class="p">}</span>
+			<span class="p">}</span><span class="o">,</span>
+			<span class="nx">mirror</span><span class="o">;</span>
+		<span class="c">// if the item is not already opened</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">item</span> <span class="o">&amp;&amp;</span> <span class="nx">list</span><span class="p">.</span><span class="nx">size</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">item</span><span class="p">.</span><span class="nx">hasClass</span><span class="p">(</span><span class="nx">CLASS_ACTIVE</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="nx">bd</span> <span class="o">=</span> <span class="nx">item</span><span class="p">.</span><span class="nx">one</span><span class="p">(</span><span class="nx">SELECTOR_ACCORDION_ITEM_BD</span><span class="p">))</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="nx">id</span> <span class="o">=</span> <span class="nx">Y</span><span class="p">.</span><span class="nx">stamp</span><span class="p">(</span><span class="nx">bd</span><span class="p">)))</span> <span class="p">{</span>
+        	<span class="c">// closing all the selected items if neccesary</span>
+            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">ATTR_MULTIPLE</span><span class="p">))</span> <span class="p">{</span>
+            	<span class="c">//	close all items and open the actived ones</span>
+				<span class="nx">mirror</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_root</span><span class="p">.</span><span class="nx">one</span><span class="p">(</span><span class="nx">FC</span><span class="o">+</span><span class="nx">CLASS_ACTIVE</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="c">// opening the selected element, based on the orientation, timer and anim attributes...</span>
+    	    <span class="nx">conf</span><span class="p">.</span><span class="nx">to</span><span class="p">[</span><span class="nx">o</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="nx">o</span><span class="o">==</span><span class="nx">WIDTH</span><span class="o">?</span><span class="nx">bd</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">SCROLL_WIDTH</span><span class="p">)</span><span class="o">:</span><span class="nx">bd</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">SCROLL_HEIGHT</span><span class="p">));</span> 
+    	    <span class="nx">conf</span><span class="p">.</span><span class="nx">node</span> <span class="o">=</span> <span class="nx">bd</span><span class="o">;</span>
+    	    <span class="nx">item</span><span class="p">.</span><span class="nx">addClass</span><span class="p">(</span><span class="nx">CLASS_SLIDING</span><span class="p">);</span>
+        	<span class="nx">fn</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+                <span class="nx">item</span><span class="p">.</span><span class="nx">removeClass</span><span class="p">(</span><span class="nx">CLASS_SLIDING</span><span class="p">);</span>
+    		    <span class="nx">item</span><span class="p">.</span><span class="nx">addClass</span><span class="p">(</span><span class="nx">CLASS_ACTIVE</span><span class="p">);</span>
+        		<span class="c">// broadcasting the corresponding event (close)...</span>
+        		<span class="c">// $B.fire (&#39;accordionOpenItem&#39;, item);</span>
+        	<span class="p">};</span>
+        	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">ATTR_ANIM</span><span class="p">))</span> <span class="p">{</span>
+    	        <span class="c">// animation manually</span>
+    	        <span class="c">// getting the desired dimension from the current item</span>
+    	        <span class="nx">fs</span> <span class="o">=</span> <span class="nx">bd</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">o</span><span class="p">);</span>
+    	        <span class="c">// override the desired dimension from the mirror if exists</span>
+    	        <span class="k">if</span> <span class="p">(</span><span class="nx">Y</span><span class="p">.</span><span class="nx">Lang</span><span class="p">.</span><span class="nx">isObject</span><span class="p">(</span><span class="nx">mirror</span><span class="p">))</span> <span class="p">{</span>
+    	          	<span class="nx">fs</span> <span class="o">=</span> <span class="nx">mirror</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">o</span><span class="p">);</span>
+    	          	<span class="nx">mirror</span><span class="p">.</span><span class="nx">addClass</span><span class="p">(</span><span class="nx">CLASS_SLIDING</span><span class="p">);</span>
+    	        <span class="p">}</span>
+        	    <span class="k">for</span> <span class="p">(</span><span class="nx">i</span><span class="o">=</span><span class="mi">1</span><span class="o">;</span><span class="nx">i</span><span class="o">&lt;=</span><span class="nx">fs</span><span class="o">;</span><span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+        	        <span class="k">if</span> <span class="p">(</span><span class="nx">Y</span><span class="p">.</span><span class="nx">Lang</span><span class="p">.</span><span class="nx">isObject</span><span class="p">(</span><span class="nx">mirror</span><span class="p">))</span> <span class="p">{</span>
+        	          <span class="nx">mirror</span><span class="p">.</span><span class="nx">setStyle</span> <span class="p">(</span><span class="nx">o</span><span class="o">,</span> <span class="p">(</span><span class="nx">fs</span><span class="o">-</span><span class="nx">i</span><span class="p">)</span><span class="o">+</span><span class="nx">PX</span><span class="p">);</span>
+        	        <span class="p">}</span>
+        	        <span class="nx">bd</span><span class="p">.</span><span class="nx">setStyle</span> <span class="p">(</span><span class="nx">o</span><span class="o">,</span> <span class="nx">i</span><span class="o">+</span><span class="nx">PX</span><span class="p">);</span>
+        	    <span class="p">}</span>
+        	    <span class="k">if</span> <span class="p">(</span><span class="nx">Y</span><span class="p">.</span><span class="nx">Lang</span><span class="p">.</span><span class="nx">isObject</span><span class="p">(</span><span class="nx">mirror</span><span class="p">))</span> <span class="p">{</span>
+    	          	<span class="nx">mirror</span><span class="p">.</span><span class="nx">removeClass</span><span class="p">(</span><span class="nx">CLASS_SLIDING</span><span class="p">);</span>
+    		    	<span class="nx">mirror</span><span class="p">.</span><span class="nx">removeClass</span><span class="p">(</span><span class="nx">CLASS_ACTIVE</span><span class="p">);</span>
+    	        <span class="p">}</span>
+        	    <span class="nx">fn</span><span class="p">();</span>
+    		<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    			<span class="c">// scrolling effect</span>
+	          	<span class="nx">conf</span><span class="p">.</span><span class="nx">to</span><span class="p">.</span><span class="nx">scroll</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="p">];</span>
+	            <span class="c">// appliying fadeIn</span>
+	            <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">ATTR_FADE</span><span class="p">))</span> <span class="p">{</span> 
+	              <span class="nx">conf</span><span class="p">.</span><span class="nx">to</span><span class="p">.</span><span class="nx">opacity</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+	            <span class="p">}</span>
+	            <span class="k">if</span> <span class="p">(</span><span class="nx">Y</span><span class="p">.</span><span class="nx">Lang</span><span class="p">.</span><span class="nx">isObject</span><span class="p">(</span><span class="nx">mirror</span><span class="p">))</span> <span class="p">{</span>
+	            	<span class="k">this</span><span class="p">.</span><span class="nx">_closeItem</span><span class="p">(</span><span class="nx">mirror</span><span class="p">);</span>
+	            <span class="p">}</span>
+	        	<span class="k">this</span><span class="p">.</span><span class="nx">_animate</span><span class="p">(</span><span class="nx">id</span><span class="o">,</span> <span class="nx">conf</span><span class="o">,</span> <span class="nx">fn</span><span class="p">);</span>
+    	    <span class="p">}</span>
+        <span class="p">}</span>
+	<span class="p">}</span><span class="o">,</span>
+
+	<span class="c">/**</span>
+<span class="c">	* @method _closeItem </span>
+<span class="c">	* @description Closes the specified item.</span>
+<span class="c">	* @protected</span>
+<span class="c">	* @param {Node} item Node instance representing an item.</span>
+<span class="c">	*/</span>
+	<span class="nx">_closeItem</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">item</span><span class="p">)</span> <span class="p">{</span>
+
+		<span class="kd">var</span> <span class="nx">bd</span><span class="o">,</span> 
+			<span class="nx">id</span><span class="o">,</span> 
+			<span class="nx">fn</span><span class="o">,</span> 
+			<span class="nx">fs</span><span class="o">,</span>
+			<span class="nx">i</span><span class="o">,</span>
+			<span class="nx">list</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">ATTR_ITEMS</span><span class="p">)</span><span class="o">,</span>
+			<span class="nx">o</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">get</span> <span class="p">(</span><span class="nx">ATTR_ORIENTATION</span><span class="p">)</span><span class="o">,</span>
+			<span class="nx">conf</span> <span class="o">=</span> <span class="p">{</span>
+				<span class="nx">duration</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">ATTR_SPEED</span><span class="p">)</span><span class="o">,</span> 
+				<span class="nx">to</span><span class="o">:</span> <span class="p">{</span>
+					<span class="nx">scroll</span><span class="o">:</span> <span class="p">[]</span>
+				<span class="p">}</span>
+			<span class="p">};</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">item</span> <span class="o">&amp;&amp;</span> <span class="nx">list</span><span class="p">.</span><span class="nx">size</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="nx">bd</span> <span class="o">=</span> <span class="nx">item</span><span class="p">.</span><span class="nx">one</span><span class="p">(</span><span class="nx">SELECTOR_ACCORDION_ITEM_BD</span><span class="p">))</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="nx">id</span> <span class="o">=</span> <span class="nx">Y</span><span class="p">.</span><span class="nx">stamp</span><span class="p">(</span><span class="nx">bd</span><span class="p">)))</span> <span class="p">{</span>
+            <span class="c">// closing the item, based on the orientation, timer and anim attributes...</span>
+            <span class="nx">conf</span><span class="p">.</span><span class="nx">to</span><span class="p">[</span><span class="nx">o</span><span class="p">]</span> <span class="o">=</span> <span class="p">(((</span><span class="nx">o</span><span class="o">==</span><span class="nx">HEIGHT</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="nx">UA</span><span class="p">.</span><span class="nx">ie</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="nx">UA</span><span class="p">.</span><span class="nx">ie</span><span class="o">&lt;</span><span class="mi">7</span><span class="p">))</span><span class="o">?</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">);</span> <span class="c">// hack for vertical accordion issue on Safari and Opera</span>
+            <span class="nx">conf</span><span class="p">.</span><span class="nx">node</span> <span class="o">=</span> <span class="nx">bd</span><span class="o">;</span>
+    		<span class="nx">item</span><span class="p">.</span><span class="nx">addClass</span><span class="p">(</span><span class="nx">CLASS_SLIDING</span><span class="p">);</span>
+        	<span class="nx">fn</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+                <span class="nx">item</span><span class="p">.</span><span class="nx">removeClass</span><span class="p">(</span><span class="nx">CLASS_SLIDING</span><span class="p">);</span>
+    		    <span class="nx">item</span><span class="p">.</span><span class="nx">removeClass</span><span class="p">(</span><span class="nx">CLASS_ACTIVE</span><span class="p">);</span>
+        		<span class="c">// broadcasting the corresponding event (close)...</span>
+        		<span class="c">// $B.fire (&#39;accordionCloseItem&#39;, item);</span>
+        	<span class="p">};</span>
+    		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">ATTR_ANIM</span><span class="p">))</span> <span class="p">{</span>
+    	        <span class="c">// animation manually</span>
+    	        <span class="nx">fs</span> <span class="o">=</span> <span class="nx">bd</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">o</span><span class="p">);</span>
+        	    <span class="k">for</span> <span class="p">(</span><span class="nx">i</span><span class="o">=</span><span class="nx">fs</span><span class="o">;</span><span class="nx">i</span><span class="o">&gt;=</span><span class="nx">conf</span><span class="p">.</span><span class="nx">to</span><span class="p">[</span><span class="nx">o</span><span class="p">].</span><span class="nx">to</span><span class="o">;</span><span class="nx">i</span><span class="o">--</span><span class="p">){</span>
+        	        <span class="nx">bd</span><span class="p">.</span><span class="nx">setStyle</span> <span class="p">(</span><span class="nx">o</span><span class="o">,</span> <span class="nx">i</span><span class="o">+</span><span class="nx">PX</span><span class="p">);</span>
+        	    <span class="p">}</span>
+        	    <span class="nx">fn</span><span class="p">();</span>
+    		<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+	            <span class="c">// scrolling effect</span>
+	          	<span class="nx">conf</span><span class="p">.</span><span class="nx">to</span><span class="p">.</span><span class="nx">scroll</span> <span class="o">=</span> <span class="p">(</span><span class="nx">o</span><span class="o">==</span><span class="nx">WIDTH</span><span class="o">?</span><span class="p">[</span><span class="nx">bd</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">SCROLL_WIDTH</span><span class="p">)</span><span class="o">,</span><span class="mi">0</span><span class="p">]</span><span class="o">:</span><span class="p">[</span><span class="mi">0</span><span class="o">,</span><span class="nx">bd</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">SCROLL_HEIGHT</span><span class="p">)]);</span>
+	          	<span class="c">// appliying fadeIn</span>
+	          	<span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">ATTR_FADE</span><span class="p">))</span> <span class="p">{</span> 
+              		<span class="nx">conf</span><span class="p">.</span><span class="nx">to</span><span class="p">.</span><span class="nx">opacity</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+              	<span class="p">}</span>
+		        <span class="k">this</span><span class="p">.</span><span class="nx">_animate</span><span class="p">(</span><span class="nx">id</span><span class="o">,</span> <span class="nx">conf</span><span class="o">,</span> <span class="nx">fn</span><span class="p">);</span>
+    		<span class="p">}</span>
+        <span class="p">}</span>
+        
+	<span class="p">}</span><span class="o">,</span>
+
+	<span class="c">//	Generic DOM Event handlers</span>
+	<span class="c">/**</span>
+<span class="c">	* @method expandAllItems</span>
+<span class="c">	* @description Expanding all items.</span>
+<span class="c">	* @public</span>
+<span class="c">	* @return {object} Plugin reference for chaining</span>
+<span class="c">	*/</span>
+	<span class="nx">expandAllItems</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+		<span class="nx">Y</span><span class="p">.</span><span class="nx">log</span><span class="p">((</span><span class="s2">&quot;Expanding all items (only if attr multiple=true): &quot;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">_root</span><span class="p">)</span><span class="o">,</span> <span class="s2">&quot;info&quot;</span><span class="o">,</span> <span class="s2">&quot;nodeAccordion&quot;</span><span class="p">);</span>
+		<span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">ATTR_MULTIPLE</span><span class="p">))</span> <span class="p">{</span>
+			<span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">ATTR_ITEMS</span><span class="p">).</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">node</span><span class="p">)</span> <span class="p">{</span>
+				<span class="k">this</span><span class="p">.</span><span class="nx">expandItem</span><span class="p">(</span><span class="nx">node</span><span class="p">);</span>
+			<span class="p">}</span><span class="o">,</span> <span class="k">this</span><span class="p">);</span>
+		<span class="p">}</span>
+		<span class="k">return</span> <span class="k">this</span><span class="o">;</span>
+	<span class="p">}</span><span class="o">,</span>
+	
+	<span class="c">/**</span>
+<span class="c">	* @method collapseAllItems</span>
+<span class="c">	* @description Collapsing all items.</span>
+<span class="c">	* @public</span>
+<span class="c">	* @return {object} Plugin reference for chaining</span>
+<span class="c">	*/</span>
+	<span class="nx">collapseAllItems</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+		<span class="nx">Y</span><span class="p">.</span><span class="nx">log</span><span class="p">((</span><span class="s2">&quot;Collapsing all items (only if attr multiple=true or attr persistent=false): &quot;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">_root</span><span class="p">)</span><span class="o">,</span> <span class="s2">&quot;info&quot;</span><span class="o">,</span> <span class="s2">&quot;nodeAccordion&quot;</span><span class="p">);</span>
+		<span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">ATTR_MULTIPLE</span><span class="p">)</span> <span class="o">||</span> <span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">ATTR_PERSISTENT</span><span class="p">))</span> <span class="p">{</span>
+			<span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">ATTR_ITEMS</span><span class="p">).</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">node</span><span class="p">)</span> <span class="p">{</span>
+				<span class="k">this</span><span class="p">.</span><span class="nx">collapseItem</span><span class="p">(</span><span class="nx">node</span><span class="p">);</span>
+			<span class="p">}</span><span class="o">,</span> <span class="k">this</span><span class="p">);</span>
+		<span class="p">}</span>
+		<span class="k">return</span> <span class="k">this</span><span class="o">;</span>
+	<span class="p">}</span><span class="o">,</span>
+	
+	<span class="c">/**</span>
+<span class="c">	* @method expandItem</span>
+<span class="c">	* @description Expand a certain item.</span>
+<span class="c">	* @public</span>
+<span class="c">	* @param {Node} node Node reference</span>
+<span class="c">	* @return {object} Plugin reference for chaining</span>
+<span class="c">	*/</span>
+	<span class="nx">expandItem</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span> <span class="nx">node</span> <span class="p">)</span> <span class="p">{</span>
+	    <span class="kd">var</span> <span class="nx">item</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_getItem</span><span class="p">(</span><span class="nx">node</span><span class="p">);</span>
+	    <span class="k">if</span> <span class="p">(</span><span class="nx">item</span><span class="p">)</span> <span class="p">{</span>
+	    	<span class="nx">Y</span><span class="p">.</span><span class="nx">log</span><span class="p">((</span><span class="s2">&quot;Expanding an item: &quot;</span> <span class="o">+</span> <span class="nx">item</span><span class="p">)</span><span class="o">,</span> <span class="s2">&quot;info&quot;</span><span class="o">,</span> <span class="s2">&quot;nodeAccordion&quot;</span><span class="p">);</span>
+	    	<span class="k">this</span><span class="p">.</span><span class="nx">_openItem</span> <span class="p">(</span><span class="nx">item</span><span class="p">);</span>
+	    <span class="p">}</span>
+		<span class="k">return</span> <span class="k">this</span><span class="o">;</span>
+	<span class="p">}</span><span class="o">,</span>
+	
+	<span class="c">/**</span>
+<span class="c">	* @method collapseItem</span>
+<span class="c">	* @description Collapse a certain item.</span>
+<span class="c">	* @public</span>
+<span class="c">	* @param {Node} node Node reference</span>
+<span class="c">	* @return {object} Plugin reference for chaining</span>
+<span class="c">	*/</span>
+	<span class="nx">collapseItem</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span> <span class="nx">node</span> <span class="p">)</span> <span class="p">{</span>
+	    <span class="kd">var</span> <span class="nx">item</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_getItem</span><span class="p">(</span><span class="nx">node</span><span class="p">);</span>
+	    <span class="k">if</span> <span class="p">(</span><span class="nx">item</span> <span class="o">&amp;&amp;</span> <span class="nx">item</span><span class="p">.</span><span class="nx">hasClass</span><span class="p">(</span><span class="nx">CLASS_ACTIVE</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">ATTR_MULTIPLE</span><span class="p">)</span> <span class="o">||</span> <span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">ATTR_PERSISTENT</span><span class="p">)))</span> <span class="p">{</span>
+	    	<span class="nx">Y</span><span class="p">.</span><span class="nx">log</span><span class="p">((</span><span class="s2">&quot;Collapse an item: &quot;</span> <span class="o">+</span> <span class="nx">item</span><span class="p">)</span><span class="o">,</span> <span class="s2">&quot;info&quot;</span><span class="o">,</span> <span class="s2">&quot;nodeAccordion&quot;</span><span class="p">);</span>
+	    	<span class="k">this</span><span class="p">.</span><span class="nx">_closeItem</span><span class="p">(</span><span class="nx">item</span><span class="p">);</span>
+	    <span class="p">}</span>
+		<span class="k">return</span> <span class="k">this</span><span class="o">;</span>
+	<span class="p">}</span><span class="o">,</span>
+	
+	<span class="c">/**</span>
+<span class="c">	* @method toggleItem</span>
+<span class="c">	* @description toggle a certain item.</span>
+<span class="c">	* @public</span>
+<span class="c">	* @param {object} node Node reference</span>
+<span class="c">	* @return {object} Plugin reference for chaining</span>
+<span class="c">	*/</span>
+	<span class="nx">toggleItem</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span> <span class="nx">node</span> <span class="p">)</span> <span class="p">{</span>
+	    <span class="kd">var</span> <span class="nx">item</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_getItem</span><span class="p">(</span><span class="nx">node</span><span class="p">);</span>
+	    <span class="nx">Y</span><span class="p">.</span><span class="nx">log</span> <span class="p">(</span><span class="s1">&#39;Looking for accordion item: &#39;</span> <span class="o">+</span> <span class="nx">SELECTOR_ACCORDION_ITEM</span><span class="p">);</span>
+	    <span class="k">if</span> <span class="p">(</span><span class="nx">item</span><span class="p">)</span> <span class="p">{</span>
+	    	<span class="c">// if the item is already opened, and is multiple and not persistent</span>
+	        <span class="nx">Y</span><span class="p">.</span><span class="nx">log</span><span class="p">((</span><span class="s2">&quot;Toggling an item: &quot;</span> <span class="o">+</span> <span class="nx">item</span><span class="p">)</span><span class="o">,</span> <span class="s2">&quot;info&quot;</span><span class="o">,</span> <span class="s2">&quot;nodeAccordion&quot;</span><span class="p">);</span>
+	        <span class="p">((</span><span class="nx">item</span><span class="p">.</span><span class="nx">hasClass</span><span class="p">(</span><span class="nx">CLASS_ACTIVE</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">ATTR_MULTIPLE</span><span class="p">)</span> <span class="o">||</span> <span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">ATTR_PERSISTENT</span><span class="p">)))</span><span class="o">?</span><span class="k">this</span><span class="p">.</span><span class="nx">_closeItem</span> <span class="p">(</span><span class="nx">item</span><span class="p">)</span><span class="o">:</span><span class="k">this</span><span class="p">.</span><span class="nx">_openItem</span> <span class="p">(</span><span class="nx">item</span><span class="p">));</span>
+	    <span class="p">}</span>
+	    <span class="k">return</span> <span class="k">this</span><span class="o">;</span>
+	<span class="p">}</span>
+
+<span class="p">});</span>
+
+<span class="nx">Y</span><span class="p">.</span><span class="nx">namespace</span><span class="p">(</span><span class="s1">&#39;Plugin&#39;</span><span class="p">);</span>
+
+<span class="nx">Y</span><span class="p">.</span><span class="nx">Plugin</span><span class="p">.</span><span class="nx">NodeAccordion</span> <span class="o">=</span> <span class="nx">NodeAccordion</span><span class="o">;</span>
+</pre></div>
+                    </div>
+			</div>
+		</div>
+		<div class="yui-b">
+            <div class="nav">
+
+                    <div id="moduleList" class="module">
+                        <h4>Modules</h4>
+                        <ul class="content">
+                                <li class="selected"><a href="module_gallery-node-accordion.html" title="gallery-node-accordion">gallery-node-accordion</a></li>
+                        </ul>
+                    </div>
+
+                    <div id="classList" class="module">
+                        <h4>Classes</h4>
+                        <ul class="content">
+                                <li class=""><a href="plugin.NodeAccordion.html" title="plugin.NodeAccordion">plugin.NodeAccordion</a></li>
+                        </ul>
+                    </div>
+
+                    <div id="fileList" class="module">
+                        <h4>Files</h4>
+                        <ul class="content">        
+                                <li class="selected"><a href="gallery-node-accordion.js.html" title="gallery-node-accordion.js">gallery-node-accordion.js</a></li>
+                        </ul>
+                    </div>
+
+
+
+
+
+            </div>
+		</div>
+	</div>
+	<div id="ft">
+        <hr />
+        Copyright &copy; 2009 Yahoo! Inc. All rights reserved.
+	</div>
+</div>
+<script type="text/javascript">
+    ALL_YUI_PROPS = [{"url": "plugin.NodeAccordion.html#config_activeItems", "access": "", "host": "plugin.NodeAccordion", "type": "config", "name": "activeItems"}, {"url": "plugin.NodeAccordion.html#event_activeItemsChange", "access": "", "host": "plugin.NodeAccordion", "type": "event", "name": "activeItemsChange"}, {"url": "plugin.NodeAccordion.html#config_anim", "access": "", "host": "plugin.NodeAccordion", "type": "config", "name": "anim"}, {"url": "plugin.NodeAccordion.html#method__animate", "access": "protected", "host": "plugin.NodeAccordion", "type": "method", "name": "_animate"}, {"url": "plugin.NodeAccordion.html#event_animChange", "access": "", "host": "plugin.NodeAccordion", "type": "event", "name": "animChange"}, {"url": "plugin.NodeAccordion.html#method__closeItem", "access": "protected", "host": "plugin.NodeAccordion", "type": "method", "name": "_closeItem"}, {"url": "plugin.NodeAccordion.html#method_collapseAllItems", "access": "", "host": "plugin.NodeAccordion", "type": "method", "name": "collapseAllItems"}, {"url": "plugin.NodeAccordion.html#method_collapseItem", "access": "", "host": "plugin.NodeAccordion", "type": "method", "name": "collapseItem"}, {"url": "plugin.NodeAccordion.html#method_expandAllItems", "access": "", "host": "plugin.NodeAccordion", "type": "method", "name": "expandAllItems"}, {"url": "plugin.NodeAccordion.html#method_expandItem", "access": "", "host": "plugin.NodeAccordion", "type": "method", "name": "expandItem"}, {"url": "plugin.NodeAccordion.html#config_fade", "access": "", "host": "plugin.NodeAccordion", "type": "config", "name": "fade"}, {"url": "plugin.NodeAccordion.html#event_fadeChange", "access": "", "host": "plugin.NodeAccordion", "type": "event", "name": "fadeChange"}, {"url": "plugin.NodeAccordion.html#method__getItem", "access": "protected", "host": "plugin.NodeAccordion", "type": "method", "name": "_getItem"}, {"url": "plugin.NodeAccordion.html#config_items", "access": "", "host": "plugin.NodeAccordion", "type": "config", "name": "items"}, {"url": "plugin.NodeAccordion.html#event_itemsChange", "access": "", "host": "plugin.NodeAccordion", "type": "event", "name": "itemsChange"}, {"url": "plugin.NodeAccordion.html#config_multiple", "access": "", "host": "plugin.NodeAccordion", "type": "config", "name": "multiple"}, {"url": "plugin.NodeAccordion.html#event_multipleChange", "access": "", "host": "plugin.NodeAccordion", "type": "event", "name": "multipleChange"}, {"url": "plugin.NodeAccordion.html#method__openItem", "access": "protected", "host": "plugin.NodeAccordion", "type": "method", "name": "_openItem"}, {"url": "plugin.NodeAccordion.html#config_orientation", "access": "", "host": "plugin.NodeAccordion", "type": "config", "name": "orientation"}, {"url": "plugin.NodeAccordion.html#event_orientationChange", "access": "", "host": "plugin.NodeAccordion", "type": "event", "name": "orientationChange"}, {"url": "plugin.NodeAccordion.html#config_persistent", "access": "", "host": "plugin.NodeAccordion", "type": "config", "name": "persistent"}, {"url": "plugin.NodeAccordion.html#event_persistentChange", "access": "", "host": "plugin.NodeAccordion", "type": "event", "name": "persistentChange"}, {"url": "plugin.NodeAccordion.html#property__root", "access": "protected", "host": "plugin.NodeAccordion", "type": "property", "name": "_root"}, {"url": "plugin.NodeAccordion.html#config_speed", "access": "", "host": "plugin.NodeAccordion", "type": "config", "name": "speed"}, {"url": "plugin.NodeAccordion.html#event_speedChange", "access": "", "host": "plugin.NodeAccordion", "type": "event", "name": "speedChange"}, {"url": "plugin.NodeAccordion.html#method_toggleItem", "access": "", "host": "plugin.NodeAccordion", "type": "method", "name": "toggleItem"}];
+</script>
+</body>
+</html>
