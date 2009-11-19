@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+<head>
+	<title>Customizing YUI2 loading process</title>
+	<!-- YUI 3 Seed //-->
+	<script type="text/javascript" src="http://yui.yahooapis.com/3.0.0/build/yui/yui-min.js"></script>
+	<!-- Initialization process //-->
+	<script type="text/javascript">
+		// initialization (optional)
+		YAHOO_config = {
+			root: '2.7.0/build/',
+     		filter: 'debug',
+		    modules: {
+				'foo': {
+					fullpath: './yui2-foo.js',
+					requires: ['event', 'button']
+				}
+			}
+		};
+	</script>
+</head>
+<body class="yui-skin-sam">
+	
+    <div id="doc">
+    	
+		<h1>Customizing YUI2 loading process</h1>
+		<p>Using the wrapper and YAHOO_config global variable you can customize the version of YUI 2.x that should be loaded. Also the filter (raw, min, debug), or even custom modules (for yui 2.x) and it's dependencies.</p>
+		  
+		<div id="demo">
+			<h3 class="title">Result:</h3>
+		</div>
+
+    </div>
+
+	<script type="text/javascript">
+		YUI({
+		    modules: {
+		        'gallery-yui2': {
+		            fullpath: '../js-demo/gallery-yui2.js',
+		            requires: ['node-base','get','async-queue'],
+		            optional: [],
+		            supersedes: []
+		      }
+		 
+		    }
+		}).use('gallery-yui2', function (Y) {
+			
+		    Y.yui2({
+				modules: {
+					'bar': {
+						fullpath: './yui2-bar.js',
+						requires: ['animation', 'layout']
+					}
+				}
+			}).use('foo', 'bar', 'tabview', function () {
+			
+				YAHOO.util.Dom.get('demo').innerHTML += '<p>foo, bar, tabview, event, button are ready!</p>';
+				
+			});
+			
+		});
+	</script>
+    
+</body>
+</html>

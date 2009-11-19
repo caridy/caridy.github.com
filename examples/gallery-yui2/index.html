@@ -6,7 +6,7 @@
 	<title>YUI3 Gallery Modules: YUI 2 Wrapper Utility - Caridy's Projects - Javascript, YUI, Bubbling, Etc.</title>
 <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/combo?2.8.0/build/reset-fonts-grids/reset-fonts-grids.css&2.8.0/build/base/base-min.css" />
 <script type="text/javascript" src="http://yui.yahooapis.com/3.0.0/build/yui/yui-min.js"></script>
-<link rel="stylesheet" href="/site.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../site.css" type="text/css" media="screen" />
 </head>
 <body class="yui-skin-sam">
 <a href="http://github.com/caridy/yui3-gallery"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
@@ -26,14 +26,26 @@
         <h2><a href="http://github.com/caridy/yui3-gallery/">YUI3 Gallery Modules</a>: YUI 2 Wrapper Utility<br />
 <span class="by"><a href="http://github.com/caridy/yui3-gallery/tree/master/src/gallery-yui2/">gallery-yui2</a> in <a href="http://github.com/caridy/yui3-gallery/">yui3-gallery</a> by <a href="http://github.com/caridy/">caridy</a></span> </h2>
         <p><strong>Examples:</strong></p>
-     	<p style="color: red;">I'm waiting for the push to CDN to add the examples.</p>   
-        <!--
         <ul>
-          <li><a href="yui2-and-yui3.html">Combining YUI2 and YUI3</a></li>
-          <li><a href="yui2.html">Customizing YUI2 loading process</a></li>
-          <li><a href="yui2-only-js.html">Loading YUI2 modules without CSS dependencies</a></li>
+          <li>
+          	<a href="yui2-and-yui3.html">Using YUI2 and YUI3 in the page page</a>
+			<p>This example shows some general approaches to include YUI 2.x modules into a page based on YUI 3. (Check the source code for more info).</p>
+		  </li>
+          <li>
+          	<a href="yui2-custom-config.html">Customizing YUI2 loading process</a>
+			<p>Using the wrapper and YAHOO_config global variable you can customize the version of YUI 2.x that should be loaded. Also the filter (raw, min, debug), or even custom modules (for yui 2.x) and it's dependencies.</p>
+		  </li>
+          <li>
+          	<a href="yui2-only-js.html">Loading YUI2 modules without CSS dependencies</a>
+			<p>Sometimes is better to include CSS files on the top, using a single request to load all the styles, and then injecting the JS dynamically. In this example, the CSS for the tabview is defined at the header, and the tabview control is loaded thru YUI 2 Wrapper Utility.</p>
+		  </li>
+		  <li>
+          	<a href="yui2-seed.html">Using YUI 2 Wrapper Utility in a page running YUI3 and YUI2 seed files</a>
+			<p>The Wrapper utility will normally include the YUI Seed file (yuiloader-min.js) dynamically, but if the loader object is already in the page (for whatever reason), it will continue from there without affecting the current state of your web app.</p>
+		  </li>
         </ul>
-//-->
+		
+		<p style="color: red">The current version in CDN (gallery-2009.11.19-20) is having some issues with inline and global modules. You can get the fixed copy from github or wait until next push to CDN scheduled for next week.</p>
     </div>
 </div>
 

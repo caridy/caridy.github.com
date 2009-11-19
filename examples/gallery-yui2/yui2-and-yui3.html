@@ -4,23 +4,14 @@
 	<title>Combining YUI2 and YUI3</title>
 	<!-- YUI 3 Seed //-->
 	<script type="text/javascript" src="http://yui.yahooapis.com/3.0.0/build/yui/yui-min.js"></script>
-	<!-- Initialization process //-->
-	<script type="text/javascript">
-		// initialization (optional)
-		YAHOO_config = {
-		    modules: {
-				'foo': {
-					fullpath: './yui2-foo.js',
-					requires: ['event']
-				}
-			}
-		};
-	</script>
 </head>
 <body class="yui-skin-sam">
 	
     <div id="doc">
-
+    	
+		<h1>Using YUI2 and YUI3 in the page page</h1>
+		<p>This example shows some general approaches to include YUI 2.x modules into a page based on YUI 3. (Check the source code for more info).</p>
+		
 		<div id="demo">
 			<h3 class="title">Result: </h3>
 		</div>
@@ -28,12 +19,23 @@
     </div>
 
 	<script type="text/javascript">
-		// First Block: using YUI 2 modules within a YUI 3 sandbox object
-		YUI({ /* config */ }).use('node', 'gallery-yui2', function (Y) {
+		// First Block: using YUI 2 modules within a YUI 3 sandbox object, and combining functionalities
+		YUI({
+		    modules: {
+		        'gallery-yui2': {
+		            fullpath: '../js-demo/gallery-yui2.js',
+		            requires: ['node-base','get','async-queue'],
+		            optional: [],
+		            supersedes: []
+		      }
+		 
+		    }
+		}).use('node', 'gallery-yui2', function (Y) {
 			
 		    Y.yui2().use('dom', 'tabview', function () {
 
-				YAHOO.util.Dom.get('demo').innerHTML += '<p>First Block: Ready...</p>';
+				YAHOO.util.Dom.get('demo').innerHTML += '<p>First Block: Ready (Displaying message using YAHOO)...</p>';
+				Y.get('#demo').append('<p>First Block: Ready (Displaying message using Y)...</p>');
 
 			});
 			
@@ -41,21 +43,18 @@
 	</script>
 
 	<script type="text/javascript">
-		// Second Block: using YUI 2 modules within a YUI 3 sandbox object, and combining functionalities
-		YUI({ /* config */ }).use('gallery-yui2', function (Y) {
-			
-		    Y.yui2().use('event', 'dom', 'connection', function () {
-			
-				Y.get('#demo').append('<p>Second Block: Ready...</p>');
-				
-			});
-			
-		});
-	</script>
-	
-	<script type="text/javascript">
-		// Third Block: combining YUI 2.x modules with a custom module defined inline
-		YUI({ /* config */ }).use('gallery-yui2', function (Y) {
+		// Second Block: combining YUI 2.x modules with a custom module defined inline
+		YUI({
+		    modules: {
+		        'gallery-yui2': {
+		            fullpath: '../js-demo/gallery-yui2.js',
+		            requires: ['node-base','get','async-queue'],
+		            optional: [],
+		            supersedes: []
+		      }
+		 
+		    }
+		}).use('gallery-yui2', function (Y) {
 			
 		    Y.yui2({
 				modules: {
@@ -66,7 +65,7 @@
 				}
 			}).use('animation', 'bar', function () {
 
-				Y.get('#demo').append('<p>Third Block: Ready...</p>');
+				Y.get('#demo').append('<p>Second Block: Ready, including bar and animation modules...</p>');
 
 			});
 			
@@ -74,15 +73,25 @@
 	</script>
 
 	<script type="text/javascript">
-		// Fourth Block: nested approach, loading a first set of yui2 modules, then 
+		// Third Block: nested approach, loading a first set of yui2 modules, then 
 		// loading the rest of the modules
-		YUI({ /* config */ }).use('gallery-yui2', function (Y1) {
+		YUI({
+		    modules: {
+		        'gallery-yui2': {
+		            fullpath: '../js-demo/gallery-yui2.js',
+		            requires: ['node-base','get','async-queue'],
+		            optional: [],
+		            supersedes: []
+		      }
+		 
+		    }
+		}).use('gallery-yui2', function (Y) {
 			
 		    Y.yui2().use('dom', 'tabview', function () {
 				
 				Y.yui2().use('anim', 'overlay', function () {
 				
-					Y.get('#demo').append('<p>Fourth Block: Ready...</p>');
+					Y.get('#demo').append('<p>Third Block: Ready, using nested inclusions (dom and tabview, then animation and overlay modules)...</p>');
 					
 				});	
 				

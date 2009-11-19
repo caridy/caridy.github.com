@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+	<title>Using YUI2 Wrapper Utility in a page running YUI3 and YUI2 seed files</title>
+	<!-- YUI 3 Seed //-->
+	<script type="text/javascript" src="http://yui.yahooapis.com/3.0.0/build/yui/yui-min.js"></script>
+	<script type="text/javascript" src="http://yui.yahooapis.com/2.8.0r4/build/yuiloader/yuiloader-min.js"></script>
+	<!-- Initialization process //-->
+</head>
+<body class="yui-skin-sam">
+	
+    <div id="doc">
+		<h1>Using YUI2 Wrapper in a page running YUI3 and YUI2 seed files</h1>
+		<p>The Wrapper utility will normally include the YUI Seed file (yuiloader-min.js) dynamically, but if the loader object is already in the page (for whatever reason), it will continue from there without affecting the current state of your web app.</p>
+		  
+		<div id="demo">
+			<h3 class="title">Result:</h3>
+		</div>
+
+    </div>
+
+	<script type="text/javascript">
+		YUI({
+		    modules: {
+		        'gallery-yui2': {
+		            fullpath: '../js-demo/gallery-yui2.js',
+		            requires: ['node-base','get','async-queue'],
+		            optional: [],
+		            supersedes: []
+		      }
+		 
+		    }
+		}).use('gallery-yui2', function (Y) {
+			
+		    Y.yui2({}).use('dom', 'tabview', function () {
+			
+				YAHOO.util.Dom.get('demo').innerHTML += '<p>DOM and Tabview ready...</p>';
+				
+			});
+			
+		});
+	</script>
+    
+</body>
+</html>

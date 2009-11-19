@@ -4,24 +4,46 @@
 	<title>Loading YUI2 modules without CSS dependencies</title>
 	<!-- YUI 3 Seed //-->
 	<script type="text/javascript" src="http://yui.yahooapis.com/3.0.0/build/yui/yui-min.js"></script>
+	<!-- Static YUI 2 Styles //-->
+	<link rel="stylesheet" type="text/css" media="screen" href="http://yui.yahooapis.com/2.8.0r4/build/tabview/assets/skins/sam/tabview.css" />
 </head>
 <body class="yui-skin-sam">
 	
-    <div id="doc">
+	<h1>Loading YUI2 modules without CSS dependencies</h1>
+	<p>Sometimes is better to include CSS files on the top, using a single request to load all the styles, and then injecting the JS dynamically. In this example, the CSS for the tabview is defined at the header, and the tabview control is loaded thru YUI 2 Wrapper Utility.</p>
+	
+    <div id="demo" class="yui-navset">
+	    <ul class="yui-nav">
 
-		<div id="demo">
-			<h3 class="title">Result:</h3>
-		</div>
+	        <li><a href="#tab1"><em>Tab One Label</em></a></li>
+	        <li class="selected"><a href="#tab2"><em>Tab Two Label</em></a></li>
+	        <li><a href="#tab3"><em>Tab Three Label</em></a></li>
+	    </ul>            
+	    <div class="yui-content">
+	        <div id="tab1"><p>Tab One Content</p></div>
+	        <div id="tab2"><p>Tab Two Content</p></div>
 
-    </div>
+	        <div id="tab3"><p>Tab Three Content</p></div>
+	    </div>
+	</div>
 	
 	<script type="text/javascript">
-		YUI({ /* config */ }).use('gallery-yui2', function (Y) {
+		YUI({
+		    modules: {
+		        'gallery-yui2': {
+		            fullpath: '../js-demo/gallery-yui2.js',
+		            requires: ['node-base','get','async-queue'],
+		            optional: [],
+		            supersedes: []
+		      }
+		 
+		    }
+		}).use('gallery-yui2', function (Y) {
 			
 		    Y.yui2({
 				type: 'js'
 			}).use('dom', 'tabview', function () {
-				YAHOO.util.Dom.get('demo').innerHTML += '<p>YUI2 Tabview is ready, and the CSS for this module was not included</p>';
+				var myTabs = new YAHOO.widget.TabView("demo");
 			});
 			
 		});
