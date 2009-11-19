@@ -6,7 +6,7 @@
 	<title>YUI3 Gallery Modules: YUI 2 Wrapper Utility - Caridy's Projects - Javascript, YUI, Bubbling, Etc.</title>
 <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/combo?2.8.0/build/reset-fonts-grids/reset-fonts-grids.css&2.8.0/build/base/base-min.css" />
 <script type="text/javascript" src="http://yui.yahooapis.com/3.0.0/build/yui/yui-min.js"></script>
-<link rel="stylesheet" href="/site.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../site.css" type="text/css" media="screen" />
 </head>
 <body class="yui-skin-sam">
 <a href="http://github.com/caridy/yui3-gallery"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
@@ -24,16 +24,39 @@
     <div>
         
         <h2><a href="http://github.com/caridy/yui3-gallery/">YUI3 Gallery Modules</a>: YUI 2 Wrapper Utility<br />
-<span class="by"><a href="http://github.com/caridy/yui3-gallery/src/gallery-yui2/">gallery-yui2</a> in <a href="http://github.com/caridy/yui3-gallery/">yui3-gallery</a> by <a href="http://github.com/caridy/">caridy</a></span> </h2>
+<span class="by"><a href="http://github.com/caridy/yui3-gallery/tree/master/src/gallery-yui2/">gallery-yui2</a> in <a href="http://github.com/caridy/yui3-gallery/">yui3-gallery</a> by <a href="http://github.com/caridy/">caridy</a></span> </h2>
         <p>The YUI2 Wrapper is a utility to load YUI 2 modules within a YUI 3 Sandbox object. This utility is very handy for incremental migration of your legacy code. </p>
-        <p>It provides an easy way to bring YUI 2 code into YUI 3 world, relying on YUI 3 lazy loading system and organization, and providing an easy way to mashup yui2 and yui3 code. It uses a YUI 2 Loader under the hook so you don't need to worry about dependencies.</p>
-        <p>It also provides a pipeline to add custom YUI 2 modules with yui2 dependencies, and a filter by type (css or JS) during the loading process.</p>
-        <p><strong>Quick overview:</strong></p>
-        <p>JS code:</p>
-        <pre class="cmd">YUI({/* config */}).use('gallery-yui2', function(Y) {<br> <br>    var myTabs = new YAHOO.widget.TabView(&quot;demo&quot;);<br> <br>});</pre>
+        <p>It provides an easy way to bring YUI 2 code into YUI 3 world, relying on YUI 3 lazy loading system and organization, and providing an easy way to mashup yui2 and yui3 code. It uses a YUI 2 Loader under the hood so you don't need to worry about dependencies.</p>
+        <p><strong>Example:</strong></p>
+        <pre class="cmd">YUI({<br>    modules: {<br>        'gallery-yui2': {<br>            fullpath: 'http://yui.yahooapis.com/gallery-2009.11.19-20/build/gallery-yui2/gallery-yui2-min.js',<br>            requires: ['node-base','get','async-queue'],<br>            optional: [],<br>            supersedes: []<br>        }<br>    }<br>}).use('gallery-yui2', function(Y) {
+<br>    Y.yui2().use('tabview', function() {
+<br>        var myTabs = new YAHOO.widget.TabView(&quot;demo&quot;);
+<br>    });
+<br>});</pre>
         
-        <p>Don't forget to include the YUI3 seed in the page.</p>
-        
+        <p>In this example, you just need to include YUI 3 seed file (yui.js) in the page. Tabview and it's dependencies will be injected into the page using combo handler and the latest version of YUI 2 by default. </p>
+        <p><strong>Custom Modules</strong></p>
+        <p>Everytime you call &quot;<span class="cmd">Y.yui2().use</span>&quot; the system will behave just like Y.use but for YUI 2.x modules. Also, you can add custom YUI 2 modules with yui2 dependencies.</p>
+         <pre class="cmd">YUI({<br>    modules: {<br>        'gallery-yui2': {<br>            fullpath: 'http://yui.yahooapis.com/gallery-2009.11.19-20/build/gallery-yui2/gallery-yui2-min.js',<br>            requires: ['node-base', 'get', 'async-queue'],<br>            optional: [],<br>            supersedes: []<br>        }<br>    }<br>}).use('gallery-yui2', function(Y) {
+<br>    Y.yui2({<br>        modules: {<br>            'bar': {<br>                fullpath: './yui2-bar.js',<br>                requires: ['tabview']<br>            }<br>        }<br>    }).use('connection', 'bar', function() {
+<br>        var myTabs = new YAHOO.widget.TabView(&quot;demo&quot;);
+<br>    });
+<br>});</pre>
+        <p>In this example, you can see how to define a custom module in YUI 2, and defining its dependencies. You have to use the YUI 3.x syntax, and you can load it immidiately after the definition calling &quot;use&quot; method.</p>
+        <p><strong>Loading YUI 2 modules without CSS dependencies</strong></p>
+        <p>Sometimes is better to include CSS files on the top, using a single request to load all the styles, and then injecting the JS dynamically.</p>
+        <pre class="cmd">YUI({<br>    modules: {<br>        'gallery-yui2': {<br>            fullpath: 'http://yui.yahooapis.com/gallery-2009.11.19-20/build/gallery-yui2/gallery-yui2-min.js',<br>            requires: ['node-base', 'get', 'async-queue'],<br>            optional: [],<br>            supersedes: []<br>        }<br>    }<br>}).use('gallery-yui2', function(Y) {
+<br>    Y.yui2({<br>        type: 'js'<br>    }).use('tabview', function() {
+<br>        var myTabs = new YAHOO.widget.TabView(&quot;demo&quot;);
+<br>    });
+<br>});</pre>
+        <p> In this example, the CSS for the tabview have to be defined at the header, and the tabview control (tabview.js) is loaded on demand.</p>
+        <p><strong>Using YAHOO_config to set up the loader upfront</strong></p>
+        <p>As an advanced feature, you can define a global object called YAHOO_config to adjust the loading process. This feature was introduced in YUI 2.3.x, and has to be included before start using gallery-yui2. Here is an example:</p>
+        <pre class="cmd">YAHOO_config = {<br>    root: '2.7.0/build/',<br>    filter: 'debug',<br>    modules: {<br>        'foo': {<br>            fullpath: './yui2-foo.js',<br>            requires: ['event', 'button']<br>        }<br>    }<br>};</pre>
+        <p>In this example, you can see how to use an old version of the library (YUI 2.7.0), turning on debug mode, and defining a custom module in YUI 2 with two dependencies (event and button). More info about <a href="http://www.wait-till-i.com/2008/08/02/conjuring-yui-from-thin-air/">YAHOO_config here</a>.</p>
+        <p>In the case of the modules, they will be registered, but not loaded until you specify them in the list of requirement thru <em>Y.yui2().use</em>.</p>
+        <p style="color: red;">The current version in CDN (gallery-2009.11.19-20) is having some issues with inline and global modules. You can get the fixed copy from github or wait until next push to CDN scheduled for next week.</p>
         <p><strong>Useful links:</strong></p>
         <ul>
           <li>API Documentation:<em><span class="fn"></span></em><br />
