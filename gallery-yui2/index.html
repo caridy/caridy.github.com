@@ -25,7 +25,7 @@
         
         <h2><a href="http://github.com/caridy/yui3-gallery/">YUI3 Gallery Modules</a>: YUI 2 Wrapper Utility<br />
 <span class="by"><a href="http://github.com/caridy/yui3-gallery/tree/master/src/gallery-yui2/">gallery-yui2</a> in <a href="http://github.com/caridy/yui3-gallery/">yui3-gallery</a> by <a href="http://github.com/caridy/">caridy</a></span> </h2>
-        <p>The YUI2 Wrapper is a utility to load YUI 2 modules within a YUI 3 Sandbox object. This utility is very handy for incremental migration of your legacy code. </p>
+        <p>The YUI2 Wrapper is a utility to load YUI 2 modules within a YUI 3 Sandbox object. This utility is very handy for incremental migration of your legacy code. It's also a lightweight module (~789 bytes).</p>
         <p>It provides an easy way to bring YUI 2 code into YUI 3 world, relying on YUI 3 lazy loading system and organization, and providing an easy way to mashup yui2 and yui3 code. It uses a YUI 2 Loader under the hood so you don't need to worry about dependencies.</p>
         <p><strong>Example:</strong></p>
         <pre class="cmd">YUI({<br>    modules: {<br>        'gallery-yui2': {<br>            fullpath: 'http://yui.yahooapis.com/gallery-2009.11.19-20/build/gallery-yui2/gallery-yui2-min.js',<br>            requires: ['node-base','get','async-queue'],<br>            optional: [],<br>            supersedes: []<br>        }<br>    }<br>}).use('gallery-yui2', function(Y) {
