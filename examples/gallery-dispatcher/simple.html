@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+<head>
+	<title>Using Dispatcher</title>
+	<!-- YUI 3 Seed //-->
+	<script type="text/javascript" src="http://yui.yahooapis.com/3.0.0/build/yui/yui-debug.js"></script>
+</head>
+<body class="yui-skin-sam">
+	
+    <div id="doc">
+    	
+		<h1>Using Dispatcher</h1>
+		
+		<div id="demo">
+			<p>Please wait... (Injecting Static Markup)</p>
+		</div>
+		
+		<div id="demoajax">
+			<p>Please wait... (Injecting External Markup: fragment.html)</p>
+		</div>
+
+    </div>
+
+	<script type="text/javascript">
+		// First Block: using YUI 2 modules within a YUI 3 sandbox object, and combining functionalities
+		YUI({
+			//filter: 'debug',
+		    modules: {
+		        'gallery-dispatcher': {
+		            fullpath: '../js-demo/gallery-dispatcher.js',
+		            //fullpath: '../../../yui3-gallery/build/gallery-dispatcher/gallery-dispatcher-debug.js',
+		            requires: ['base-base', 'node-base', 'io-base', 'get', 'async-queue', 'classnamemanager'],
+		            optional: [],
+		            supersedes: []
+		      }
+		 
+		    }
+		}).use('gallery-dispatcher', function (Y) {
+
+			new Y.Dispatcher ({
+		        node: '#demo',
+				content: '<p>Please wait... (Injecting Static Markup)</p>'
+		    }).set('content', "<p>Static Markup</p><style>body{ color: red; }</style><link rel=\"stylesheet\" href=\"../../site.css\" type=\"text/css\" /><script type=\"text/javascript\">foo = true\; window.bar = true\;<\/script><script type=\"text/javascript\" src=\"../js-demo/gallery-yui2.js\"><\/script>");
+			
+			new Y.Dispatcher ({
+		        node: '#demoajax',
+		        uri: 'fragment.html'
+			});
+			
+		});
+	</script>
+
+</body>
+</html>
