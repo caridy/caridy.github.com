@@ -36,10 +36,11 @@ YUI.add('gallery-yui2', function(Y) {
 //	Util shortcuts
 
 var Env = Y.Env,
-	_config = ((typeof YAHOO_config == "undefined" || !YAHOO_config)?{}:YAHOO_config),
+	UNDEFINED = 'undefined',
+	_config = ((typeof YAHOO_config === UNDEFINED || !YAHOO_config)?{}:YAHOO_config),
 	_base = _config.base || 'http://yui.yahooapis.com/2.8.0r4/build/',
 	_seed = _config.seed || 'yuiloader/yuiloader-min.js',
-	_ready = !(typeof YAHOO == "undefined" || !YAHOO || !YAHOO.util || !YAHOO.util.YUILoader),
+	_ready = !(typeof YAHOO === UNDEFINED || !YAHOO),
 	_loader,
 	_useQueue;
 
@@ -76,9 +77,12 @@ var Env = Y.Env,
  */
 function _initLoader (l) {
 	/* creating the loader object */
-	l.combine = l.combine || true; /* using the Combo Handle by default */
+	if (typeof l.combine === UNDEFINED) {
+	    l.combine = true; /* using the Combo Handle by default */
+	}
 	l.filter = l.filter || 'min';  /* using production mode by default */
-	return (new YAHOO.util.YUILoader(l));	
+	_loader = new YAHOO.util.YUILoader(l);
+	return _loader;
 }
 
 /**
@@ -98,7 +102,7 @@ function _register (name, m) {
 		m.type = m.type || ((m.fullpath || m.path).indexOf('.css')>=0?'css':'js');
 		Env._legacy._useQueue.add ({
 			fn: function () {
-				Env._legacy._loader.addModule (m);
+				_loader.addModule (m);
 			},
 			autoContinue: true
 		});
@@ -128,13 +132,14 @@ function _filterConf(o) {
 
 // preparing the queue and loading yui2 loader if needed
 if (!Env._legacy) {
-	Env._legacy = {_useQueue: new Y.AsyncQueue()};
+	_useQueue = new Y.AsyncQueue();
+	Env._legacy = {_useQueue: _useQueue};
 	if (_ready) {
 		// YUI loader is in the page, and we don't need to inject it into the page.
-		Env._legacy._loader = _initLoader(_config);
+		Env._legacy._loader = Env._legacy._loader || _initLoader(_config);
 	} else {
 		// loading the loader
-		Env._legacy._useQueue.add ({
+		_useQueue.add ({
 			fn: function () {
 				YUI ({
 					modules: {
@@ -145,7 +150,7 @@ if (!Env._legacy) {
 				}).use ('yui2-yuiloader', function (X, result) {
 					if (result.success) {
 						Env._legacy._loader = _initLoader(_config);
-						Env._legacy._useQueue.run();
+						_useQueue.run();
 					} else {
 					}
 				});
@@ -155,8 +160,11 @@ if (!Env._legacy) {
 	}
 	// registering the default set of modules defined by YAHOO_config
 	_config = _filterConf(_config);
-	Env._legacy._useQueue.run();
+	_useQueue.run();
 }
+
+_useQueue = Env._legacy._useQueue;
+_loader = Env._legacy._loader;
 
 Y.yui2 = function (o) {
 	o = _filterConf(o);
@@ -180,7 +188,6 @@ Y.yui2 = function (o) {
 
 			_queue.add ({
 				fn: function () {
-					var _loader = Env._legacy._loader;
 					_loader.require(a);
 					_loader.insert({
 						onSuccess: function (o) {
