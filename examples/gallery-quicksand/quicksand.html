@@ -1,0 +1,162 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+	<title>YUI Plugin: gallery-quicksand </title>
+	<link type="text/css" rel="stylesheet" href="http://yui.yahooapis.com/3.0.0/build/cssfonts/fonts-min.css" />
+	<link type="text/css" rel="stylesheet" href="http://razorjack.net/quicksand/styles/main.css" />
+	<style>
+		/* module examples */
+		div#demo {
+		    //position:relative;
+		    //width:22em;
+		    //overflow:hidden;
+		}
+	</style>
+</head>
+<body class="yui-skin-sam">
+    <div id="doc">
+
+		<div id="demo">
+			<div class="hd"><h3 class="title">Yay! Porting Quicksand jQuery Plugin to YUI3</h3></div>
+			<div class="bd">
+			
+   <form id="filter">
+ 		<fieldset>
+ 			<legend>Filter by type</legend>
+ 			<label><input id="displayall" type="radio" name="type" value="all" checked="checked">Everything</label>
+
+ 			<label><input id="displayapps" type="radio" name="type" value="app">Applications</label>
+ 			<label><input id="displayutils" type="radio" name="type" value="util">Utilities</label>
+ 		</fieldset>
+ 		<fieldset style="display: none;">
+ 			<legend>Sort by</legend>
+ 			<label><input type="radio" name="sort" value="size" checked="checked">Size</label>
+ 			<label><input type="radio" name="sort" value="name">Name</label>			
+ 		</fieldset>
+
+   </form>
+ 
+   <ul id="applications" class="image-grid">
+     <li data-id="id-1" class="util">
+       <img src="http://razorjack.net/quicksand/content/images/activity-monitor.png" width="128" height="128" alt="" />
+       <strong>Activity Monitor</strong>
+       <span data-type="size">348 KB</span>
+     </li>
+     <li data-id="id-2" data-type="app">
+
+       <img src="http://razorjack.net/quicksand/content/images/address-book.png" width="128" height="128" alt="" />
+       <strong>Address Book</strong> 
+       <span data-type="size">1904 KB</span>
+     </li>
+     <li data-id="id-3" data-type="app">
+       <img src="http://razorjack.net/quicksand/content/images/finder.png" width="128" height="128" alt="" />
+       <strong>Finder</strong> 
+       <span data-type="size">1337 KB</span>
+
+     </li>
+     <li data-id="id-4" data-type="app">
+       <img src="http://razorjack.net/quicksand/content/images/front-row.png" width="128" height="128" alt="" />
+       <strong>Front Row</strong> 
+       <span data-type="size">401 KB</span>
+     </li>
+     <li data-id="id-5" data-type="app">
+       <img src="http://razorjack.net/quicksand/content/images/google-pokemon.png" width="128" height="128" alt="" />
+
+       <strong>Google Pokémon</strong> 
+       <span data-type="size">12875 KB</span>
+     </li>
+     <li data-id="id-6" data-type="app">
+       <img src="http://razorjack.net/quicksand/content/images/ical.png" width="128" height="128" alt="" />
+       <strong>iCal</strong> 
+       <span data-type="size">5273 KB</span>
+     </li>
+
+     <li data-id="id-7" data-type="app">
+       <img src="http://razorjack.net/quicksand/content/images/ichat.png" width="128" height="128" alt="" />
+       <strong>iChat</strong> 
+       <span data-type="size">5437 KB</span>
+     </li>
+     <li data-id="id-8" data-type="app">
+       <img src="http://razorjack.net/quicksand/content/images/interface-builder.png" width="128" height="128" alt="" />
+       <strong>Interface Builder</strong> 
+       <span data-type="size">2764 KB</span>
+
+     </li>
+     <li data-id="id-9" data-type="app">
+       <img src="http://razorjack.net/quicksand/content/images/ituna.png" width="128" height="128" alt="" />
+       <strong>iTuna</strong> 
+       <span data-type="size">17612 KB</span>
+     </li>
+     <li data-id="id-10" class="util">
+       <img src="http://razorjack.net/quicksand/content/images/keychain-access.png" width="128" height="128" alt="" />
+
+       <strong>Keychain Access</strong> 
+       <span data-type="size">972 KB</span>
+     </li>
+     <li data-id="id-11" class="util">
+       <img src="http://razorjack.net/quicksand/content/images/network-utility.png" width="128" height="128" alt="" />
+       <strong>Network Utility</strong> 
+       <span data-type="size">245 KB</span>
+     </li>
+
+     <li data-id="id-12" class="util">
+       <img src="http://razorjack.net/quicksand/content/images/sync.png" width="128" height="128" alt="" />
+       <strong>Sync</strong> 
+       <span data-type="size">3788 KB</span>
+     </li>
+     <li data-id="id-13" data-type="app">
+       <img src="http://razorjack.net/quicksand/content/images/textedit.png" width="128" height="128" alt="" />
+       <strong>TextEdit</strong> 
+       <span data-type="size">1669 KB</span>
+
+     </li>
+   </ul>
+ 
+ 					
+			</div>
+		</div>
+
+    </div>
+
+	<!-- YUI3 Core //-->
+	<script type="text/javascript" src="http://yui.yahooapis.com/3.0.0/build/yui/yui-debug.js"></script>
+	<!-- Initialization process //-->
+	<script type="text/javascript">
+		YUI({
+	       modules: {
+				'gallery-quicksand': {
+					//fullpath: '../../../yui3-gallery/build/gallery-quicksand/gallery-quicksand-debug.js',
+					fullpath: '../js-demo/quicksand.js',
+            		requires: ['node-base','node-style','plugin','node-event-delegate','classnamemanager'],
+					optional: ['anim'],
+					supersedes: []
+			  }
+		   }
+		}).use('anim', 'event', 'node', 'gallery-quicksand', function (Y) {
+
+			Y.one("#applications").plug(Y.Plugin.Quicksand, { 
+				anim: true,
+				speed: 'slow'
+			});
+
+			b = Y.one("#applications").quicksand;
+			
+			Y.one ('#displayall').on('click', function (e) {
+				b.set ('filter', '');
+				b.refresh();
+			});
+
+			Y.one ('#displayapps').on('click', function (e) {
+				b.set ('filter', '[data-type=app]');
+				b.refresh();
+			});
+
+			Y.one ('#displayutils').on('click', function (e) {
+				b.set ('filter', '[class=util]');
+				b.refresh();
+			});
+			
+		});
+	</script>
+</body>
+</html>
