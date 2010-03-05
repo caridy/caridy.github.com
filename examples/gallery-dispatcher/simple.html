@@ -26,19 +26,18 @@
 		YUI({
 		    modules: {
 		        'gallery-dispatcher': {
-		            fullpath: 'http://yui.yahooapis.com/gallery-2010.02.17-20/build/gallery-dispatcher/gallery-dispatcher-min.js',
+		            fullpath: 'http://yui.yahooapis.com/gallery-2010.02.17-20/build/gallery-dispatcher/gallery-dispatcher-debug.js',
 		            requires: ['base-base','node-base','io-base','get','async-queue','classnamemanager'],
 		            optional: [],
 		            supersedes: []
 		      }
-		 
 		    }
 		}).use('gallery-dispatcher', function(Y) {
 		 
 			new Y.Dispatcher ({
 		        node: '#demo',
 				content: '<p>Please wait... (Injecting Static Markup)</p>'
-		    }).set('content', "<p>Static Markup</p><style>body{ color: red; }</style><link rel=\"stylesheet\" href=\"../../site.css\" type=\"text/css\" /><script type=\"text/javascript\">foo = true\; window.bar = true\;<\/script><script type=\"text/javascript\" src=\"../js-demo/gallery-yui2.js\"><\/script>");
+		    }).set('content', "<p>Static Markup</p><style>#demo{ color: red; }</style><link rel=\"stylesheet\" href=\"../../site.css\" type=\"text/css\" /><script type=\"text/javascript\">foo = true\; window.bar = true\;<\/script><script type=\"text/javascript\" src=\"../js-demo/gallery-yui2.js\"><\/script>");
 			
 			new Y.Dispatcher ({
 		        node: '#demoajax',
