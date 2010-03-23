@@ -44,11 +44,8 @@
 			// using the initialization to define the url that should be injected automatically.
 			(new Y.Dispatcher ({
 		        node: '#demoajax',
-				content: 'Please wait... (Injecting External Markup: fragment.html)',
-				uri: 'fragment.html'
-		    }));
-
-		    // o.set ('uri', '../another/page.html');
+				content: 'Please wait... (Injecting External Markup: fragment.html)'
+		    })).set ('uri', 'fragment.html');
 		 
 		});
 	</script>
