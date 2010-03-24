@@ -1,0 +1,147 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns:yui="http://yuilibrary.com/rdf/1.0/yui.rdf#">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<title>API: gallery-dispatcher   (YUI Library)</title>
+
+	<link rel="stylesheet" type="text/css" href="assets/reset-fonts-grids-min.css" />
+	<link rel="stylesheet" type="text/css" href="assets/api.css" />
+
+    <script type="text/javascript" src="assets/api-js"></script>
+    <script type="text/javascript" src="assets/ac-js"></script>
+</head>
+
+<body id="yahoo-com">
+
+<div id="doc3" class="yui-t2">
+	<div id="hd">
+        <h1><a href="http://developer.yahoo.com/yui/" title="Yahoo! UI Library">Yahoo! UI Library</a></h1>
+        <h3>gallery-dispatcher&nbsp; <span class="subtitle">3.0.0</span></h3>
+        <a href="./index.html" title="Yahoo! UI Library">Yahoo! UI Library</a> 
+            &gt; <a href="./module_gallery-dispatcher.html" title="gallery-dispatcher">gallery-dispatcher</a>
+                
+                
+        <form onsubmit="return false">
+            <div id="propertysearch">
+                Search: <input autocomplete="off" id="searchinput" />
+                <div id="searchresults">
+                    &nbsp;
+                </div>
+            </div>
+        </form>
+	</div>
+
+	<div id="bd">
+		<div id="yui-main">
+			<div class="yui-b">
+            <form action="#" name="yui-classopts-form" method="get" id="yui-classopts-form">
+                <fieldset>
+                    <legend>Filters</legend>
+                <span class="classopts"><input type="checkbox" name="show_private" id="show_private" /> <label for="show_private">Show Private</label></span>
+                <span class="classopts"><input type="checkbox" name="show_protected" id="show_protected" /> <label for="show_protected">Show Protected</label></span>
+                <span class="classopts"><input type="checkbox" name="show_deprecated" id="show_deprecated" /> <label for="show_deprecated">Show Deprecated</label></span>
+                </fieldset>
+            </form>
+
+                   
+                    <h3>Module: gallery-dispatcher
+                    
+
+
+                    </h3>
+                    <div class="description summary">
+                        <p>The Dispatcher satisfies a very common need of developers using the 
+YUI library: dynamic execution of Ajax response content. Typical strategies to 
+fulfill this need, like executing the innerHTML property or referencing remote 
+scripts, are unreliable due to browser incompatibilities. The Dispatcher normalize 
+this behavior across all a-grade browsers.
+<p>To use the Dispatcher Module, simply create a new object based on Y.Dispatcher
+and pass a reference to a node that should be handled.</p>
+<p>
+<code>
+&#60;script type="text/javascript"&#62; <br>
+<br>
+//	Call the "use" method, passing in "gallery-dispatcher".  This will <br>
+//	load the script for the Dispatcher Module and all of <br>
+//	the required dependencies. <br>
+<br>
+YUI().use("gallery-dispatcher", function(Y) { <br>
+<br>
+(new Y.Dispatcher ({<br>
+node: '#demoajax',<br>
+content: 'Please wait... (Injecting fragment.html)'<br>
+})).set('uri', 'fragment.html');<br>
+<br>
+<br>		
+&#60;/script&#62; <br>
+</code>
+</p>
+<p>The Dispatcher has several configuration properties that can be 
+set via an object literal that is passed as a first argument during the
+initialization, or using "set" method.
+</p>
+                    </div>
+
+
+
+                <div class="yui-gc">
+                    <div class="yui-u first">
+
+                            <p>This module contains the following classes:</p>
+                            <script>
+                            //var YUI_CLASS_LIST = [{"extends": {"superclass": {}, "events": {}, "configs": {}, "properties": {}, "methods": {}}, "description": "The Dispatcher class represents an object that can manage Node Elements to\ninject HTML content as the content of the Node..", "guessedname": "Y.Dispatcher", "name": "Y.Dispatcher"}];
+                            </script>
+                            <div id="splash_classList">
+                                <ul>
+                                    <li><a href="Y.Dispatcher.html" title="Y.Dispatcher" id="class_0">Y.Dispatcher</a></li>
+                                </ul>
+                            </div>
+                    </div>
+                    <div class="yui-u">
+
+                        </div>
+                </div>
+
+			</div>
+		</div>
+		<div class="yui-b">
+            <div class="nav">
+
+                    <div id="moduleList" class="module">
+                        <h4>Modules</h4>
+                        <ul class="content">
+                                <li class="selected"><a href="module_gallery-dispatcher.html" title="gallery-dispatcher">gallery-dispatcher</a></li>
+                        </ul>
+                    </div>
+
+                    <div id="classList" class="module">
+                        <h4>Classes</h4>
+                        <ul class="content">
+                                <li class=""><a href="Y.Dispatcher.html" title="Y.Dispatcher">Y.Dispatcher</a></li>
+                        </ul>
+                    </div>
+
+                    <div id="fileList" class="module">
+                        <h4>Files</h4>
+                        <ul class="content">        
+                                <li class=""><a href="gallery-dispatcher.js.html" title="gallery-dispatcher.js">gallery-dispatcher.js</a></li>
+                        </ul>
+                    </div>
+
+
+
+
+
+            </div>
+		</div>
+	</div>
+	<div id="ft">
+        <hr />
+        Copyright &copy; 2010 Yahoo! Inc. All rights reserved.
+	</div>
+</div>
+<script type="text/javascript">
+    ALL_YUI_PROPS = [{"url": "Y.Dispatcher.html#config_autopurge", "access": "", "host": "Y.Dispatcher", "type": "config", "name": "autopurge"}, {"url": "Y.Dispatcher.html#event_autopurgeChange", "access": "", "host": "Y.Dispatcher", "type": "event", "name": "autopurgeChange"}, {"url": "Y.Dispatcher.html#config_content", "access": "", "host": "Y.Dispatcher", "type": "config", "name": "content"}, {"url": "Y.Dispatcher.html#event_contentChange", "access": "", "host": "Y.Dispatcher", "type": "event", "name": "contentChange"}, {"url": "Y.Dispatcher.html#method__dispatch", "access": "protected", "host": "Y.Dispatcher", "type": "method", "name": "_dispatch"}, {"url": "Y.Dispatcher.html#method__fetch", "access": "protected", "host": "Y.Dispatcher", "type": "method", "name": "_fetch"}, {"url": "Y.Dispatcher.html#config_loading", "access": "", "host": "Y.Dispatcher", "type": "config", "name": "loading"}, {"url": "Y.Dispatcher.html#event_loadingChange", "access": "", "host": "Y.Dispatcher", "type": "event", "name": "loadingChange"}, {"url": "Y.Dispatcher.html#config_node", "access": "", "host": "Y.Dispatcher", "type": "config", "name": "node"}, {"url": "Y.Dispatcher.html#event_nodeChange", "access": "", "host": "Y.Dispatcher", "type": "event", "name": "nodeChange"}, {"url": "Y.Dispatcher.html#method_stop", "access": "", "host": "Y.Dispatcher", "type": "method", "name": "stop"}, {"url": "Y.Dispatcher.html#config_uri", "access": "", "host": "Y.Dispatcher", "type": "config", "name": "uri"}, {"url": "Y.Dispatcher.html#event_uriChange", "access": "", "host": "Y.Dispatcher", "type": "event", "name": "uriChange"}, {"url": "Y.Dispatcher.html#property_Y.Dispatcher.ATTRS", "access": "", "host": "Y.Dispatcher", "type": "property", "name": "Y.Dispatcher.ATTRS"}];
+</script>
+</body>
+</html>

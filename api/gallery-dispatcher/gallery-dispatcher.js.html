@@ -1,0 +1,445 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns:yui="http://yuilibrary.com/rdf/1.0/yui.rdf#">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<title>API: gallery-dispatcher   gallery-dispatcher.js  (YUI Library)</title>
+
+	<link rel="stylesheet" type="text/css" href="assets/reset-fonts-grids-min.css" />
+	<link rel="stylesheet" type="text/css" href="assets/api.css" />
+
+    <script type="text/javascript" src="assets/api-js"></script>
+    <script type="text/javascript" src="assets/ac-js"></script>
+</head>
+
+<body id="yahoo-com">
+
+<div id="doc3" class="yui-t2">
+	<div id="hd">
+        <h1><a href="http://developer.yahoo.com/yui/" title="Yahoo! UI Library">Yahoo! UI Library</a></h1>
+        <h3>gallery-dispatcher&nbsp; <span class="subtitle">3.0.0</span></h3>
+        <a href="./index.html" title="Yahoo! UI Library">Yahoo! UI Library</a> 
+            &gt; <a href="./module_gallery-dispatcher.html" title="gallery-dispatcher">gallery-dispatcher</a>
+                
+                 &gt; gallery-dispatcher.js (source view) 
+        <form onsubmit="return false">
+            <div id="propertysearch">
+                Search: <input autocomplete="off" id="searchinput" />
+                <div id="searchresults">
+                    &nbsp;
+                </div>
+            </div>
+        </form>
+	</div>
+
+	<div id="bd">
+		<div id="yui-main">
+			<div class="yui-b">
+            <form action="#" name="yui-classopts-form" method="get" id="yui-classopts-form">
+                <fieldset>
+                    <legend>Filters</legend>
+                <span class="classopts"><input type="checkbox" name="show_private" id="show_private" /> <label for="show_private">Show Private</label></span>
+                <span class="classopts"><input type="checkbox" name="show_protected" id="show_protected" /> <label for="show_protected">Show Protected</label></span>
+                <span class="classopts"><input type="checkbox" name="show_deprecated" id="show_deprecated" /> <label for="show_deprecated">Show Deprecated</label></span>
+                </fieldset>
+            </form>
+
+                    <div id="srcout">
+                        <style>
+                            #doc3 .classopts { display:none; }
+                        </style>
+<div class="highlight"><pre><span class="c">/**</span>
+<span class="c">* &lt;p&gt;The Dispatcher satisfies a very common need of developers using the </span>
+<span class="c">* YUI library: dynamic execution of Ajax response content. Typical strategies to </span>
+<span class="c">* fulfill this need, like executing the innerHTML property or referencing remote </span>
+<span class="c">* scripts, are unreliable due to browser incompatibilities. The Dispatcher normalize </span>
+<span class="c">* this behavior across all a-grade browsers.</span>
+<span class="c">* </span>
+<span class="c">* &lt;p&gt;To use the Dispatcher Module, simply create a new object based on Y.Dispatcher</span>
+<span class="c">* and pass a reference to a node that should be handled.&lt;/p&gt;</span>
+<span class="c">* </span>
+<span class="c">* &lt;p&gt;</span>
+<span class="c">* &lt;code&gt;</span>
+<span class="c">* &amp;#60;script type=&quot;text/javascript&quot;&amp;#62; &lt;br&gt;</span>
+<span class="c">* &lt;br&gt;</span>
+<span class="c">* 		//	Call the &quot;use&quot; method, passing in &quot;gallery-dispatcher&quot;.  This will &lt;br&gt;</span>
+<span class="c">* 		//	load the script for the Dispatcher Module and all of &lt;br&gt;</span>
+<span class="c">* 		//	the required dependencies. &lt;br&gt;</span>
+<span class="c">* &lt;br&gt;</span>
+<span class="c">* 		YUI().use(&quot;gallery-dispatcher&quot;, function(Y) { &lt;br&gt;</span>
+<span class="c">* &lt;br&gt;</span>
+<span class="c">*			(new Y.Dispatcher ({&lt;br&gt;</span>
+<span class="c">*			    node: &#39;#demoajax&#39;,&lt;br&gt;</span>
+<span class="c">*				 content: &#39;Please wait... (Injecting fragment.html)&#39;&lt;br&gt;</span>
+<span class="c">*			})).set(&#39;uri&#39;, &#39;fragment.html&#39;);&lt;br&gt;</span>
+<span class="c">* &lt;br&gt;</span>
+<span class="c">* &lt;br&gt;		</span>
+<span class="c">* 	&amp;#60;/script&amp;#62; &lt;br&gt;</span>
+<span class="c">* &lt;/code&gt;</span>
+<span class="c">* &lt;/p&gt;</span>
+<span class="c">*</span>
+<span class="c">* &lt;p&gt;The Dispatcher has several configuration properties that can be </span>
+<span class="c">* set via an object literal that is passed as a first argument during the</span>
+<span class="c">* initialization, or using &quot;set&quot; method.</span>
+<span class="c">* &lt;/p&gt;</span>
+<span class="c">*</span>
+<span class="c">* @module gallery-dispatcher</span>
+<span class="c">*/</span>
+
+<span class="c">//	Util shortcuts</span>
+<span class="kd">var</span> <span class="nx">UA</span> <span class="o">=</span> <span class="nx">Y</span><span class="p">.</span><span class="nx">UA</span><span class="o">,</span>
+	<span class="nx">getClassName</span> <span class="o">=</span> <span class="nx">Y</span><span class="p">.</span><span class="nx">ClassNameManager</span><span class="p">.</span><span class="nx">getClassName</span><span class="o">,</span>
+
+	<span class="c">//	Frequently used strings</span>
+	<span class="nx">DISPATCHER</span> <span class="o">=</span> <span class="s2">&quot;dispatcher&quot;</span><span class="o">,</span>
+	<span class="nx">PERIOD</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span><span class="o">,</span>
+	<span class="nx">SC</span> <span class="o">=</span> <span class="s2">&quot;script&quot;</span><span class="o">,</span>
+	<span class="nx">DISPATCHER_START</span> <span class="o">=</span> <span class="s1">&#39;start&#39;</span><span class="o">,</span>
+    <span class="nx">DISPATCHER_PURGE</span> <span class="o">=</span> <span class="s1">&#39;purge&#39;</span><span class="o">,</span>
+    <span class="nx">DISPATCHER_CHANGE</span> <span class="o">=</span> <span class="s1">&#39;change&#39;</span><span class="o">,</span>
+    <span class="nx">DISPATCHER_LOAD</span> <span class="o">=</span> <span class="s1">&#39;load&#39;</span><span class="o">,</span>
+    
+	<span class="c">//	Attribute keys</span>
+	<span class="nx">ATTR_URI</span> 		 <span class="o">=</span> <span class="s1">&#39;uri&#39;</span><span class="o">,</span>
+	<span class="nx">ATTR_CONTENT</span> 	 <span class="o">=</span> <span class="s1">&#39;content&#39;</span><span class="o">,</span>
+	<span class="nx">ATTR_AUTOPURGE</span> 	 <span class="o">=</span> <span class="s1">&#39;autopurge&#39;</span><span class="o">,</span>
+	<span class="nx">ATTR_LOADING</span>     <span class="o">=</span> <span class="s1">&#39;loading&#39;</span><span class="o">,</span>
+	<span class="nx">ATTR_NODE</span>     	 <span class="o">=</span> <span class="s1">&#39;node&#39;</span><span class="o">,</span>
+	<span class="nx">ATTRS</span>			 <span class="o">=</span> <span class="p">[</span><span class="nx">ATTR_NODE</span><span class="o">,</span> <span class="nx">ATTR_AUTOPURGE</span><span class="o">,</span> <span class="nx">ATTR_LOADING</span><span class="o">,</span> <span class="nx">ATTR_CONTENT</span><span class="o">,</span> <span class="nx">ATTR_URI</span><span class="p">]</span><span class="o">,</span>
+	
+	<span class="c">//	CSS class names</span>
+	<span class="nx">CLASS_DISPATCHER</span> 			 <span class="o">=</span> <span class="nx">getClassName</span><span class="p">(</span><span class="nx">DISPATCHER</span><span class="p">)</span><span class="o">,</span>
+	<span class="nx">CLASS_DISPATCHER_LOADING</span> 	 <span class="o">=</span> <span class="nx">getClassName</span><span class="p">(</span><span class="nx">DISPATCHER</span><span class="o">,</span> <span class="s1">&#39;loading&#39;</span><span class="p">)</span><span class="o">,</span>
+   	
+	<span class="c">//	CSS selectors</span>
+	<span class="nx">SELECTOR_DISPATCHER</span> <span class="o">=</span> <span class="nx">PERIOD</span> <span class="o">+</span> <span class="nx">CLASS_DISPATCHER</span><span class="o">,</span>       
+	
+	<span class="c">// shorthands</span>
+    <span class="nx">L</span> <span class="o">=</span> <span class="nx">Y</span><span class="p">.</span><span class="nx">Lang</span><span class="o">,</span>
+    <span class="nx">isBoolean</span><span class="o">=</span> <span class="nx">L</span><span class="p">.</span><span class="nx">isBoolean</span><span class="o">,</span>
+    <span class="nx">isString</span> <span class="o">=</span> <span class="nx">L</span><span class="p">.</span><span class="nx">isString</span><span class="o">,</span>
+    <span class="nx">isObject</span> <span class="o">=</span> <span class="nx">L</span><span class="p">.</span><span class="nx">isObject</span><span class="o">,</span>	
+    
+	<span class="c">/**</span>
+<span class="c">	* The Dispatcher class represents an object that can manage Node Elements to</span>
+<span class="c">	* inject HTML content as the content of the Node..</span>
+<span class="c">	* @namespace Y</span>
+<span class="c">	* @class Dispatcher</span>
+<span class="c">	*/</span>
+	<span class="nx">Dispatcher</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+		<span class="nx">Dispatcher</span><span class="p">.</span><span class="nx">superclass</span><span class="p">.</span><span class="nx">constructor</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="o">,</span> <span class="nx">arguments</span><span class="p">);</span>
+	<span class="p">};</span>
+
+<span class="c">//	Utility functions</span>
+
+<span class="kd">function</span> <span class="nx">_parseContent</span> <span class="p">(</span> <span class="nx">content</span> <span class="p">)</span> <span class="p">{</span>
+	<span class="kd">var</span> <span class="nx">fragment</span> <span class="o">=</span> <span class="nx">Y</span><span class="p">.</span><span class="nx">Node</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="s1">&#39;&lt;div&gt;&lt;/div&gt;&#39;</span><span class="p">)</span><span class="o">,</span>
+		<span class="nx">o</span> <span class="o">=</span> <span class="p">{};</span>
+	
+	<span class="nx">fragment</span><span class="p">.</span><span class="nx">setContent</span> <span class="p">(</span><span class="nx">content</span><span class="p">);</span>
+	   
+	<span class="nx">o</span><span class="p">.</span><span class="nx">js</span> <span class="o">=</span> <span class="nx">fragment</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span><span class="nx">SC</span><span class="p">).</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">n</span><span class="p">)</span> <span class="p">{</span>
+		<span class="nx">fragment</span><span class="p">.</span><span class="nx">removeChild</span> <span class="p">(</span><span class="nx">n</span><span class="p">);</span>
+	<span class="p">});</span>
+	<span class="nx">o</span><span class="p">.</span><span class="nx">content</span> <span class="o">=</span> <span class="nx">fragment</span><span class="p">.</span><span class="nx">get</span> <span class="p">(</span><span class="s1">&#39;innerHTML&#39;</span><span class="p">);</span>
+	<span class="k">return</span> <span class="nx">o</span><span class="o">;</span>
+<span class="p">}</span>
+
+<span class="c">// Dispatcher definition</span>
+
+<span class="nx">Y</span><span class="p">.</span><span class="nx">mix</span><span class="p">(</span><span class="nx">Dispatcher</span><span class="o">,</span> <span class="p">{</span>
+
+    <span class="c">/**</span>
+<span class="c">     * Static property used to define the default attribute configuration of</span>
+<span class="c">     * the component.</span>
+<span class="c">     *</span>
+<span class="c">     * @property Y.Dispatcher.ATTRS</span>
+<span class="c">     * @Type Object</span>
+<span class="c">     * @static</span>
+<span class="c">     */</span>
+    <span class="nx">ATTRS</span> <span class="o">:</span> <span class="p">{</span>
+
+		<span class="c">/**</span>
+<span class="c">		* YUI Node Object that represent a dynamic area in the page.  </span>
+<span class="c">		* @attribute node</span>
+<span class="c">		* @default null</span>
+<span class="c">		* @type object</span>
+<span class="c">		*/</span>	
+		<span class="nx">node</span><span class="o">:</span> <span class="p">{</span>
+			<span class="nx">value</span><span class="o">:</span> <span class="kc">null</span><span class="o">,</span>
+			<span class="nx">writeOnce</span><span class="o">:</span> <span class="kc">true</span><span class="o">,</span>
+			<span class="nx">setter</span> <span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">n</span><span class="p">)</span> <span class="p">{</span>
+ 				<span class="k">return</span> <span class="nx">Y</span><span class="p">.</span><span class="nx">one</span><span class="p">(</span><span class="nx">n</span><span class="p">);</span>
+			<span class="p">}</span><span class="o">,</span>
+		<span class="p">}</span><span class="o">,</span>
+		
+ 		<span class="c">/**</span>
+<span class="c"> 		* If dispatcher should purge the DOM elements before replacing the content</span>
+<span class="c"> 		* @attribute autopurge</span>
+<span class="c"> 		* @default true</span>
+<span class="c"> 		* @type boolean</span>
+<span class="c"> 		*/</span>	
+ 		<span class="nx">autopurge</span><span class="o">:</span> <span class="p">{</span>
+ 			<span class="nx">value</span><span class="o">:</span> <span class="kc">true</span><span class="o">,</span>
+ 			<span class="nx">writeOnce</span><span class="o">:</span> <span class="kc">true</span><span class="o">,</span>
+ 			<span class="nx">validator</span> <span class="o">:</span> <span class="nx">isBoolean</span>
+ 		<span class="p">}</span><span class="o">,</span>
+ 		<span class="c">/**</span>
+<span class="c"> 		* URL that should be injected within the host</span>
+<span class="c"> 		* @attribute uri</span>
+<span class="c"> 		* @default null</span>
+<span class="c"> 		* @type string</span>
+<span class="c"> 		*/</span>	
+ 		<span class="nx">uri</span><span class="o">:</span> <span class="p">{</span>
+ 			<span class="nx">value</span><span class="o">:</span> <span class="kc">null</span><span class="o">,</span>
+ 			<span class="nx">setter</span> <span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">v</span><span class="p">)</span> <span class="p">{</span>
+ 				<span class="nx">Y</span><span class="p">.</span><span class="nx">log</span> <span class="p">(</span><span class="s1">&#39;dispatching a new url&#39;</span><span class="o">,</span><span class="s1">&#39;info&#39;</span><span class="o">,</span><span class="nx">DISPATCHER</span><span class="p">);</span>
+ 				<span class="k">this</span><span class="p">.</span><span class="nx">stop</span> <span class="p">();</span>
+ 				<span class="k">this</span><span class="p">.</span><span class="nx">_io</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_fetch</span><span class="p">(</span><span class="nx">v</span><span class="p">);</span>
+				<span class="k">return</span> <span class="nx">v</span><span class="o">;</span>
+			<span class="p">}</span><span class="o">,</span>
+ 			<span class="nx">validator</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">v</span><span class="p">)</span> <span class="p">{</span>
+ 	            <span class="k">return</span> <span class="p">(</span><span class="nx">v</span> <span class="o">&amp;&amp;</span> <span class="nx">isString</span><span class="p">(</span><span class="nx">v</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="nx">v</span><span class="o">!==</span><span class="s1">&#39;&#39;</span><span class="p">));</span>
+ 	        <span class="p">}</span>
+ 		<span class="p">}</span><span class="o">,</span>
+ 		<span class="c">/**</span>
+<span class="c"> 		* default content for the dynamic area</span>
+<span class="c"> 		* @attribute content</span>
+<span class="c"> 		* @default empty</span>
+<span class="c"> 		* @type string</span>
+<span class="c"> 		*/</span>	
+ 		<span class="nx">content</span><span class="o">:</span> <span class="p">{</span>
+ 			<span class="nx">value</span><span class="o">:</span> <span class="s1">&#39;&#39;</span><span class="o">,</span>
+ 			<span class="nx">setter</span> <span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">v</span><span class="p">)</span> <span class="p">{</span>
+ 				<span class="nx">Y</span><span class="p">.</span><span class="nx">log</span> <span class="p">(</span><span class="s1">&#39;dispatching a new content&#39;</span><span class="o">,</span><span class="s1">&#39;info&#39;</span><span class="o">,</span><span class="nx">DISPATCHER</span><span class="p">);</span>
+ 				<span class="k">this</span><span class="p">.</span><span class="nx">stop</span><span class="p">();</span>
+ 				<span class="k">this</span><span class="p">.</span><span class="nx">_dispatch</span><span class="p">(</span><span class="nx">v</span><span class="p">);</span> <span class="c">// discarding the file name</span>
+	            <span class="k">return</span> <span class="nx">v</span><span class="o">;</span>
+			<span class="p">}</span><span class="o">,</span>
+ 			<span class="nx">validator</span> <span class="o">:</span> <span class="nx">isString</span>
+ 		<span class="p">}</span><span class="o">,</span>
+	    <span class="c">/**</span>
+<span class="c">		* Boolean indicating that a process is undergoing.</span>
+<span class="c">		* </span>
+<span class="c">		* @attribute loading</span>
+<span class="c">		* @default false</span>
+<span class="c">		* @type {boolean}</span>
+<span class="c">		*/</span>
+		<span class="nx">loading</span><span class="o">:</span> <span class="p">{</span>
+			<span class="nx">value</span><span class="o">:</span> <span class="kc">false</span><span class="o">,</span>
+			<span class="nx">validator</span><span class="o">:</span> <span class="nx">isBoolean</span><span class="o">,</span>
+			<span class="nx">setter</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">v</span><span class="p">)</span> <span class="p">{</span>
+				<span class="nx">Y</span><span class="p">.</span><span class="nx">log</span> <span class="p">(</span><span class="s1">&#39;setting status&#39;</span><span class="o">,</span><span class="s1">&#39;info&#39;</span><span class="o">,</span><span class="nx">DISPATCHER</span><span class="p">);</span>
+				<span class="k">if</span> <span class="p">(</span><span class="nx">v</span><span class="p">)</span> <span class="p">{</span>
+					<span class="k">this</span><span class="p">.</span><span class="nx">_node</span><span class="p">.</span><span class="nx">addClass</span> <span class="p">(</span><span class="nx">CLASS_DISPATCHER_LOADING</span><span class="p">);</span>
+				<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+					<span class="k">this</span><span class="p">.</span><span class="nx">_node</span><span class="p">.</span><span class="nx">removeClass</span> <span class="p">(</span><span class="nx">CLASS_DISPATCHER_LOADING</span><span class="p">);</span>
+				<span class="p">}</span>
+				<span class="k">return</span> <span class="nx">v</span><span class="o">;</span>
+			<span class="p">}</span> 
+		<span class="p">}</span>
+     <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="nx">Y</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">Dispatcher</span><span class="o">,</span> <span class="nx">Y</span><span class="p">.</span><span class="nx">Base</span><span class="o">,</span> <span class="p">{</span>
+
+	<span class="c">//	Protected properties</span>
+
+   <span class="nx">_node</span><span class="o">:</span> <span class="kc">null</span><span class="o">,</span>
+   <span class="nx">_queue</span><span class="o">:</span> <span class="kc">null</span><span class="o">,</span>
+   <span class="nx">_io</span><span class="o">:</span> <span class="kc">null</span><span class="o">,</span>
+
+	<span class="c">//	Public methods</span>
+
+    <span class="nx">initializer</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">config</span><span class="p">)</span> <span class="p">{</span>
+		<span class="kd">var</span> <span class="nx">that</span> <span class="o">=</span> <span class="k">this</span><span class="o">;</span>
+		<span class="nx">config</span> <span class="o">=</span> <span class="nx">config</span> <span class="o">||</span> <span class="p">{};</span>
+		<span class="nx">Y</span><span class="p">.</span><span class="nx">log</span> <span class="p">(</span><span class="s1">&#39;Initializer&#39;</span><span class="o">,</span><span class="s1">&#39;info&#39;</span><span class="o">,</span><span class="nx">DISPATCHER</span><span class="p">);</span>
+		<span class="k">this</span><span class="p">.</span><span class="nx">_queue</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Y</span><span class="p">.</span><span class="nx">AsyncQueue</span> <span class="p">();</span>
+		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">isObject</span><span class="p">(</span><span class="nx">config</span><span class="p">)</span> <span class="o">||</span> <span class="o">!</span><span class="nx">config</span><span class="p">.</span><span class="nx">node</span> <span class="o">||</span> <span class="o">!</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">_node</span> <span class="o">=</span> <span class="nx">Y</span><span class="p">.</span><span class="nx">one</span><span class="p">(</span><span class="nx">config</span><span class="p">.</span><span class="nx">node</span><span class="p">)))</span> <span class="p">{</span>
+			<span class="nx">Y</span><span class="p">.</span><span class="nx">log</span> <span class="p">(</span><span class="s1">&#39;Dispatcher requires a NODE to be instantiated&#39;</span><span class="o">,</span><span class="s1">&#39;info&#39;</span><span class="o">,</span><span class="nx">DISPATCHER</span><span class="p">);</span>
+			<span class="c">// how can we stop the initialization?</span>
+			<span class="k">return</span><span class="o">;</span>
+		<span class="p">}</span>
+		
+		<span class="nx">Y</span><span class="p">.</span><span class="nb">Array</span><span class="p">.</span><span class="nx">each</span> <span class="p">(</span><span class="nx">ATTRS</span><span class="o">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">v</span><span class="p">)</span> <span class="p">{</span>
+			<span class="k">if</span> <span class="p">(</span><span class="nx">config</span><span class="p">[</span><span class="nx">v</span><span class="p">])</span> <span class="p">{</span>
+				<span class="nx">that</span><span class="p">.</span><span class="nx">set</span> <span class="p">(</span><span class="nx">v</span><span class="o">,</span> <span class="nx">config</span><span class="p">[</span><span class="nx">v</span><span class="p">]);</span>
+			<span class="p">}</span>
+    	<span class="p">});</span>
+
+        <span class="k">this</span><span class="p">.</span><span class="nx">publish</span><span class="p">(</span><span class="nx">DISPATCHER_START</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">publish</span><span class="p">(</span><span class="nx">DISPATCHER_PURGE</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">publish</span><span class="p">(</span><span class="nx">DISPATCHER_CHANGE</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">publish</span><span class="p">(</span><span class="nx">DISPATCHER_LOAD</span><span class="p">);</span>
+	<span class="p">}</span><span class="o">,</span>
+
+	<span class="nx">destructor</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+		<span class="k">this</span><span class="p">.</span><span class="nx">stop</span><span class="p">();</span>
+		<span class="k">this</span><span class="p">.</span><span class="nx">_node</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="k">this</span><span class="p">.</span><span class="nx">_queue</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="k">this</span><span class="p">.</span><span class="nx">_io</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="p">}</span><span class="o">,</span>
+	<span class="c">/**</span>
+<span class="c">	 * @method stop</span>
+<span class="c">	 * @description Cancel the current loading and execution process immediately</span>
+<span class="c">	 * @public</span>
+<span class="c">	 * @return  {object} reference for chaining</span>
+<span class="c">	 */</span>
+    <span class="nx">stop</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    	<span class="k">this</span><span class="p">.</span><span class="nx">_queue</span><span class="p">.</span><span class="nx">stop</span> <span class="p">();</span>
+    	<span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">_io</span><span class="p">)</span> <span class="p">{</span>
+    		<span class="k">this</span><span class="p">.</span><span class="nx">_io</span><span class="p">.</span><span class="nx">abort</span><span class="p">();</span>
+    	<span class="p">}</span>
+    	<span class="k">return</span> <span class="k">this</span><span class="o">;</span>
+    <span class="p">}</span><span class="o">,</span>
+	<span class="c">/**</span>
+<span class="c">	 * @method _dispatch</span>
+<span class="c">	 * @description Dispatch a content into the code, parsing out the scripts, </span>
+<span class="c">	 * injecting the code into the DOM, then executing the scripts.</span>
+<span class="c">	 * @protected</span>
+<span class="c">	 * @param {string} content html content that should be injected in the page</span>
+<span class="c">	 * @return null</span>
+<span class="c">	 */</span>
+	<span class="nx">_dispatch</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">content</span><span class="p">)</span> <span class="p">{</span>
+    	<span class="kd">var</span> <span class="nx">o</span> <span class="o">=</span> <span class="nx">_parseContent</span> <span class="p">(</span><span class="nx">content</span><span class="p">)</span><span class="o">,</span>
+    		<span class="nx">q</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_queue</span><span class="o">,</span>
+    		<span class="nx">n</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_node</span><span class="o">;</span>
+    	<span class="c">// autopurging children collection</span>
+    	<span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">get</span> <span class="p">(</span><span class="s1">&#39;autopurge&#39;</span><span class="p">))</span> <span class="p">{</span>
+    		<span class="nx">q</span><span class="p">.</span><span class="nx">add</span> <span class="p">({</span>
+    			<span class="nx">fn</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    				<span class="nx">Y</span><span class="p">.</span><span class="nx">log</span> <span class="p">(</span><span class="s1">&#39;purging children collection&#39;</span><span class="o">,</span><span class="s1">&#39;info&#39;</span><span class="o">,</span><span class="nx">DISPATCHER</span><span class="p">);</span>
+	        		<span class="nx">n</span><span class="p">.</span><span class="nx">get</span> <span class="p">(</span><span class="s1">&#39;children&#39;</span><span class="p">).</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">c</span><span class="p">)</span> <span class="p">{</span>
+	        			<span class="nx">c</span><span class="p">.</span><span class="nx">purge</span> <span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+	        		<span class="p">});</span>
+	        	<span class="p">}</span>
+    		<span class="p">});</span>
+		<span class="p">}</span>
+    	<span class="c">// injecting new content</span>
+    	<span class="nx">q</span><span class="p">.</span><span class="nx">add</span> <span class="p">({</span>
+			<span class="nx">fn</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+				<span class="nx">Y</span><span class="p">.</span><span class="nx">log</span> <span class="p">(</span><span class="s1">&#39;setting new content: &#39;</span><span class="o">+</span><span class="nx">o</span><span class="p">.</span><span class="nx">content</span><span class="o">,</span><span class="s1">&#39;info&#39;</span><span class="o">,</span><span class="nx">DISPATCHER</span><span class="p">);</span>
+    			<span class="nx">n</span><span class="p">.</span><span class="nx">setContent</span> <span class="p">(</span><span class="nx">o</span><span class="p">.</span><span class="nx">content</span><span class="p">);</span>
+			<span class="p">}</span>
+		<span class="p">});</span>
+    	<span class="c">// executing JS blocks before the injection</span>
+    	<span class="nx">o</span><span class="p">.</span><span class="nx">js</span><span class="p">.</span><span class="nx">each</span> <span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">jsNode</span><span class="p">)</span> <span class="p">{</span>
+    		<span class="k">if</span> <span class="p">(</span><span class="nx">jsNode</span> <span class="o">&amp;&amp;</span> <span class="nx">jsNode</span><span class="p">.</span><span class="nx">get</span> <span class="p">(</span><span class="s1">&#39;src&#39;</span><span class="p">))</span> <span class="p">{</span>
+	    		<span class="nx">q</span><span class="p">.</span><span class="nx">add</span> <span class="p">({</span>
+					<span class="nx">fn</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+						<span class="nx">Y</span><span class="p">.</span><span class="nx">log</span> <span class="p">(</span><span class="s1">&#39;external script tag: &#39;</span><span class="o">+</span><span class="nx">jsNode</span><span class="p">.</span><span class="nx">get</span> <span class="p">(</span><span class="s1">&#39;src&#39;</span><span class="p">)</span><span class="o">,</span><span class="s1">&#39;info&#39;</span><span class="o">,</span><span class="nx">DISPATCHER</span><span class="p">);</span>
+						<span class="c">//q.next();</span>
+						<span class="nx">Y</span><span class="p">.</span><span class="nx">Get</span><span class="p">.</span><span class="nx">script</span><span class="p">(</span><span class="nx">jsNode</span><span class="p">.</span><span class="nx">get</span> <span class="p">(</span><span class="s1">&#39;src&#39;</span><span class="p">)</span><span class="o">,</span> <span class="p">{</span> 
+							<span class="nx">onFailure</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">o</span><span class="p">)</span> <span class="p">{</span>
+	    						<span class="nx">Y</span><span class="p">.</span><span class="nx">log</span> <span class="p">(</span><span class="s1">&#39;external script tag fail to load: &#39;</span><span class="o">+</span><span class="nx">jsNode</span><span class="p">.</span><span class="nx">get</span> <span class="p">(</span><span class="s1">&#39;src&#39;</span><span class="p">)</span><span class="o">,</span><span class="s1">&#39;error&#39;</span><span class="o">,</span><span class="nx">DISPATCHER</span><span class="p">);</span>
+							<span class="p">}</span><span class="o">,</span>
+							<span class="nx">onEnd</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">o</span><span class="p">)</span> <span class="p">{</span>
+								<span class="nx">o</span><span class="p">.</span><span class="nx">purge</span><span class="p">();</span> <span class="c">//removes the script node immediately after executing it</span>
+								<span class="nx">q</span><span class="p">.</span><span class="nx">run</span><span class="p">();</span>
+							<span class="p">}</span>
+						<span class="p">});</span>
+					<span class="p">}</span><span class="o">,</span>
+					<span class="nx">autoContinue</span><span class="o">:</span> <span class="kc">false</span>
+	    		<span class="p">});</span>  			
+    		<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+	    		<span class="nx">q</span><span class="p">.</span><span class="nx">add</span> <span class="p">({</span>
+					<span class="nx">fn</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+		    			<span class="c">// inject js;</span>
+						<span class="nx">Y</span><span class="p">.</span><span class="nx">log</span> <span class="p">(</span><span class="s1">&#39;inline script tag: &#39;</span><span class="o">+</span><span class="nx">jsNode</span><span class="p">.</span><span class="nx">get</span> <span class="p">(</span><span class="s1">&#39;innerHTML&#39;</span><span class="p">)</span><span class="o">,</span><span class="s1">&#39;info&#39;</span><span class="o">,</span><span class="nx">DISPATCHER</span><span class="p">);</span>
+						<span class="kd">var</span> <span class="nx">d</span> <span class="o">=</span> <span class="nx">jsNode</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;ownerDocument&#39;</span><span class="p">)</span><span class="o">,</span>
+							<span class="nx">h</span> <span class="o">=</span> <span class="nx">d</span><span class="p">.</span><span class="nx">one</span><span class="p">(</span><span class="s1">&#39;head&#39;</span><span class="p">)</span> <span class="o">||</span> <span class="nx">d</span><span class="p">.</span><span class="nx">get</span> <span class="p">(</span><span class="s1">&#39;documentElement&#39;</span><span class="p">)</span><span class="o">,</span>
+							<span class="nx">newScript</span> <span class="o">=</span> <span class="nx">Y</span><span class="p">.</span><span class="nx">Node</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="s1">&#39;&lt;&#39;</span><span class="o">+</span><span class="nx">SC</span><span class="o">+</span><span class="s1">&#39;&gt;&lt;/&#39;</span><span class="o">+</span><span class="nx">SC</span><span class="o">+</span><span class="s1">&#39;&gt;&#39;</span><span class="p">);</span>
+						<span class="nx">h</span><span class="p">.</span><span class="nx">replaceChild</span><span class="p">(</span><span class="nx">jsNode</span><span class="o">,</span> <span class="nx">h</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">newScript</span><span class="p">));</span>
+						<span class="k">if</span> <span class="p">(</span><span class="nx">jsNode</span><span class="p">.</span><span class="nx">_node</span><span class="p">.</span><span class="nx">text</span><span class="p">)</span> <span class="p">{</span>
+					        <span class="nx">newScript</span><span class="p">.</span><span class="nx">_node</span><span class="p">.</span><span class="nx">text</span> <span class="o">=</span> <span class="nx">jsNode</span><span class="p">.</span><span class="nx">_node</span><span class="p">.</span><span class="nx">text</span><span class="o">;</span>
+						<span class="p">}</span>
+						<span class="nx">jsNode</span><span class="p">.</span><span class="nx">remove</span><span class="p">();</span> <span class="c">//removes the script node immediately after executing it</span>
+					<span class="p">}</span>
+	    		<span class="p">});</span>    			
+    		<span class="p">}</span>
+    	<span class="p">});</span>
+    	<span class="c">// executing the queue</span>
+    	<span class="k">this</span><span class="p">.</span><span class="nx">_queue</span><span class="p">.</span><span class="nx">run</span><span class="p">();</span>
+	<span class="p">}</span><span class="o">,</span>
+	<span class="c">/**</span>
+<span class="c">	* @description Fetching a remote file using Y.io. The response will be dispatched thru _dispatch method...</span>
+<span class="c">	* @method _fetch</span>
+<span class="c">	* @protected</span>
+<span class="c">	* @param {string} uri uri that should be loaded using Y.io</span>
+<span class="c">	* @param {object} cfg configuration object that will be used as base configuration for Y.io </span>
+<span class="c">	* (http://developer.yahoo.com/yui/3/io/#configuration)</span>
+<span class="c">	* @return object  Reference to the connection handler</span>
+<span class="c">	*/</span>
+	<span class="nx">_fetch</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span> <span class="nx">uri</span><span class="o">,</span> <span class="nx">cfg</span> <span class="p">){</span>
+		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">uri</span><span class="p">)</span> <span class="p">{</span>
+			<span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+		<span class="p">}</span>
+		<span class="nx">cfg</span> <span class="o">=</span> <span class="nx">cfg</span> <span class="o">||</span> <span class="p">{</span>
+			<span class="nx">method</span><span class="o">:</span> <span class="s1">&#39;GET&#39;</span>
+		<span class="p">};</span>
+		<span class="nx">cfg</span><span class="p">.</span><span class="nx">on</span> <span class="o">=</span> <span class="p">{</span>
+			<span class="nx">start</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+		   		<span class="nx">Y</span><span class="p">.</span><span class="nx">log</span> <span class="p">(</span><span class="s1">&#39;Start&#39;</span><span class="o">,</span><span class="s1">&#39;info&#39;</span><span class="o">,</span><span class="nx">DISPATCHER</span><span class="p">);</span>
+	   		<span class="p">}</span><span class="o">,</span>
+			<span class="nx">success</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">tid</span><span class="o">,</span> <span class="nx">o</span><span class="p">)</span> <span class="p">{</span>
+		   		<span class="nx">Y</span><span class="p">.</span><span class="nx">log</span> <span class="p">(</span><span class="s1">&#39;Success: &#39;</span><span class="o">+</span><span class="nx">o</span><span class="p">.</span><span class="nx">responseText</span><span class="o">,</span><span class="s1">&#39;info&#39;</span><span class="o">,</span><span class="nx">DISPATCHER</span><span class="p">);</span>
+		   		<span class="k">this</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nx">ATTR_CONTENT</span><span class="o">,</span> <span class="nx">o</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);</span>
+	   		<span class="p">}</span><span class="o">,</span>
+	   		<span class="nx">failure</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">tid</span><span class="o">,</span> <span class="nx">o</span><span class="p">)</span> <span class="p">{</span>
+	   			<span class="nx">Y</span><span class="p">.</span><span class="nx">log</span> <span class="p">(</span><span class="s1">&#39;Failure: &#39;</span><span class="o">+</span><span class="nx">uri</span><span class="o">,</span><span class="s1">&#39;warn&#39;</span><span class="o">,</span><span class="nx">DISPATCHER</span><span class="p">);</span>
+		   	<span class="p">}</span><span class="o">,</span>
+			<span class="nx">end</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+		   		<span class="nx">Y</span><span class="p">.</span><span class="nx">log</span> <span class="p">(</span><span class="s1">&#39;End&#39;</span><span class="o">,</span><span class="s1">&#39;info&#39;</span><span class="o">,</span><span class="nx">DISPATCHER</span><span class="p">);</span>
+	   		<span class="p">}</span>
+		<span class="p">};</span>
+		<span class="nx">cfg</span><span class="p">.</span><span class="nx">context</span> <span class="o">=</span> <span class="k">this</span><span class="o">;</span>
+		<span class="k">return</span> <span class="nx">Y</span><span class="p">.</span><span class="nx">io</span><span class="p">(</span><span class="nx">uri</span><span class="o">,</span> <span class="nx">cfg</span><span class="p">);</span>
+	<span class="p">}</span>	
+<span class="p">});</span>
+
+<span class="nx">Y</span><span class="p">.</span><span class="nx">Dispatcher</span> <span class="o">=</span> <span class="nx">Dispatcher</span><span class="o">;</span>
+</pre></div>
+                    </div>
+			</div>
+		</div>
+		<div class="yui-b">
+            <div class="nav">
+
+                    <div id="moduleList" class="module">
+                        <h4>Modules</h4>
+                        <ul class="content">
+                                <li class="selected"><a href="module_gallery-dispatcher.html" title="gallery-dispatcher">gallery-dispatcher</a></li>
+                        </ul>
+                    </div>
+
+                    <div id="classList" class="module">
+                        <h4>Classes</h4>
+                        <ul class="content">
+                                <li class=""><a href="Y.Dispatcher.html" title="Y.Dispatcher">Y.Dispatcher</a></li>
+                        </ul>
+                    </div>
+
+                    <div id="fileList" class="module">
+                        <h4>Files</h4>
+                        <ul class="content">        
+                                <li class="selected"><a href="gallery-dispatcher.js.html" title="gallery-dispatcher.js">gallery-dispatcher.js</a></li>
+                        </ul>
+                    </div>
+
+
+
+
+
+            </div>
+		</div>
+	</div>
+	<div id="ft">
+        <hr />
+        Copyright &copy; 2010 Yahoo! Inc. All rights reserved.
+	</div>
+</div>
+<script type="text/javascript">
+    ALL_YUI_PROPS = [{"url": "Y.Dispatcher.html#config_autopurge", "access": "", "host": "Y.Dispatcher", "type": "config", "name": "autopurge"}, {"url": "Y.Dispatcher.html#event_autopurgeChange", "access": "", "host": "Y.Dispatcher", "type": "event", "name": "autopurgeChange"}, {"url": "Y.Dispatcher.html#config_content", "access": "", "host": "Y.Dispatcher", "type": "config", "name": "content"}, {"url": "Y.Dispatcher.html#event_contentChange", "access": "", "host": "Y.Dispatcher", "type": "event", "name": "contentChange"}, {"url": "Y.Dispatcher.html#method__dispatch", "access": "protected", "host": "Y.Dispatcher", "type": "method", "name": "_dispatch"}, {"url": "Y.Dispatcher.html#method__fetch", "access": "protected", "host": "Y.Dispatcher", "type": "method", "name": "_fetch"}, {"url": "Y.Dispatcher.html#config_loading", "access": "", "host": "Y.Dispatcher", "type": "config", "name": "loading"}, {"url": "Y.Dispatcher.html#event_loadingChange", "access": "", "host": "Y.Dispatcher", "type": "event", "name": "loadingChange"}, {"url": "Y.Dispatcher.html#config_node", "access": "", "host": "Y.Dispatcher", "type": "config", "name": "node"}, {"url": "Y.Dispatcher.html#event_nodeChange", "access": "", "host": "Y.Dispatcher", "type": "event", "name": "nodeChange"}, {"url": "Y.Dispatcher.html#method_stop", "access": "", "host": "Y.Dispatcher", "type": "method", "name": "stop"}, {"url": "Y.Dispatcher.html#config_uri", "access": "", "host": "Y.Dispatcher", "type": "config", "name": "uri"}, {"url": "Y.Dispatcher.html#event_uriChange", "access": "", "host": "Y.Dispatcher", "type": "event", "name": "uriChange"}, {"url": "Y.Dispatcher.html#property_Y.Dispatcher.ATTRS", "access": "", "host": "Y.Dispatcher", "type": "property", "name": "Y.Dispatcher.ATTRS"}];
+</script>
+</body>
+</html>
