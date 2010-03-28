@@ -193,6 +193,43 @@ injecting the code into the DOM, then executing the scripts.
                                     </div>
                                     <hr />
                                     </div>
+                                    <div class="protected" rel="yui:method" resource="#method__initEvents">
+                                    <h4>
+                                        <a name="method__initEvents">_initEvents</a></h4>
+                                    <div class="detail" >
+                                        <code>
+                                         protected 
+                                        
+                                        
+                                        void
+                                            <strong property="yui:name">_initEvents</strong>
+                                           (
+                                            )
+                                        </code>
+                                        
+                                        <div class="description" property="yui:description">
+                                            Publishes Dispatcher's events
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl>
+                                                    <dt>Returns:
+                                                    <code property="yui:return">
+                                                        void
+                                                    </code></dt>
+                                                    <dd property="yui:returnInfo"></dd>
+                                                </dl>
+
+
+             
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
                                     <div class="" rel="yui:method" resource="#method_stop">
                                     <h4>
                                         <a name="method_stop">stop</a></h4>
@@ -283,6 +320,50 @@ injecting the code into the DOM, then executing the scripts.
                                     </div>
                                     <hr />
                                     </div>
+                                    <div class="" rel="yui:event" resource="#event_beforeExecute">
+                                    <h4>
+                                        <a name="event_beforeExecute">beforeExecute</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                            <strong property="yui:name">beforeExecute</strong>
+
+                                            (
+                                                
+                                                        
+                                                         event
+                                                    
+                                                
+                                            )
+
+                                        </code>
+                                        
+                                        <div class="description" property="yui:description">
+                                            Signals rigth after injecting the new content but before executing the script tags.
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl rel="yui:parameters">
+                                                    <dt>Parameters:</dt>
+                                                        <dd rel="yui:parameter">
+                                                            <code><span property="yui:name">event</span>
+                                                                &lt;<span property="yui:type">Event.Facade</span>&gt;
+                                                            </code>
+                                                            <span property="yui:description">  An Event Facade object</span>
+                                                        </dd>
+                                                        
+                                                </dl>
+
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
                                     <div class="" rel="yui:event" resource="#event_contentChange">
                                     <h4>
                                         <a name="event_contentChange">contentChange</a></h4>
@@ -317,6 +398,94 @@ injecting the code into the DOM, then executing the scripts.
                                                                 &lt;<span property="yui:type">Event.Facade</span>&gt;
                                                             </code>
                                                             <span property="yui:description">An Event Facade object with      the following attribute specific properties added:	<dl>		<dt>prevVal</dt>		<dd>The value of the attribute, prior to it being set</dd>		<dt>newVal</dt>		<dd>The value the attribute is to be set to</dd>		<dt>attrName</dt>		<dd>The name of the attribute being set</dd>		<dt>subAttrName</dt>		<dd>If setting a property within the attribute's value,           the name of the sub-attribute property being set</dd>	</dl></span>
+                                                        </dd>
+                                                        
+                                                </dl>
+
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="" rel="yui:event" resource="#event_fetch">
+                                    <h4>
+                                        <a name="event_fetch">fetch</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                            <strong property="yui:name">fetch</strong>
+
+                                            (
+                                                
+                                                        
+                                                         event
+                                                    
+                                                
+                                            )
+
+                                        </code>
+                                        
+                                        <div class="description" property="yui:description">
+                                            Signals when dispatcher starts loading a new remote content (Y.io->start).
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl rel="yui:parameters">
+                                                    <dt>Parameters:</dt>
+                                                        <dd rel="yui:parameter">
+                                                            <code><span property="yui:name">event</span>
+                                                                &lt;<span property="yui:type">Event.Facade</span>&gt;
+                                                            </code>
+                                                            <span property="yui:description">  An Event Facade object</span>
+                                                        </dd>
+                                                        
+                                                </dl>
+
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="" rel="yui:event" resource="#event_load">
+                                    <h4>
+                                        <a name="event_load">load</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                            <strong property="yui:name">load</strong>
+
+                                            (
+                                                
+                                                        
+                                                         event
+                                                    
+                                                
+                                            )
+
+                                        </code>
+                                        
+                                        <div class="description" property="yui:description">
+                                            Signals when the remote content gets ready to be injected in the page (Y.io->success)
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl rel="yui:parameters">
+                                                    <dt>Parameters:</dt>
+                                                        <dd rel="yui:parameter">
+                                                            <code><span property="yui:name">event</span>
+                                                                &lt;<span property="yui:type">Event.Facade</span>&gt;
+                                                            </code>
+                                                            <span property="yui:description">  An Event Facade object</span>
                                                         </dd>
                                                         
                                                 </dl>
@@ -405,6 +574,96 @@ injecting the code into the DOM, then executing the scripts.
                                                                 &lt;<span property="yui:type">Event.Facade</span>&gt;
                                                             </code>
                                                             <span property="yui:description">An Event Facade object with      the following attribute specific properties added:	<dl>		<dt>prevVal</dt>		<dd>The value of the attribute, prior to it being set</dd>		<dt>newVal</dt>		<dd>The value the attribute is to be set to</dd>		<dt>attrName</dt>		<dd>The name of the attribute being set</dd>		<dt>subAttrName</dt>		<dd>If setting a property within the attribute's value,           the name of the sub-attribute property being set</dd>	</dl></span>
+                                                        </dd>
+                                                        
+                                                </dl>
+
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="" rel="yui:event" resource="#event_purge">
+                                    <h4>
+                                        <a name="event_purge">purge</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                            <strong property="yui:name">purge</strong>
+
+                                            (
+                                                
+                                                        
+                                                         event
+                                                    
+                                                
+                                            )
+
+                                        </code>
+                                        
+                                        <div class="description" property="yui:description">
+                                            Signals the old content has been clean up (Purge), and it's 
+ready to get the new content.
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl rel="yui:parameters">
+                                                    <dt>Parameters:</dt>
+                                                        <dd rel="yui:parameter">
+                                                            <code><span property="yui:name">event</span>
+                                                                &lt;<span property="yui:type">Event.Facade</span>&gt;
+                                                            </code>
+                                                            <span property="yui:description">  An Event Facade object</span>
+                                                        </dd>
+                                                        
+                                                </dl>
+
+
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    </div>
+                                    <div class="" rel="yui:event" resource="#event_ready">
+                                    <h4>
+                                        <a name="event_ready">ready</a></h4>
+                                    <div class="detail">
+                                        <code>
+                                        
+                                        
+                                        
+                                            <strong property="yui:name">ready</strong>
+
+                                            (
+                                                
+                                                        
+                                                         event
+                                                    
+                                                
+                                            )
+
+                                        </code>
+                                        
+                                        <div class="description" property="yui:description">
+                                            Signals the moment when a node become ready, right after the 
+html injecting and the execution of the scripts.
+                                        </div>
+
+                                        <div class="description">
+
+
+                                                <dl rel="yui:parameters">
+                                                    <dt>Parameters:</dt>
+                                                        <dd rel="yui:parameter">
+                                                            <code><span property="yui:name">event</span>
+                                                                &lt;<span property="yui:type">Event.Facade</span>&gt;
+                                                            </code>
+                                                            <span property="yui:description">  An Event Facade object</span>
                                                         </dd>
                                                         
                                                 </dl>
@@ -598,6 +857,7 @@ injecting the code into the DOM, then executing the scripts.
                         <ul class="content">        
                                 <li class="protected"><a href="#method__dispatch" title="_dispatch">_dispatch</a></li>
                                 <li class="protected"><a href="#method__fetch" title="_fetch">_fetch</a></li>
+                                <li class="protected"><a href="#method__initEvents" title="_initEvents">_initEvents</a></li>
                                 <li class=""><a href="#method_stop" title="stop">stop</a></li>
                         </ul>
                     </div>
@@ -606,9 +866,14 @@ injecting the code into the DOM, then executing the scripts.
                         <h4>Events</h4>
                         <ul class="content">        
                                 <li class=""><a href="#event_autopurgeChange" title="autopurgeChange">autopurgeChange</a></li>
+                                <li class=""><a href="#event_beforeExecute" title="beforeExecute">beforeExecute</a></li>
                                 <li class=""><a href="#event_contentChange" title="contentChange">contentChange</a></li>
+                                <li class=""><a href="#event_fetch" title="fetch">fetch</a></li>
+                                <li class=""><a href="#event_load" title="load">load</a></li>
                                 <li class=""><a href="#event_loadingChange" title="loadingChange">loadingChange</a></li>
                                 <li class=""><a href="#event_nodeChange" title="nodeChange">nodeChange</a></li>
+                                <li class=""><a href="#event_purge" title="purge">purge</a></li>
+                                <li class=""><a href="#event_ready" title="ready">ready</a></li>
                                 <li class=""><a href="#event_uriChange" title="uriChange">uriChange</a></li>
                         </ul>
                     </div>
@@ -633,7 +898,7 @@ injecting the code into the DOM, then executing the scripts.
 	</div>
 </div>
 <script type="text/javascript">
-    ALL_YUI_PROPS = [{"url": "Y.Dispatcher.html#config_autopurge", "access": "", "host": "Y.Dispatcher", "type": "config", "name": "autopurge"}, {"url": "Y.Dispatcher.html#event_autopurgeChange", "access": "", "host": "Y.Dispatcher", "type": "event", "name": "autopurgeChange"}, {"url": "Y.Dispatcher.html#config_content", "access": "", "host": "Y.Dispatcher", "type": "config", "name": "content"}, {"url": "Y.Dispatcher.html#event_contentChange", "access": "", "host": "Y.Dispatcher", "type": "event", "name": "contentChange"}, {"url": "Y.Dispatcher.html#method__dispatch", "access": "protected", "host": "Y.Dispatcher", "type": "method", "name": "_dispatch"}, {"url": "Y.Dispatcher.html#method__fetch", "access": "protected", "host": "Y.Dispatcher", "type": "method", "name": "_fetch"}, {"url": "Y.Dispatcher.html#config_loading", "access": "", "host": "Y.Dispatcher", "type": "config", "name": "loading"}, {"url": "Y.Dispatcher.html#event_loadingChange", "access": "", "host": "Y.Dispatcher", "type": "event", "name": "loadingChange"}, {"url": "Y.Dispatcher.html#config_node", "access": "", "host": "Y.Dispatcher", "type": "config", "name": "node"}, {"url": "Y.Dispatcher.html#event_nodeChange", "access": "", "host": "Y.Dispatcher", "type": "event", "name": "nodeChange"}, {"url": "Y.Dispatcher.html#method_stop", "access": "", "host": "Y.Dispatcher", "type": "method", "name": "stop"}, {"url": "Y.Dispatcher.html#config_uri", "access": "", "host": "Y.Dispatcher", "type": "config", "name": "uri"}, {"url": "Y.Dispatcher.html#event_uriChange", "access": "", "host": "Y.Dispatcher", "type": "event", "name": "uriChange"}, {"url": "Y.Dispatcher.html#property_Y.Dispatcher.ATTRS", "access": "", "host": "Y.Dispatcher", "type": "property", "name": "Y.Dispatcher.ATTRS"}];
+    ALL_YUI_PROPS = [{"url": "Y.Dispatcher.html#config_autopurge", "access": "", "host": "Y.Dispatcher", "type": "config", "name": "autopurge"}, {"url": "Y.Dispatcher.html#event_autopurgeChange", "access": "", "host": "Y.Dispatcher", "type": "event", "name": "autopurgeChange"}, {"url": "Y.Dispatcher.html#event_beforeExecute", "access": "", "host": "Y.Dispatcher", "type": "event", "name": "beforeExecute"}, {"url": "Y.Dispatcher.html#config_content", "access": "", "host": "Y.Dispatcher", "type": "config", "name": "content"}, {"url": "Y.Dispatcher.html#event_contentChange", "access": "", "host": "Y.Dispatcher", "type": "event", "name": "contentChange"}, {"url": "Y.Dispatcher.html#method__dispatch", "access": "protected", "host": "Y.Dispatcher", "type": "method", "name": "_dispatch"}, {"url": "Y.Dispatcher.html#method__fetch", "access": "protected", "host": "Y.Dispatcher", "type": "method", "name": "_fetch"}, {"url": "Y.Dispatcher.html#event_fetch", "access": "", "host": "Y.Dispatcher", "type": "event", "name": "fetch"}, {"url": "Y.Dispatcher.html#method__initEvents", "access": "protected", "host": "Y.Dispatcher", "type": "method", "name": "_initEvents"}, {"url": "Y.Dispatcher.html#event_load", "access": "", "host": "Y.Dispatcher", "type": "event", "name": "load"}, {"url": "Y.Dispatcher.html#config_loading", "access": "", "host": "Y.Dispatcher", "type": "config", "name": "loading"}, {"url": "Y.Dispatcher.html#event_loadingChange", "access": "", "host": "Y.Dispatcher", "type": "event", "name": "loadingChange"}, {"url": "Y.Dispatcher.html#config_node", "access": "", "host": "Y.Dispatcher", "type": "config", "name": "node"}, {"url": "Y.Dispatcher.html#event_nodeChange", "access": "", "host": "Y.Dispatcher", "type": "event", "name": "nodeChange"}, {"url": "Y.Dispatcher.html#event_purge", "access": "", "host": "Y.Dispatcher", "type": "event", "name": "purge"}, {"url": "Y.Dispatcher.html#event_ready", "access": "", "host": "Y.Dispatcher", "type": "event", "name": "ready"}, {"url": "Y.Dispatcher.html#method_stop", "access": "", "host": "Y.Dispatcher", "type": "method", "name": "stop"}, {"url": "Y.Dispatcher.html#config_uri", "access": "", "host": "Y.Dispatcher", "type": "config", "name": "uri"}, {"url": "Y.Dispatcher.html#event_uriChange", "access": "", "host": "Y.Dispatcher", "type": "event", "name": "uriChange"}, {"url": "Y.Dispatcher.html#property_Y.Dispatcher.ATTRS", "access": "", "host": "Y.Dispatcher", "type": "property", "name": "Y.Dispatcher.ATTRS"}];
 </script>
 </body>
 </html>
