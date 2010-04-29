@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<head>
+  <title>Using Y.preload</title>
+  <!-- YUI 3 Seed //-->
+  <script type="text/javascript" src="http://yui.yahooapis.com/3.1.0/build/yui/yui-debug.js"></script>
+</head>
+<body class="yui3-skin-sam">
+  
+    <div id="doc">
+      
+      <h1>Preloading CSS, JS and PNG files</h1>
+      <p>Check the console or the NET tab to verify that the files get loaded correctly.</p>
+
+    </div>
+    
+<!-- Initialization process //-->
+<script src="../js-demo/gallery-preload.js"></script>
+<script type="text/javascript">
+YUI({
+    combine: false,
+    filter: 'debug',
+    useConsole: true
+}).use('gallery-preload', function(Y) {
+    
+    // single argument (an array) with multiple files 
+    Y.preload ([
+        'http://tools.w3clubs.com/pagr2/1.sleep.expires.png',
+        'http://tools.w3clubs.com/pagr2/1.sleep.expires.js',
+        'http://tools.w3clubs.com/pagr2/1.sleep.expires.css'
+    ]);
+ 
+    // multiple arguments, each represents an url
+    Y.preload (
+        'http://tools.w3clubs.com/pagr2/2.sleep.expires.png', 
+        'http://tools.w3clubs.com/pagr2/2.sleep.expires.js', 
+        'http://tools.w3clubs.com/pagr2/2.sleep.expires.css'
+    );
+
+});
+</script>
+</body>
+</html>
