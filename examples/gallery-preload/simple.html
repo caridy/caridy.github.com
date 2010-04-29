@@ -36,6 +36,13 @@ YUI({
         'http://tools.w3clubs.com/pagr2/2.sleep.expires.js', 
         'http://tools.w3clubs.com/pagr2/2.sleep.expires.css'
     );
+    
+    // multiple arguments, each represents an url
+    Y.preloadOnIdle ([
+        'http://tools.w3clubs.com/pagr2/3.sleep.expires.png', 
+        'http://tools.w3clubs.com/pagr2/3.sleep.expires.js', 
+        'http://tools.w3clubs.com/pagr2/3.sleep.expires.css'
+    ], 100);
 
 });
 </script>
