@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title></title>
+	<meta name="generator" content="Studio 3 http://aptana.com/">
+	<meta name="author" content="caridy">
+	<!-- Date: 2010-05-13 -->
+</head>
+<body>
+	<div id="doc" style="border: 1px solid red; ">
+		container area: <br />
+		<div id="d1">node 1</div>
+		<div id="d2">node 2</div>
+	</div>
+	<div id="d3">node 3</div>
+	<p>Container represents the AREA to clean up. Node 1 and Node 2 are nodes that should be destroyed before destroying the area node.</p>
+<script type="text/javascript" src="http://yui.yahooapis.com/3.1.0/build/yui/yui-min.js"></script>
+<script>	
+YUI().use('node', function (Y) { 
+
+  var area = Y.one ('#doc');
+
+  function _getCache () {
+  	var s = '';
+  	Y.each(Y.Node._instances, function (n) {
+  		s += n.get('id')+', ';
+  	});
+  	return s;
+  };
+
+  Y.one ('#d1');
+  Y.one ('#d2');
+  Y.one ('#d3');
+    
+  console.log ('Initial Nodes (in cache): ', _getCache());
+
+  Y.each(Y.Node._instances, function(n) {
+ 
+    console.log ('Checking is this node is a child of [area]: ', n.get('id'));
+
+    if (Y.DOM.ancestor(n._node, function(p) {
+    	return (area._node === p);
+    })) {
+    	console.log ('Destroying: ', n.get('id'));
+    	n.destroy();
+    }
+  });
+
+  console.log ('Nodes (in cache) after cleaning up the content of [area]: ',  _getCache());
+
+  area.destroy();
+  area = null; // garbage collector should be able to clean up the memory for area node now.
+
+  console.log ('Nodes (in cache) after destroying [area]: ',  _getCache());
+
+
+});
+</script>
+</body>
+</html>
