@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+	<title>Real YUI2 Sandbox implementation using YUI 3 Loading Approach (yui 2in3)</title>
+   	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		
+	<!-- YUI Loader, version 2.8.1 -->
+	<script src="http://yui.yahooapis.com/3.1.1/build/yui/yui-min.js"></script>
+
+</head>
+<body class="yui-skin-sam">
+
+	<h1>Treview using YUI 2.8.1:</h1>
+	<div id="treediv1"></div>
+	<hr />
+	<h1>Tabview using YUI 2.8.0r4:</h1>
+	<div id="tabview2"></div>
+
+		<script>
+			YUI({
+				'yui2': '2.8.1',
+				'2in3': '3'
+			}).use("yui2-treeview", function(Y) {
+				var ref = Y.YUI2;
+				ref.util.Event.onAvailable("treediv1", function() {
+						var tree = new ref.widget.TreeView("treediv1");
+						var n = new ref.widget.TextNode("node 1", tree.getRoot());
+						new ref.widget.TextNode("node 2", n);
+						new ref.widget.TextNode("node 3", n);
+						tree.draw();
+				});
+			});
+		</script>
+		
+		<script>
+			YUI({
+				'yui2': '2.8.0r4',
+				'2in3': '3'
+			}).use("yui2-tabview", function(Y) {
+				var ref = Y.YUI2;
+				ref.util.Event.onAvailable("tabview2", function() {
+						var myTabs = new ref.widget.TabView();
+ 
+						myTabs.addTab( new ref.widget.Tab({
+						    label: 'Tab One Label',
+						    content: '<p>Tab One Content</p>',
+						    active: true
+						}));
+						 
+						myTabs.addTab( new ref.widget.Tab({
+						    label: 'Tab Two Label',
+						    content: '<p>Tab Two Content</p>'
+						}));
+						 						 
+						myTabs.appendTo('tabview2');
+				});
+			});
+		</script>
+
+</body>
