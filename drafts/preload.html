@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Untitled Document</title>
+</head>
+
+<body>
+<p>Few days ago, Stoyan Stefanov (<a href="http://twitter.com/stoyanstefanov/">@stoyanstefanov</a>) published the result of <a href="http://www.phpied.com/preload-cssjavascript-without-execution/">his research about preloading components in advance without executing them</a>. This technique can help improve the performance of the successive pages, if these components can be cached ahead of time.</p>
+<p>Stoyan’s script relies on “Image” for IE and “Object” for the rest of the Browsers. We decided to port it to <a href="http://developer.yahoo.com/yui/3/">YUI 3</a> thru the “<a href="http://yuilibrary.com/gallery/">Gallery</a>”, the new module is called &quot;<a href="http://yuilibrary.com/gallery/show/preload">gallery-preload</a>&quot;, and is now available thru the <a href="http://developer.yahoo.com/yui/3/yui/#loader">YUI Loader</a>. </p>
+<p>Let’s see a <a href="http://caridy.github.com/examples/gallery-preload/simple.html">preload example</a>:</p>
+<pre>YUI().use('gallery-preload', function(Y) {<br />
+  Y.preload ([<br />
+    'http://tools.w3clubs.com/pagr2/1.sleep.expires.png',<br />
+    'http://tools.w3clubs.com/pagr2/1.sleep.expires.js',<br />
+    'http://tools.w3clubs.com/pagr2/1.sleep.expires.css'<br />
+  ]); <br />
+});</pre>
+<p><strong>How this module will help to improve the user experience? </strong></p>
+<p>Now days, web applications have a huge footprint in terms of <em>Javascript</em>, <em>CSS</em> and <em>Images</em>. Most of these are serviced thru a CDN, hence cacheable. Once a file gets downloaded and cached, the browser doesn’t need to download the same file in successive pages. But still we have a big impact in the initial page.</p>
+<p>Recent studies suggest that &quot;<em>0.1 second [100ms] is about the limit for having the user feel that the system is reacting instatntaneouly, more than that will make the user impatient (Jakob Nielsen)</em>&quot;. And the same happens for the loading process, if it takes too long, the user will probably close the window. So, to make sure that our application runs fast we need to be ahead of our users.</p>
+<p>In the case of applications like <em>Facebook</em> or <em>Gmail</em>, the user has to log-in first. This is a classic scenario to apply “preloading”. We can estimate that every user will spend between 5 and 10 seconds in the login page. Even more if they need to type the username and password. During this time, our application is normally waiting for the user input. If we can use this time to load cacheable files in background, once the user log-in, the browser will not need to re-load some of the scripts that this new page requires, because they were cached in advance.</p>
+<p>This is a technique that many has being using for a while, but, as Stoyan pointed out, it’s hard to do it without executing the script, or injecting the CSS, or displaying the image. And in most of the cases, these files will not play nicely with the login page.  So, in order to avoid conflicts, and minimizing the time to put this solution in place, we should guarantee that these files get included in the cache without using them in the current page.</p>
+<p><strong>The following video shows a live example:</strong></p>
+<p><strong>[TBD]</strong></p>
+<p>It's important to clarify that this process is completely harmless, and even if the user navigate to another page or stop the loading process before the files get downloaded and cached, the fallback is always in place, and the second page will try to load the file directly.</p>
+<p>We also include a more advanced feature for those who want to be less aggressive. The module includes a built-in integration with <a href="http://yuilibrary.com/gallery/show/idletimer">Nicholas Zakas’ Timer Idle module</a>, allowing us to preload files only if the user is inactive for a while. Here is an example:</p>
+
+<pre>YUI().use('gallery-preload', function(Y) {<br />
+  // preload files only when the user is idle for at least 100ms<br />
+  Y.preloadOnIdle ([<br />
+    'http://tools.w3clubs.com/pagr2/3.sleep.expires.png', <br />
+    'http://tools.w3clubs.com/pagr2/3.sleep.expires.js', <br />
+    'http://tools.w3clubs.com/pagr2/3.sleep.expires.css'<br />
+  ], 100); <br />
+});</pre>
+<p><strong>Conclusions:</strong></p>
+<p>TBD</p>
+</body>
+</html>
