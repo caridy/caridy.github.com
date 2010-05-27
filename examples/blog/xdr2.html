@@ -1,0 +1,17 @@
+<!doctype html>
+<html>
+  <head>
+    <script src="http://yui.yahooapis.com/2.8.1/build/yahoo/yahoo.js"></script>
+    <script src="http://yui.yahooapis.com/2.8.1/build/event/event.js"></script>
+    <script src="http://yui.yahooapis.com/2.8.1/build/connection/connection.js"></script>
+  </head>
+  <body>
+    <script language="javascript">
+      YAHOO.util.Connect.xdrReadyEvent.subscribe(function() {
+          alert("xdrReadyEvent");
+      });
+      YAHOO.util.Connect.transport("http://developer.yahoo.com/yui/build/connection/connection.swf");
+    </script>
+    <p>Testing</p>
+  </body>
+</html>
