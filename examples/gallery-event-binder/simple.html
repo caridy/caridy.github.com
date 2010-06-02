@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+<head>
+<title>Using Event Binder</title>
+<script>
+YUI_config = {
+	eventbinder: {
+		fn: function (e) {
+			var classCheck = /yui3-event-binder/,
+				container = target = (e.target)? e.target : e.srcElement;
+				
+			while (container && !classCheck.test(container.className)) {
+				container = container.parentNode;
+			}
+			
+			if (container) {
+				container.className+=' yui3-binding';
+				YUI_config.eventbinder.q.push({type: e.type, e: e, t: target});
+				e.preventDefault?e.preventDefault():e;
+				return (e.returnValue = false);
+			}
+		},
+		add: function (type) {
+			d = document;
+			this.q = this.q || [];
+			if (d.addEventListener) {
+				d.addEventListener(type, this.fn, false);
+			}
+			else {
+				d.attachEvent('on'+type, this.fn);
+			}
+			return this;
+		}
+	}
+};
+YUI_config.eventbinder.add('click');
+</script>
+</head>
+<body class="yui3-skin-sam">
+	
+    <div id="doc">
+    	
+		<h1>Using Gallery Event Binder</h1>
+		
+		<div id="demo" class="yui3-event-binder">
+			<p>Placeholder for <a href="http://yuilibrary.com/">click</a> listener</p>
+		</div>
+		
+    </div>
+
+<!-- YUI 3 Seed //-->
+<script type="text/javascript" src="http://yui.yahooapis.com/3.1.1/build/yui/yui-min.js"></script>
+<!-- Initialization process //-->
+<script type="text/javascript" src="../js-demo/event-binder.js"></script>
+<script type="text/javascript">
+YUI({
+    useBrowserConsole: true
+}).use('gallery-event-binder', 'event', function(Y) {
+
+	Y.later (3000, {}, function() {
+
+		Y.on('click', function(e) {
+			Y.log ('clicked ['+Math.random()+'] - Targer: '+ e.target.get('tagName'));
+			e.halt();
+		}, '#demo');
+
+		Y.log ('flushing');
+		Y.EventBinder.flush('click');
+		Y.log ('ready');
+
+	});
+ 
+});
+</script>
+</body>
+</html>
