@@ -52,11 +52,13 @@ YUI_config.eventbinder.add('click');
     </div>
 
 <!-- YUI 3 Seed //-->
-<script type="text/javascript" src="http://yui.yahooapis.com/3.1.1/build/yui/yui-min.js"></script>
+<script type="text/javascript" src="http://yui.yahooapis.com/3.1.1/build/yui/yui-debug.js"></script>
 <!-- Initialization process //-->
 <script type="text/javascript" src="../js-demo/event-binder.js"></script>
 <script type="text/javascript">
-YUI().use('gallery-event-binder', 'event', 'node', function(Y) {
+YUI({
+	filter: 'debug', combine: false
+}).use('gallery-event-binder', 'event', 'node', function(Y) {
 
 	var ul = Y.one ('#output');
 	ul.append('<li>waiting 3000ms to flush the events</li>');
