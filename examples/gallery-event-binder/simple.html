@@ -6,16 +6,21 @@
 YUI_config = {
 	eventbinder: {
 		fn: function (e) {
-			var classCheck = /yui3-event-binder/,
-				container = target = (e.target)? e.target : e.srcElement;
-				
+			var classCheck = /yui3-event-binder/, i, p = {},
+				container = p.target = (e.target)? e.target : e.srcElement;
+			
 			while (container && !classCheck.test(container.className)) {
 				container = container.parentNode;
 			}
 			
 			if (container) {
 				container.className+=' yui3-binding';
-				YUI_config.eventbinder.q.push({type: e.type, e: e, t: target});
+				for (i in e) {
+					if (e.hasOwnProperty(i)) {
+						p[i] = (e[i]);
+					}
+				}
+				YUI_config.eventbinder.q.push(p);
 				e.preventDefault?e.preventDefault():e;
 				return (e.returnValue = false);
 			}

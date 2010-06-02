@@ -50,7 +50,7 @@ Y.EventBinder = {
 		Y.each(config.q, function(o) {
 			
 			if (type == o.type) {
-				Y.Event.simulate(o.t, type, (new Y.DOMEventFacade(o.e, type)));
+				Y.Event.simulate(o.target, type, o);
 			}
 		});
 	}
