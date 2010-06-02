@@ -46,6 +46,9 @@ YUI_config.eventbinder.add('click');
 			<p>Placeholder for <a href="http://yuilibrary.com/">click</a> listener</p>
 		</div>
 		
+		<h3>Output:</h3>
+		<ul id="output"></ul>
+		
     </div>
 
 <!-- YUI 3 Seed //-->
@@ -53,20 +56,21 @@ YUI_config.eventbinder.add('click');
 <!-- Initialization process //-->
 <script type="text/javascript" src="../js-demo/event-binder.js"></script>
 <script type="text/javascript">
-YUI({
-    useBrowserConsole: true
-}).use('gallery-event-binder', 'event', function(Y) {
+YUI().use('gallery-event-binder', 'event', 'node', function(Y) {
 
+	var ul = Y.one ('#output');
+	ul.append('<li>waiting 3000ms to flush the events</li>');
+	
 	Y.later (3000, {}, function() {
 
 		Y.on('click', function(e) {
-			Y.log ('clicked ['+Math.random()+'] - Targer: '+ e.target.get('tagName'));
+			ul.append('<li>clicked - Targer: '+ e.target.get('tagName')+'</li>');
 			e.halt();
 		}, '#demo');
 
-		Y.log ('flushing');
+		ul.append('<li>flushing</li>');
 		Y.EventBinder.flush('click');
-		Y.log ('ready');
+		ul.append('<li>finish</li>');
 
 	});
  
