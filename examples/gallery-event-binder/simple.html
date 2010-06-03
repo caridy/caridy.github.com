@@ -15,11 +15,23 @@ YUI_config = {
 			
 			if (container) {
 				container.className+=' yui3-binding';
-				for (i in e) {
-					if (e.hasOwnProperty(i)) {
-						p[i] = (e[i]);
-					}
-				}
+				  p.bubbles = e.bubbles;
+  p.cancelable = e.cancelable;
+  p.view = e.view;
+  p.screenX = e.screenX;
+  p.screenY = e.screenY;
+  p.clientX = e.clientX;
+  p.clientY = e.clientY;
+  p.ctrlKey = e.ctrlKey;
+  p.altKey = e.altKey;
+  p.shiftKey = e.shiftKey;
+  p.metaKey = e.metaKey;
+  p.button = e.button;
+  p.relatedTarget = e.relatedTarget;
+  p.target = e.target;
+  p.type = e.type;
+  p.keyCode = e.keyCode;
+  p.charCode = e.charCode;
 				YUI_config.eventbinder.q.push(p);
 				e.preventDefault?e.preventDefault():e;
 				return (e.returnValue = false);
