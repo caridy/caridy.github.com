@@ -16,7 +16,7 @@ YUI_config = {
 			if (container) {
 				container.className+=' yui3-binding';
 				for (i in p) {
-				  if (p.hasOwnProperty(i)) {
+				  if (p.hasOwnProperty(i) && !p[i]) {
 				    p[i] = e[i];
 			    }
 				}
