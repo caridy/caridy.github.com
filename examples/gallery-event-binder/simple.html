@@ -6,7 +6,7 @@
 YUI_config = {
 	eventbinder: {
 		fn: function (e) {
-			var classCheck = /yui3-event-binder/, i, p = {},
+			var classCheck = /yui3-event-binder/, i, p = {screenX:0, screenY:0, clientX:0, clientY:0, ctrlKey:0, altKey:0, shiftKey:0, metaKey:0, button:0, relatedTarget:0, type:0, keyCode:0, charCode:0},
 				container = p.target = (e.target)? e.target : e.srcElement;
 			
 			while (container && !classCheck.test(container.className)) {
@@ -15,20 +15,11 @@ YUI_config = {
 			
 			if (container) {
 				container.className+=' yui3-binding';
-        p.view = e['view'];
-        p.screenX = e['screenX'];
-        p.screenY = e['screenY'];
-        p.clientX = e['clientX'];
-        p.clientY = e['clientY'];
-        p.ctrlKey = e['ctrlKey'];
-        p.altKey = e['altKey'];
-        p.shiftKey = e['shiftKey'];
-        p.metaKey = e['metaKey'];
-        p.button = e['button'];
-        p.relatedTarget = e['relatedTarget'];
-        p.type = e['type'];
-        p.keyCode = e['keyCode'];
-        p.charCode = e['charCode'];
+				for (i in p) {
+				  if (p.hasOwnProperty(i)) {
+				    p[i] = e[i];
+			    }
+				}
 				YUI_config.eventbinder.q.push(p);
 				e.preventDefault?e.preventDefault():e;
 				return (e.returnValue = false);
