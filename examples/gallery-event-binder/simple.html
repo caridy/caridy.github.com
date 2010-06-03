@@ -5,29 +5,39 @@
 <script>
 YUI_config = {
 	eventbinder: {
+	  // set of options that should be preserved for every event (they are all optional)
+	  e: {ctrlKey:0, altKey:0, shiftKey:0, metaKey:0, keyCode:0, charCode:0, screenX:0, screenY:0, clientX:0, clientY:0, button:0, relatedTarget:0},
+		// listener callback function
 		fn: function (e) {
-			var classCheck = /yui3-event-binder/, i, p = {screenX:0, screenY:0, clientX:0, clientY:0, ctrlKey:0, altKey:0, shiftKey:0, metaKey:0, button:0, relatedTarget:0, type:0, keyCode:0, charCode:0},
-				container = p.target = (e.target)? e.target : e.srcElement;
-			
+			var o = YUI_config.eventbinder,
+			    classCheck = /yui3-event-binder/, i, 
+			    t = (e.target?e.target:e.srcElement),
+			    p = {target:t, type: e.type},
+				  container = t;
+
+			// looking for an element with the class yui3-event-binder
 			while (container && !classCheck.test(container.className)) {
 				container = container.parentNode;
 			}
-			
+
 			if (container) {
-				container.className+=' yui3-binding';
-				for (i in p) {
-				  if (p.hasOwnProperty(i) && !p[i]) {
+				t.className+=' yui3-waiting';
+
+				// backing up the event properties to simulate the event later on
+				for (i in (o.e||{})) {
+				  if (o.e.hasOwnProperty(i)) {
 				    p[i] = e[i];
 			    }
 				}
-				YUI_config.eventbinder.q.push(p);
+				(o.q = o.q || []).push(p);
+
+				// preventing the default browser action for this event
 				e.preventDefault?e.preventDefault():e;
 				return (e.returnValue = false);
 			}
 		},
 		add: function (type) {
 			d = document;
-			this.q = this.q || [];
 			if (d.addEventListener) {
 				d.addEventListener(type, this.fn, false);
 			}

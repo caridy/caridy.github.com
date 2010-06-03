@@ -50,6 +50,7 @@ Y.EventBinder = {
 		Y.each(config.q, function(o) {
 			
 			if (type == o.type) {
+				Y.get(o.target).removeClass('yui3-waiting');
 				Y.Event.simulate(o.target, type, o);
 			}
 		});
