@@ -2,54 +2,19 @@
 <html>
 <head>
 <title>Using Event Binder</title>
+<style>
+.yui3-event-binder a.yui3-waiting {
+  background: url(http://www.sanbaldo.com/wordpress/wp-content/tiny_red.gif) left no-repeat;
+  padding-left: 15px;
+}
+</style>
 <script>
 YUI_config = {
-	eventbinder: {
-	  // set of options that should be preserved for every event (they are all optional)
-	  e: {ctrlKey:0, altKey:0, shiftKey:0, metaKey:0, keyCode:0, charCode:0, screenX:0, screenY:0, clientX:0, clientY:0, button:0, relatedTarget:0},
-		// listener callback function
-		fn: function (e) {
-			var o = YUI_config.eventbinder,
-			    classCheck = /yui3-event-binder/, i, 
-			    t = (e.target?e.target:e.srcElement),
-			    p = {target:t, type: e.type},
-				  container = t;
-
-			// looking for an element with the class yui3-event-binder
-			while (container && !classCheck.test(container.className)) {
-				container = container.parentNode;
-			}
-
-			if (container) {
-				t.className+=' yui3-waiting';
-
-				// backing up the event properties to simulate the event later on
-				for (i in (o.e||{})) {
-				  if (o.e.hasOwnProperty(i)) {
-				    p[i] = e[i];
-			    }
-				}
-				(o.q = o.q || []).push(p);
-
-				// preventing the default browser action for this event
-				e.preventDefault?e.preventDefault():e;
-				return (e.returnValue = false);
-			}
-		},
-		add: function (type) {
-			d = document;
-			if (d.addEventListener) {
-				d.addEventListener(type, this.fn, false);
-			}
-			else {
-				d.attachEvent('on'+type, this.fn);
-			}
-			return this;
-		}
-	}
+	filter: 'min', 
+	combine: true
 };
-YUI_config.eventbinder.add('click');
 </script>
+<script type="text/javascript" src="my-yui-config.js"></script>
 </head>
 <body class="yui3-skin-sam">
 	
@@ -67,18 +32,16 @@ YUI_config.eventbinder.add('click');
     </div>
 
 <!-- YUI 3 Seed //-->
-<script type="text/javascript" src="http://yui.yahooapis.com/3.1.1/build/yui/yui-debug.js"></script>
+<script type="text/javascript" src="http://yui.yahooapis.com/3.1.1/build/yui/yui-min.js"></script>
 <!-- Initialization process //-->
 <script type="text/javascript" src="../js-demo/event-binder.js"></script>
 <script type="text/javascript">
-YUI({
-	filter: 'debug', combine: false
-}).use('gallery-event-binder', 'event', 'node', function(Y) {
+YUI().use('gallery-event-binder', 'event', 'node', function(Y) {
 
 	var ul = Y.one ('#output');
-	ul.append('<li>waiting 3000ms to flush the events</li>');
+	ul.append('<li>waiting 5000ms to flush the events</li>');
 	
-	Y.later (3000, {}, function() {
+	Y.later (5000, {}, function() {
 
 		Y.on('click', function(e) {
 			ul.append('<li>clicked - Targer: '+ e.target.get('tagName')+'</li>');
