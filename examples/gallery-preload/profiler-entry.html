@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+<head>
+  <title>Y.preload - Profiler Entry Point</title>
+  <!-- YUI 3 Seed //-->
+  <script type="text/javascript" src="http://yui.yahooapis.com/3.1.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+  
+    <div id="doc">
+      
+      <h1>Y.preload - Profiler</h1>
+      <h3>Option #1: </h3>
+      <form action="profiler-target.html" method="get">
+        <input type="text" value="click here to preload YUI2 and YUI3 components" size="60" id="myinput" tabindex="-1"/><br />
+        <input type="submit" value="GO">
+      </form>
+      <h3>Option #2: </h3>
+      <p><a href="profiler-target.html">Click here</a> to go to the target page without preloading YUI2 and YUI3 components.</p>
+      <br />
+      <p style="color: red;"><em>Note: Please, clear the cache before running this example.</em></p>
+
+    </div>
+    
+<!-- Initialization process //-->
+<script type="text/javascript">
+YUI({
+    //Last Gallery Build of this module
+    gallery: 'gallery-2010.05.05-19-39'
+}).use('event-focus', 'gallery-preload', function(Y) {
+
+	var YUI3combo = 'http://yui.yahooapis.com/combo?3.1.0/build/oop/oop.js&3.1.0/build/pluginhost/pluginhost.js&3.1.0/build/attribute/attribute.js&3.1.0/build/base/base.js&3.1.0/build/event/event-base.js&3.1.0/build/dom/dom.js&3.1.0/build/node/node.js&3.1.0/build/event/event-delegate.js&3.1.0/build/anim/anim.js&3.1.0/build/event/event-focus.js&3.1.0/build/widget/widget.js&3.1.0/build/dump/dump.js&3.1.0/build/substitute/substitute.js&3.1.0/build/event/event-mouseenter.js&3.1.0/build/event/event-resize.js&3.1.0/build/dd/dd.js&3.1.0/build/slider/slider.js&3.1.0/build/widget/widget-child.js&3.1.0/build/collection/arraylist.js&3.1.0/build/widget/widget-parent.js&3.1.0/build/plugin/plugin.js&3.1.0/build/event-simulate/event-simulate.js&3.1.0/build/node/node-event-simulate.js&3.1.0/build/event/event-key.js&3.1.0/build/tabview/tabview.js&3.1.0/build/widget-anim/widget-anim.js&3.1.0/build/widget/widget.js&3.1.0/build/tabview/tabview-plugin.js&3.1.0/build/swfdetect/swfdetect.js&3.1.0/build/swf/swf.js&3.1.0/build/sortable/sortable.js&3.1.0/build/stylesheet/stylesheet.js&3.1.0/build/node/shim-plugin.js&3.1.0/build/overlay/overlay.js&3.1.0/build/node-menunav/node-menunav.js&3.1.0/build/json/json.js&3.1.0/build/dataschema/dataschema.js&3.1.0/build/cache/cache.js&3.1.0/build/io/io-base.js&3.1.0/build/datasource/datasource.js&3.1.0/build/history/history.js&3.1.0/build/dom/selector-css3.js&3.1.0/build/test/test.js&3.1.0/build/event-custom/event-custom.js&3.1.0/build/pluginhost/pluginhost.js&3.1.0/build/attribute/attribute.js&3.1.0/build/base/base.js&3.1.0/build/event/event-base.js&3.1.0/build/dom/dom.js&3.1.0/build/node/node.js&3.1.0/build/event/event-delegate.js&3.1.0/build/anim/anim.js&3.1.0/build/imageloader/imageloader.js&3.1.0/build/event/event-focus.js&3.1.0/build/widget/widget.js&3.1.0/build/dump/dump.js&3.1.0/build/substitute/substitute.js&3.1.0/build/event/event-mouseenter.js&3.1.0/build/event/event-resize.js&3.1.0/build/dd/dd.js&3.1.0/build/slider/slider.js&3.1.0/build/collection/arraylist.js&3.1.0/build/plugin/plugin.js&3.1.0/build/event-simulate/event-simulate.js&3.1.0/build/node/node-event-simulate.js&3.1.0/build/event/event-key.js&3.1.0/build/tabview/tabview.js&3.1.0/build/tabview/tabview-plugin.js&3.1.0/build/swfdetect/swfdetect.js&3.1.0/build/swf/swf.js&3.1.0/build/sortable/sortable.js&3.1.0/build/stylesheet/stylesheet.js&3.1.0/build/node/shim-plugin.js&3.1.0/build/overlay/overlay.js&3.1.0/build/node-menunav/node-menunav.js&3.1.0/build/json/json.js&3.1.0/build/dataschema/dataschema.js&3.1.0/build/cache/cache.js&3.1.0/build/io/io-base.js&3.1.0/build/datasource/datasource.js&3.1.0/build/history/history.js&3.1.0/build/dom/selector-css3.js';
+	
+	var YUI2combo = 'http://yui.yahooapis.com/combo?2.8.0r4/build/utilities/utilities.js&2.8.0r4/build/datasource/datasource-debug.js&2.8.0r4/build/autocomplete/autocomplete-debug.js&2.8.0r4/build/container/container-debug.js&2.8.0r4/build/menu/menu-debug.js&2.8.0r4/build/event-mouseenter/event-mouseenter-debug.js&2.8.0r4/build/selector/selector-debug.js&2.8.0r4/build/event-delegate/event-delegate-debug.js&2.8.0r4/build/button/button-debug.js&2.8.0r4/build/calendar/calendar-debug.js&2.8.0r4/build/carousel/carousel-debug.js&2.8.0r4/build/json/json-debug.js&2.8.0r4/build/swf/swf-debug.js&2.8.0r4/build/charts/charts-debug.js&2.8.0r4/build/slider/slider-debug.js&2.8.0r4/build/colorpicker/colorpicker-debug.js&2.8.0r4/build/paginator/paginator-debug.js&2.8.0r4/build/datatable/datatable-debug.js&2.8.0r4/build/editor/editor-debug.js&2.8.0r4/build/history/history-debug.js&2.8.0r4/build/resize/resize-debug.js&2.8.0r4/build/imagecropper/imagecropper-debug.js&2.8.0r4/build/imageloader/imageloader-debug.js&2.8.0r4/build/layout/layout-debug.js&2.8.0r4/build/logger/logger-debug.js&2.8.0r4/build/profiler/profiler-debug.js&2.8.0r4/build/profilerviewer/profilerviewer-debug.js&2.8.0r4/build/progressbar/progressbar-debug.js&2.8.0r4/build/tabview/tabview-debug.js&2.8.0r4/build/treeview/treeview-debug.js&2.8.0r4/build/uploader/uploader-debug.js&2.8.0r4/build/event-simulate/event-simulate-debug.js';
+	
+  // waiting until the user focuses on an input element to start loading assets
+  Y.on("focus", function() {
+    Y.preload ([YUI3combo, YUI2combo]);
+    this.set('value', 'Preloading components. Wait few seconds then go.');
+  }, "#myinput");
+});
+</script>
+</body>
+</html>
+
+
