@@ -6,68 +6,156 @@
 </head>
 
 <body>
-<p>Now that YUI 3 is out, it's stable, and it's getting some traction in the developer community. Many of these developers are getting their heads around the on-demand nature of YUI 3.
-</p>
-<p>If you're </p>
 
-<p>Few weeks ago, Stoyan Stefanov (<a href="http://twitter.com/stoyanstefanov/">@stoyanstefanov</a>) published the result of <a href="http://www.phpied.com/preload-cssjavascript-without-execution/">his research about preloading components in advance without executing them</a>. This technique can help improve the performance of the successive pages, if these components can be cached ahead of time.</p>
-<p>We decided to port it to <a href="http://developer.yahoo.com/yui/3/">YUI 3</a>, the new module is called &quot;<a href="http://yuilibrary.com/gallery/show/preload">gallery-preload</a>&quot;, and is now available through the YUI Loader. </p>
-<p>Let’s see a <a href="http://caridy.github.com/examples/gallery-preload/simple.html">preload example</a>:</p>
+<p>Now that YUI 3 is ready, it's stable, and it's getting some traction in the developers community. Many of these developers are getting their heads around the on-demand nature of YUI 3. The on-demand capabilities in YUI bring a lot of good stuff, but also some challenges, specially for high performance web applications.</p>
+
+<p>One of these challenges is to catch early user interactions. Once the browser starts rendering the page, the user can start clicking in some of the elements, even when the page is not fully loaded, and the JS initialization process (aka listener definitions) hasn't being executed yet.</p>
+
+<p>In many cases you can just streamline your initialization code, setting just listeners, then adding the logic for loading the pieces that you need for every user interaction. Recently, some Facebook engineers talk about a similar approach to improve the loading process, <a href="http://blog.reybango.com/2010/04/21/jsconf-2010-video-interviews-with-top-javascript-developers/">check this interview from Rey Bango</a> at JSConf. Here is an example for YUI 3:</p>
+
+<pre>
+YUI().use('event', function(Y) {
+    // waiting until the user focuses on an input element to start loading assets
+    Y.on("click", function(e) {
+
+      Y.use ('anim', 'io', function() {
+          // load a remote content and display it using an animation here...
+      });
+
+      e.halt(); // stopping the propagation
+    }, "#demo");
+});
+</pre>
+
+<p>This technique introduces some complexity in your code, because listeners not only have to deal with the user interaction, but also with some loading logic. Another point against this approach is that still you have to load some javascript code at the top (HEAD) in order to define at least the listener and the loading logic to catch early actions.</p> 
+
+<p>We create a module for <a href="http://developer.yahoo.com/yui/3/">YUI 3</a> to address this use-case using a different approach. Our main focus is to create a component that works without affecting your application logic. This new module is called &quot;<a href="http://yuilibrary.com/gallery/show/event-binder">gallery-event-binder</a>&quot;, and is now available through the YUI Loader. </p>
+
+<p>Let’s see an <a href="http://caridy.github.com/examples/gallery-event-binder/simple.html">event binder example</a>:</p>
+
 <pre>YUI({
     //Last Gallery Build of this module
     gallery: 'gallery-2010.05.05-19-39'
-}).use('gallery-preload', function(Y) {
-  Y.preload ([
-    'http://tools.w3clubs.com/pagr2/1.sleep.expires.png',
-    'http://tools.w3clubs.com/pagr2/1.sleep.expires.js',
-    'http://tools.w3clubs.com/pagr2/1.sleep.expires.css'
-  ]); 
+}).use('gallery-event-binder', 'event', function(Y) {
+
+    Y.on('click', function(e) {
+
+        // do your stuff here
+        e.halt(); // stop the event propagation if you want...
+
+    }, '#demo');
+
+    // flush early user interactions
+    Y.EventBinder.flush('click');
+
 });</pre>
-<p><strong>How this module will help to improve the user experience? </strong></p>
-<p>Now days, web applications have a huge footprint in terms of <em>Javascript</em>, <em>CSS</em> and <em>Images</em>. Most of these files are serviced through a CDN, hence cacheable. Once a file gets downloaded and cached, the browser doesn’t need to download the same file in successive pages. But still we have a big impact in the initial page.</p>
-<p>Recent studies suggest that &quot;<em>0.1 second [100ms] is about the limit for having the user feel that the system is reacting instantaneously, more than that will make the user impatient (Jakob Nielsen)</em>&quot;. And the same happens for the loading process, if it takes too long, the user will probably close the window. So, to make sure that our application runs fast we need to be ahead of our users.</p>
-<p>Web Applications like <em>Facebook</em> or <em>Gmail</em>, the user has to log-in first. This is a classic scenario to apply “preloading”. We can estimate that every user will spend between 5 and 10 seconds interacting with a form. During this time, our application is doing nothing. If we can use this time to load cacheable files in background, once the user log-in, the browser will not need to re-load some of the scripts that this new page requires, because they were cached in advance. In general, any web application with a form can leverage the technique, because 90+% of the users will head to the form's target page.</p>
-<p>Some folks have used this technique for a while, but, as Stoyan pointed out, it’s hard to do it without executing the script, or injecting the CSS, or displaying the image. And in most of the cases, these files will not play nicely with the initial page. So, in order to avoid conflicts, and minimizing the time to put this solution in place, we should guarantee that these files get included in the cache without using them in the current page.</p>
-<p>This process is completely harmless, and even if the user navigate or stop the loading process before the files get downloaded and cached, the fallback is always in place, and the second page will try to load the file directly.</p>
-<p><strong>The following code shows how to implement this approach:</strong></p>
-<pre>YUI({
-    //Last Gallery Build of this module
-    gallery: 'gallery-2010.05.05-19-39'
-}).use('event-focus', 'gallery-preload', function(Y) {
-  // waiting until the user focuses on an input element to start loading assets
-  Y.on("focus", function() {
-    Y.preload ([
-      'http://tools.w3clubs.com/pagr2/2.sleep.expires.png', 
-      'http://tools.w3clubs.com/pagr2/2.sleep.expires.js', 
-      'http://tools.w3clubs.com/pagr2/2.sleep.expires.css'
-    ]);
-  }, ".myform input.query");
-});</pre>
-<p>This piece of code waits until the user focuses on one of the form input elements to start loading assets that will be used in the form's target page. This will improve the loading time of the page once the user submits the form.</p>
-<p><strong>Check the differences between accessing a page directly, or preloading a set of YUI2/YUI3 components ahead of time:</strong></p>
 
-<p><img src="preload/without-cache.jpg" /></p>
+<p>In this example, YUI Loader will try to load "gallery-event-binder" and "event" modules on-demand, and once they both get ready, along with their dependencies, the code within the callback function (3rd argument) will be execute. During the execution, a listener is set for an element with id=demo. The trick here is that once "Y.EventBinder.flush('click')" gets called, the system will flush some of the "click" events that might happened before this initialization code gets executed.</p>
 
-<p><img src="preload/with-cache.jpg" /></p>
+<p><strong>The configuration</strong></p>
 
-<p>Including few lines of codes to preload these set of components ahead makes this page to load 4 times faster. No changes required in the logic of your application, and no change in the target page. Isn't that amazing?</p>
+<p>This technique requires some extra configuration, specifically the definition of YUI_config as a global object to tweak the YUI execution. Don't worry, it's very simple. Let's see an example in details:</p>
+
+<pre>
+YUI_config = {
+  // some standard YUI_config configuration here 
+  combine: true,
+  filter: 'min',
+  // Event binder configuration starts here
+  eventbinder: {
+  	// set of options that should be preserved for every event (they are all optional)
+  	e: {
+  		ctrlKey: 0,
+  		altKey: 0,
+  		shiftKey: 0,
+  		metaKey: 0,
+  		keyCode: 0,
+  		charCode: 0,
+  		screenX: 0,
+  		screenY: 0,
+  		clientX: 0,
+  		clientY: 0,
+  		button: 0,
+  		relatedTarget: 0
+  	},
+  	// listener callback function
+  	fn: function(e) {
+  		var o = YUI_config.eventbinder,
+  			filter = /yui3-event-binder/, i,
+  			t = (e.target ? e.target: e.srcElement),
+  			p = {
+  				target: t,
+  				type: e.type
+  			},
+  			container = t;
+
+  		// looking for an element with the class yui3-event-binder
+  		while (container && !filter.test(container.className)) {
+  			container = container.parentNode;
+  		}
+
+  		if (container) {
+  			t.className += ' yui3-waiting';
+
+  			// backing up the event properties to simulate the event later on
+  			for (i in (o.e || {})) {
+  				if (o.e.hasOwnProperty(i)) {
+  					p[i] = e[i];
+  				}
+  			}
+  			(o.q = o.q || []).push(p);
+
+  			// preventing the default browser action for this event
+  			if (e.preventDefault) {
+  				e.preventDefault();
+  			}
+  			return (e.returnValue = false);
+  		}
+  	},
+  	add: function(type) {
+  		var d = document;
+  		if (d.addEventListener) {
+  			d.addEventListener(type, this.fn, false);
+  		}
+  		else {
+  			d.attachEvent('on' + type, this.fn);
+  		}
+  		return this;
+  	}
+  }
+};
+// adding events to the monitoring process
+YUI_config.eventbinder.add('click');
+</pre>
+
+<p>This code should be included at the very top of the page. Once you minify this configuration object, it will be just few bites. We recommend to use a cacheable file for production, and include it in the head section in your pages. You can read more about YUI_config and the different configurations that you can tweak through this object in the <a href="http://developer.yahoo.com/yui/3/api/config.html">official API documentation</a>.</p>
+
+<p>You can modify this configuration to suit you best, and at the same time you can define what are the events that you care about. In the example we just add 'click' to the monitoring list (check the last line in the configuration). You can add multiple events to the monitoring list using chaining: </p>
+
+<pre>YUI_config.eventbinder.add('click').add('keyup').add('mouseover');</pre>
+
+<p><strong>How this module works? </strong></p>
+
+<p>Once the configuration (aka YUI_config) gets executed, along with the call to "YUI_config.eventbinder.add", a listener for a specific event type will be defined. Only events that bubbles up will be monitored, due the fact that the listener will be defined for the "document" element. When a user interaction is caught at that level, it will be analyzed, specifically checking if the target element or any of its ancestor has this classname "yui3-event-binder". If that's the case, then the event will be added to a queue and the default behavior for that event will be prevented. This technique provides an easy way to monitor specific "type of actions" in specific "areas" of the page.</p>
+
+<p>When you finish with your initialization you can call "Y.EventBinder.flush" to flush a particular event type. Basically, some of the elements in the queue (filter by event type) will be simulated using YUI Event Simulate, so a new YUI Event Facade will be created, and triggered, and the listeners will be executed. This process is completely seamless, and your code will react just like if the event listeners were defined before the original user interaction happens.</p>
 
 <p><strong>One more feature:</strong></p>
 
-<p>We also include a more advanced feature for those who want to be less aggressive. The module includes a built-in integration with <a href="http://yuilibrary.com/gallery/show/idletimer">Nicholas Zakas’ Timer Idle module</a>, allowing us to preload files only if the user is inactive for a while. Here is an example:</p>
+<p>Once the system picks up an event, and add it to the internal queue to be flushed later on, a loading classname will be applied to the target element (by default 'yui3-waiting'). This way you can define a simple CSS rule in your application to notify the user that something is going on, so the user don't feel your application unresponsive. Here is an example of the CSS ruleset that you can use:</p>
 
-<pre>YUI({
-    //Last Gallery Build of this module
-    gallery: 'gallery-2010.05.05-19-39'
-}).use('gallery-preload', function(Y) {
-  // preload files only when the user is idle for at least 100ms
-  Y.preloadOnIdle ([
-    'http://tools.w3clubs.com/pagr2/3.sleep.expires.png', 
-    'http://tools.w3clubs.com/pagr2/3.sleep.expires.js', 
-    'http://tools.w3clubs.com/pagr2/3.sleep.expires.css'
-  ], 100); 
-});</pre>
+<pre>
+.yui3-event-binder a.yui3-waiting {
+    background: url(loading.gif) left no-repeat;
+    padding-left: 15px;
+}
+</pre>
+
 <p><strong>Conclusions:</strong></p>
-<p>It's important to be ahead of our users, and knowing the workflow of our users will help us to leverage the preloading to achieve that goal. It's also important to do it without introduce or increase the complexity of our current application. This new component ("gallery-preload") relies on these ideas, use it wisely.</p>
+
+<p>For high performance web applications it's important to load very fast, and to accomplish that, we have to rely on on-demand loading processes. Once you start dealing with that, it's equal important to control user interactions that can happen before the corresponding code for an action become available. Remember that doing early performance optimizations is sometimes danger, and introducing performance optimization that requires a change in your logic is equally dangerous.</p>
+
+<p><a href="http://yuilibrary.com/gallery/show/event-binder">Event Binder (gallery-event-binder)</a> provides some friendly APIs to deal with this use-case without forcing you to change your application logic. It can be applied to any YUI 3 application without introducing any extra complexity to your code.</p>
+
 </body>
 </html>
