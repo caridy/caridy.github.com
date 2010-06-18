@@ -7,11 +7,11 @@
 
 <body>
 
-<p>Now that YUI 3 is ready, it's stable, and it's getting some traction in the developers community. Many of these developers are getting their heads around the on-demand nature of YUI 3. The on-demand capabilities in YUI bring a lot of good stuff, but also some challenges, specially for high performance web applications.</p>
+<p>Now that YUI 3 is ready, it's stable, and it's getting some traction in the developers community. Many of these developers are getting their heads around the on-demand nature of YUI 3. The on-demand capabilities in YUI brings a lot of good stuff, but also some challenges, specially for high performance web applications.</p>
 
 <p>One of these challenges is to catch early user interactions. Once the browser starts rendering the page, the user can start clicking in some of the elements, even when the page is not fully loaded, and the JS initialization process (aka listener definitions) hasn't being executed yet.</p>
 
-<p>In many cases you can just streamline your initialization code, setting just listeners, then adding the logic for loading the pieces that you need for every user interaction. Recently, some Facebook engineers talk about a similar approach to improve the loading process, <a href="http://blog.reybango.com/2010/04/21/jsconf-2010-video-interviews-with-top-javascript-developers/">check this interview from Rey Bango</a> at JSConf. Here is an example for YUI 3:</p>
+<p>In many cases you can just streamline your initialization code, setting just listeners, then adding the logic for loading the pieces that you need for every user interaction. Recently, some Facebook engineers talked about a similar approach to improve the loading process, <a href="http://blog.reybango.com/2010/04/21/jsconf-2010-video-interviews-with-top-javascript-developers/">check this interview from Rey Bango</a> at JSConf. Here is an example for YUI 3:</p>
 
 <pre>
 YUI().use('event', function(Y) {
@@ -27,15 +27,25 @@ YUI().use('event', function(Y) {
 });
 </pre>
 
-<p>This technique introduces some complexity in your code, because listeners not only have to deal with the user interaction, but also with some loading logic. Another point against this approach is that still you have to load some javascript code at the top (HEAD) in order to define at least the listener and the loading logic to catch early actions.</p> 
+<p>This technique introduces some complexity in your code, because listeners not only have to deal with the user interaction, but also with some loading logic. Another point against this approach is that still you have to load some javascript code at the top (in this case YUI Seed + Event) in order to define at least the listener and the loading logic to catch early actions. We can resume this in two features:</p>
 
-<p>We create a module for <a href="http://developer.yahoo.com/yui/3/">YUI 3</a> to address this use-case using a different approach. Our main focus is to create a component that works without affecting your application logic. This new module is called &quot;<a href="http://yuilibrary.com/gallery/show/event-binder">gallery-event-binder</a>&quot;, and is now available through the YUI Loader. </p>
+<ul>
+  <li><a href="#early-interactions">Capturing early user interactions</a></li>
+  <li><a href="#on-demand-interactions">Facilitating the on-demand nature of some user interactions</a></li>
+</ul>   
+
+<p>We create a module for <a href="http://developer.yahoo.com/yui/3/">YUI 3</a> to address these two use-cases. Our main focus is to create a component that works without affecting your application logic. This new module is called &quot;<a href="http://yuilibrary.com/gallery/show/event-binder">gallery-event-binder</a>&quot;, and is now available through the YUI Loader. </p>
+
+<a name="early-interactions"></a>
+<h3>Capturing early user interactions</h3>
+
+<p>The main goal of this feature is to guarantee that some user interactions are queueing until the the listeners become ready.</p>
 
 <p>Let’s see an <a href="http://caridy.github.com/examples/gallery-event-binder/simple.html">event binder example</a>:</p>
 
 <pre>YUI({
     //Last Gallery Build of this module
-    gallery: 'gallery-2010.05.05-19-39'
+    gallery: 'gallery-2010.06.07-17-52'
 }).use('gallery-event-binder', 'event', function(Y) {
 
     Y.on('click', function(e) {
@@ -50,7 +60,7 @@ YUI().use('event', function(Y) {
 
 });</pre>
 
-<p>In this example, YUI Loader will try to load "gallery-event-binder" and "event" modules on-demand, and once they both get ready, along with their dependencies, the code within the callback function (3rd argument) will be execute. During the execution, a listener is set for an element with id=demo. The trick here is that once "Y.EventBinder.flush('click')" gets called, the system will flush some of the "click" events that might happened before this initialization code gets executed.</p>
+<p>In this example, YUI Loader will try to load "gallery-event-binder" and "event" modules on-demand, and once they both get ready, along with their dependencies, the code within the callback function (3rd argument) will be execute. During the execution, a listener is set for an element with id=demo. The trick here is that once "Y.EventBinder.flush('click')" gets called, the system will flush some of the "click" events that might have happened before this initialization code gets executed.</p>
 
 <p><strong>The configuration</strong></p>
 
@@ -134,15 +144,50 @@ YUI_config.eventbinder.add('click');
 
 <pre>YUI_config.eventbinder.add('click').add('keyup').add('mouseover');</pre>
 
-<p><strong>How this module works? </strong></p>
+<p><strong>How this feature works? </strong></p>
 
 <p>Once the configuration (aka YUI_config) gets executed, along with the call to "YUI_config.eventbinder.add", a listener for a specific event type will be defined. Only events that bubbles up will be monitored, due the fact that the listener will be defined for the "document" element. When a user interaction is caught at that level, it will be analyzed, specifically checking if the target element or any of its ancestor has this classname "yui3-event-binder". If that's the case, then the event will be added to a queue and the default behavior for that event will be prevented. This technique provides an easy way to monitor specific "type of actions" in specific "areas" of the page.</p>
 
 <p>When you finish with your initialization you can call "Y.EventBinder.flush" to flush a particular event type. Basically, some of the elements in the queue (filter by event type) will be simulated using YUI Event Simulate, so a new YUI Event Facade will be created, and triggered, and the listeners will be executed. This process is completely seamless, and your code will react just like if the event listeners were defined before the original user interaction happens.</p>
 
-<p><strong>One more feature:</strong></p>
+<a name="on-demand-interactions"></a>
+<h3>Facilitating the on-demand nature of some user interactions</h3>
 
-<p>Once the system picks up an event, and add it to the internal queue to be flushed later on, a loading classname will be applied to the target element (by default 'yui3-waiting'). This way you can define a simple CSS rule in your application to notify the user that something is going on, so the user don't feel your application unresponsive. Here is an example of the CSS ruleset that you can use:</p>
+<p>The main goal of this feature is to help developers to define the loading logic based on some user interactions.</p>
+
+<p>Let’s see <a href="http://caridy.github.com/examples/gallery-event-binder/modules-on-demand.html">another event binder example</a>:</p>
+
+<pre>
+YUI({
+  modules: {
+    'my-custom-module': {
+      fullpath: './my-custom-module.js'
+    }
+  }
+}).use('gallery-event-binder', 'node', function(Y) {
+
+  // setting a listener for '#demo a', and relying on 'my-custom-module' 
+  // to handle that particular event.
+  Y.EventBinder.on('click', 'my-custom-module', '#demo a');
+
+  // setting a delegate listener for all the anchors in a list, and relying 
+  // on 'my-custom-module' and 'my-another-module' to handle those particular events
+  Y.EventBinder.delegate('click', ['my-custom-module', 'my-another-module'], '#mylist', 'li a');
+
+});
+</pre>
+
+<p>In this example, we use "Y.EventBinder.on" and "Y.EventBinder.delegate" to define some listeners. These two methods wrap Y.on and Y.delegate to drive some loading logic through a user-interaction. Sometimes is better to avoid loading a specific functionality in every page, and instead loading it on-demand once the user try to use a particular feature.</p>
+
+<p><strong>How this feature works? </strong></p>
+
+<p>In this case, when a user clicks on one of the elements, we load one or more custom YUI modules whom implement all the features associated with that particular click. Once those modules become available (thereby new listeners are set), the binder will flush the event that was on hold during the loading process just to preserve the state of the action.</p>
+
+<p>It's important to highlight that this feature doesn't requires any initial configuration. Although both features can be use it at the same time to cover early and on-demand user-interactions.</p>
+
+<h3>One more feature</h3>
+
+<p>Once the system picks up an event that should be on hold for a while, a loading classname will be applied to the target element (by default 'yui3-waiting'). This way you can define a simple CSS rule in your application to notify the user that something is going on, so the user don't feel your application unresponsive. Here is an example of the CSS ruleset that you can use:</p>
 
 <pre>
 .yui3-event-binder a.yui3-waiting {
@@ -155,7 +200,7 @@ YUI_config.eventbinder.add('click');
 
 <p>For high performance web applications it's important to load very fast, and to accomplish that, we have to rely on on-demand loading processes. Once you start dealing with that, it's equal important to control user interactions that can happen before the corresponding code for an action become available. Remember that doing early performance optimizations is sometimes danger, and introducing performance optimization that requires a change in your logic is equally dangerous.</p>
 
-<p><a href="http://yuilibrary.com/gallery/show/event-binder">Event Binder (gallery-event-binder)</a> provides some friendly APIs to deal with this use-case without forcing you to change your application logic. It can be applied to any YUI 3 application without introducing any extra complexity to your code.</p>
+<p><a href="http://yuilibrary.com/gallery/show/event-binder">Event Binder (gallery-event-binder)</a> provides some friendly APIs to deal with both use-cases without forcing you to change your application logic. It can be applied to any YUI 3 application without introducing any extra complexity to your code.</p>
 
 </body>
 </html>
