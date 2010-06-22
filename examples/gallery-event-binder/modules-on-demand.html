@@ -41,7 +41,7 @@ YUI({
   }
 }).use('gallery-event-binder', 'node', function(Y) {
 
-  Y.one('#output').append('<li>Binder listeners ready...</li>');
+  Y.one('#output').append('<li>Y.EventBinder.on and Y.EventBinder.delegate listeners ready...</li>');
 
 	Y.EventBinder.on('click', 'my-custom-module', '#democlick a');
 
