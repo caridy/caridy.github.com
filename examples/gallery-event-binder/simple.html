@@ -2,13 +2,56 @@
 <html>
 <head>
 <title>Using Event Binder</title>
-<style>
-.yui3-event-binder a.yui3-waiting {
-  background: url(http://www.sanbaldo.com/wordpress/wp-content/tiny_red.gif) left no-repeat;
-  padding-left: 15px;
-}
-</style>
-<script type="text/javascript" src="my-yui-config.js"></script>
+<script type="text/javascript">
+YUI_config = {
+    // standard YUI_config configuration
+    combine: true,
+    filter: 'min',
+
+    // event binder configuration starts here
+    eventbinder: {
+        // listener callback function
+        fn: function(e) {
+            var binder = YUI_config.eventbinder,
+                filter = /yui3-event-binder/,
+                container = (e.target || e.srcElement),
+                info = {
+                    target: container,
+                    type : e.type
+                };
+
+            // look for an element with the class yui3-event-binder
+            while (container && !filter.test(container.className)) {
+                container = container.parentNode;
+            }
+
+            if (container) {
+                (binder.q = binder.q || []).push(info);
+
+                // prevent the default browser action for this event
+                if (e.preventDefault) {
+                    e.preventDefault();
+                }
+                return (e.returnValue = false);
+            }
+        },
+
+        add: function(type) {
+            var d = document;
+
+            if (d.addEventListener) {
+                d.addEventListener(type, this.fn, false);
+            } else {
+                d.attachEvent('on' + type, this.fn);
+            }
+
+            return this;
+        }
+    }
+};
+// add events to the monitoring process
+YUI_config.eventbinder.add('click');
+</script>
 </head>
 <body class="yui3-skin-sam">
 	
@@ -32,21 +75,20 @@
 YUI({
     //Last Gallery Build of this module
     gallery: 'gallery-2010.06.07-17-52'
-}).use('gallery-event-binder', 'event', 'node', function(Y) {
+}).use('gallery-event-binder', 'node', function(Y) {
 
 	var ul = Y.one ('#output');
-	ul.append('<li>waiting 5000ms to flush the events</li>');
+	ul.append('<li>waiting 5000ms to flush early events</li>');
 	
 	Y.later (5000, {}, function() {
 
 		Y.on('click', function(e) {
-			ul.append('<li>clicked - Targer: '+ e.target.get('tagName')+'</li>');
+			ul.append('<li>clicked - Target: '+ e.target.get('tagName')+'</li>');
 			e.halt();
 		}, '#demo');
 
-		ul.append('<li>flushing</li>');
+		ul.append('<li>flushing early events</li>');
 		Y.EventBinder.flush('click');
-		ul.append('<li>finish</li>');
 
 	});
  
