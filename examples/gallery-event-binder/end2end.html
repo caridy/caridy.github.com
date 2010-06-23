@@ -4,25 +4,29 @@
 <title>Using Event Binder</title>
 <style>
 .yui3-event-binder a.yui3-waiting {
-  background: url(http://www.sanbaldo.com/wordpress/wp-content/tiny_red.gif) left no-repeat;
+  background: url(loading.gif) left no-repeat;
   padding-left: 15px;
 }
 </style>
 <script type="text/javascript" src="my-yui-config.js"></script>
 </head>
 <body class="yui3-skin-sam">
-	
+  
     <div id="doc">
-    	
-		<h1>Using Gallery Event Binder: Catching early actions and loading features on-demand</h1>
-		
-		<div id="democlick" class="yui3-event-binder">
-			<p>Placeholder for <a href="http://yuilibrary.com/">click</a> listener</p>
-		</div>
-		
-		<h3>Output:</h3>
-		<ul id="output"></ul>
-		
+      
+      <h1>Using Gallery Event Binder: Catching early actions and loading features on-demand</h1>
+    
+      <div id="democlick" class="yui3-event-binder">
+        <p>Placeholder for <a href="http://yuilibrary.com/">click</a> listener</p>
+      </div>
+    
+      <div id="demodelegate" class="yui3-event-binder">
+        <p>Placeholder for <a href="http://yuilibrary.com/">delegate</a> listener</p>
+      </div>
+    
+      <h3>Output:</h3>
+      <ul id="output"></ul>
+    
     </div>
 
 <!-- YUI 3 Seed //-->
@@ -41,20 +45,19 @@ YUI({
     }
 }).use('gallery-event-binder', 'node', function(Y) {
 
-	var ul = Y.one ('#output');
-	ul.append('<li>waiting 5000ms to flush the events</li>');
-	
-	Y.later (5000, {}, function() {
+  var ul = Y.one ('#output');
+  ul.append('<li>waiting 5000ms to simulate a delay in the loading process, then flushing events</li>');
+  
+  Y.later (5000, {}, function() {
 
-    Y.one('#output').append('<li>Y.EventBinder.on listener ready...</li>');
+    Y.one('#output').append('<li>Y.EventBinder.delegate listener ready.</li>');
 
-  	Y.EventBinder.on('click', 'my-custom-module', '#democlick a');
+    Y.EventBinder.delegate('click', ['my-custom-module'], '#doc', '.yui3-event-binder a');
 
-		ul.append('<li>flushing</li>');
-		Y.EventBinder.flush('click');
-		ul.append('<li>finish</li>');
+    ul.append('<li>flushing events</li>');
+    Y.EventBinder.flush('click');
 
-	});
+  });
  
 });
 </script>

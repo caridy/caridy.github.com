@@ -4,28 +4,24 @@
 <title>Using Event Binder</title>
 <style>
 a.yui3-waiting {
-  background: url(http://www.sanbaldo.com/wordpress/wp-content/tiny_red.gif) left no-repeat;
+  background: url(loading.gif) left no-repeat;
   padding-left: 15px;
 }
 </style>
 </head>
 <body class="yui3-skin-sam">
-	
+  
     <div id="doc">
-    	
-		<h1>Using Gallery Event Binder: Binding Y.on and Y.delegate to load modules then simulate the trigger event.</h1>
-		
-		<div id="democlick">
-			<p>Placeholder for <a href="http://yuilibrary.com/">click</a> listener</p>
-		</div>
-		
-		<div id="demodelegate">
-			<p>Placeholder for <a href="http://yuilibrary.com/">delegate click</a> listener</p>
-		</div>
-		
-		<h3>Output:</h3>
-		<ul id="output"></ul>
-		
+
+      <h1>Using Gallery Event Binder: Binding Y.on to load on-demand modules and flush the events when the new modules become ready.</h1>
+
+      <div id="democlick">
+        <p>Placeholder for <a href="http://yuilibrary.com/">click</a> listener</p>
+      </div>
+
+      <h3>Output:</h3>
+      <ul id="output"></ul>
+    
     </div>
 
 <!-- YUI 3 Seed //-->
@@ -41,11 +37,9 @@ YUI({
   }
 }).use('gallery-event-binder', 'node', function(Y) {
 
-  Y.one('#output').append('<li>Y.EventBinder.on and Y.EventBinder.delegate listeners ready...</li>');
+  Y.one('#output').append('<li>Y.EventBinder.on listeners ready.</li>');
 
-	Y.EventBinder.on('click', 'my-custom-module', '#democlick a');
-
-	Y.EventBinder.delegate('click', ['my-custom-module'], '#demodelegate', 'a');
+  Y.EventBinder.on('click', ['my-custom-module'], '#democlick a');
 
 });
 </script>

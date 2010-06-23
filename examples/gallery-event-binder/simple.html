@@ -54,18 +54,18 @@ YUI_config.eventbinder.add('click');
 </script>
 </head>
 <body class="yui3-skin-sam">
-	
+  
     <div id="doc">
-    	
-		<h1>Using Gallery Event Binder: Catching early actions</h1>
-		
-		<div id="demo" class="yui3-event-binder">
-			<p>Placeholder for <a href="http://yuilibrary.com/">click</a> listener</p>
-		</div>
-		
-		<h3>Output:</h3>
-		<ul id="output"></ul>
-		
+      
+      <h1>Using Gallery Event Binder: Catching early actions</h1>
+    
+      <div id="democlick" class="yui3-event-binder">
+        <p>Placeholder for <a href="http://yuilibrary.com/">click</a> listener</p>
+      </div>
+    
+      <h3>Output:</h3>
+      <ul id="output"></ul>
+    
     </div>
 
 <!-- YUI 3 Seed //-->
@@ -77,20 +77,20 @@ YUI({
     gallery: 'gallery-2010.06.07-17-52'
 }).use('gallery-event-binder', 'node', function(Y) {
 
-	var ul = Y.one ('#output');
-	ul.append('<li>waiting 5000ms to flush early events</li>');
-	
-	Y.later (5000, {}, function() {
+  var ul = Y.one ('#output');
+  ul.append('<li>waiting 5000ms to simulate a delay in the loading process, then flushing events</li>');
+  
+  Y.later (5000, {}, function() {
 
-		Y.on('click', function(e) {
-			ul.append('<li>clicked - Target: '+ e.target.get('tagName')+'</li>');
-			e.halt();
-		}, '#demo');
+    Y.on('click', function(e) {
+      ul.append('<li>clicked - Target: '+ e.target.get('tagName')+'</li>');
+      e.halt();
+    }, '#democlick a');
 
-		ul.append('<li>flushing early events</li>');
-		Y.EventBinder.flush('click');
+    ul.append('<li>flushing events</li>');
+    Y.EventBinder.flush('click');
 
-	});
+  });
  
 });
 </script>
