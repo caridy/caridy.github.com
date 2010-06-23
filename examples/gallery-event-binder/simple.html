@@ -36,7 +36,7 @@ YUI_config = {
             }
         },
 
-        add: function(type) {
+        listenFor: function(type) {
             var d = document;
 
             if (d.addEventListener) {
@@ -50,7 +50,7 @@ YUI_config = {
     }
 };
 // add events to the monitoring process
-YUI_config.eventbinder.add('click');
+YUI_config.eventbinder.listenFor('click');
 </script>
 </head>
 <body class="yui3-skin-sam">
@@ -74,7 +74,7 @@ YUI_config.eventbinder.add('click');
 <script type="text/javascript">
 YUI({
     //Last Gallery Build of this module
-    gallery: 'gallery-2010.06.07-17-52'
+    gallery: 'gallery-2010.06.23-18-37'
 }).use('gallery-event-binder', 'node', function(Y) {
 
   var ul = Y.one ('#output');

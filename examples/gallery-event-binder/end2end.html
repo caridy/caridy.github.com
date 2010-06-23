@@ -37,7 +37,7 @@
 <script type="text/javascript">
 YUI({
     //Last Gallery Build of this module
-    gallery: 'gallery-2010.06.07-17-52',
+    gallery: 'gallery-2010.06.23-18-37',
     modules: {
       'my-custom-module': {
         fullpath: './my-custom-module.js'
@@ -52,7 +52,7 @@ YUI({
 
     Y.one('#output').append('<li>Y.EventBinder.delegate listener ready.</li>');
 
-    Y.EventBinder.delegate('click', ['my-custom-module'], '#doc', '.yui3-event-binder a');
+    Y.EventBinder.on('click', ['my-custom-module'], '#doc .yui3-event-binder a');
 
     ul.append('<li>flushing events</li>');
     Y.EventBinder.flush('click');
