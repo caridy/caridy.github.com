@@ -10,16 +10,32 @@
 <!-- YUI 3 Seed //-->
 <script type="text/javascript" src="http://yui.yahooapis.com/combo?3.1.1/build/yui/yui-debug.js"></script>
 
-<div><div class="caridy">caridy</div></div>
+
+<div>
+   <div class="demo1">first element</div>
+   <div class="demo2">second element</div>
+</div>
+
+<p><a id="another-normal-id" href="#">click here to check the status of the elements</a></p>
+
 <script>
-YUI().use('node', function(Y) {
+YUI_config = {
+  filter: 'debug',
+  combine: false
+};
+YUI().use('node', 'event', function(Y) {
 
-  var n = Y.one('.caridy');
-  n.set('id', Y.stamp(n));
-  alert (n._node.id);
+    var n = Y.one('.demo1');
+    n.set('id', Y.stamp(n));
 
+    var n = Y.one('.demo2');
+    n.set('id', Y.stamp(n));
+    
+    Y.on('click', function() {
+      alert ('First Element: '+Y.one('.demo1').get('id')+'\n Second Element: '+Y.one('.demo2').get('id'));
+    }, '#another-normal-id');
+    
 });
 </script>
-
 </body> 
 </html>
