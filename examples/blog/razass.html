@@ -1,0 +1,58 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+<meta charset="utf-8" /> 
+<title>test</title> 
+</head>
+
+<body>
+
+<!-- YUI 3 Seed //-->
+<script type="text/javascript" src="http://yui.yahooapis.com/combo?3.1.1/build/yui/yui-debug.js"></script>
+
+
+<div id="demo">
+</div>
+
+<script>
+
+YUI_config = {
+  filter: 'debug',
+  combine: false
+};
+
+YUI.add('carousel', function(Y) {
+
+    Y.Carousel = Y.Base.create('carousel', Y.Widget, [], {
+
+        initializer : function() {
+            Y.log(HTML_PARSER);
+        },
+        renderUI : function() {},
+        bindUI : function() {},
+        syncUI : function() {},
+        destructor : function() {}
+
+    },{
+
+        HTML_PARSER : {
+
+            //images : [".smimage"]
+
+        },
+
+        ATTRS : {
+
+        }
+
+    });
+
+}, '0.1', {requires: ['widget', 'base']});
+
+YUI().use('carousel', function(Y) {
+  alert ('Ready...');
+});
+
+</script>
+</body> 
+</html>
