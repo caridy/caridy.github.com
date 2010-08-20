@@ -232,15 +232,19 @@ h2 {
 	});
 	
 	YUI().use ('node', function(Y) {
-	  Y.on('click', function() {
+	  var a1 = Y.one ('#a1'),
+	      a2 = Y.one ('#a2'),
+	      a3 = Y.one ('#a3');
+    
+    Y.on('click', function() {
 	    
-	    alert (Y.one ('#a1').getStyle('width'));
-	    alert (Y.one ('#a2').getStyle('width'));
-	    alert (Y.one ('#a3').getStyle('width'));
+	    alert (a1.getStyle('width'));
+	    alert (a2.getStyle('width'));
+	    alert (a3.getStyle('width'));
 	    
-	    alert (Y.one ('#a1').getStyle('scrollWidth'));
-	    alert (Y.one ('#a2').getStyle('scrollWidth'));
-	    alert (Y.one ('#a3').getStyle('scrollWidth'));
+	    alert (a1.getStyle('scrollWidth'));
+	    alert (a2.getStyle('scrollWidth'));
+	    alert (a3.getStyle('scrollWidth'));
 	    
 	  }, '#caridy');
 	});
