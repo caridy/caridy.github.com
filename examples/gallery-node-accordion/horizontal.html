@@ -6,99 +6,99 @@
 <style>
 /* module examples */
 div#demo {
-  position: relative;
-  padding: 10px;
+	position: relative;
+	padding: 10px;
 }
 h2 {
-  clear: left;
-  padding-top: 20px;
+	clear: left;
+	padding-top: 20px;
 }
 
 /* Generic Horizontal CSS - TODO: putting this into the module css */
 .yui3-accordion {
-  position: relative;
-  zoom: 1;
+	position: relative;
+	zoom: 1;
 }
 .yui3-accordion .yui3-accordion-item {
-  float: left;
-  display: inline;
+	float: left;
+	display: inline;
 }
 .yui3-accordion .yui3-accordion-item .yui3-accordion-item-bd {
-  width: 1px;
-  overflow: hidden;
-  zoom: 1;
+	width: 1px;
+	overflow: hidden;
+	zoom: 1;
 }
 .yui3-accordion .yui3-accordion-item-active .yui3-accordion-item-bd {
-  float: left;
-  display: inline;
-  width: auto;
+	float: left;
+	display: inline;
+	width: auto;
 }
 .yui3-accordion-hidden {
-  /* absolute position off-screen and box collapsing used to
-  avoid display:none, which causes issues for some content (firefox
-    restarts flash movies) */
-    border:0;
-    height: 0;
-    width: 0;
-    padding: 0;
-    position: absolute;
-    left: -999999px;
-    overflow: hidden;
-    visibility: hidden;
+	/* absolute position off-screen and box collapsing used to
+	avoid display:none, which causes issues for some content (firefox
+		restarts flash movies) */
+		border:0;
+		height: 0;
+		width: 0;
+		padding: 0;
+		position: absolute;
+		left: -999999px;
+		overflow: hidden;
+		visibility: hidden;
 }
 
 /* accordion 1 */
 #myaccordion1 .yui3-accordion .yui3-accordion-item {
-  border: 1px solid #004c6d;
-  color: #004c6d;
+	border: 1px solid #004c6d;
+	color: #004c6d;
 }
 #myaccordion1 .yui3-accordion .yui3-accordion-item .yui3-accordion-item-hd {
-  background: #406ed9;
-  color: #fff;
-  margin: 0px;
-  padding: 5px;
+	background: #406ed9;
+	color: #fff;
+	margin: 0px;
+	padding: 5px;
 }
 #myaccordion1 .yui3-accordion .yui3-accordion-item .yui3-accordion-item-bd {
-  background: #abceff;
-  color: #333333;
-  height: 150px;
+	background: #abceff;
+	color: #333333;
+	height: 150px;
 }
 /* forcing the expandable area to a fixed width and height, to keep the container size */
 #myaccordion1 .yui3-accordion .yui3-accordion-item .yui3-accordion-item-bd .fix {
-  padding: 5px;
-  width: 200px;
-  padding: 5px;
-  overflow: hidden;
+	padding: 5px;
+	width: 200px;
+	padding: 5px;
+	overflow: hidden;
 }
 
 /* accordion 2 */
 #myaccordion2 .yui3-accordion .yui3-accordion-item {
-  border: 1px solid #004c6d;
-  color: #004c6d;
+	border: 1px solid #004c6d;
+	color: #004c6d;
 }
 #myaccordion2 .yui3-accordion .yui3-accordion-item .yui3-accordion-item-hd {
-  background: #406ed9;
-  color: #fff;
-  margin: 0px;
-  padding: 5px;
-  float: left;
-  display: inline;
-  height: 140px;
+	background: #406ed9;
+	color: #fff;
+	margin: 0px;
+	padding: 5px;
+	float: left;
+	display: inline;
+	height: 140px;
 }
 #myaccordion2 .yui3-accordion .yui3-accordion-item .yui3-accordion-item-bd {
-  float: left;
-  display: inline;
-  background: #abceff;
-  color: #333333;
-  height: 150px;
+	float: left;
+	display: inline;
+	background: #abceff;
+	color: #333333;
+	height: 150px;
 }
 /* forcing the expandable area to a fixed width and height, to keep the container size */
 #myaccordion2 .yui3-accordion .yui3-accordion-item .yui3-accordion-item-bd p {
-  padding: 5px;
-  margin: 0;
-  width: 200px;
-  padding: 5px;
-  overflow: hidden;
+	padding: 5px;
+	margin: 0;
+	width: 200px;
+	padding: 5px;
+	overflow: hidden;
 }
 </style>
 </head>
@@ -107,18 +107,18 @@ h2 {
 
 		<div id="demo">
 			<div class="hd">
-			  <h3 class="title">Horizontal Accordions</h3>
-        <p>More information about gallery-node-accordion here: <br /><a href="http://yuilibrary.com/gallery/show/node-accordion">http://yuilibrary.com/gallery/show/node-accordion</a></p>
+				<h3 class="title">Horizontal Accordions</h3>
+				<p>More information about gallery-node-accordion here: <br /><a href="http://yuilibrary.com/gallery/show/node-accordion">http://yuilibrary.com/gallery/show/node-accordion</a></p>
 			</div>
 			<div class="bd">
 
-        <h2>header on the top</h2>
+				<h2>header on the top</h2>
 
 				<div id="myaccordion1">
-				  <div class="yui3-accordion yui3-accordion-hidden">
+					<div class="yui3-accordion yui3-accordion-hidden">
 						<div class="yui3-module yui3-accordion-item">
 								<div class="yui3-hd yui3-accordion-item-hd yui3-accordion-item-trigger">
-								  1
+									1
 								</div>
 								<div class="yui3-bd yui3-accordion-item-bd" id="a3">
 									<div class="fix">
@@ -128,7 +128,7 @@ h2 {
 						</div>
 						<div class="yui3-module yui3-accordion-item yui3-accordion-item-active">
 								<div class="yui3-hd yui3-accordion-item-hd yui3-accordion-item-trigger">
-								  2
+									2
 								</div>
 								<div class="yui3-bd yui3-accordion-item-bd">
 										<div class="fix">
@@ -138,7 +138,7 @@ h2 {
 						</div>
 						<div class="yui3-module yui3-accordion-item">
 								<div class="yui3-hd yui3-accordion-item-hd yui3-accordion-item-trigger">
-								  3
+									3
 								</div>
 								<div class="yui3-bd yui3-accordion-item-bd">
 									<div class="fix">
@@ -148,7 +148,7 @@ h2 {
 						</div>
 						<div class="yui3-module yui3-accordion-item">
 								<div class="yui3-hd yui3-accordion-item-hd yui3-accordion-item-trigger">
-								  4
+									4
 								</div>
 								<div class="yui3-bd yui3-accordion-item-bd">
 									<div class="fix">
@@ -159,10 +159,10 @@ h2 {
 					</div>
 				</div>
 
-        <h2>header on the left</h2>
+				<h2>header on the left</h2>
 
 				<div id="myaccordion2">
-				  <div class="yui3-accordion yui3-accordion-hidden">
+					<div class="yui3-accordion yui3-accordion-hidden">
 						<div class="yui3-module yui3-accordion-item yui3-accordion-item-active">
 								<div class="yui3-hd yui3-accordion-item-hd yui3-accordion-item-trigger">
 										1
@@ -216,9 +216,9 @@ h2 {
 <!-- Initialization process //-->
 <script type="text/javascript">
 	YUI({
-      //Last Gallery Build of this module
-      gallery: 'gallery-2010.05.21-18-16'
-  }).use('node', 'gallery-node-accordion', function (Y) {
+			//Last Gallery Build of this module
+			gallery: 'gallery-2010.05.21-18-16'
+	}).use('node', 'gallery-node-accordion', function (Y) {
 				
 		Y.one("#myaccordion1 .yui3-accordion").plug(Y.Plugin.NodeAccordion, { 
 			speed: 'slow',
