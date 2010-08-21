@@ -2,9 +2,8 @@
 <html>
 <head>
 	<title>YUI Plugin: gallery-node-accordion </title>
-	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/combo?3.1.0/build/cssfonts/fonts-min.css&3.1.0/build/cssreset/reset-min.css&3.1.0/build/cssbase/base-min.css">
-	<link type="text/css" rel="stylesheet" href11="http://yui.yahooapis.com/gallery-2010.04.02-17-26/build/gallery-node-accordion/assets/gallery-node-accordion-core.css" />
-	<link type="text/css" rel="stylesheet" href="../../../yui3-gallery/build/gallery-node-accordion/assets/gallery-node-accordion-core.css" />
+	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/combo?3.1.1/build/cssfonts/fonts-min.css&3.1.1/build/cssreset/reset-min.css&3.1.1/build/cssbase/base-min.css">
+	<link type="text/css" rel="stylesheet" href="http://yui.yahooapis.com/gallery-2010.05.21-18-16/build/gallery-node-accordion/assets/gallery-node-accordion-core.css" />
 	<style>
 		/* module examples */
 		div#demo {
@@ -77,21 +76,20 @@
 <!-- YUI 3 Seed //-->
 <script type="text/javascript" src="http://yui.yahooapis.com/3.1.1/build/yui/yui-min.js"></script>
 <!-- Initialization process //-->
-<script type="text/javascript" src="../../../yui3-gallery/build/gallery-node-accordion/gallery-node-accordion-debug.js"></script>
 <script type="text/javascript">
 	YUI({
-	    //Last Gallery Build of this module
-	    gallery: 'gallery-2010.04.02-17-26'
-	}).use('anim', 'event', 'node', 'gallery-node-accordion', function (Y) {
-				
-	    Y.one("#myaccordion").plug(Y.Plugin.NodeAccordion, { 
+      //Last Gallery Build of this module
+      gallery: 'gallery-2010.05.21-18-16'
+  }).use('anim', 'event', 'node', 'gallery-node-accordion', function (Y) {
+
+	  Y.one("#myaccordion").plug(Y.Plugin.NodeAccordion, { 
 			anim: true,
 			speed: 'slow',
 			fade: true,
 			multiple: false,
 			persistent: true
 		});
-		
+
 	});
 </script>
 </body>
