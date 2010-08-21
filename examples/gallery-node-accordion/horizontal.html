@@ -29,6 +29,8 @@ h2 {
   zoom: 1;
 }
 .yui3-accordion .yui3-accordion-item-active .yui3-accordion-item-bd {
+  float: left;
+  display: inline;
   width: auto;
 }
 .yui3-accordion-hidden {
@@ -230,25 +232,6 @@ h2 {
 		});
 		
 	});
-	
-	YUI().use ('node', function(Y) {
-	  var a1 = Y.one ('#a1'),
-	      a2 = Y.one ('#a2'),
-	      a3 = Y.one ('#a3');
-    
-    Y.on('click', function() {
-	    
-	    alert (a1.getStyle('width'));
-	    alert (a2.getStyle('width'));
-	    alert (a3.getStyle('width'));
-	    
-	    alert (a1.get('scrollWidth'));
-	    alert (a2.get('scrollWidth'));
-	    alert (a3.get('scrollWidth'));
-	    
-	  }, '#caridy');
-	});
-	
 </script>
 <a id="caridy" href="#">debug</a>
 </body>
