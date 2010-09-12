@@ -83,10 +83,11 @@
 <span class="c">//	Util shortcuts</span>
 
 <span class="kd">var</span> <span class="nx">Env</span> <span class="o">=</span> <span class="nx">Y</span><span class="p">.</span><span class="nx">Env</span><span class="o">,</span>
-	<span class="nx">_config</span> <span class="o">=</span> <span class="p">((</span><span class="k">typeof</span> <span class="nx">YAHOO_config</span> <span class="o">==</span> <span class="s2">&quot;undefined&quot;</span> <span class="o">||</span> <span class="o">!</span><span class="nx">YAHOO_config</span><span class="p">)</span><span class="o">?</span><span class="p">{}</span><span class="o">:</span><span class="nx">YAHOO_config</span><span class="p">)</span><span class="o">,</span>
-	<span class="nx">_base</span> <span class="o">=</span> <span class="nx">_config</span><span class="p">.</span><span class="nx">base</span> <span class="o">||</span> <span class="s1">&#39;http://yui.yahooapis.com/2.8.0/build/&#39;</span><span class="o">,</span>
+	<span class="nx">UNDEFINED</span> <span class="o">=</span> <span class="s1">&#39;undefined&#39;</span><span class="o">,</span>
+	<span class="nx">_config</span> <span class="o">=</span> <span class="p">((</span><span class="k">typeof</span> <span class="nx">YAHOO_config</span> <span class="o">===</span> <span class="nx">UNDEFINED</span> <span class="o">||</span> <span class="o">!</span><span class="nx">YAHOO_config</span><span class="p">)</span><span class="o">?</span><span class="p">{}</span><span class="o">:</span><span class="nx">YAHOO_config</span><span class="p">)</span><span class="o">,</span>
+	<span class="nx">_base</span> <span class="o">=</span> <span class="nx">_config</span><span class="p">.</span><span class="nx">base</span> <span class="o">||</span> <span class="s1">&#39;http://yui.yahooapis.com/2.8.0r4/build/&#39;</span><span class="o">,</span>
 	<span class="nx">_seed</span> <span class="o">=</span> <span class="nx">_config</span><span class="p">.</span><span class="nx">seed</span> <span class="o">||</span> <span class="s1">&#39;yuiloader/yuiloader-min.js&#39;</span><span class="o">,</span>
-	<span class="nx">_ready</span> <span class="o">=</span> <span class="o">!</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">YAHOO</span> <span class="o">==</span> <span class="s2">&quot;undefined&quot;</span> <span class="o">||</span> <span class="o">!</span><span class="nx">YAHOO</span> <span class="o">||</span> <span class="o">!</span><span class="nx">YAHOO</span><span class="p">.</span><span class="nx">util</span> <span class="o">||</span> <span class="o">!</span><span class="nx">YAHOO</span><span class="p">.</span><span class="nx">util</span><span class="p">.</span><span class="nx">YUILoader</span><span class="p">)</span><span class="o">,</span>
+	<span class="nx">_ready</span> <span class="o">=</span> <span class="o">!</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">YAHOO</span> <span class="o">===</span> <span class="nx">UNDEFINED</span> <span class="o">||</span> <span class="o">!</span><span class="nx">YAHOO</span><span class="p">)</span><span class="o">,</span>
 	<span class="nx">_loader</span><span class="o">,</span>
 	<span class="nx">_useQueue</span><span class="o">;</span>
 
@@ -123,9 +124,12 @@
 <span class="c"> */</span>
 <span class="kd">function</span> <span class="nx">_initLoader</span> <span class="p">(</span><span class="nx">l</span><span class="p">)</span> <span class="p">{</span>
 	<span class="c">/* creating the loader object */</span>
-	<span class="nx">l</span><span class="p">.</span><span class="nx">combine</span> <span class="o">=</span> <span class="nx">l</span><span class="p">.</span><span class="nx">combine</span> <span class="o">||</span> <span class="kc">true</span><span class="o">;</span> <span class="c">/* using the Combo Handle by default */</span>
+	<span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">l</span><span class="p">.</span><span class="nx">combine</span> <span class="o">===</span> <span class="nx">UNDEFINED</span><span class="p">)</span> <span class="p">{</span>
+	    <span class="nx">l</span><span class="p">.</span><span class="nx">combine</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span> <span class="c">/* using the Combo Handle by default */</span>
+	<span class="p">}</span>
 	<span class="nx">l</span><span class="p">.</span><span class="nx">filter</span> <span class="o">=</span> <span class="nx">l</span><span class="p">.</span><span class="nx">filter</span> <span class="o">||</span> <span class="s1">&#39;min&#39;</span><span class="o">;</span>  <span class="c">/* using production mode by default */</span>
-	<span class="k">return</span> <span class="p">(</span><span class="k">new</span> <span class="nx">YAHOO</span><span class="p">.</span><span class="nx">util</span><span class="p">.</span><span class="nx">YUILoader</span><span class="p">(</span><span class="nx">l</span><span class="p">));</span>	
+	<span class="nx">_loader</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">YAHOO</span><span class="p">.</span><span class="nx">util</span><span class="p">.</span><span class="nx">YUILoader</span><span class="p">(</span><span class="nx">l</span><span class="p">);</span>
+	<span class="k">return</span> <span class="nx">_loader</span><span class="o">;</span>
 <span class="p">}</span>
 
 <span class="c">/**</span>
@@ -140,13 +144,13 @@
 <span class="c"> */</span>
 <span class="kd">function</span> <span class="nx">_register</span> <span class="p">(</span><span class="nx">name</span><span class="o">,</span> <span class="nx">m</span><span class="p">)</span> <span class="p">{</span>
 	<span class="c">// adding a module to the queue </span>
-	<span class="k">if</span> <span class="p">(</span><span class="nx">Y</span><span class="p">.</span><span class="nx">isObject</span><span class="p">(</span><span class="nx">m</span><span class="p">))</span> <span class="p">{</span>
+	<span class="k">if</span> <span class="p">(</span><span class="nx">Y</span><span class="p">.</span><span class="nx">Lang</span><span class="p">.</span><span class="nx">isObject</span><span class="p">(</span><span class="nx">m</span><span class="p">))</span> <span class="p">{</span>
 		<span class="nx">m</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">m</span><span class="p">.</span><span class="nx">name</span> <span class="o">||</span> <span class="nx">name</span><span class="o">;</span>
 		<span class="nx">m</span><span class="p">.</span><span class="nx">type</span> <span class="o">=</span> <span class="nx">m</span><span class="p">.</span><span class="nx">type</span> <span class="o">||</span> <span class="p">((</span><span class="nx">m</span><span class="p">.</span><span class="nx">fullpath</span> <span class="o">||</span> <span class="nx">m</span><span class="p">.</span><span class="nx">path</span><span class="p">).</span><span class="nx">indexOf</span><span class="p">(</span><span class="s1">&#39;.css&#39;</span><span class="p">)</span><span class="o">&gt;=</span><span class="mi">0</span><span class="o">?</span><span class="s1">&#39;css&#39;</span><span class="o">:</span><span class="s1">&#39;js&#39;</span><span class="p">);</span>
 		<span class="nx">Env</span><span class="p">.</span><span class="nx">_legacy</span><span class="p">.</span><span class="nx">_useQueue</span><span class="p">.</span><span class="nx">add</span> <span class="p">({</span>
 			<span class="nx">fn</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-				<span class="nx">Y</span><span class="p">.</span><span class="nx">log</span> <span class="p">(</span><span class="s1">&#39;Registering a module: &#39;</span><span class="o">+</span> <span class="nx">m</span><span class="p">.</span><span class="nx">name</span><span class="o">,</span> <span class="nx">m</span><span class="p">);</span>
-				<span class="nx">Env</span><span class="p">.</span><span class="nx">_legacy</span><span class="p">.</span><span class="nx">_loader</span><span class="p">.</span><span class="nx">addModule</span> <span class="p">(</span><span class="nx">m</span><span class="p">);</span>
+				<span class="nx">Y</span><span class="p">.</span><span class="nx">log</span> <span class="p">(</span><span class="s1">&#39;Registering a module: &#39;</span><span class="o">+</span> <span class="nx">m</span><span class="p">.</span><span class="nx">name</span><span class="o">,</span><span class="s1">&#39;info&#39;</span><span class="o">,</span><span class="s1">&#39;YUI2Wrapper&#39;</span><span class="p">);</span>
+				<span class="nx">_loader</span><span class="p">.</span><span class="nx">addModule</span> <span class="p">(</span><span class="nx">m</span><span class="p">);</span>
 			<span class="p">}</span><span class="o">,</span>
 			<span class="nx">autoContinue</span><span class="o">:</span> <span class="kc">true</span>
 		<span class="p">});</span>
@@ -176,11 +180,16 @@
 
 <span class="c">// preparing the queue and loading yui2 loader if needed</span>
 <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">Env</span><span class="p">.</span><span class="nx">_legacy</span><span class="p">)</span> <span class="p">{</span>
-	<span class="nx">Env</span><span class="p">.</span><span class="nx">_legacy</span> <span class="o">=</span> <span class="p">{</span><span class="nx">_useQueue</span><span class="o">:</span> <span class="k">new</span> <span class="nx">Y</span><span class="p">.</span><span class="nx">AsyncQueue</span><span class="p">()};</span>
-	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">_ready</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">_useQueue</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Y</span><span class="p">.</span><span class="nx">AsyncQueue</span><span class="p">();</span>
+	<span class="nx">Env</span><span class="p">.</span><span class="nx">_legacy</span> <span class="o">=</span> <span class="p">{</span><span class="nx">_useQueue</span><span class="o">:</span> <span class="nx">_useQueue</span><span class="p">};</span>
+	<span class="k">if</span> <span class="p">(</span><span class="nx">_ready</span><span class="p">)</span> <span class="p">{</span>
+		<span class="c">// YUI loader is in the page, and we don&#39;t need to inject it into the page.</span>
+		<span class="nx">Y</span><span class="p">.</span><span class="nx">log</span> <span class="p">(</span><span class="s1">&#39;YUI 2 Loader is already in the page, don\&#39;t need to be loaded it again.&#39;</span><span class="o">,</span><span class="s1">&#39;info&#39;</span><span class="o">,</span><span class="s1">&#39;YUI2Wrapper&#39;</span><span class="p">);</span>
+		<span class="nx">Env</span><span class="p">.</span><span class="nx">_legacy</span><span class="p">.</span><span class="nx">_loader</span> <span class="o">=</span> <span class="nx">Env</span><span class="p">.</span><span class="nx">_legacy</span><span class="p">.</span><span class="nx">_loader</span> <span class="o">||</span> <span class="nx">_initLoader</span><span class="p">(</span><span class="nx">_config</span><span class="p">);</span>
+	<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
 		<span class="c">// loading the loader</span>
-		<span class="nx">Y</span><span class="p">.</span><span class="nx">log</span> <span class="p">(</span><span class="s1">&#39;Including YUI 2 Loader&#39;</span><span class="p">);</span>
-		<span class="nx">Env</span><span class="p">.</span><span class="nx">_legacy</span><span class="p">.</span><span class="nx">_useQueue</span><span class="p">.</span><span class="nx">add</span> <span class="p">({</span>
+		<span class="nx">Y</span><span class="p">.</span><span class="nx">log</span> <span class="p">(</span><span class="s1">&#39;YUI 2 Loader need to be loaded upfront.&#39;</span><span class="o">,</span><span class="s1">&#39;info&#39;</span><span class="o">,</span><span class="s1">&#39;YUI2Wrapper&#39;</span><span class="p">);</span>
+		<span class="nx">_useQueue</span><span class="p">.</span><span class="nx">add</span> <span class="p">({</span>
 			<span class="nx">fn</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
 				<span class="nx">YUI</span> <span class="p">({</span>
 					<span class="nx">modules</span><span class="o">:</span> <span class="p">{</span>
@@ -190,19 +199,24 @@
 					<span class="p">}</span>
 				<span class="p">}).</span><span class="nx">use</span> <span class="p">(</span><span class="s1">&#39;yui2-yuiloader&#39;</span><span class="o">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">X</span><span class="o">,</span> <span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
 					<span class="k">if</span> <span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">success</span><span class="p">)</span> <span class="p">{</span>
+						<span class="nx">Y</span><span class="p">.</span><span class="nx">log</span> <span class="p">(</span><span class="s1">&#39;YUI 2 Loader is ready to be used.&#39;</span><span class="o">,</span><span class="s1">&#39;info&#39;</span><span class="o">,</span><span class="s1">&#39;YUI2Wrapper&#39;</span><span class="p">);</span>
 						<span class="nx">Env</span><span class="p">.</span><span class="nx">_legacy</span><span class="p">.</span><span class="nx">_loader</span> <span class="o">=</span> <span class="nx">_initLoader</span><span class="p">(</span><span class="nx">_config</span><span class="p">);</span>
-						<span class="nx">Env</span><span class="p">.</span><span class="nx">_legacy</span><span class="p">.</span><span class="nx">_useQueue</span><span class="p">.</span><span class="nx">run</span><span class="p">();</span>
+						<span class="nx">_useQueue</span><span class="p">.</span><span class="nx">run</span><span class="p">();</span>
 					<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-						<span class="nx">Y</span><span class="p">.</span><span class="nx">log</span> <span class="p">(</span><span class="s1">&#39;Error trying to include yui 2 loader in the page&#39;</span><span class="p">);</span>
+						<span class="nx">Y</span><span class="p">.</span><span class="nx">log</span> <span class="p">(</span><span class="s1">&#39;Error trying to include yui 2 loader in the page&#39;</span><span class="o">,</span><span class="s1">&#39;error&#39;</span><span class="o">,</span><span class="s1">&#39;YUI2Wrapper&#39;</span><span class="p">);</span>
 					<span class="p">}</span>
 				<span class="p">});</span>
 			<span class="p">}</span><span class="o">,</span>
 			<span class="nx">autoContinue</span><span class="o">:</span> <span class="kc">false</span>
-		<span class="p">}).</span><span class="nx">run</span><span class="p">();</span>
+		<span class="p">});</span>
 	<span class="p">}</span>
 	<span class="c">// registering the default set of modules defined by YAHOO_config</span>
 	<span class="nx">_config</span> <span class="o">=</span> <span class="nx">_filterConf</span><span class="p">(</span><span class="nx">_config</span><span class="p">);</span>
+	<span class="nx">_useQueue</span><span class="p">.</span><span class="nx">run</span><span class="p">();</span>
 <span class="p">}</span>
+
+<span class="nx">_useQueue</span> <span class="o">=</span> <span class="nx">Env</span><span class="p">.</span><span class="nx">_legacy</span><span class="p">.</span><span class="nx">_useQueue</span><span class="o">;</span>
+<span class="nx">_loader</span> <span class="o">=</span> <span class="nx">Env</span><span class="p">.</span><span class="nx">_legacy</span><span class="p">.</span><span class="nx">_loader</span><span class="o">;</span>
 
 <span class="nx">Y</span><span class="p">.</span><span class="nx">yui2</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">o</span><span class="p">)</span> <span class="p">{</span>
 	<span class="nx">o</span> <span class="o">=</span> <span class="nx">_filterConf</span><span class="p">(</span><span class="nx">o</span><span class="p">);</span>
@@ -226,10 +240,11 @@
 
 			<span class="nx">_queue</span><span class="p">.</span><span class="nx">add</span> <span class="p">({</span>
 				<span class="nx">fn</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-					<span class="kd">var</span> <span class="nx">_loader</span> <span class="o">=</span> <span class="nx">Env</span><span class="p">.</span><span class="nx">_legacy</span><span class="p">.</span><span class="nx">_loader</span><span class="o">;</span>
 					<span class="nx">_loader</span><span class="p">.</span><span class="nx">require</span><span class="p">(</span><span class="nx">a</span><span class="p">);</span>
+					<span class="nx">Y</span><span class="p">.</span><span class="nx">log</span> <span class="p">(</span><span class="s1">&#39;Loading modules: &#39;</span><span class="o">+</span> <span class="nx">a</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s2">&quot;, &quot;</span><span class="p">)</span><span class="o">,</span><span class="s1">&#39;info&#39;</span><span class="o">,</span><span class="s1">&#39;YUI2Wrapper&#39;</span><span class="p">);</span>
 					<span class="nx">_loader</span><span class="p">.</span><span class="nx">insert</span><span class="p">({</span>
 						<span class="nx">onSuccess</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">o</span><span class="p">)</span> <span class="p">{</span>
+							<span class="nx">Y</span><span class="p">.</span><span class="nx">log</span> <span class="p">(</span><span class="s1">&#39;Modules ready: &#39;</span><span class="o">+</span> <span class="nx">a</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s2">&quot;, &quot;</span><span class="p">)</span><span class="o">,</span><span class="s1">&#39;info&#39;</span><span class="o">,</span><span class="s1">&#39;YUI2Wrapper&#39;</span><span class="p">);</span>
 							<span class="nx">_queue</span><span class="p">.</span><span class="nx">run</span><span class="p">();</span>
 							<span class="nx">callback</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">Y</span><span class="o">,</span> <span class="p">[</span><span class="nx">Y</span><span class="o">,</span> <span class="p">{</span><span class="nx">success</span><span class="o">:</span> <span class="nx">o</span><span class="p">}]);</span>
 						<span class="p">}</span><span class="o">,</span>
@@ -290,7 +305,7 @@
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2009 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2010 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 <script type="text/javascript">

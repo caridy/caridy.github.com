@@ -2,39 +2,29 @@
 <html> 
 <head> 
 <meta charset="utf-8" /> 
-<title>test</title> 
-</head>
-
-<body>
-
+<title>test</title>
 <!-- YUI 3 Seed //-->
-<script type="text/javascript" src="http://yui.yahooapis.com/combo?3.1.1/build/yui/yui-debug.js"></script>
-
-
-<div>
-   <div class="demo1">first element</div>
-   <div class="demo2">second element</div>
-</div>
-
-<p><a id="another-normal-id" href="#">click here to check the status of the elements</a></p>
-
+<script src="http://yui.yahooapis.com/combo?3.1.1/build/yui/yui-debug.js"></script>
 <script>
 YUI_config = {
-  filter: 'debug',
-  combine: false
+  useConsoleOutput: true,
+  filter: 'debug'
 };
-YUI().use('node', 'event', function(Y) {
+</script>
+</head>
+<body class="yui3-skin-sam">
 
-    var n = Y.one('.demo1');
-    n.set('id', Y.stamp(n));
+<div id="demo">
+</div>
 
-    var n = Y.one('.demo2');
-    n.set('id', Y.stamp(n));
-    
-    Y.on('click', function() {
-      alert ('First Element: '+Y.one('.demo1').get('id')+'\n Second Element: '+Y.one('.demo2').get('id'));
-    }, '#another-normal-id');
-    
+<script>
+YUI().use('console', function(Y) {
+  (new Y.Console({
+      verbose: true,
+      newestOnTop: false,height: '300px',
+      width: '99%',
+      style: 'block'
+  })).render();
 });
 </script>
 </body> 

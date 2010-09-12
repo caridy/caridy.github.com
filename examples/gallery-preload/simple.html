@@ -3,7 +3,7 @@
 <head>
   <title>Using Y.preload</title>
   <!-- YUI 3 Seed //-->
-  <script type="text/javascript" src="http://yui.yahooapis.com/3.1.0/build/yui/yui-debug.js"></script>
+  <script type="text/javascript" src="http://yui.yahooapis.com/3.1.1/build/yui/yui-min.js"></script>
 </head>
 <body class="yui3-skin-sam">
   
@@ -15,12 +15,10 @@
     </div>
     
 <!-- Initialization process //-->
-<script src="../js-demo/gallery-preload.js"></script>
 <script type="text/javascript">
 YUI({
-    combine: false,
-    filter: 'debug',
-    useConsole: true
+    //Last Gallery Build of this module
+    gallery: 'gallery-2010.05.05-19-39'
 }).use('gallery-preload', function(Y) {
     
     // single argument (an array) with multiple files 
@@ -37,7 +35,7 @@ YUI({
         'http://tools.w3clubs.com/pagr2/2.sleep.expires.css'
     );
     
-    // multiple arguments, each represents an url
+    // preload files only when the user is idle for at least 100ms
     Y.preloadOnIdle ([
         'http://tools.w3clubs.com/pagr2/3.sleep.expires.png', 
         'http://tools.w3clubs.com/pagr2/3.sleep.expires.js', 

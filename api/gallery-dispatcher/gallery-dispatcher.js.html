@@ -49,7 +49,7 @@
                         </style>
 <div class="highlight"><pre><span class="c">/**</span>
 <span class="c">* &lt;p&gt;The Dispatcher satisfies a very common need of developers using the </span>
-<span class="c">* YUI library: dynamic execution of Ajax response content. Typical strategies to </span>
+<span class="c">* YUI library: dynamic execution of HTML Fragments or remote content. Typical strategies to </span>
 <span class="c">* fulfill this need, like executing the innerHTML property or referencing remote </span>
 <span class="c">* scripts, are unreliable due to browser incompatibilities. The Dispatcher normalize </span>
 <span class="c">* this behavior across all a-grade browsers.</span>
@@ -69,7 +69,7 @@
 <span class="c">* &lt;br&gt;</span>
 <span class="c">*			(new Y.Dispatcher ({&lt;br&gt;</span>
 <span class="c">*				node: &#39;#demoajax&#39;,&lt;br&gt;</span>
-<span class="c">*				 content: &#39;Please wait... (Injecting fragment.html)&#39;&lt;br&gt;</span>
+<span class="c">*				content: &#39;Please wait... (Injecting fragment.html)&#39;&lt;br&gt;</span>
 <span class="c">*			})).set(&#39;uri&#39;, &#39;fragment.html&#39;);&lt;br&gt;</span>
 <span class="c">* &lt;br&gt;</span>
 <span class="c">* &lt;br&gt;		</span>
@@ -86,12 +86,10 @@
 <span class="c">*/</span>
 
 <span class="c">//	Util shortcuts</span>
-<span class="kd">var</span> <span class="nx">UA</span> <span class="o">=</span> <span class="nx">Y</span><span class="p">.</span><span class="nx">UA</span><span class="o">,</span>
-<span class="nx">getClassName</span> <span class="o">=</span> <span class="nx">Y</span><span class="p">.</span><span class="nx">ClassNameManager</span><span class="p">.</span><span class="nx">getClassName</span><span class="o">,</span>
+<span class="kd">var</span> <span class="nx">getClassName</span> <span class="o">=</span> <span class="nx">Y</span><span class="p">.</span><span class="nx">ClassNameManager</span><span class="p">.</span><span class="nx">getClassName</span><span class="o">,</span>
 
 <span class="c">//	Frequently used strings</span>
 <span class="nx">DISPATCHER</span> <span class="o">=</span> <span class="s2">&quot;dispatcher&quot;</span><span class="o">,</span>
-<span class="nx">PERIOD</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span><span class="o">,</span>
 <span class="nx">SC</span> <span class="o">=</span> <span class="s2">&quot;script&quot;</span><span class="o">,</span>
 <span class="nx">DISPATCHER_FETCH</span> <span class="o">=</span> <span class="s1">&#39;fetch&#39;</span><span class="o">,</span>
 <span class="nx">DISPATCHER_PURGE</span> <span class="o">=</span> <span class="s1">&#39;purge&#39;</span><span class="o">,</span>
@@ -107,17 +105,12 @@
 <span class="nx">ATTR_NODE</span> <span class="o">=</span> <span class="s1">&#39;node&#39;</span><span class="o">,</span>
 
 <span class="c">//	CSS class names</span>
-<span class="nx">CLASS_DISPATCHER</span> <span class="o">=</span> <span class="nx">getClassName</span><span class="p">(</span><span class="nx">DISPATCHER</span><span class="p">)</span><span class="o">,</span>
 <span class="nx">CLASS_DISPATCHER_LOADING</span> <span class="o">=</span> <span class="nx">getClassName</span><span class="p">(</span><span class="nx">DISPATCHER</span><span class="o">,</span> <span class="s1">&#39;loading&#39;</span><span class="p">)</span><span class="o">,</span>
-
-<span class="c">//	CSS selectors</span>
-<span class="nx">SELECTOR_DISPATCHER</span> <span class="o">=</span> <span class="nx">PERIOD</span> <span class="o">+</span> <span class="nx">CLASS_DISPATCHER</span><span class="o">,</span>
 
 <span class="c">// shorthands</span>
 <span class="nx">L</span> <span class="o">=</span> <span class="nx">Y</span><span class="p">.</span><span class="nx">Lang</span><span class="o">,</span>
 <span class="nx">isBoolean</span> <span class="o">=</span> <span class="nx">L</span><span class="p">.</span><span class="nx">isBoolean</span><span class="o">,</span>
 <span class="nx">isString</span> <span class="o">=</span> <span class="nx">L</span><span class="p">.</span><span class="nx">isString</span><span class="o">,</span>
-<span class="nx">isObject</span> <span class="o">=</span> <span class="nx">L</span><span class="p">.</span><span class="nx">isObject</span><span class="o">,</span>
 
 <span class="c">/**</span>
 <span class="c">	* The Dispatcher class represents an object that can manage Node Elements to</span>
@@ -137,7 +130,7 @@
 	<span class="nx">fragment</span><span class="p">.</span><span class="nx">setContent</span><span class="p">(</span><span class="nx">content</span><span class="p">);</span>
 
 	<span class="nx">o</span><span class="p">.</span><span class="nx">js</span> <span class="o">=</span> <span class="nx">fragment</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span><span class="nx">SC</span><span class="p">).</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">n</span><span class="p">)</span> <span class="p">{</span>
-		<span class="nx">fragment</span><span class="p">.</span><span class="nx">removeChild</span><span class="p">(</span><span class="nx">n</span><span class="p">);</span>
+		<span class="nx">n</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;parentNode&#39;</span><span class="p">).</span><span class="nx">removeChild</span><span class="p">(</span><span class="nx">n</span><span class="p">);</span>
 	<span class="p">});</span>
 	<span class="nx">o</span><span class="p">.</span><span class="nx">content</span> <span class="o">=</span> <span class="nx">fragment</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;innerHTML&#39;</span><span class="p">);</span>
 	<span class="k">return</span> <span class="nx">o</span><span class="o">;</span>
@@ -246,16 +239,16 @@
 		<span class="k">this</span><span class="p">.</span><span class="nx">_initEvents</span><span class="p">();</span>
 
 		<span class="k">this</span><span class="p">.</span><span class="nx">after</span><span class="p">(</span><span class="nx">ATTR_CONTENT</span> <span class="o">+</span> <span class="s2">&quot;Change&quot;</span><span class="o">,</span>
-		<span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
-			<span class="k">this</span><span class="p">.</span><span class="nx">_dispatch</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">newVal</span><span class="p">);</span>
-		<span class="p">}</span><span class="o">,</span>
-		<span class="k">this</span><span class="p">);</span>
+			<span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+				<span class="k">this</span><span class="p">.</span><span class="nx">_dispatch</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">newVal</span><span class="p">);</span>
+			<span class="p">}</span><span class="o">,</span>
+			<span class="k">this</span><span class="p">);</span>
 
 		<span class="k">this</span><span class="p">.</span><span class="nx">after</span><span class="p">(</span><span class="nx">ATTR_URI</span> <span class="o">+</span> <span class="s2">&quot;Change&quot;</span><span class="o">,</span>
-		<span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
-			<span class="k">this</span><span class="p">.</span><span class="nx">_fetch</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">newVal</span><span class="p">);</span>
-		<span class="p">}</span><span class="o">,</span>
-		<span class="k">this</span><span class="p">);</span>
+			<span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+				<span class="k">this</span><span class="p">.</span><span class="nx">_fetch</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">newVal</span><span class="p">);</span>
+			<span class="p">}</span><span class="o">,</span>
+			<span class="k">this</span><span class="p">);</span>
 
 		<span class="c">// making the trick for content and uri in case the user want to set up thru config</span>
 		<span class="k">if</span> <span class="p">(</span><span class="nx">config</span><span class="p">[</span><span class="nx">ATTR_CONTENT</span><span class="p">])</span> <span class="p">{</span>
@@ -361,7 +354,7 @@
 		<span class="nx">Y</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;dispatching a new content&#39;</span><span class="o">,</span> <span class="s1">&#39;info&#39;</span><span class="o">,</span> <span class="nx">DISPATCHER</span><span class="p">);</span>
 
 		<span class="c">// autopurging children collection</span>
-		<span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;autopurge&#39;</span><span class="p">))</span> <span class="p">{</span>
+		<span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">ATTR_AUTOPURGE</span><span class="p">))</span> <span class="p">{</span>
 			<span class="nx">q</span><span class="p">.</span><span class="nx">add</span><span class="p">({</span>
 				<span class="nx">fn</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
 					<span class="nx">Y</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;purging children collection&#39;</span><span class="o">,</span> <span class="s1">&#39;info&#39;</span><span class="o">,</span> <span class="nx">DISPATCHER</span><span class="p">);</span>

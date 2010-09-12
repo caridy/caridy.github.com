@@ -16,4 +16,4 @@ YUI.add('my-custom-module', function (Y) {
 		
 	}, '#demodelegate', 'a')
 	
-}, '@VERSION@' ,{requires:['event']});
+}, '@VERSION@' ,{requires:['event', 'node']});

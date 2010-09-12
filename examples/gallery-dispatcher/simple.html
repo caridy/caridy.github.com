@@ -1,47 +1,64 @@
 <!doctype html>
 <html>
 <head>
-	<title>Using Dispatcher</title>
+    <title>Using Dispatcher</title>
 </head>
 <body class="yui3-skin-sam">
-	
+    
     <div id="doc">
-    	
-		<h1>Using Dispatcher</h1>
-		
-		<div id="demo">
-			<p>Placeholder to inject static markup</p>
-		</div>
-		
-		<div id="demoajax">
-			<p>Placeholder to inject external markup: fragment.html)</p>
-		</div>
+        
+        <h1>Using Dispatcher</h1>
+        
+        <div id="demo">
+            <p>Placeholder to inject static markup</p>
+        </div>
+        
+        <div id="demoajax">
+            <p>Placeholder to inject external markup: fragment.html)</p>
+        </div>
 
     </div>
 
 <!-- YUI 3 Seed //-->
-<script type="text/javascript" src="http://yui.yahooapis.com/3.1.1/build/yui/yui-min.js"></script>
+<script type="text/javascript" src="http://yui.yahooapis.com/3.2.0/build/yui/yui-min.js"></script>
 <!-- Initialization process //-->
 <script type="text/javascript">
-	YUI({
+    YUI({
       //Last Gallery Build of this module
       gallery: 'gallery-2010.08.18-17-12'
   }).use('gallery-dispatcher', function(Y) {
-	
-		var o = new Y.Dispatcher ({
-			node: '#demo',
-			content: '<p>Please wait... (Injecting Static Markup)</p>'
-		});
-		// using the dispatcher object to set a new content
-		o.set('content', "<p>Static Markup</p><style>#demo{ color: red; }</style><link rel=\"stylesheet\" href=\"../../site.css\" type=\"text/css\" /><script type=\"text/javascript\">foo = true\; window.bar = true\;<\/script><script type=\"text/javascript\" src=\"http://yui.yahooapis.com/gallery-2009.12.08-22/build/gallery-yui2/gallery-yui2-min.js\"><\/script>");
-		
-		// using the initialization to define the url that should be injected automatically.
-		(new Y.Dispatcher ({
-			node: '#demoajax',
-			content: 'Please wait... (Injecting External Markup: fragment.html)'
-		})).set ('uri', 'fragment.html');
-	 
-	});
+    
+        var o = new Y.Dispatcher ({
+            node: '#demo',
+            content: '<p>Please wait... (Injecting Static Markup)</p>'
+        });
+        // using the dispatcher object to set a new content
+        o.set('content', "<p>Static Markup</p><style>#demo{ color: red; }</style><link rel=\"stylesheet\" href=\"../../site.css\" type=\"text/css\" /><script type=\"text/javascript\">foo = true\; window.bar = true\;<\/script><script type=\"text/javascript\" src=\"http://yui.yahooapis.com/gallery-2009.12.08-22/build/gallery-yui2/gallery-yui2-min.js\"><\/script>");
+        
+        // using the initialization to define the url that should be injected automatically.
+        (new Y.Dispatcher ({
+            node: '#demoajax',
+            content: 'Please wait... (Injecting External Markup: fragment.html)',
+            ioConfig: { // check for more info here: http://developer.yahoo.com/yui/3/io/#configuration
+                method: 'POST',
+                on: {
+                    start: function() {
+                        // start loading
+                    },
+                    success: function(tid, o) {
+                        // success
+                    },
+                    failure: function(tid, o) {
+                        // request fails
+                    },
+                    end: function() {
+                        // end will be executed, no matter if it fails or not
+                    }
+                }
+            }
+        })).set ('uri', 'fragment.html');
+     
+    });
 </script>
 </body>
 </html>

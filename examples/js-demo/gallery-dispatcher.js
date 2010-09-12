@@ -1,5 +1,3 @@
-YUI.add('gallery-dispatcher', function(Y) {
-
 /**
 * <p>The Dispatcher Node Plugin makes it easy to transform existing 
 * markup into an dispatcher element with expandable and collapsable elements, 
@@ -154,10 +152,8 @@ Y.mix(Dispatcher, {
     NAME : DISPATCHER,
 
     /**
-     * Static Object hash used to cache requests.
-     *
      * @property Dispatcher._hashtable
-     * @Type Array
+     * @type Array
      * @static
      */
     _hashtable : [],
@@ -191,6 +187,7 @@ Y.mix(Dispatcher, {
  		uri: {
  			value: null,
  			setter : function (v) {
+ 				Y.log ('dispatching a new url','info',DISPATCHER);
  				this.stop ();
  				this._io = this._fetch(v);
 				return v;
@@ -206,6 +203,7 @@ Y.mix(Dispatcher, {
  		content: {
  			value: '',
  			setter : function (v) {
+ 				Y.log ('dispatching a new content','info',DISPATCHER);
  				this.stop();
  				v = this._dispatch(v); // discarding the file name
 	            return v;
@@ -223,6 +221,7 @@ Y.mix(Dispatcher, {
 			value: false,
 			validator: isBoolean,
 			setter: function (v) {
+				Y.log ('setting status','info',DISPATCHER);
 				if (v) {
 					this._node.addClass (CLASS_DISPATCHER_LOADING);
 				} else {
@@ -253,8 +252,10 @@ Y.extend(Dispatcher, Y.Base, {
 	//	Public methods
 
     initializer: function (config) {
+		Y.log ('Initializer','info',DISPATCHER);
 		this._queue = new Y.AsyncQueue ();
 		if (!isObject(config) || !config.node || !(this._node = Y.one(config.node))) {
+			Y.log ('Dispatcher requires a NODE to be instantiated','info',DISPATCHER);
 			// how can we stop the initialization?
 			return;
 		}
@@ -303,9 +304,11 @@ Y.extend(Dispatcher, Y.Base, {
     		if (cssNode && cssNode.get ('href')) {
 	    		q.add ({
 					fn: function () {
+	    				Y.log ('external link tag: '+cssNode.get ('href'),'info',DISPATCHER);
 	    				//q.next();
 	    				Y.Get.css(cssNode.get ('href'), { 
 	    					onFailure: function(o) {
+	    						Y.log ('external link tag fail to load: '+cssNode.get ('href'),'warn',DISPATCHER);
 							},
 							onEnd: function () {
 								q.run();
@@ -318,6 +321,7 @@ Y.extend(Dispatcher, Y.Base, {
 	    		q.add ({
 					fn: function () {
 		    			// inject css;
+		    			Y.log ('inline style tag: '+cssNode.get ('innerHTML'),'info',DISPATCHER);
 		    			var d = cssNode.get('ownerDocument'),
 							h = d.one('head') || d.get ('documentElement'),
 							newStyle = Y.Node.create('<style></style>');
@@ -330,6 +334,7 @@ Y.extend(Dispatcher, Y.Base, {
     	if (this.get ('autopurge')) {
     		q.add ({
     			fn: function () {
+    				Y.log ('purging children collection','info',DISPATCHER);
 	        		n.get ('children').each(function(c) {
 	        			c.purge (true);
 	        		});
@@ -339,6 +344,7 @@ Y.extend(Dispatcher, Y.Base, {
     	// injecting new content
     	q.add ({
 			fn: function () {
+				Y.log ('setting new content: '+o.content,'info',DISPATCHER);
     			n.setContent (o.content);
 			}
 		});
@@ -347,9 +353,11 @@ Y.extend(Dispatcher, Y.Base, {
     		if (jsNode && jsNode.get ('src')) {
 	    		q.add ({
 					fn: function () {
+						Y.log ('external script tag: '+jsNode.get ('src'),'info',DISPATCHER);
 						//q.next();
 						Y.Get.script(jsNode.get ('src'), { 
 							onFailure: function(o) {
+	    						Y.log ('external script tag fail to load: '+jsNode.get ('src'),'error',DISPATCHER);
 							},
 							onEnd: function (o) {
 								o.purge(); //removes the script node immediately after executing it
@@ -363,6 +371,7 @@ Y.extend(Dispatcher, Y.Base, {
 	    		q.add ({
 					fn: function () {
 		    			// inject js;
+						Y.log ('inline script tag: '+jsNode.get ('innerHTML'),'info',DISPATCHER);
 						var d = jsNode.get('ownerDocument'),
 							h = d.one('head') || d.get ('documentElement'),
 							newScript = Y.Node.create('<script></script>');
@@ -389,13 +398,17 @@ Y.extend(Dispatcher, Y.Base, {
 		};
 		cfg.on = {
 			start: function () {
+		   		Y.log ('Start','info',DISPATCHER);
 	   		},
 			success: function (tid, o) {
+		   		Y.log ('Success: '+o.responseText,'info',DISPATCHER);
 		   		this.set(ATTR_CONTENT, o.responseText);
 	   		},
 	   		failure: function (tid, o) {
+	   			Y.log ('Failure','warn',DISPATCHER);
 		   	},
 			end: function () {
+		   		Y.log ('End','info',DISPATCHER);
 	   		}
 		};
 		cfg.context = this;
@@ -417,6 +430,3 @@ Y.extend(Dispatcher, Y.Base, {
 });
 
 Y.Dispatcher = Dispatcher;
-
-
-}, '@VERSION@' ,{requires:['base-base', 'node-base', 'io-base', 'get', 'async-queue', 'classnamemanager']});

@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+    <title>Dynamic YUI Injection - Using Parent Window Utility</title>
+</head>
+<body class="yui3-skin-sam">
+    
+    <div id="doc">
+        
+        <h1>Dynamic YUI Injection - Using Parent Window Utility</h1>
+        
+        <div id="demo">
+            <p>An iframe will be injected dynamically, and within the iframe, we will load 
+                YUI Node, adding an event listener for this link:</p>
+            
+            <p> - <a href="#" id="trigger">Click here to see an alert</a>
+            
+            <p>Some facts:</p>
+            <ul>
+                <li>This example shows how YUI can be sandboxed within an iframe but being executed in the scope of the parent window document, which means that any DOM operation executed within the scope of the iframe YUI instance will be executed against the parent window DOM structure.</li>
+                <li>There isn't any YUI instance or YUI code running in this page, everything is actually sandboxed within the iframe.</li>
+                <li>The JS code that we have in this page is for injecting an iframe, waiting for the onload event for that iframe (which is fairly instantly because it's just a "body" tag), and injecting a JS file within the iframe. This dynamic.js file that will be injected within the iframe could be two things:<br >
+                    - A production script merging YUI seed + other YUI stuff + an initialization code to do something.<br>
+                    - A bootstrap script to inject YUI seed in the page, and do an initialization once YUI become available.<br>
+                    Both cases are valid, although I recommend #1 for production. In this example we will use #2 to keep it simple.
+                </li>
+                <li>As an advanced configuration, you can pass a configuration object to the iframe, so dynamic.js can tweak the way it does the initialization. This is achieve using YUI_config={app:{trigger:'a#trigger'}}; during the iframe injection.</li>
+                <li><a href="dynamic.js">Click here</a> to see the source code for dynamic.js</li>
+            </ul>
+        </div>
+
+    </div>
+
+<!-- Injecting iframe dynamically //-->
+<script type="text/javascript">
+(function(d){
+    var iframe = d.body.appendChild(d.createElement('iframe')), 
+        doc = iframe.contentWindow.document;
+    iframe.style.cssText = "position:absolute;width:1px;height:1px;left:-9999px;";   
+    doc.open().write('<body onload="YUI_config={app:{trigger:\'a#trigger\'}}; var d=document;d.getElementsByTagName(\'head\')[0].appendChild(d.createElement(\'script\')).src=\'dynamic.js\'">');
+    doc.close();
+})(document);
+</script>
+</body>
+</html>

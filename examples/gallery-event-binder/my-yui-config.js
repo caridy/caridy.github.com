@@ -57,7 +57,7 @@ YUI_config = {
             }
         },
 
-        add: function(type) {
+        listenFor: function(type) {
             var d = document;
 
             if (d.addEventListener) {
@@ -72,4 +72,4 @@ YUI_config = {
 };
 
 // add events to the monitoring process
-YUI_config.eventbinder.add('click');
+YUI_config.eventbinder.listenFor('click');
