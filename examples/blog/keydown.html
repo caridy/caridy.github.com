@@ -14,17 +14,21 @@ YUI_config = {
 </head>
 <body class="yui3-skin-sam">
 
+
+Type here: <input type="text" id="source" /><br >
+
+Residual value should appear here: <input type="text" id="clone" /><br>
+
 <div id="demo">
+    Keydown logs should appear here: 
 </div>
 
 <script>
-Y.use('console', function(Y) {
-  (new Y.Console({
-      verbose: true,
-      newestOnTop: false,height: '300px',
-      width: '99%',
-      style: 'block'
-  })).render();
+Y.one('#source').on('keydown', function(e) {
+    Y.one('#clone').set('value', Y.one('#source').get('value'));
+});
+Y.on('keydown', function(e) {
+    Y.one('#demo').append(' ['+e.keyCode+']');
 });
 </script>
 </body> 
