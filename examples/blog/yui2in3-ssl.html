@@ -21,13 +21,13 @@
     <script type="text/javascript">
         YUI({
             filter: 'debug',
-            combine: false,
+            combine: true,
+            comboBase: 'https://s.yimg.com/lq/lib/yui/combo?',
             groups: {
                 yui2: {
                     combine: true,
-                    comboBase: 'https://s.yimg.com/lq/lib/yui/combo?',
-                    root: '2in3.3/2.8.0r4/build/',
-                    patterns:  { 
+                    root: '2in3.4/2.8.2/build/', // you should update to 2.8.2 too
+                    patterns:  {
                         'yui2-': {
                             configFn: function(me) {
                                 if(/-skin|reset|fonts|grids|base/.test(me.name)) {
@@ -37,7 +37,7 @@
                                     me.path = me.path.replace(/\/yui2-skin/, '/assets/skins/sam/yui2-skin');
                                 }
                             }
-                        } 
+                        }
                     }
                 }
             }
