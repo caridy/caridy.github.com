@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+    <title>Customizing YUI2 properties</title>
+    <!-- YUI 3 Seed //-->
+    <script type="text/javascript" src="http://yui.yahooapis.com/3.3.0/build/yui/yui-debug.js"></script>
+    <!-- Initialization process //-->
+</head>
+<body class="yui-skin-sam">
+    
+    <div id="doc">
+        
+        <h1>YUI2in3 on SSL</h1>
+          
+        <div id="demo">
+            <h3 class="title">Result:</h3>
+        </div>
+
+    </div>
+
+    <script type="text/javascript">
+        YUI({
+            filter: 'debug',
+            combine: false,
+            groups: {
+                yui2: {
+                    combine: true,
+                    comboBase: 'https://s.yimg.com/lq/lib/yui/combo?',
+                    root: '2in3.3/2.8.0r4/build/',
+                    patterns:  { 
+                        'yui2-': {
+                            configFn: function(me) {
+                                if(/-skin|reset|fonts|grids|base/.test(me.name)) {
+                                    me.type = 'css';
+                                    me.path = me.path.replace(/\.js/, '.css');
+                                    // this makes skins in builds earlier than 2.6.0 work as long as combine is false
+                                    me.path = me.path.replace(/\/yui2-skin/, '/assets/skins/sam/yui2-skin');
+                                }
+                            }
+                        } 
+                    }
+                }
+            }
+        }).use('yui2-datatable', function (Y) {
+            
+            Y.YUI2.util.Dom.get('demo').innerHTML += '<p>datatable is ready!</p>';
+                
+        });
+    </script>
+    
+</body>
+</html>
