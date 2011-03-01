@@ -1,4 +1,4 @@
-YAHOO.env.classMap = {"plugin.NodeAccordion": "gallery-node-accordion"};
+YAHOO.env.classMap = {"Y.Plugin.NodeAccordion": "gallery-node-accordion"};
 
 YAHOO.env.resolveClass = function(className) {
     var a=className.split('.'), ns=YAHOO.env.classMap;

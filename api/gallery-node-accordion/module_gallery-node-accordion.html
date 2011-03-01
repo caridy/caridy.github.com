@@ -16,7 +16,7 @@
 <div id="doc3" class="yui-t2">
 	<div id="hd">
         <h1><a href="http://developer.yahoo.com/yui/" title="Yahoo! UI Library">Yahoo! UI Library</a></h1>
-        <h3>gallery-node-accordion&nbsp; <span class="subtitle">3.0.0</span></h3>
+        <h3>gallery-node-accordion&nbsp; <span class="subtitle">3.3.0</span></h3>
         <a href="./index.html" title="Yahoo! UI Library">Yahoo! UI Library</a> 
             &gt; <a href="./module_gallery-node-accordion.html" title="gallery-node-accordion">gallery-node-accordion</a>
                 
@@ -59,30 +59,30 @@ Node instance's <code>plug</code> method.</p>
 <code>
 &#60;script type="text/javascript"&#62; <br>
 <br>
-//	Call the "use" method, passing in "gallery-node-accordion".  This will <br>
-//	load the script and CSS for the Accordion Node Plugin and all of <br>
-//	the required dependencies. <br>
+//  Call the "use" method, passing in "gallery-node-accordion".  This will <br>
+//  load the script and CSS for the Accordion Node Plugin and all of <br>
+//  the required dependencies. <br>
 <br>
 YUI().use("gallery-node-accordion", function(Y) { <br>
 <br>
-//	Use the "contentready" event to initialize the accordion when <br>
-//	the element that represente the accordion <br>
-//	(&#60;div id="accordion-1"&#62;) is ready to be scripted. <br>
+//  Use the "contentready" event to initialize the accordion when <br>
+//  the element that represente the accordion <br>
+//  (&#60;div id="accordion-1"&#62;) is ready to be scripted. <br>
 <br>
 Y.on("contentready", function () { <br>
 <br>
-//	The scope of the callback will be a Node instance <br>
-//	representing the accordion (&#60;div id="accordion-1"&#62;). <br>
-//	Therefore, since "this" represents a Node instance, it <br>
-//	is possible to just call "this.plug" passing in a <br>
-//	reference to the Accordion Node Plugin. <br>
+//  The scope of the callback will be a Node instance <br>
+//  representing the accordion (&#60;div id="accordion-1"&#62;). <br>
+//  Therefore, since "this" represents a Node instance, it <br>
+//  is possible to just call "this.plug" passing in a <br>
+//  reference to the Accordion Node Plugin. <br>
 <br>
 this.plug(Y.Plugin.NodeAccordion); <br>
 <br>
 }, "#accordion-1"); <br>
-<br>		
+<br>      
 }); <br>
-<br>	
+<br>  
 &#60;/script&#62; <br>
 </code>
 </p>
@@ -94,30 +94,30 @@ instance's <code>plug</code> method.
 <code>
 &#60;script type="text/javascript"&#62; <br>
 <br>
-//	Call the "use" method, passing in "gallery-node-accordion".  This will <br>
-//	load the script and CSS for the Accordion Node Plugin and all of <br>
-//	the required dependencies. <br>
+//  Call the "use" method, passing in "gallery-node-accordion".  This will <br>
+//  load the script and CSS for the Accordion Node Plugin and all of <br>
+//  the required dependencies. <br>
 <br>
 YUI().use("gallery-node-accordion", function(Y) { <br>
 <br>
-//	Use the "contentready" event to initialize the accordion when <br>
-//	the element that represente the accordion <br>
-//	(&#60;div id="accordion-1"&#62;) is ready to be scripted. <br>
+//  Use the "contentready" event to initialize the accordion when <br>
+//  the element that represente the accordion <br>
+//  (&#60;div id="accordion-1"&#62;) is ready to be scripted. <br>
 <br>
 Y.on("contentready", function () { <br>
 <br>
-//	The scope of the callback will be a Node instance <br>
-//	representing the accordion (&#60;div id="accordion-1"&#62;). <br>
-//	Therefore, since "this" represents a Node instance, it <br>
-//	is possible to just call "this.plug" passing in a <br>
-//	reference to the Accordion Node Plugin. <br>
+//  The scope of the callback will be a Node instance <br>
+//  representing the accordion (&#60;div id="accordion-1"&#62;). <br>
+//  Therefore, since "this" represents a Node instance, it <br>
+//  is possible to just call "this.plug" passing in a <br>
+//  reference to the Accordion Node Plugin. <br>
 <br>
 this.plug(Y.Plugin.NodeAccordion, { anim: true, effect: Y.Easing.backIn });
 <br><br>
 }, "#accordion-1"); <br>
-<br>		
+<br>      
 }); <br>
-<br>	
+<br>  
 &#60;/script&#62; <br>
 </code>
 </p>
@@ -130,11 +130,11 @@ this.plug(Y.Plugin.NodeAccordion, { anim: true, effect: Y.Easing.backIn });
 
                             <p>This module contains the following classes:</p>
                             <script>
-                            //var YUI_CLASS_LIST = [{"extends": {"superclass": {}, "events": {}, "configs": {}, "properties": {}, "methods": {}}, "description": "The NodeAccordion class is a plugin for a Node instance.  The class is used via  \nthe <a href=\"Node.html#method_plug\"><code>plug</code></a> method of Node and \nshould not be instantiated directly.", "guessedname": "plugin.NodeAccordion", "name": "plugin.NodeAccordion"}];
+                            //var YUI_CLASS_LIST = [{"extends": {"superclass": {}, "events": {}, "configs": {}, "properties": {}, "methods": {}}, "description": "The NodeAccordion class is a plugin for a Node instance.  The class is used via  \nthe <a href=\"Node.html#method_plug\"><code>plug</code></a> method of Node and \nshould not be instantiated directly.", "guessedname": "Y.Plugin.NodeAccordion", "name": "Y.Plugin.NodeAccordion"}];
                             </script>
                             <div id="splash_classList">
                                 <ul>
-                                    <li><a href="plugin.NodeAccordion.html" title="plugin.NodeAccordion" id="class_0">plugin.NodeAccordion</a></li>
+                                    <li><a href="Y.Plugin.NodeAccordion.html" title="Y.Plugin.NodeAccordion" id="class_0">Y.Plugin.NodeAccordion</a></li>
                                 </ul>
                             </div>
                     </div>
@@ -158,7 +158,7 @@ this.plug(Y.Plugin.NodeAccordion, { anim: true, effect: Y.Easing.backIn });
                     <div id="classList" class="module">
                         <h4>Classes</h4>
                         <ul class="content">
-                                <li class=""><a href="plugin.NodeAccordion.html" title="plugin.NodeAccordion">plugin.NodeAccordion</a></li>
+                                <li class=""><a href="Y.Plugin.NodeAccordion.html" title="Y.Plugin.NodeAccordion">Y.Plugin.NodeAccordion</a></li>
                         </ul>
                     </div>
 
@@ -178,11 +178,12 @@ this.plug(Y.Plugin.NodeAccordion, { anim: true, effect: Y.Easing.backIn });
 	</div>
 	<div id="ft">
         <hr />
-        Copyright &copy; 2009 Yahoo! Inc. All rights reserved.
+        Copyright &copy; 2011 Yahoo! Inc. All rights reserved.
 	</div>
 </div>
 <script type="text/javascript">
-    ALL_YUI_PROPS = [{"url": "plugin.NodeAccordion.html#config_activeItems", "access": "", "host": "plugin.NodeAccordion", "type": "config", "name": "activeItems"}, {"url": "plugin.NodeAccordion.html#event_activeItemsChange", "access": "", "host": "plugin.NodeAccordion", "type": "event", "name": "activeItemsChange"}, {"url": "plugin.NodeAccordion.html#config_anim", "access": "", "host": "plugin.NodeAccordion", "type": "config", "name": "anim"}, {"url": "plugin.NodeAccordion.html#method__animate", "access": "protected", "host": "plugin.NodeAccordion", "type": "method", "name": "_animate"}, {"url": "plugin.NodeAccordion.html#event_animChange", "access": "", "host": "plugin.NodeAccordion", "type": "event", "name": "animChange"}, {"url": "plugin.NodeAccordion.html#method__closeItem", "access": "protected", "host": "plugin.NodeAccordion", "type": "method", "name": "_closeItem"}, {"url": "plugin.NodeAccordion.html#method_collapseAllItems", "access": "", "host": "plugin.NodeAccordion", "type": "method", "name": "collapseAllItems"}, {"url": "plugin.NodeAccordion.html#method_collapseItem", "access": "", "host": "plugin.NodeAccordion", "type": "method", "name": "collapseItem"}, {"url": "plugin.NodeAccordion.html#method_expandAllItems", "access": "", "host": "plugin.NodeAccordion", "type": "method", "name": "expandAllItems"}, {"url": "plugin.NodeAccordion.html#method_expandItem", "access": "", "host": "plugin.NodeAccordion", "type": "method", "name": "expandItem"}, {"url": "plugin.NodeAccordion.html#config_fade", "access": "", "host": "plugin.NodeAccordion", "type": "config", "name": "fade"}, {"url": "plugin.NodeAccordion.html#event_fadeChange", "access": "", "host": "plugin.NodeAccordion", "type": "event", "name": "fadeChange"}, {"url": "plugin.NodeAccordion.html#method__getItem", "access": "protected", "host": "plugin.NodeAccordion", "type": "method", "name": "_getItem"}, {"url": "plugin.NodeAccordion.html#config_items", "access": "", "host": "plugin.NodeAccordion", "type": "config", "name": "items"}, {"url": "plugin.NodeAccordion.html#event_itemsChange", "access": "", "host": "plugin.NodeAccordion", "type": "event", "name": "itemsChange"}, {"url": "plugin.NodeAccordion.html#config_multiple", "access": "", "host": "plugin.NodeAccordion", "type": "config", "name": "multiple"}, {"url": "plugin.NodeAccordion.html#event_multipleChange", "access": "", "host": "plugin.NodeAccordion", "type": "event", "name": "multipleChange"}, {"url": "plugin.NodeAccordion.html#method__openItem", "access": "protected", "host": "plugin.NodeAccordion", "type": "method", "name": "_openItem"}, {"url": "plugin.NodeAccordion.html#config_orientation", "access": "", "host": "plugin.NodeAccordion", "type": "config", "name": "orientation"}, {"url": "plugin.NodeAccordion.html#event_orientationChange", "access": "", "host": "plugin.NodeAccordion", "type": "event", "name": "orientationChange"}, {"url": "plugin.NodeAccordion.html#config_persistent", "access": "", "host": "plugin.NodeAccordion", "type": "config", "name": "persistent"}, {"url": "plugin.NodeAccordion.html#event_persistentChange", "access": "", "host": "plugin.NodeAccordion", "type": "event", "name": "persistentChange"}, {"url": "plugin.NodeAccordion.html#property__root", "access": "protected", "host": "plugin.NodeAccordion", "type": "property", "name": "_root"}, {"url": "plugin.NodeAccordion.html#config_speed", "access": "", "host": "plugin.NodeAccordion", "type": "config", "name": "speed"}, {"url": "plugin.NodeAccordion.html#event_speedChange", "access": "", "host": "plugin.NodeAccordion", "type": "event", "name": "speedChange"}, {"url": "plugin.NodeAccordion.html#method_toggleItem", "access": "", "host": "plugin.NodeAccordion", "type": "method", "name": "toggleItem"}];
+
+    var ALL_YUI_PROPS = [{"url": "Y.Plugin.NodeAccordion.html#config_activeItems", "access": "", "host": "Y.Plugin.NodeAccordion", "type": "config", "name": "activeItems"}, {"url": "Y.Plugin.NodeAccordion.html#event_activeItemsChange", "access": "", "host": "Y.Plugin.NodeAccordion", "type": "event", "name": "activeItemsChange"}, {"url": "Y.Plugin.NodeAccordion.html#config_anim", "access": "", "host": "Y.Plugin.NodeAccordion", "type": "config", "name": "anim"}, {"url": "Y.Plugin.NodeAccordion.html#method__animate", "access": "protected", "host": "Y.Plugin.NodeAccordion", "type": "method", "name": "_animate"}, {"url": "Y.Plugin.NodeAccordion.html#event_animChange", "access": "", "host": "Y.Plugin.NodeAccordion", "type": "event", "name": "animChange"}, {"url": "Y.Plugin.NodeAccordion.html#method__closeItem", "access": "protected", "host": "Y.Plugin.NodeAccordion", "type": "method", "name": "_closeItem"}, {"url": "Y.Plugin.NodeAccordion.html#method_collapseAllItems", "access": "", "host": "Y.Plugin.NodeAccordion", "type": "method", "name": "collapseAllItems"}, {"url": "Y.Plugin.NodeAccordion.html#method_collapseItem", "access": "", "host": "Y.Plugin.NodeAccordion", "type": "method", "name": "collapseItem"}, {"url": "Y.Plugin.NodeAccordion.html#property_DynamicForm.ATTRS", "access": "", "host": "Y.Plugin.NodeAccordion", "type": "property", "name": "DynamicForm.ATTRS"}, {"url": "Y.Plugin.NodeAccordion.html#method_expandAllItems", "access": "", "host": "Y.Plugin.NodeAccordion", "type": "method", "name": "expandAllItems"}, {"url": "Y.Plugin.NodeAccordion.html#method_expandItem", "access": "", "host": "Y.Plugin.NodeAccordion", "type": "method", "name": "expandItem"}, {"url": "Y.Plugin.NodeAccordion.html#config_fade", "access": "", "host": "Y.Plugin.NodeAccordion", "type": "config", "name": "fade"}, {"url": "Y.Plugin.NodeAccordion.html#event_fadeChange", "access": "", "host": "Y.Plugin.NodeAccordion", "type": "event", "name": "fadeChange"}, {"url": "Y.Plugin.NodeAccordion.html#method__getItem", "access": "protected", "host": "Y.Plugin.NodeAccordion", "type": "method", "name": "_getItem"}, {"url": "Y.Plugin.NodeAccordion.html#method__getItemBody", "access": "protected", "host": "Y.Plugin.NodeAccordion", "type": "method", "name": "_getItemBody"}, {"url": "Y.Plugin.NodeAccordion.html#config_itemBodySelector", "access": "", "host": "Y.Plugin.NodeAccordion", "type": "config", "name": "itemBodySelector"}, {"url": "Y.Plugin.NodeAccordion.html#event_itemBodySelectorChange", "access": "", "host": "Y.Plugin.NodeAccordion", "type": "event", "name": "itemBodySelectorChange"}, {"url": "Y.Plugin.NodeAccordion.html#config_items", "access": "", "host": "Y.Plugin.NodeAccordion", "type": "config", "name": "items"}, {"url": "Y.Plugin.NodeAccordion.html#event_itemsChange", "access": "", "host": "Y.Plugin.NodeAccordion", "type": "event", "name": "itemsChange"}, {"url": "Y.Plugin.NodeAccordion.html#config_itemSelector", "access": "", "host": "Y.Plugin.NodeAccordion", "type": "config", "name": "itemSelector"}, {"url": "Y.Plugin.NodeAccordion.html#event_itemSelectorChange", "access": "", "host": "Y.Plugin.NodeAccordion", "type": "event", "name": "itemSelectorChange"}, {"url": "Y.Plugin.NodeAccordion.html#config_minHeight", "access": "", "host": "Y.Plugin.NodeAccordion", "type": "config", "name": "minHeight"}, {"url": "Y.Plugin.NodeAccordion.html#event_minHeightChange", "access": "", "host": "Y.Plugin.NodeAccordion", "type": "event", "name": "minHeightChange"}, {"url": "Y.Plugin.NodeAccordion.html#config_minWidth", "access": "", "host": "Y.Plugin.NodeAccordion", "type": "config", "name": "minWidth"}, {"url": "Y.Plugin.NodeAccordion.html#event_minWidthChange", "access": "", "host": "Y.Plugin.NodeAccordion", "type": "event", "name": "minWidthChange"}, {"url": "Y.Plugin.NodeAccordion.html#config_multiple", "access": "", "host": "Y.Plugin.NodeAccordion", "type": "config", "name": "multiple"}, {"url": "Y.Plugin.NodeAccordion.html#event_multipleChange", "access": "", "host": "Y.Plugin.NodeAccordion", "type": "event", "name": "multipleChange"}, {"url": "Y.Plugin.NodeAccordion.html#method__openItem", "access": "protected", "host": "Y.Plugin.NodeAccordion", "type": "method", "name": "_openItem"}, {"url": "Y.Plugin.NodeAccordion.html#config_orientation", "access": "", "host": "Y.Plugin.NodeAccordion", "type": "config", "name": "orientation"}, {"url": "Y.Plugin.NodeAccordion.html#event_orientationChange", "access": "", "host": "Y.Plugin.NodeAccordion", "type": "event", "name": "orientationChange"}, {"url": "Y.Plugin.NodeAccordion.html#config_persistent", "access": "", "host": "Y.Plugin.NodeAccordion", "type": "config", "name": "persistent"}, {"url": "Y.Plugin.NodeAccordion.html#event_persistentChange", "access": "", "host": "Y.Plugin.NodeAccordion", "type": "event", "name": "persistentChange"}, {"url": "Y.Plugin.NodeAccordion.html#property__root", "access": "protected", "host": "Y.Plugin.NodeAccordion", "type": "property", "name": "_root"}, {"url": "Y.Plugin.NodeAccordion.html#method__slidingBegin", "access": "protected", "host": "Y.Plugin.NodeAccordion", "type": "method", "name": "_slidingBegin"}, {"url": "Y.Plugin.NodeAccordion.html#method__slidingEnd", "access": "protected", "host": "Y.Plugin.NodeAccordion", "type": "method", "name": "_slidingEnd"}, {"url": "Y.Plugin.NodeAccordion.html#config_speed", "access": "", "host": "Y.Plugin.NodeAccordion", "type": "config", "name": "speed"}, {"url": "Y.Plugin.NodeAccordion.html#event_speedChange", "access": "", "host": "Y.Plugin.NodeAccordion", "type": "event", "name": "speedChange"}, {"url": "Y.Plugin.NodeAccordion.html#method_toggleItem", "access": "", "host": "Y.Plugin.NodeAccordion", "type": "method", "name": "toggleItem"}, {"url": "Y.Plugin.NodeAccordion.html#config_triggerSelector", "access": "", "host": "Y.Plugin.NodeAccordion", "type": "config", "name": "triggerSelector"}, {"url": "Y.Plugin.NodeAccordion.html#event_triggerSelectorChange", "access": "", "host": "Y.Plugin.NodeAccordion", "type": "event", "name": "triggerSelectorChange"}];
 </script>
 </body>
 </html>
