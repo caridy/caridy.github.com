@@ -1,0 +1,192 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+    <head>
+        <title>ScrollView Example</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <style>
+            /* Avoid resource latency for these, since they hide unenhanced content */
+            .yui3-js-enabled .yui3-scrollview-loading {
+                visibility:hidden;
+            }
+
+            #additional-content {
+                display:none;
+            }
+        </style>
+
+        <link rel="stylesheet" href="http://yui.yahooapis.com/3.4.1/build/cssreset/cssreset-min.css" type="text/css" charset="utf-8">
+
+        <link rel="stylesheet" href="http://yuilibrary.com/yui/docs/scrollview/../assets/scrollview/horizontal.css" type="text/css" charset="utf-8">
+        <link media="handheld, only screen and (max-device-width: 480px)" href="http://yuilibrary.com/yui/docs/scrollview/../assets/scrollview/horizontal-smallscreen.css" type="text/css" rel="stylesheet" charset="utf-8">
+
+        <style>
+        .wow {
+            white-space: nowrap;
+            display: inline-block;
+        }
+        body {
+            margin-left: 100px;
+        }
+        </style>
+
+        <script src="http://yui.yahooapis.com/3.4.1/build/yui/yui-min.js"></script>    
+    </head>
+
+    <body class="yui3-skin-sam">
+        <div id="scrollview-container">
+    <div id="scrollview-header">
+        <h1>Paged ScrollView</h1>
+    </div>
+
+    <div id="scrollview-content" class="yui3-scrollview-loading">
+        <ul class="wow">
+            <li><img src="http://farm5.static.flickr.com/4136/4802088086_c621e0b501.jpg" style="width: 100px"  title="0"></li>
+            <li><img src="http://farm5.static.flickr.com/4136/4802088086_c621e0b501.jpg" style="width: 100px"  title="1"></li>
+            <li><img src="http://farm5.static.flickr.com/4114/4801461321_1373a0ef89.jpg" style="width: 100px" title="2"></li>
+            <li><img src="http://farm5.static.flickr.com/4100/4801614015_4303e8eaea.jpg" style="width: 100px"  title="3"></li>
+            <li><img src="http://farm5.static.flickr.com/4076/4801368583_854e8c0ef3.jpg" style="width: 130px"  title="4"></li>
+            <li><img src="http://farm5.static.flickr.com/4114/4801461321_1373a0ef89.jpg" style="width: 100px"  title="5"></li>
+            <li><img src="http://farm5.static.flickr.com/4100/4801614015_4303e8eaea.jpg" style="width: 100px"  title="6"></li>
+             <li><img src="http://farm5.static.flickr.com/4076/4801368583_854e8c0ef3.jpg" style="width: 400px"  title="7"></li>
+         </ul>
+         <ul class="wow">
+             <li><img src="http://farm5.static.flickr.com/4114/4801461321_1373a0ef89.jpg" style="width: 100px"  title="8"></li>
+             <li><img src="http://farm5.static.flickr.com/4100/4801614015_4303e8eaea.jpg" style="width: 100px"  title="9"></li>
+             <li><img src="http://farm5.static.flickr.com/4100/4801614015_4303e8eaea.jpg" style="width: 70px"  title="10"></li>
+              <li><img src="http://farm5.static.flickr.com/4076/4801368583_854e8c0ef3.jpg" style="width: 100px"  title="11"></li>
+              <li><img src="http://farm5.static.flickr.com/4114/4801461321_1373a0ef89.jpg" style="width: 100px"  title="12"></li>
+              <li><img src="http://farm5.static.flickr.com/4100/4801614015_4303e8eaea.jpg" title="13"></li>
+            <li><img src="http://farm5.static.flickr.com/4076/4801368583_854e8c0ef3.jpg" title="14"></li>
+            <li><img src="http://farm5.static.flickr.com/4076/4801368583_854e8c0ef3.jpg" style="width: 100px"  title="15"></li>
+            <li><img src="http://farm5.static.flickr.com/4114/4801461321_1373a0ef89.jpg" title="16"></li>
+            <li><img src="http://farm5.static.flickr.com/4100/4801614015_4303e8eaea.jpg" title="17"></li>
+        </ul>
+    </div>
+
+    <div id="scrollview-pager">
+        <button id="scrollview-prev">Prev</button>
+        <button id="scrollview-next">Next</button>
+    </div>
+</div>
+
+
+<script type="text/javascript" charset="utf-8">
+YUI().use('scrollview', 'scrollview-paginator', 'node-screen', function(Y) {
+
+    var scrollView = new Y.ScrollView({
+        id: "scrollview",
+        srcNode : '#scrollview-content',
+        width : 820,
+        flick: {
+            minDistance:10,
+            minVelocity:0.3,
+            axis: "x"
+        }
+    });
+
+    var next, prev, v,
+        controls = Y.one('#scrollview-pager');
+
+    scrollView.plug(Y.Plugin.ScrollViewPaginator, {
+        selector: 'li'
+    });
+
+    function computeNextAnchor(current) {
+        var items = scrollView.get('contentBox').all(scrollView.pages.get('selector')),
+            item, region,
+            mark = items.item(current).get('region'),
+            c = container.get('region');
+        console.log ('next', mark.left+c.width);
+        for (var i=current+1;i<items.size();i++) {
+            item = items.item(i);
+            region = item.get('region');
+            console.log (i, region.left+region.width);
+            if (region.left+region.width > mark.left+c.width) {
+                console.log ('picking the next: ', i, region.left);
+                return i;
+            }
+        }
+        return items.size()-1;
+    }
+
+    function computePrevAnchor(current) {
+        var items = scrollView.get('contentBox').all(scrollView.pages.get('selector')),
+            item, region,
+            mark = items.item(current).get('region'),
+            c = container.get('region');
+        console.log ('prev', mark.left-c.width);
+        for (var i=current-2;i>=0;i--) {
+            item = items.item(i);
+            if (item) {
+                region = item.get('region');
+                console.log (i+1, region.left);
+                if (region.left < mark.left-c.width) {
+                    console.log ('picking the prev: ', i+1, items.item(i+1).get('region').left);
+                    return i+1;
+                }
+            } 
+        }
+        return 0;
+    }
+
+    scrollView.pages.on('indexChange', function (e) {
+        console.log ('hiding the controls');
+        controls.hide();        
+    });
+
+    scrollView.pages.after('indexChange', function (e) {
+        e.halt();
+        if ((e.newVal - e.prevVal > 0)) {
+            // go to next anchor
+            if (e.newVal != next) {
+                console.log ('going to next: ', next);
+                scrollView.pages.set('index', next);
+            }
+        } else if (e.prevVal != prev) {
+            // go to prev anchor
+            console.log ('going to prev: ', prev);
+            scrollView.pages.set('index', prev);
+        }
+    });
+
+    scrollView.on('scrollEnd', function() {
+        var index = scrollView.pages.get('index');
+        console.log ('trying to pick new winners: ');
+        prev = computePrevAnchor(index);
+        next = computeNextAnchor(index);
+        console.log ('showing the controls');
+        controls.show();
+    });
+    
+
+    scrollView.render();
+
+    container = Y.one('#scrollview');
+    prev = computePrevAnchor(0);
+    next = computeNextAnchor(0);
+
+    var content = scrollView.get("contentBox");
+
+    content.delegate("click", function(e) {
+        // For mouse based devices, we need to make sure the click isn't fired
+        // at the end of a drag/flick. We use 2 as an arbitrary threshold.
+        if (Math.abs(scrollView.lastScrolledAmt) < 2) {
+            alert(e.currentTarget.getAttribute("alt"));
+        }
+    }, "img");
+
+    // Prevent default image drag behavior
+    content.delegate("mousedown", function(e) {
+        e.preventDefault();
+    }, "img");
+
+    Y.one('#scrollview-next').on('click', Y.bind(scrollView.pages.next, scrollView.pages));
+    Y.one('#scrollview-prev').on('click', Y.bind(scrollView.pages.prev, scrollView.pages));
+
+});
+</script>
+
+
+    </body>
+</html>
