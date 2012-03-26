@@ -4,15 +4,16 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 </head>
 <body>
-<script type="text/javascript" src="http://yui.yahooapis.com/3.4.1/build/simpleyui/simpleyui-min.js"></script>
+<script type="text/javascript" src="http://yui.yahooapis.com/combo?3.4.1/build/simpleyui/simpleyui-min.js&3.4.1/build/intl/intl-min.js&3.4.1/build/json-stringify/json-stringify-min.js"></script>
 <script type="text/javascript" src="cl.js"></script>
 <script type="text/javascript">
-
-    var Y = YUI().use('cl');
-
+var Y = YUI({bootstrap: false}).use('cl', function() {
     Y.CL = new Y.CommunicationLayer();
-    Y.CL.fire('polo');
-
+    Y.CL.on('marco', function() {
+        Y.CL.fire('polo');
+    });
+    Y.CL.ready();
+});
 </script>
 </body>
 </html>
