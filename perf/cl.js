@@ -63,9 +63,16 @@ YUI.add('cl', function (Y, NAME) {
             self._addListener(self._WIN, 'message', function (e) {
                 var source = e.source,
                     origin = e.origin,
-                    parsed = Y.JSON.parse(e.data),
-                    name   = parsed.name,
+                    parsed,
+                    name,
                     data;
+
+                try {
+                    parsed = Y.JSON.parse(e.data);
+                    name   = parsed && parsed.name;
+                } catch (err) {
+                    Y.log('Invalid data structure as part of the message, discarded message.', INFO, NAME);
+                }
 
                 Y.log('Received window message: '+e.data+' from '+origin, DEBUG, NAME);
 
