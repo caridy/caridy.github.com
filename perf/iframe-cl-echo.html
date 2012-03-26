@@ -7,7 +7,7 @@
 <script type="text/javascript" src="http://yui.yahooapis.com/combo?3.4.1/build/simpleyui/simpleyui-min.js&3.4.1/build/intl/intl-min.js&3.4.1/build/json-stringify/json-stringify-min.js"></script>
 <script type="text/javascript" src="cl.js"></script>
 <script type="text/javascript">
-var Y = YUI({bootstrap: false}).use('cl', function() {
+YUI({bootstrap: false}).use('cl', function(Y) {
     Y.CL = new Y.CommunicationLayer();
     Y.CL.on('marco', function() {
         Y.CL.fire('polo');
