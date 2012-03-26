@@ -624,4 +624,4 @@ YUI.add('cl', function (Y, NAME) {
 
     Y.CommunicationLayer = CommunicationLayer;
 
-}, '0.0.1', {requires: ['json', 'event-custom-base']});
+}, '0.0.1', {requires: ['json', 'node-base', 'event-custom-base']});
