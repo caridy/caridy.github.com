@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+<!-- Mirrored from www.bubbling-library.com/themes/bubbling/jscripts/yui-cms/examples/bubbling/behavior-shortcuts-anchor-button.html by HTTrack Website Copier/3.x [XR&CO'2010], Wed, 04 Apr 2012 15:56:36 GMT -->
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>Behaviors Shortcuts' - Example of Bubbling technique</title>
+<meta name='author' content='Caridy Patino (caridy at gmail.com)' />
+<link rel="stylesheet" type="text/css" href="../assets/example.css">
+<!-- YUI Basement Style -->
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/button/assets/skins/sam/button.css">
+<!-- Dependency source files -->
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/utilities/utilities.js"></script>
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/button/button-min.js"></script>
+<script type="text/javascript" src='../../../../../../../js.bubbling-library.com/2.1/build/bubbling/bubbling.js'></script>
+<script type="text/javascript">
+    // defining the global behavior... (in this case a navigation behavior)
+
+    var fnActionGlobalBahavior = function (layer, args) {
+      alert ('Behavior {actionGlobalBahavior}');
+      // arguments
+      // args[1].target  - Target element
+      // args[0]         - Event Object
+      // reclaiming the event and stop the propagation
+	  return true;
+    };
+
+    YAHOO.Bubbling.addDefaultAction('actionGlobalBahavior', fnActionGlobalBahavior);
+
+    YAHOO.Bubbling.on('key', function (layer, args) {
+	  var o = args[1];
+	  if (!args[1].flagged && (o.type == 'keyup') && (o.keyCode === 76) && (o.altKey === true)) { // Shortcut: Alt - L
+		  fnActionGlobalBahavior(layer, args); // firing the global behavior
+		  // reclaiming the event
+	      args[1].flagged = true;
+		  // stoping the event propagation
+	      args[1].stop = true;
+	  }
+    });
+
+    YAHOO.Bubbling.on('key', function (layer, args) {
+	  var o = args[1];
+	  /* availables arguments:
+  		o.type: 'keyup'|'keydown'
+		o.keyCode: number
+		o.charCode: number
+		o.ctrlKey: boolean,
+		o.shiftKey: boolean,
+		o.altKey: boolean,
+		target: DOM element,
+	  */
+	  if (!args[1].flagged && (o.type == 'keyup') && (o.keyCode === 72)) { // Shortcut: H
+		  alert ('H - Shortcut');
+          // arguments
+          // args[1].target  - Target element (element focused)
+          // args[0]         - Event Object
+          // reclaiming the event
+	      args[1].flagged = true;
+		  // stoping the event propagation
+	      args[1].stop = true;
+	  }
+    });
+
+    // this method is not important, his only function is the creation of the YUI buttons and the adition of the correct className to every button...
+	YAHOO.example.init = function () {
+		// "contentready" event handler for the "pushbuttonsfrommarkup" <fieldset>
+		YAHOO.util.Event.onContentReady("pushbuttonsfrommarkup", function () {
+			// Create Buttons using existing <input> elements as a data source
+			var oPushButton1 = new YAHOO.widget.Button("pushbutton1src", { id:"pushbutton1" });
+			oPushButton1.addClass ('actionGlobalBahavior');
+
+			// Create Buttons using the YUI Button markup
+			var oPushButton2 = new YAHOO.widget.Button("pushbutton2");
+		});
+
+		// Create Buttons without using existing markup
+		var oPushButton3 = new YAHOO.widget.Button({ label:"Button From JavaScript", id:"pushbutton3", container:"pushbuttonsfromjavascript" });
+		oPushButton3.addClass ('actionGlobalBahavior');
+	}();
+
+</script>
+</head>
+<body id="cms-body" class="yui-skin-sam">
+<div id="doc">
+
+	<div class="path">
+	  <a href="../../../../../../index.html" target="_top">Bubbling Library</a> &gt; <a href="../../../../../../eng/examples.html" target="_top">Examples</a>
+	</div>
+
+	<h1>Examples of Using the Bubbling Technique: Behaviors Shortcuts'</h1>
+	<p>In this example you will see how to define keyboard shortcuts that will fire a certain behaviors.</p>
+	<fieldset id="pushbuttonsfrommarkup">
+		<legend>From Markup</legend>
+
+		<a href="#" class="actionGlobalBahavior">Link with behavior (Shortcut: Alt - L)</a>
+
+		<input type="button" id="pushbutton1src" name="button1" value="Button From Input (Shortcut: H)">
+
+		<span id="pushbutton2" class="yui-button actionGlobalBahavior"><span class="first-child"><button type="button" name="button2">Button From YUI markup (Shortcut: Alt - L)</button></span></span>
+
+	</fieldset>
+
+	<fieldset id="pushbuttonsfromjavascript">
+		<legend>From JavaScript</legend>
+		<a href="#">Link without behavior</a>
+	</fieldset>
+
+</div>
+<script type="text/javascript">var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));</script><script type="text/javascript">try { var pageTracker = _gat._getTracker("UA-2337646-1");pageTracker._trackPageview();} catch(err) {}</script></body>
+
+<!-- Mirrored from www.bubbling-library.com/themes/bubbling/jscripts/yui-cms/examples/bubbling/behavior-shortcuts-anchor-button.html by HTTrack Website Copier/3.x [XR&CO'2010], Wed, 04 Apr 2012 15:56:36 GMT -->
+</html>

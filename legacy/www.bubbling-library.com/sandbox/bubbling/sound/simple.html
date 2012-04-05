@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<title>Bubbling Library (YUI Extension) - Sound Manager</title>
+<meta name='author' content='Caridy Patino (caridy at gmail.com)' />
+<link rel="stylesheet" type="text/css" href="../assets/example.css">
+<!-- Dependency source files -->
+<script type="text/javascript" src="http://yui.yahooapis.com/2.6.0/build/utilities/utilities.js"></script>
+<script type="text/javascript" src="http://js.bubbling-library.com/2.0/build/bubbling/bubbling.js"></script>
+<script type="text/javascript" src="http://js.bubbling-library.com/2.0/build/sound/sound.js"></script>
+<script language="JavaScript">
+<!--
+
+YAHOO.plugin.SoundManager.create('/themes/bubbling/jscripts/yui-cms/build/sound/sound.swf');
+
+YAHOO.plugin.SoundManager.load('bounce',{
+    uri:'/themes/bubbling/jscripts/yui-cms/examples/sound/bounce.mp3',
+    cache:true // <- use the cache attribute to get notification when a certain sound become available.
+});
+YAHOO.plugin.SoundManager.load('close',{uri:'/themes/bubbling/jscripts/yui-cms/examples/sound/close.mp3'});
+YAHOO.plugin.SoundManager.load('intro',{uri:'/themes/bubbling/jscripts/yui-cms/examples/sound/intro.mp3'});
+YAHOO.plugin.SoundManager.load('laser',{uri:'/themes/bubbling/jscripts/yui-cms/examples/sound/laser.mp3'});
+YAHOO.plugin.SoundManager.load('open',{uri:'/themes/bubbling/jscripts/yui-cms/examples/sound/open.mp3'});
+YAHOO.plugin.SoundManager.load('iron',{uri:'/themes/bubbling/jscripts/yui-cms/examples/sound/iron.mp3'});
+YAHOO.plugin.SoundManager.load('electricity',{uri:'/themes/bubbling/jscripts/yui-cms/examples/sound/electricity.mp3'});
+YAHOO.plugin.SoundManager.load('gun',{uri:'/themes/bubbling/jscripts/yui-cms/examples/sound/gun.mp3'});
+
+// -->
+</script>
+</head>
+<body id="cms-body">
+<div id="doc">
+
+	<div class="path">
+	  <a href="http://www.bubbling-library.com/" target="_top">Bubbling Library</a> &gt; <a href="http://www.bubbling-library.com/eng/examples" target="_top">Examples</a>
+	</div>
+
+  <h1>Sound Manager</h1>
+  <p>Simple actions (onClick, onMouseOver) to play sounds in your pages based on the classname of the elements.
+
+  <h3>On Click</h3>
+	<p>
+      Effects: <a href="#" class="soundOnClick" rel="bounce">bounce</a>
+      <a href="#" class="soundOnClick" rel="close">close</a>
+      <a href="#" class="soundOnClick" rel="open">open</a>
+      <a href="#" class="soundOnClick" rel="intro">intro</a>
+    </p>
+  <h3>On Rollover</h3>
+	<p>
+      Effects: <a href="#" class="soundOnRollover" rel="laser">laser</a>
+      <a href="#" class="soundOnRollover" rel="iron">iron</a>
+      <a href="#" class="soundOnRollover" rel="electricity">electricity</a>
+      <a href="#" class="soundOnRollover" rel="gun">gun</a>
+    </p>
+<!-- THE EXAMPLE's CODE END HERE, FROM NOW ON IS JUST THE DOCUMENTATION //-->
+</div>
+</body>
+</html>

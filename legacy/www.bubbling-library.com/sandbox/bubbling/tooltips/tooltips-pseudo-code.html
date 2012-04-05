@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+<!-- Mirrored from www.bubbling-library.com/sandbox/bubbling/tooltips/tooltips-pseudo-code.html by HTTrack Website Copier/3.x [XR&CO'2010], Wed, 04 Apr 2012 15:59:16 GMT -->
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<title>Dynamic ToolTips - This is a customization of the previous example, creating a pseudo code to apply styles to the title - Example of Bubbling technique</title>
+<meta name='author' content='Caridy Patino (caridy at gmail.com)' />
+<link rel="stylesheet" type="text/css" href="../assets/example.css">
+<!-- YUI Basement Style -->
+<link rel="stylesheet" type="text/css" href='http://yui.yahooapis.com/2.7.0/build/container/assets/skins/sam/container.css'/>
+<style>
+.yui-cms-tt .yui-panel {
+	text-align: left;
+}
+    .yui-cms-tt .yui-panel .hd {
+    	visible: hidden;
+    	display: none;
+    }
+</style>
+<!-- YUI Library -->
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/utilities/utilities.js"></script>
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/container/container-min.js"></script>
+<!-- YUI-CMS Extension: Bubbling Library -->
+<script type="text/javascript" src='../../../../js.bubbling-library.com/2.1/build/bubbling/bubbling.js'></script>
+<script type="text/javascript" src='../../../../js.bubbling-library.com/2.1/build/tooltips/tooltips.js'></script>
+<script type="text/javascript">
+YAHOO.widget.TooltipManager.init();
+YAHOO.widget.TooltipManager.config ({
+	width: '250px'
+});
+// customizing the tooltips compilation routine
+YAHOO.widget.TooltipManager.onCompile = function ( el, o ) {
+	var t = this.backup.title || '';
+	t = t.replace ('[]', '<br />'); //  [] means: break
+	t = t.replace ('[', '<strong>'); //  [ means: begin bold tag
+	t = t.replace (']', '</strong>'); // ] means: end bold tag
+	t = t.replace ('{', '<i>'); //  { means: begin italic tag
+	t = t.replace ('}', '</i>'); // } means: end strong tag
+	this.body = t;
+  	return true;
+};
+</script>
+</head>
+<body id="cms-body" class="yui-skin-sam">
+
+  <div id="doc">
+
+	<div class="path">
+	  <a href="../../../index.html" target="_top">Bubbling Library</a> &gt; <a href="../../../eng/examples.html" target="_top">Examples</a>
+	</div>
+
+	<h2>Examples of Using the Bubbling Technique for ToolTips</h2>
+
+    <p>Dynamic ToolTips - This is a customization of the previous example, creating a pseudo code to apply styles to the title - Example of Bubbling technique</p>
+    <p>Pseudo-code (XHTML valid):</p>
+    <ul>
+        <li>[]: break</li>
+        <li>[: begin bold tag</li>
+        <li>]: end bold tag</li>
+        <li>{: begin italic tag</li>
+        <li>}: end italic tag</li>
+    </ul>
+
+	<div id="dynamic-area">
+		<a title="This is the[] static [link] number 1" href="http://www.yahoo.com/">1.  Hover over me to see my Tooltip</a><br><br>
+		<a title="This is the [static link number] 2" href="http://www.yahoo.com/">2.  Hover over me to see my Tooltip</a><br><br>
+		<a title="This is the {static} link number [3]" href="http://www.yahoo.com/">3.  Hover over me to see my Tooltip</a><br><br>
+		<a title="This is the static[] link number 4" href="http://www.yahoo.com/">4.  Hover over me to see my Tooltip</a><br><br>
+		<a title="This is the static {link} number 5" href="http://www.yahoo.com/">5.  Hover over me to see my Tooltip</a><br><br>
+		<a title="This is the[] static link number 6" href="http://www.yahoo.com/">6.  Hover over me to see my Tooltip</a><br><br>
+		<a title="This is the {static} link number 7" href="http://www.yahoo.com/">7.  Hover over me to see my Tooltip</a><br><br>
+		<a title="This is the [static link] number 8" href="http://www.yahoo.com/">8.  Hover over me to see my Tooltip</a><br><br>
+		<a title="[This is] the static link number 9" href="http://www.yahoo.com/">9.  Hover over me to see my Tooltip</a><br><br>
+		<a title="[This is the[] static {link}] number 10" href="http://www.yahoo.com/">10.  Hover over me to see my Tooltip</a><br><br>
+	</div>
+    <!-- THE EXAMPLE's CODE END HERE, FROM NOW ON IS JUST THE DOCUMENTATION //-->
+  </div>
+</body>
+
+<!-- Mirrored from www.bubbling-library.com/sandbox/bubbling/tooltips/tooltips-pseudo-code.html by HTTrack Website Copier/3.x [XR&CO'2010], Wed, 04 Apr 2012 15:59:16 GMT -->
+</html>

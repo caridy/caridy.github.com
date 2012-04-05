@@ -1,0 +1,772 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+ "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+<!-- Mirrored from www.bubbling-library.com/eng/api/docs/widgets/accordion/examples by HTTrack Website Copier/3.x [XR&CO'2010], Wed, 04 Apr 2012 15:57:11 GMT -->
+<head>
+<title>YUI Widget: Accordion Manager - Examples - JavaScript Bubbling Library - YUI Library Extension for Event-Driven Applications</title>
+<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1' />
+<meta name='keywords' content=', ' />
+<meta name='description' content='Examples show you the correct HTML and CSS needed for expandable and collapsible areas. - JavaScript Bubbling Library - YUI Library Extension for Event-Driven Applications' />
+<meta name='author' content='Caridy Patino' />
+<meta name='robots' content='All' />
+<link rel="icon" href="../../../../../themes/bubbling/images/favicon.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="../../../../../themes/bubbling/images/favicon.ico" type="image/x-icon" />
+<link rel="alternate" type="application/rss+xml" title='Accordion Manager' href='../accordions/rss/index.html' />
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/combo?2.7.0/build/reset-fonts-grids/reset-fonts-grids.css&amp;2.7.0/build/base/base-min.css&amp;2.7.0/build/assets/skins/sam/skin.css" /> 
+<link rel="stylesheet" type="text/css" href='../../../../../../js.bubbling-library.com/2.1/build/accordion/assets/accordion.css' />
+<link rel="stylesheet" type="text/css" href='../../../../../themes/bubbling/css/comarq.css' />
+</head>
+<body id="tms-body" class="yui-skin-sam">
+<a name="top"></a>
+  <div id="doc4" class="yui-t3 notips">
+     <div id="hd">
+        <div>
+          <div id="session">
+            <a href='../../../../../index.html' title='JavaScript Bubbling Library - YUI Library Extension for Event-Driven Applications'><img src='../../../../../themes/bubbling/images/logo.gif' alt='JavaScript Bubbling Library - YUI Library Extension for Event-Driven Applications' width="290" height="85"  border="0" id="logo" /></a>
+          </div>
+          <div id="departments"><div id="general-tabs" class="yui-navset">
+    <ul class="yui-nav">
+        <li class='1'><a href="../../../../../index.html"  title="Home page" ><em>Home</em></a></li><li class='1'><a href="../../../../releases.html"  title="Check for releases and updates of the bubbling library components..." ><em>Releases</em></a></li><li class='selected current'><a href="../../../../../sandbox/api/index.html"  title="Full API Documentation for every script related with the bubbling library..." ><em>API Doc</em></a></li><li class='1'><a href="../../../../examples.html"  title="Examples related with the bubbling library..." ><em>Examples</em></a></li><li class='orange'><a href="../../../../downloads.html"  title="Free download of the last versions of the Bubbling Library, as well as the plugins, behaviors  and extensions that are related with the YUI Library..." ><em>Downloads</em></a></li><li class='1'><a href="../../../../faqs.html"  title="Get answers here..." ><em>FAQs</em></a></li>
+    </ul>
+</div></div>
+          <div id="quickaccess" class="yuimenubar yuimenubarnav">
+  <div class="bd">
+	<ul class="first-of-type">
+	  <li class="yuimenubaritem"><a href="../../bubbling-core.html" id="yuimenubaritem88" title="">Bubbling Core</a>
+  
+</li><li class="yuimenubaritem"><a href="../../plugins.html" id="yuimenubaritem26" title="">Plugins</a>
+  <div id="yuimenu26" class="yuimenu">
+		<div class="bd">
+			<ul>
+			  <li class="yuimenuitem"><a href="../../plugins/dispatcher.html" id="yuimenuitem102" title="">Dispatcher</a>
+  
+</li><li class="yuimenuitem"><a href="../../plugins/wizard.html" id="yuimenuitem105" title="">Form Manager</a>
+  
+</li><li class="yuimenuitem"><a href="../../plugins/lighterhtml.html" id="yuimenuitem104" title="">Lighter</a>
+  
+</li>
+			</ul>
+		</div>
+	</div>                    
+
+</li><li class="yuimenubaritem"><a href="../../widgets.html" id="yuimenubaritem21" title="">Widgets</a>
+  <div id="yuimenu21" class="yuimenu">
+		<div class="bd">
+			<ul>
+			  <li class="yuimenuitem"><a href="../accordions.html" id="yuimenuitem113" title="">Accordion Manager</a>
+  
+</li><li class="yuimenuitem"><a href="../loading-mask.html" id="yuimenuitem112" title="">Loading Mask</a>
+  
+</li><li class="yuimenuitem"><a href="../tooltips.html" id="yuimenuitem110" title="">Tooltip Manager</a>
+  
+</li>
+			</ul>
+		</div>
+	</div>                    
+
+</li>
+	</ul>
+  </div>
+</div>
+        </div>
+     </div>
+     <div id="bd">
+        <div id="yui-main">
+            <div class="yui-b" id="tms-story">
+                 <a name="tms-pagination"></a>
+<div class="yui-cms-pager"><div class="barwithicon">
+  <h3>YUI Widget: Accordion Manager - Examples</h3>
+</div>
+<div class="fecha">2007-11-18</div>
+<div class="story">
+    <div class="yui-cms-categories path">
+	<a href="../../../../index.html"  title=""  >Home</a>
+<a href="#" class="actionCategoriesMap"><span class="yui-cms-more">&nbsp;</span></a>
+	<a href="../../../docs.html">API Documentation<span class="yui-cms-more">&nbsp;</span></a> <a href="../../widgets.html">Widgets<span class="yui-cms-more">&nbsp;</span></a> <a href="../accordions.html">Accordion Manager<span class="yui-cms-more">&nbsp;</span></a>
+  </div>
+  
+  
+  
+  
+
+  <p><br /><strong>See the examples in a new window</strong>:</p><p><a href='http://bubbling-library.com/sandbox/bubbling/accordion/index.html' rel='external' title='Open in a new window'><img src='../../../../../themes/bubbling/images/popup.gif' alt='New Window' width='17' height='15' /> &nbsp; /sandbox/bubbling/accordion/index.html</a></p>
+
+  <div class="examples"><iframe src="http://bubbling-library.com/sandbox/bubbling/accordion/index.html"></iframe></div>
+</div>
+<h3><a href='#postcomment' title='Leave a comment'>35 Comments</a></h3>
+<div class="comments yui-cms-selector">
+	<div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars0">icons</h4>
+  <div class="yui-cms-comment-body">
+  	<p>the icons of the nested menu inherits it's parents state. you should add a class for "deselected".</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	stefan  	
+  	 - August 7, 2008
+  </div>
+</div><div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars0">RE: icons</h4>
+  <div class="yui-cms-comment-body">
+  	<p>Hi stefan, thanks for the feedbacks, we will solve this issue with the next release 2.0.0.</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	Caridy Patino  	
+  	 - August 10, 2008
+  </div>
+</div><div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars1">Accordion</h4>
+  <div class="yui-cms-comment-body">
+  	<p>Too bad, the Accordion manager does not work in IE7 and is therefore a show stopper for us....<br />
+Another 'Firefox only" nice but useless piece of code.<br />
+Please fix it.<br />
+Thanks<br />
+Jacques</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	Jacques  	
+  	 - September 23, 2008
+  </div>
+</div><div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars0">RE: Accordion</h4>
+  <div class="yui-cms-comment-body">
+  	<p>Could you please send me the specific example that didn't works? also your IE 7 version, I mean the exact version. All the component were tested on IE 6/7, and only the vertical accordion have some issues, but anyway, you send us the link, and we will fix it for you... The accordion plugin have a configuration argument, called  fixIE, which is a class, that should solve all the problems with IE.</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	Caridy  	
+  	 - September 23, 2008
+  </div>
+</div><div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars0">Accordian and IE</h4>
+  <div class="yui-cms-comment-body">
+  	<p>I seem to have 1 issue with IE. I have a collapsable/expandable item that I dynamically insert other divs into for menu items.</p>
+<p>		Bookmarks</p>
+<p>		<a href="#" class="accordionToggleItem">&nbsp;</a></p>
+<p>The code above is for the item collapsable/expandable container and I dynamically insert divs into "bookmarkPane". An example div is:</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	Ryan  	
+  	 - October 14, 2008
+  </div>
+</div><div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars0">RE: Accordian and IE</h4>
+  <div class="yui-cms-comment-body">
+  	<p>Hey Ryan,</p>
+<p>There is an example to integrate the accordion with the YUI Connection Manager to load the content of the element when it get expanded:</p>
+<p>http://bubbling-library.com/sandbox/accordion/ajax.html</p>
+<p>But anyway, here is the code:</p>
+<p>YAHOO.util.Dom.setStyle(el,"height",el.scrollHeight+"px");</p>
+<p>and "el" is a reference to the "bd" element (which is the expandable / collapsible element).</p>
+<p>P.S.: let me know if you need more help with this.</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	Caridy  	
+  	 - October 14, 2008
+  </div>
+</div><div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars5">Hidden Left Panel (Accordion Menu) (open on click)</h4>
+  <div class="yui-cms-comment-body">
+  	<p>Hypothetically, could a web app allow the following?</p>
+<p>1. Create a new Hidden Panel (Accordion Menu) (open on click);</p>
+<p>2. Drag (move) it somewhere on the page;</p>
+<p>3. When it's positioned where the user wants it to be, "anchor" it there so it moves with the page as it scrolls up or down;</p>
+<p>4. And the accordion contains a textarea for notes?</p>
+<p>Thank you very much for this wonderful library!</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	Jim  	
+  	 - January 14, 2009
+  </div>
+</div><div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars0">RE: Hidden Left Panel (Accordion Menu) (open on click)</h4>
+  <div class="yui-cms-comment-body">
+  	<p>Hey Jim:</p>
+<p>You can do it. You have to use YUI Drag And Drop Utility for that. There are no implications if you remove the markup (html) for a particular accordion, and move it to another part in the DOM, because the accordion do not set any listener, so no memory leaks or lost reference. </p>
+<p>The last example (Accordion Panels: Using Drag and Drop to reorder the items: http://bubbling-library.com/sandbox/accordion/dragdrop-panels.html)<br />
+implements something similar: 3 docks, and you can drop the accordions elements in these docks.</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	Caridy  	
+  	 - January 15, 2009
+  </div>
+</div><div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars0">prototype.js and accordion</h4>
+  <div class="yui-cms-comment-body">
+  	<p>Hi,</p>
+<p>When I add the prototype js frameword file with the accordion.js file, the accordion doesn't close on IE. It works fine on Firefox.<br />
+It opens properly on IE, but just doesn't close.</p>
+<p>Any idea what I might be able to do to fix this problem?</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	DJ  	
+  	 - February 25, 2009
+  </div>
+</div><div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars5">Accordion Issues</h4>
+  <div class="yui-cms-comment-body">
+  	<p>Hi Caridy.</p>
+<p>Great work on the bubbling library!  It makes life a lot easier.  Hope you can help, this is driving me mad...</p>
+<p>Question:  Is there a way to re-render an open accordion?  I didn't see a public method to do so and I ask because I have the following problem:</p>
+<p>* YUI build 2.6.0<br />
+* Bubbling Library build 2.0 (using Dispatcher and AccordionManager)</p>
+<p>I have a YUI DataTable at the top of my page above a closed accordion.  I have a link in the first column of the DataTable that, when clicked, does the following:</p>
+<p>1.  Uses your Dispatcher plugin to fetch some information for display in an accordion element<br />
+2.  Opens the corresponding accordion element</p>
+<p>The element opens but does not display the fetched data UNLESS I close the accordion and open it again (manually, not programmatically unless I call toggle and click the link three times).  This problem also happens when I have a DataTable inside an accordion and let the user pick the number of rows to display - if the number of rows extends beyond the height of the accordion, the rows appear but the accordion cuts them off UNLESS I close and re-open the accordion.  Only then does the accordion know to change its height.</p>
+<p>How do we let the accordion know that it needs to be re-rendered or refreshed?  Your AJAX example in the comments above is using Bubbling 1.5.0 with YUI 2.5.1.</p>
+<p>Thanks again for your hard work - it is definitely saving me time.</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	Mike  	
+  	 - March 16, 2009
+  </div>
+</div><div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars0">Re: Accordion Issues</h4>
+  <div class="yui-cms-comment-body">
+  	<p>The solution is simple: </p>
+<p>// el is a dom reference to the bd element for an accordion item<br />
+// you can open the item here, and probably set the body to: loading, please wait...<br />
+// now using the dispatcher to load the content...<br />
+YAHOO.plugin.Dispatcher.fetch ( el, url, {<br />
+                    onLoad: function (el) {<br />
+						// forcing the accordion item to expand to the correct height when the content is loaded using ajax<br />
+						YAHOO.util.Dom.setStyle(el,"height",el.scrollHeight+"px");</p>
+<p>						// OR apply the animation instead to apply the height/width directly</p>
+<p>     }<br />
+ });</p>
+<p>I didn't test it, but it should works. If not, just ping me, and I will create an example for you.</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	Caridy  	
+  	 - March 17, 2009
+  </div>
+</div><div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars5">Re: Accordion Issues</h4>
+  <div class="yui-cms-comment-body">
+  	<p>I've integrated a YUI datatable under the Accordion and it works fine under FireFox, but IE doesn't open it up properly. I saw your comment above, but I'm not certain how to integrate that. Can you give an example?</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	Paul Cobb  	
+  	 - April 29, 2009
+  </div>
+</div><div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars0">Re: Re: Accordion Issues</h4>
+  <div class="yui-cms-comment-body">
+  	<p>@Paul Cobb,</p>
+<p>Well, I have two recommendations for you:</p>
+<p>1. If you want to use AJAX to load the content of the item dynamically, then you have to resize the "bd" of the item after the render process for the datatable.</p>
+<p>2. if the information is static information, you should try to renderer the datatable before setting up the styles for the elements, and keep in mind that the bd should have position: relative; to avoid weird behavior on IE.</p>
+<p>You can contact me directly, and I will try to help you.</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	Caridy  	
+  	 - May 13, 2009
+  </div>
+</div><div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars5">Accordion Issues</h4>
+  <div class="yui-cms-comment-body">
+  	<p>Hi,</p>
+<p>I have the same problem as DJ. I have a jsp page with prototype js, yui 2.7 datatable out of accordion menu, and a accordion menu at the top of the page...the problem is that the accordion doesn't close on IE. It works fine on Firefox.</p>
+<p>Thank´s a lot.</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	David  	
+  	 - May 19, 2009
+  </div>
+</div><div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars0">IE!</h4>
+  <div class="yui-cms-comment-body">
+  	<p>Hello!</p>
+<p>Big fan of expanding the  YUI library, and a big fan of the particular items that you have built!  I did also notice though that going to this page in IE7, the accordions don't expand, either on roll-over or click actually. I was just about to download it and use it!  IE7 version 7.0.5730.</p>
+<p>Hope that helps!  Thanks for sharing your hard work.</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	ben  	
+  	 - June 2, 2009
+  </div>
+</div><div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars0">More IE issues</h4>
+  <div class="yui-cms-comment-body">
+  	<p>I want to have my accordion expanded completely upon loading the page.  Thought i had it working by having an "onLoad" call on my body tag:</p>
+<p>Worked great in Firefox 3.0, but not in IE6.  Adding that statement not only doesn't work in IE but it appears to bugger up the accordion entirely.</p>
+<p>As a side note, the "open all/collapse all" links work fine in either browser, so I'm at a loss.</p>
+<p>Any suggestions?</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	Doug  	
+  	 - June 18, 2009
+  </div>
+</div><div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars0">RE: IE!</h4>
+  <div class="yui-cms-comment-body">
+  	<p>@Ben: I don't know how I missed this message. I will try the accordion with that particular IE version and I will be back to you.</p>
+<p>About the other issue, usually there are few problems with the "onLoad" event in IE, and my recommendations is to use YUI onDOMReady.</p>
+<p>So, instead of using this:<br />
+onLoad=\"javascript:YAHOO.widget.AccordionManager.expand(\'newAppAccordion\');</p>
+<p>You should use this:<br />
+YAHOO.util.Event.onDOMReady(function () {<br />
+  YAHOO.widget.AccordionManager.expand('newAppAccordion');<br />
+});</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	Caridy  	
+  	 - June 18, 2009
+  </div>
+</div><div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars3">This doesn\'t work in IE 6</h4>
+  <div class="yui-cms-comment-body">
+  	<p>Hi,</p>
+<p>I'm viewing this page in IE 6, and the expand/collapse doesn't work at all in IE 6. I'm using 6.0.2800.1106.... on Windows Xp with SP2</p>
+<p>FF works - of course - fine....</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	Christian Sonne Jensen  	
+  	 - June 22, 2009
+  </div>
+</div><div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars0">YUI Panel</h4>
+  <div class="yui-cms-comment-body">
+  	<p>Hi,<br />
+   This library is really awesome work. Thanks for all your hardwork. </p>
+<p>There was an issue with the collapse option when its applied to yui panels. When you set the height for the panel in the properties the only the div with class 'bd' scrolls up leaving the parent element still visible.<br />
+The issue would be same if you resize the panel.</p>
+<p> I added an extra animation to open and close the panel.<br />
+I added this code in _openItem and _closeItem<br />
+	var myAnim = new YAHOO.util.Anim(item.el.id, at);<br />
+				myAnim.duration =  list.timer;<br />
+				myAnim.method = YAHOO.util.Easing.easeOut;<br />
+				myAnim.animate();<br />
+where the values for at is set diff for open and close (height: to: 0 for close and the other way for open).</p>
+<p>Is there a better way to solve this problem ?</p>
+<p>Thanks,<br />
+Akshay.</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	Akshay  	
+  	 - June 23, 2009
+  </div>
+</div><div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars0">Re: prototype.js and accordion</h4>
+  <div class="yui-cms-comment-body">
+  	<p>The collision is in clear function inside the extending of Array, I remark it and all work fine for me.</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	Ishai Borovoy  	
+  	 - August 5, 2009
+  </div>
+</div><div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars0">Re: prototype.js and accordion</h4>
+  <div class="yui-cms-comment-body">
+  	<p>@david and @DJ: thanks for reporting the issue.</p>
+<p>@Ishai: thanks for figure out the issue with prototype JS. I just solved the problem. Here is the DEMO:</p>
+<p>http://bubbling-library.com/sandbox/misc/accordion-prototype.html</p>
+<p>This fix will be officially release with 2.2, but in the meantime you can download the code from github:<br />
+http://github.com/caridy/bubbling-library/tree/c4ccba7341e7b4a5dbe52d662cc38301be997140/build/accordion</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	Caridy  	
+  	 - August 5, 2009
+  </div>
+</div><div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars5">help</h4>
+  <div class="yui-cms-comment-body">
+  	<p>I wanted to know if you have any examples of vertical accordions that have horizontal accordians within them.</p>
+<p>Thanks in advance</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	Amit  	
+  	 - August 12, 2009
+  </div>
+</div><div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars0">Re: help</h4>
+  <div class="yui-cms-comment-body">
+  	<p>@Amit: at the moment there is not an example to show that kind of interation, but should be really easy to implement. </p>
+<p>Check these two examples:<br />
+http://bubbling-library.com/sandbox/accordion/vertical.html<br />
+http://bubbling-library.com/sandbox/accordion/nested.html</p>
+<p>The merging process should be easy. The complexity is in the CSS definition. If you need help with that, just contact me directly and I will try to help you.</p>
+<p>Best Regards,<br />
+Caridy</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	Caridy  	
+  	 - August 12, 2009
+  </div>
+</div><div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars4">IE Visual Artifacts</h4>
+  <div class="yui-cms-comment-body">
+  	<p>When I use the accordion on IE7 or IE8 and the accordion panel has a yui menu button on it, expanding and collapsing the panel causes visual arttifacts on the screen.  I do have the fixIE style set.</p>
+<p>Any ideas?</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	Jason Southwell  	
+  	 - September 16, 2009
+  </div>
+</div><div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars5">Help with YUI Dispatcher Plugin - Loading Child TabViews</h4>
+  <div class="yui-cms-comment-body">
+  	<p>Hello:<br />
+I just came across your Bubbling JavaScript Library which is amazing! I have been using the YUI TabView for a while and have long tried to load a TabView inside another TabView with no luck until I found your library on the Internet.</p>
+<p>Using your dispatcher add in (Dispatcher.js), I am able to load a child TabView but after that I cannot click on the main tabs anymore! What do I need to do to access the main tabs AFTER loading a child TabView?</p>
+<p>You can see an example here (http://www.myshbp.com/demo.html). The child TabView is associated with the main tab “Tasks”. But after you click on Tasks, you cannot click the other tabs (Description, Rules, etc) anymore. </p>
+<p>Your help is very much appreciated.</p>
+<p>Isaac</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	Isac Tabe  	
+  	 - October 10, 2009
+  </div>
+</div><div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars3">IE 7 no go</h4>
+  <div class="yui-cms-comment-body">
+  	<p>Doesn't work on IE7 version 7.0.5730.13</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	Phil  	
+  	 - October 13, 2009
+  </div>
+</div><div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars0">O3D objects don\'t collapse</h4>
+  <div class="yui-cms-comment-body">
+  	<p>Hello,</p>
+<p>I really like this nice library. However it seems it does not collapse O3D objects (the O3D plugin from Google allows 3D graphics on the web), since the O3D object stands above the collapsed panel. Can I expect O3D compatibility soon?</p>
+<p>Thanks.</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	Eric  	
+  	 - February 16, 2010
+  </div>
+</div><div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars0">RE: O3D objects do not collapse</h4>
+  <div class="yui-cms-comment-body">
+  	<p>Hey Eric,</p>
+<p>O3D is a plugin. Normally, we do not test widgets with browser plugins. In the case of flash, it supports wmode to solve the problem during the interaction with HTML elements, working with the browser stack. I'm not so sure this plugin does. But I will try to find a solution.</p>
+<p>The workaround for this can be: destroying the element before collapsing the item. Then restoring the element after expanding the element. That will fix the problem today, and the accordion manager provides the corresponding hooks to do that.</p>
+<p>Best Regards,<br />
+Caridy</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	Caridy  	
+  	 - February 18, 2010
+  </div>
+</div><div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars0">RE: O3D objects do not collapse</h4>
+  <div class="yui-cms-comment-body">
+  	<p>Thanks for your fast answer. Just to say the issue I described only happens in Firefox. In IE it works well.</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	Eric  	
+  	 - February 18, 2010
+  </div>
+</div><div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars5">prototype + accordion</h4>
+  <div class="yui-cms-comment-body">
+  	<p>Thanks for the library and for the solution of the prototype issue.</p>
+<p>Just a comment: The correct URL of the 2.2 javascript file is this one:</p>
+<p>http://github.com/caridy/bubbling-library/blob/master/build/accordion/accordion.js</p>
+<p>Thanks!</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	Esteban C.  	
+  	 - March 11, 2010
+  </div>
+</div><div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars0">Adding Dynamic Elements</h4>
+  <div class="yui-cms-comment-body">
+  	<p>Hi, </p>
+<p>Great tool thanks - is there a reason why you haven't included the ability to add() new elements?</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	Alan  	
+  	 - April 1, 2010
+  </div>
+</div><div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars4">Accordion and forms</h4>
+  <div class="yui-cms-comment-body">
+  	<p>Hi</p>
+<p>Can you please tell me if you can use an accordion in conjunction with a form that has separate sections divided by fieldsets with a submit button in the last fieldset.</p>
+<p>Thank you</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	Jean  	
+  	 - April 13, 2010
+  </div>
+</div><div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars0">RE: Adding Dynamic Elements</h4>
+  <div class="yui-cms-comment-body">
+  	<p>@Alan: you can add new elements, but not thru the accordion manager plugin. This component controls the actions not the markup, which means that you can modify the markup manually, and it will catch up new elements automatically. Here is an example: </p>
+<p>http://bubbling-library.com/sandbox/bubbling/accordion/inject.html</p>
+<p>Best Regards,<br />
+Caridy</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	Caridy  	
+  	 - April 17, 2010
+  </div>
+</div><div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars0">RE: Accordion and forms</h4>
+  <div class="yui-cms-comment-body">
+  	<p>@Jean: You can use any HTML element within an accordion item. An item is just a block element (DIV), which means that it can contain whatever you want. There are some situations in which some browsers react a little bit odd, but normally if you apply the relative position (position: relative; in your CSS for the container element) you should be ok. Are you having any problem? can you send me a link so I can take a look?</p>
+<p>Best Regards,<br />
+Caridy</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	Caridy  	
+  	 - April 17, 2010
+  </div>
+</div><div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars5">Datatables in Accordian</h4>
+  <div class="yui-cms-comment-body">
+  	<p>Hi<br />
+I have datatables in each accordian and I am facing problems.Let me explain what I doing.<br />
+1) I am injecting accordian dynamically with following code.<br />
+---------<br />
+function injectAccordianItem(_header, divId){</p>
+<p>			var accItem = ''+_header+'';<br />
+				accItem += '';<br />
+				accItem += '<a href="#" class="accordionToggleItem">&nbsp;</a>';</p>
+<p>			YAHOO.util.Dom.get('editor-accordion').innerHTML += accItem;</p>
+<p>		}<br />
+-------------------------<br />
+2). I have a method which creates table for div id that is injected in above method.</p>
+<p>Problems are -<br />
+1) For each table I am declaring paginator, but it only appears for last table in last accordian.<br />
+2) And eventHandlers attached to each table works only for last table.<br />
+I am not what blunders are happening from my side. I am not where I am making mistakes.</p>
+<p>I need urgent help. Thanks<br />
+Pankaj Mittal</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	Pankaj Mittal  	
+  	 - May 3, 2010
+  </div>
+</div>
+</div>
+<a name="postcomment"></a>
+<div id="contenttabview" class="yui-navset">
+    <ul class="yui-nav">
+        <li class="selected"><a href="#brothers"><em>More Information</em></a></li>
+        <li><a href="#linked"><em>Releateds Links</em></a></li>
+    </ul>
+    <div class="yui-content">
+        <div id="brothers">
+            <ul class="listing">
+	<li><a href='documentation.html' title=''>YUI Widget: Accordion Manager - Documentation</a></li><li><a href='examples.html' title='Examples show you the correct HTML and CSS needed for expandable and collapsible areas.'>YUI Widget: Accordion Manager - Examples</a></li>
+</ul>	  
+
+            <br />
+        </div>
+        <div id="linked">
+          	<p>
+  Links does not exist.
+</p>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+  	var tabView = new YAHOO.widget.TabView('contenttabview');
+  	tabView.addTab( new YAHOO.widget.Tab({
+        label: 'Leave a comment',
+        content: '<div id="wizardcommentfrom">Loading, please wait...</div>'
+    }));
+
+	YAHOO.plugin.WizardManager.add( 'wizardcommentfrom', {
+		uri:'/admin/interface/comments/eng.php?obj_id=213&lang_code=eng',
+		onFinish: function ( values ) { alert ('Thanks for your comment...'); }
+	});
+
+</script>
+</div>
+            </div>
+        </div>
+        <div class="yui-b">
+            <div class="panels">
+    <div class="yui-cms-accordion multiple fixIE">
+        <div class="yui-cms-item yui-panel selected">
+	<div class="hd">Navigation</div>
+	<div class="bd">
+	  <div class="fixed">
+		  <ul class="listing">
+			<li class=''><a href="../tooltips.html" title="">Tooltip Manager</a>
+
+</li><li class=''><a href="../../plugins/tooltips.html" title="">Tooltip Manager</a>
+
+</li><li class=''><a href="../loading-mask.html" title="">Loading Mask</a>
+
+</li><li class=''><a href="../accordions.html" title="">Accordion Manager</a>
+
+</li>  		
+		  </ul>  
+	  </div>
+	</div>
+	<div class="actions">
+	  <a href="#" class="accordionToggleItem">&nbsp;</a>
+	</div>
+</div>
+<div class="yui-cms-item yui-panel selected">
+	<div class="hd">More Information</div>
+	<div class="bd">
+	  <div class="fixed">
+		  <ul class="listing">
+			<li><a href='documentation.html' title=''>YUI Widget: Accordion Manager - Documentation</a></li><li><a href='examples.html' title='Examples show you the correct HTML and CSS needed for expandable and collapsible areas.'>YUI Widget: Accordion Manager - Examples</a></li>
+		  </ul>	  
+	  </div>
+	</div>
+	<div class="actions">
+	  <a href="#" class="accordionToggleItem">&nbsp;</a>
+	</div>
+</div>
+        
+        <div class="yui-cms-item yui-panel selected">
+            <div class="hd"><strong>Bubbling for YUI 3.x</strong></div>
+            <div class="bd">
+              <div class="fixed">
+                    <p>
+                        <a href="http://yuilibrary.com/gallery/show/dispatcher" title="Porting Bubbling Library Dispatcher Plugin to YUI 3">Dispatcher (gallery-dispatcher)</a><br />
+                        <small>The Dispatcher satisfies a very common need of developers using the YUI library: dynamic execution of Ajax response content. (<em class="red">new</em>)</small>
+                    </p>
+                    <p>
+                        <a href="http://yuilibrary.com/gallery/show/node-accordion" title="Node Accordion Plugin is a light-weight solution (~3k) for expandable and collapsible elements.">Node Accordion (gallery-node-accordion)</a><br />
+                        <small>The Accordion Node Plugin makes it easy to transform existing markup into an accordion element with expandable and collapsible elements. Elements are easy to customize, and only require a small set of dependencies. (<em class="red">new</em>)</small><br/>
+                    </p>
+                    <p>
+                        <a href="http://yuilibrary.com/gallery/show/event-binder" title="Binding user actions until a particular YUI 3 instance become ready">Event Binder (gallery-event-binder)</a><br />
+                        <small>Binding user actions until a particular YUI instance become ready, and the listeners defined before flushing those events through a queue. This will help to catch some early user interactions due the on-demand nature of YUI 3. (<em class="red">new</em>)</small>
+                    </p>
+                    <p>
+                        <a href="http://yuilibrary.com/gallery/show/preload" title="Preload images, CSS and JavaScript files without executing them">Preload (gallery-preload)</a><br />
+                        <small>Port of Stoyan Stefanov's JavaScript preload() function. It also has built-in support for Timer Idle to preload files only when the user is idle to avoid any overhead during the initial loading process. (<em class="red">new</em>)</small>
+                    </p>
+                    <p>
+                        <a href="http://yuilibrary.com/gallery/show/parent-window" title="Parent Window Utility allow you to manipulate the parent window using YUI">Parent Window Utility (gallery-parent-window)</a><br />
+                        <small>This utility provides a set of functionalities to interact with the parent window. (<em class="red">new</em>)</small>
+                    </p>
+                    <p>
+                        <small> - <a href="http://yuilibrary.com/gallery/user/caridy">See more modules by Caridy</a>.</small>
+                    </p>
+              </div>
+            </div>
+        </div>
+        <div class="yui-cms-item yui-panel selected">
+            <div class="hd"><strong>Follow up</strong></div>
+            <div class="bd">
+              <div class="fixed">
+                <ul>
+                  <li><a href="http://github.com/caridy/">Fork Caridy on GitHub</a></li>
+                  <li><a href="http://twitter.com/caridy">Follow @caridy on Twitter</a></li>
+                  <li><a href="http://caridy.name/">Caridy's Blog</a></li>
+                  <li><a href="http://yuiblog.com/">YUI Blog</a></li>
+                  <li><a href="http://developer.yahoo.com/yui/">Yahoo! UI Library (YUI)</a></li>
+                  <li><a href="http://yuilibrary.com/forum">YUI Forums</a></li>
+                </ul>
+              </div>
+            </div>
+        </div>
+    </div>
+</div>
+        </div>
+     </div>
+     <div id="ft">
+        <div id="icons">
+            <p>Bubbling Library is free open source software under the <a href="../../../../licencehtml.html" title="Bubbling Library is free open source software under the BSD License">BSD License</a></p>
+            <p>(c) 2006 - 2010 <a href="http://www.linkedin.com/in/caridy" title="View Caridy Patino's profile on LinkedIn" rel="external">Caridy Patino</a>. All Rights Reserved.</p>
+<p>This is one of my side projects, if you need something, <a href="../../../../contact-us.html" title="Email me through this website...">just ask</a>!</p>
+        </div>
+     </div>
+  </div>
+<script type="text/javascript">
+//<![CDATA[
+var TMS_THEMEPATH = '../../../../../themes/bubbling/index.html',
+    TMS_CURRENT_LANG = 'eng',
+    TMS_LOADING_MESSAGE = 'Loading, please wait...',
+	DEFAULT_VARS = {};
+//]]>
+</script>
+<script type="text/javascript" src="http://yui.yahooapis.com/combo?2.7.0/build/utilities/utilities.js&amp;2.7.0/build/container/container-min.js&amp;2.7.0/build/menu/menu-min.js&amp;2.7.0/build/button/button-min.js&amp;2.7.0/build/json/json-min.js&amp;2.7.0/build/tabview/tabview-min.js"></script>
+<script type="text/javascript" src='../../../../../../js.bubbling-library.com/2.1/build/package/core.js'></script>
+<script type="text/javascript" src='../../../../../themes/bubbling/jscripts/init.js'></script>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-2337646-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+</body>
+
+<!-- Mirrored from www.bubbling-library.com/eng/api/docs/widgets/accordion/examples by HTTrack Website Copier/3.x [XR&CO'2010], Wed, 04 Apr 2012 15:57:11 GMT -->
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+<!-- Mirrored from www.bubbling-library.com/sandbox/bubbling/bubbling/repainting-resize-scroll.html by HTTrack Website Copier/3.x [XR&CO'2010], Wed, 04 Apr 2012 15:59:03 GMT -->
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>Global Behaviors - Example of Bubbling technique</title>
+<meta name='author' content='Caridy Patino (caridy at gmail.com)' />
+<link rel="stylesheet" type="text/css" href="../assets/example.css">
+<style>
+    #hint2 {
+      color: #0000ff;
+    }
+    #hint3 {
+      color: #ff0000;
+    }
+    .rounded {
+        border: 1px solid #333333;
+        position: relative;
+        width: 190px;
+        padding: 5px;
+        background-color: #ededed;
+        opacity: 0.8;
+    }
+</style>
+<!-- YUI Basement Style -->
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/container/assets/skins/sam/container.css">
+<!-- Dependency source files -->
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/utilities/utilities.js"></script>
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/container/container-min.js"></script>
+<script type="text/javascript" src='../../../../js.bubbling-library.com/2.1/build/bubbling/bubbling.js'></script>
+<script type="text/javascript">
+    // Turning on the monitors (by default, the bubbling core only monitors the browser window size)
+    YAHOO.Bubbling.initMonitors();
+
+    function _adjustPosition (config) {
+        var context = YAHOO.util.Dom.getRegion(config.context);
+        YAHOO.util.Dom.setXY(config.id, [context.right, context.bottom]);
+    }
+
+    function _createHint (config) {
+        var dom = document.createElement('div');
+        var el = new YAHOO.util.Element(dom, {
+            id: config.id,
+            className: 'rounded',
+            title: 'Hint',
+            innerHTML: config.text
+        });
+        el.appendTo(document.body);
+    }
+
+    // properties of the hints...
+    var oHintList = [
+       {context: 'hint1', id:'_hint1box', text: 'Hint #1, applied to an anchor...'},
+       {context: 'hint2', id:'_hint2box', text: 'Hint #2, applied to an span...'},
+       {context: 'hint3', id:'_hint3box', text: 'Hint #2, applied to another span...'}
+    ];
+
+    YAHOO.util.Event.onDOMReady (function (){
+        // Creating the overlays...
+        _createHint (oHintList[0]);
+        _createHint (oHintList[1]);
+        _createHint (oHintList[2]);
+        // adjusting the position of the elements.
+        YAHOO.Bubbling.onRepaint ();
+    });
+
+    // defining a global rule for repainting
+    YAHOO.Bubbling.on('repaint', function (layer, args) {
+        // adjuting the position of each hint...
+        _adjustPosition (oHintList[0]);
+        _adjustPosition (oHintList[1]);
+        _adjustPosition (oHintList[2]);
+    });
+
+</script>
+</head>
+<body id="cms-body" class="yui-skin-sam">
+<div id="doc">
+
+	<div class="path">
+	  <a href="../../../index.html" target="_top">Bubbling Library</a> &gt; <a href="../../../eng/examples.html" target="_top">Examples</a>
+	</div>
+
+	<h1>Example of how to deal with floating elements: Repainting the viewport</h1>
+	<p>In this example you will see how to use the bubbling core to repaint certain elements when something change in the viewport.</p>
+    <p>The bubbling CORE will define a set of listeners to monitoring the browser (font size, scrolling, browser resize, etc), creating a custom event to offer us a pipe to take certain actions.</p>
+    <pre>
+    YAHOO.Bubbling.on('repaint', function (layer, args) {
+      // do your stuff here...
+      // when something happen in the browser window, this function will be executed...
+    });
+    // Turning on the monitors (by default, the bubbling core only monitors the browser window size)
+    YAHOO.Bubbling.initMonitors();
+    </pre>
+    <p>Each widget/control can subscribe a method to this pipe, and take certain action to keep the layout and the position of the widget/control when something modified the browser viewport.</p>
+    <p>In this particular case, we have three floating hints, aligned to certain elements in the page. If you change the window size, the font size (zoom), or the scrollbar position, this function will be fired.</p>
+    <hr />
+    <p>Lorem ipsum dolor sit <a href="#" id="hint1">amet</a>, consectetuer adipiscing elit. Maecenas sit amet metus. Nunc quam elit, posuere nec, auctor in, rhoncus quis, dui. Aliquam erat volutpat. Ut dignissim, massa sit amet dignissim cursus, quam lacus feugiat.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas sit amet metus. Nunc quam elit, posuere nec, auctor in, rhoncus quis, dui. </p>
+    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas sit amet metus. Nunc quam elit, posuere nec, auctor in, rhoncus quis, dui. Aliquam erat volutpat. Ut dignissim, massa sit amet dignissim cursus, quam lacus feugiat.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas sit amet metus. Nunc quam elit, posuere nec, auctor in, rhoncus quis, dui. </p>
+    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas sit amet metus. Nunc quam elit, posuere nec, auctor in, rhoncus quis, dui. Aliquam erat volutpat. Ut dignissim, massa sit amet dignissim cursus, quam lacus feugiat.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas sit amet metus. Nunc quam elit, posuere nec, auctor in, rhoncus quis, dui. </p>
+    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas sit amet <span id="hint2">metus</span>. Nunc quam elit, posuere nec, auctor in, rhoncus quis, dui. Aliquam erat volutpat. Ut dignissim, massa sit amet dignissim cursus, quam lacus feugiat.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas sit amet metus. Nunc quam elit, posuere nec, auctor in, rhoncus quis, dui. </p>
+    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas sit amet metus. Nunc quam elit, posuere nec, auctor in, rhoncus quis, dui. Aliquam erat volutpat. Ut dignissim, massa sit amet dignissim cursus, quam lacus feugiat.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas sit amet metus. Nunc quam elit, posuere nec, auctor in, rhoncus quis, dui. </p>
+    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas sit amet metus. Nunc quam elit, posuere nec, auctor in, rhoncus quis, dui. Aliquam erat volutpat. Ut dignissim, massa sit amet dignissim cursus, quam lacus feugiat.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas sit amet metus. Nunc quam elit, posuere nec, auctor in, rhoncus quis, dui. </p>
+    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas sit amet metus. Nunc quam elit, posuere nec, auctor in, rhoncus quis, dui. Aliquam erat volutpat. Ut dignissim, massa sit amet dignissim cursus, quam lacus feugiat.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas sit amet metus. Nunc quam elit, posuere nec, auctor in, rhoncus quis, dui. </p>
+    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas sit amet metus. Nunc quam elit, posuere nec, auctor in, rhoncus quis, dui. Aliquam erat volutpat. Ut dignissim, massa sit amet dignissim cursus, quam lacus feugiat.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas sit amet metus. Nunc quam elit, posuere nec, auctor in, rhoncus quis, dui. </p>
+    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas sit amet metus. Nunc quam elit, posuere nec, auctor in, rhoncus quis, dui. Aliquam erat volutpat. Ut dignissim, massa sit amet dignissim cursus, quam lacus feugiat.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas sit amet metus. Nunc quam elit, posuere nec, auctor in, rhoncus quis, dui. </p>
+    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas sit amet metus. Nunc quam elit, posuere nec, auctor in, rhoncus quis, dui. Aliquam erat volutpat. Ut dignissim, massa sit amet dignissim cursus, quam lacus feugiat.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas sit amet metus. Nunc quam elit, posuere nec, auctor in, rhoncus quis, dui. </p>
+    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas sit amet metus. Nunc quam elit, posuere nec, auctor in, rhoncus quis, dui. Aliquam erat volutpat. Ut dignissim, massa sit amet dignissim cursus, quam lacus feugiat.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas sit amet metus. Nunc quam elit, posuere nec, auctor in, rhoncus quis, dui. </p>
+    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas sit amet metus. Nunc quam elit, posuere nec, auctor in, rhoncus quis, dui. Aliquam erat volutpat. Ut dignissim, massa sit amet dignissim cursus, quam lacus feugiat.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas sit amet metus. Nunc quam elit, posuere nec, auctor in, rhoncus quis, dui. </p>
+    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas sit amet metus. Nunc quam elit, posuere nec, auctor in, rhoncus quis, dui. Aliquam erat volutpat. Ut dignissim, massa sit amet dignissim cursus, quam lacus feugiat.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas sit amet metus. Nunc quam elit, posuere nec, auctor in, rhoncus quis, dui. </p>
+    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas sit amet metus. Nunc quam elit, posuere nec, auctor in, rhoncus quis, dui. Aliquam erat volutpat. Ut dignissim, massa sit amet dignissim cursus, quam lacus feugiat.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas sit amet metus. Nunc quam elit, posuere nec, auctor in, rhoncus quis, dui. </p>
+    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas sit amet metus. Nunc quam elit, posuere nec, auctor in, rhoncus quis, dui. Aliquam erat volutpat. Ut dignissim, massa sit amet dignissim cursus, quam lacus feugiat.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas sit amet metus. Nunc quam elit, posuere nec, auctor in, rhoncus quis, dui. </p>
+    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas sit amet metus. Nunc quam elit, posuere nec, auctor in, rhoncus quis, dui. Aliquam erat volutpat. Ut <span id="hint3">dignissim</span>, massa sit amet dignissim cursus, quam lacus feugiat.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas sit amet metus. Nunc quam elit, posuere nec, auctor in, rhoncus quis, dui. </p>
+    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas sit amet metus. Nunc quam elit, posuere nec, auctor in, rhoncus quis, dui. Aliquam erat volutpat. Ut dignissim, massa sit amet dignissim cursus, quam lacus feugiat.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas sit amet metus. Nunc quam elit, posuere nec, auctor in, rhoncus quis, dui. </p>
+    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas sit amet metus. Nunc quam elit, posuere nec, auctor in, rhoncus quis, dui. Aliquam erat volutpat. Ut dignissim, massa sit amet dignissim cursus, quam lacus feugiat.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas sit amet metus. Nunc quam elit, posuere nec, auctor in, rhoncus quis, dui. </p>
+</div>
+</body>
+
+<!-- Mirrored from www.bubbling-library.com/sandbox/bubbling/bubbling/repainting-resize-scroll.html by HTTrack Website Copier/3.x [XR&CO'2010], Wed, 04 Apr 2012 15:59:03 GMT -->
+</html>

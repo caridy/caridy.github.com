@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+<!-- Mirrored from www.bubbling-library.com/sandbox/bubbling/dispatcher/ondestroy-utility.html by HTTrack Website Copier/3.x [XR&CO'2010], Wed, 04 Apr 2012 15:59:14 GMT -->
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<title>TabView Example - Dynamically Loading Content</title>
+<meta name='author' content='Caridy Patino (caridy at gmail.com)' />
+<link rel="stylesheet" type="text/css" href="../assets/example.css">
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/tabview/assets/skins/sam/tabview.css">
+<!-- Dependency source files -->
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/utilities/utilities.js"></script>
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/tabview/tabview-min.js"></script>
+<script type="text/javascript" src="../../../../js.bubbling-library.com/2.1/build/dispatcher/dispatcher.js"></script>
+<style type="text/css">
+#demo {
+    width:40em; /* arbitrary width */
+}
+#demo .yui-content {
+    padding:1em;
+}
+#demo .loading {
+    background-image:url(../images/loading.gif);
+    background-position:center center;
+    background-repeat:no-repeat;
+}
+
+#demo .loading * {
+    display:none;
+}
+</style>
+<script type="text/javascript">
+
+    var tabView = new YAHOO.widget.TabView({id: 'demo'});
+
+    YAHOO.plugin.Dispatcher.delegate (new YAHOO.widget.Tab({
+    	label: 'DataTable Control',
+        dataSrc: 'tabs/xhtml.with.datatable.html',
+        active: true,
+        cacheData: false
+    }), tabView);
+
+    YAHOO.plugin.Dispatcher.delegate (new YAHOO.widget.Tab({
+        label: 'Inline Scripts',
+        dataSrc: 'tabs/xhtml.with.inline.scripts.html'
+    }), tabView);
+
+    YAHOO.util.Event.onContentReady('doc', function() {
+        tabView.appendTo('doc');
+    });
+
+</script>
+</head>
+<body id="cms-body" class="yui-skin-sam">
+<div id="doc">
+
+	<div class="path">
+	  <a href="../../../index.html" target="_top">Bubbling Library</a> &gt; <a href="../../../eng/examples.html" target="_top">Examples</a>
+	</div>
+
+    <h1>Dispatcher - How to avoid memory leaks</h1>
+    <p>In this example, you can see how the first tab "Datatable Control"  defines the rules to destroy the YUI Datatable before changing the content  of the tab (which means that every time you click on the first tab, the  dispatcher will destroy the DataTable control, releasing the memory and  then will display the new content). Also, by default, the dispatcher  will release all the listeners defined for a dynamic area before  displaying the new content (YAHOO.util.Event.purgeElement).</p>
+  <pre>// setting the destruction's rules<br>YAHOO.plugin.Dispatcher.destroyer.subscribe (function(el, config){<br>    myDataTable.destroy ();<br>});</pre>
+</div>
+</body>
+
+<!-- Mirrored from www.bubbling-library.com/sandbox/bubbling/dispatcher/ondestroy-utility.html by HTTrack Website Copier/3.x [XR&CO'2010], Wed, 04 Apr 2012 15:59:14 GMT -->
+</html>

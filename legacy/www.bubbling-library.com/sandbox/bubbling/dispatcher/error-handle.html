@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<title>Dispatcher Example - Dynamically Loading Content</title>
+<meta name='author' content='Caridy Patino (caridy at gmail.com)' />
+<!-- Reset and Fonts -->
+<link rel="stylesheet" type="text/css" href="../assets/example.css">
+<!-- YUI Library -->
+<script type="text/javascript" src="http://yui.yahooapis.com/2.5.2/build/utilities/utilities.js"></script>
+<!-- YUI-CMS Extension: Bubbling Library -->
+<script type="text/javascript" src="http://js.bubbling-library.com/1.5.0/build/dispatcher/dispatcher.js"></script>
+<style type="text/css">
+#demo {
+    width:40em; /* arbitrary width */
+}
+.boxing {
+	border: 1px solid;
+	margin: 1%;
+	padding: 1%;
+}
+</style>
+<script type="text/javascript">
+YAHOO.example.init = function() {
+    YAHOO.plugin.Dispatcher.fetch ( 'boxwithinlinescript', 'tabs/inline-javascript-with-error.html', {
+		error: function (id, js) {
+			var l = YAHOO.util.Dom.get ('logs');
+			if (l) {
+				l.innerHTML += '<hr /><h3>JS Error ('+id+'):</h3><pre>'+js+'</pre>';	
+			}
+		}
+	});
+};
+YAHOO.example.init();
+</script>
+</head>
+<body id="cms-body" class="yui-skin-sam">
+<div id="doc">
+
+	<div class="path">
+	  <a href="http://www.bubbling-library.com/" target="_top">Bubbling Library</a> &gt; <a href="http://www.bubbling-library.com/eng/examples" target="_top">Examples</a>
+	</div>
+
+    <h1>Dispatcher Example - Handling the errors with the dispatcher plugin</h1>
+	<div class="boxing">
+		<h3>Dynamic content with inline javascripts (with few errors)</h3>
+		<div id="boxwithinlinescript">
+          Loading, please wait...
+    	</div>
+	</div>
+	
+	<div id="logs"></div>
+
+</div>
+</body>
+</html>

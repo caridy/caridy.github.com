@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+<!-- Mirrored from www.bubbling-library.com/sandbox/bubbling/dispatcher/customizing-inline-execution.html by HTTrack Website Copier/3.x [XR&CO'2010], Wed, 04 Apr 2012 15:59:08 GMT -->
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<title>Dispatcher Example - Dynamically Loading Content</title>
+<meta name='author' content='Caridy Patino (caridy at gmail.com)' />
+<link rel="stylesheet" type="text/css" href="../assets/example.css">
+<!-- YUI Library -->
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/utilities/utilities.js"></script>
+<!-- YUI-CMS Extension: Bubbling Library -->
+<script type="text/javascript" src="../../../../js.bubbling-library.com/2.1/build/dispatcher/dispatcher.js"></script>
+<style type="text/css">
+#demo {
+    width:40em; /* arbitrary width */
+}
+.boxing {
+	border: 1px solid;
+	margin: 1%;
+	padding: 1%;
+}
+</style>
+</head>
+<body id="cms-body" class="yui-skin-sam">
+<div id="scriptDiv" style="position: absolute"></div>
+<div id="doc">
+
+	<div class="path">
+	  <a href="../../../index.html" target="_top">Bubbling Library</a> &gt; <a href="../../../eng/examples.html" target="_top">Examples</a>
+	</div>
+
+    <h1>Dispatcher Example - Customizing the script inline execution</h1>
+    <p> By default, dispatcher injects inline scripts using an script tag. If you want to pre-process the scripts and inject those scripts using eval or any other execution routine, you can re-define the evaluation routine (&quot;evalRoutine&quot;) for a certain dynamic area.</p>
+  <p>Note: This method uses a DIV to add the script inside.</p>
+<div class="boxing">
+		<h3>Dynamic content with inline scripts</h3>
+		<div id="boxwithinlinescript">
+          Loading, please wait...
+    </div>
+	</div>
+
+<script type="text/javascript">
+// Creating a function to manage the inline script execution, see more information about this method here:
+// http://members.aol.com/_ht_a/hikksnotathome/loadJSFile/index.html
+// this method uses a DIV to add the script inside... "scriptDiv"
+function myCustomEval(scriptString, config){
+  var newScript = document.createElement('script'); 
+  newScript.type = "text/javascript"; 
+  if (YAHOO.util.Event.isIE) {
+	  newScript.text = scriptString;
+	  document.getElementById("scriptDiv").appendChild(newScript); 
+  } else {
+	  var s = document.createTextNode(scriptString); 
+	  newScript.appendChild(s);
+	  document.getElementById("scriptDiv").appendChild(newScript); 
+  }
+}
+
+YAHOO.plugin.Dispatcher.fetch ( 'boxwithinlinescript', 'tabs/xhtml.with.inline.scripts.html', {evalRoutine: myCustomEval} );
+</script>
+<!-- THE EXAMPLE's CODE END HERE, FROM NOW ON IS JUST THE DOCUMENTATION //-->
+</div>
+</body>
+
+<!-- Mirrored from www.bubbling-library.com/sandbox/bubbling/dispatcher/customizing-inline-execution.html by HTTrack Website Copier/3.x [XR&CO'2010], Wed, 04 Apr 2012 15:59:08 GMT -->
+</html>

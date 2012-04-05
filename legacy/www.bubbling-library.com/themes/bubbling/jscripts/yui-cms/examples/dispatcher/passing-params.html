@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+<!-- Mirrored from www.bubbling-library.com/themes/bubbling/jscripts/yui-cms/examples/dispatcher/passing-params.html by HTTrack Website Copier/3.x [XR&CO'2010], Wed, 04 Apr 2012 15:56:49 GMT -->
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<title>How to pass parameters thru the dispatcher - Dynamically Loading Content</title>
+<meta name='author' content='Caridy Patino (caridy at gmail.com)' />
+<link rel="stylesheet" type="text/css" href="../assets/example.css">
+<!-- Dependency source files -->
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/utilities/utilities.js"></script>
+<script type="text/javascript" src="../../../../../../../js.bubbling-library.com/2.1/build/dispatcher/dispatcher.js"></script>
+<style type="text/css">
+.yui-skin-sam .yui-navset .yui-content {
+	background-color: #ffffff;
+}
+.boxing {
+    display: block;
+	float: left;
+	border: 1px solid #333333;
+	width: 90%;
+	padding: 2%;
+	margin: 2%;
+}
+</style>
+<script type="text/javascript">
+YAHOO.example.init = function() {
+
+	YAHOO.plugin.Dispatcher.fetch ('myCustomPort1', 'tabs/getting-params1.html',
+	  // configuration object
+	  {
+		onLoad: function( area ) {
+		   var foo = 'param1',
+			   boo = 'param2';
+		   myRemoteMethod1( foo, boo, {tee:1, loo: 2});
+		}
+	  }
+	);
+
+	YAHOO.plugin.Dispatcher.fetch ('myCustomPort2', 'tabs/getting-params2.html',
+	  // configuration object
+	  {
+		onLoad: function(area) {
+		   myRemoteMethod2.apply(this, []);
+		},
+		foo: 'param1',
+		boo: 'param2',
+		obj: {tee:1, loo: 2}
+	  }
+	);
+
+};
+YAHOO.util.Event.onDOMReady(YAHOO.example.init);
+</script>
+</head>
+<body id="cms-body" class="yui-skin-sam">
+<div id="doc">
+
+	<div class="path">
+	  <a href="../../../../../../index.html" target="_top">Bubbling Library</a> &gt; <a href="../../../../../../eng/examples.html" target="_top">Examples</a>
+	</div>
+
+    <h1>Dispatcher - How to pass parameters thru the dispatcher</h1>
+    <p>In this example, you will see how to pass parameters in the initialization process, and then use these parameters in the different moments during the loading process.</p>
+  <h4>Facts:</h4>
+  <p>- The method "after" execute a function defined inside the content when the new content is ready.<br />
+    - The executed method can access to variables defined in the initialization of the area.<br>
+    - You can use the same trick for <em>delegate</em>, <em>process</em> and <em>jsLoader</em> too.</p>
+    <div id="myCustomPort1" class="boxing"></div>
+    <div id="myCustomPort2" class="boxing"></div>
+
+<!-- THE EXAMPLE's CODE END HERE, FROM NOW ON IS JUST THE DOCUMENTATION //-->
+</div>
+<script type="text/javascript">var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));</script><script type="text/javascript">try { var pageTracker = _gat._getTracker("UA-2337646-1");pageTracker._trackPageview();} catch(err) {}</script></body>
+
+<!-- Mirrored from www.bubbling-library.com/themes/bubbling/jscripts/yui-cms/examples/dispatcher/passing-params.html by HTTrack Website Copier/3.x [XR&CO'2010], Wed, 04 Apr 2012 15:56:50 GMT -->
+</html>

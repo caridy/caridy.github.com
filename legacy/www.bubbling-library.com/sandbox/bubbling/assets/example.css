@@ -1,0 +1,117 @@
+/*reset.css*/body{color:#000;background:#FFF;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{margin:0;padding:0;}table{border-collapse:collapse;border-spacing:0;}fieldset,img{border:0;}address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal;}li{list-style:none;}caption,th{text-align:left;}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}q:before,q:after{content:'';}abbr,acronym{border:0;font-variant:normal;}sup,sub{line-height:-1px;vertical-align:text-top;}sub{vertical-align:text-bottom;}input, textarea, select{font-family:inherit;font-size:inherit;font-weight:inherit;}
+/*fonts.css*/body {font:13px/1.22 arial,helvetica,clean,sans-serif;*font-size:small;*font:x-small;}table {font-size:inherit;font:100%;}pre,code,kbd,samp,tt{font-family:monospace;*font-size:108%;line-height:99%;}
+/*base.css*/h1{font-size:138.5%;}h2{font-size:123.1%;}h3{font-size:108%;}h1,h2,h3{margin:1em 0;}h1,h2,h3,h4,h5,h6,strong{font-weight:bold;}abbr,acronym{border-bottom:1px dotted #000;cursor:help;}em{font-style:italic;}blockquote,ul,ol,dl{margin:1em;}ol,ul,dl{margin-left:2em;}ol li{list-style: decimal outside;}ul li{list-style: disc outside;}dl dd{margin-left:1em;}th,td {border:1px solid #000;padding:.5em;}th {font-weight:bold;text-align:center;}caption {margin-bottom:.5em;text-align:center;}p,fieldset,table {margin-bottom:1em;}
+
+body {
+    padding:5px;
+    margin: 5px;
+	background-image: url(../images/logo.gif);
+	background-position: right top;
+	background-repeat: no-repeat;
+}
+
+h1 {
+    color:#666;
+}
+
+h2 {
+    margin:1em 0 0.5em;
+}
+
+#hd img {
+    vertical-align:middle;
+}
+
+#hd h1 {
+    display:inline;
+    margin:0 0 0 20px;
+    vertical-align:middle;
+}
+
+#examples li {
+    padding:0.5em 1em;
+}
+
+pre {
+ white-space: pre-wrap;
+ white-space: -moz-pre-wrap;
+ white-space: -pre-wrap;
+ white-space: -o-pre-wrap;
+ word-wrap: break-word;
+ font-size:11px;
+ font-family:Arial, Helvetica, sans-serif;
+ color:#1E76C8;
+ padding:3px;
+ margin: 5px 0px;
+ border-left:3px solid #1E76C8;
+ background:#ededed;
+ line-height: 1.3;
+}
+code {
+    font-family: 'Courier New', Courier, Fixed, sans-serif;
+    white-space:pre;
+    font-size: 1.0em;
+    font-style: italic;
+}
+
+fieldset { border:1px solid #cccccc; padding: 10px; margin: 5px 0; }
+legend {}
+
+ul.listing {
+    padding: 0 10px 10px 10px;
+}
+    ul.listing li {
+        list-style: disc;
+        margin: 5px;
+    }
+
+th,td{margin:0;padding:0;}
+table {margin: 0.7em 0;border-collapse:collapse;border-spacing:0;}
+td {border:1px solid #dedede; padding:2px; font-size:100%; vertical-align:top;}
+td.title {width:25%;}
+th.title {color:#333333;padding:7px;text-align:left;}
+td.description {width:65%;}
+tr.odd {background-color:#eeddcc;}
+th {border:1px solid #dedede; padding:2px; color:#CCCCCC; font-weight:bold; font-size:100%;}
+th.title {background-color:#F4F4F4;}
+
+/* overrides decoration from previous rule for hovered links */
+h1, h2, h3, h4, h5, h6 {
+	clear: both;
+}
+h1{
+ color: #666666;
+ margin: 10px 0px;
+ padding: 0px;
+ font-weight: normal;
+}
+h2{
+ color: #333333;
+ margin: 5px 0px;
+ font-weight: bold;
+}
+h3{
+ padding: 8px;
+ color: #636363;
+ background-color: #ffffff;
+ background-image: url(../images/h3bg.jpg);
+ background-position: top;
+ background-repeat: repeat-x;
+ font-weight: normal;
+}
+h5{
+  color: #ffffff;
+  text-transform: uppercase;
+}
+.deprecated {
+  text-decoration: line-through;
+}
+.yui-skin-sam .yui-navset .yui-content {
+	background-color: #ffffff;
+}
+
+#hd,
+#bd,
+#ft {
+	margin: 10px 0;
+}

@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+<!-- Mirrored from www.bubbling-library.com/sandbox/bubbling/dispatcher/dispatcher-bhm.html by HTTrack Website Copier/3.x [XR&CO'2010], Wed, 04 Apr 2012 15:59:12 GMT -->
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>TabView Example - Dynamically Loading Content with Browser History Manager</title>
+<meta name='author' content='Caridy Patino (caridy at gmail.com)' />
+
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/fonts/fonts-min.css" />
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/tabview/assets/skins/sam/tabview.css">
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/utilities/utilities.js"></script>
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/tabview/tabview-min.js"></script>
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/history/history-min.js"></script>
+<!-- YUI-CMS Extension: Bubbling Library -->
+<script type="text/javascript" src="../../../../js.bubbling-library.com/2.1/build/bubbling/bubbling.js"></script>
+<script type="text/javascript" src="../../../../js.bubbling-library.com/2.1/build/dispatcher/dispatcher.js"></script>
+<script type="text/javascript" src="../../../../js.bubbling-library.com/2.1/build/wizard/wizard.js"></script>
+<script type="text/javascript" src="../../../../js.bubbling-library.com/2.1/build/navigation/navigation.js"></script>
+<!--there is no custom header content for this example-->
+
+</head>
+
+<body id="cms-body" class="yui-skin-sam">
+
+<style>
+
+#yui-history-iframe {
+  position:absolute;
+  top:0; left:0;
+  width:1px; height:1px; /* avoid scrollbars */
+  visibility:hidden;
+}
+
+#demo { margin:1em; width: 40em;}
+
+#demo1dispatcher {padding: 1em; margin:1em; width: 20em;float:right;border: 1px solid #333;}
+
+</style>
+
+<!-- Static markup required for browser history management. Note that these
+     could be created using document.write in a script block. But they have
+     to be created while the page is being parsed, so it cannot be done
+     from an imported script file. Also, these have to be created as early
+     as possible to avoid problems on Internet Explorer.
+     Note that "magic URLs" such as:
+
+         javascript:document.open();document.write(new Date().getTime());document.close();
+
+     and such do NOT work on IE6! Only a real document works (that "real
+     document" does not need to be an HTML document. It can be an image
+     as well. Using an asset that you use somewhere else on your site,
+     instead of a separate asset avoids an unnecessary server round trip.
+     Finally, note that the iframe is only used on Internet Explorer.
+     If this page is server generated (by a PHP script for example), it is
+     a good idea to create the IFrame ONLY for Internet Explorer (use
+     server side user agent sniffing) -->
+
+<iframe id="yui-history-iframe" src="blank.html"></iframe>
+<input id="yui-history-field" type="hidden">
+
+<script type="text/javascript">
+(function() {
+
+    var tabView = new YAHOO.widget.TabView({id: 'demo'});
+
+	// Instantiate the TabView control...
+	YAHOO.plugin.Dispatcher.delegate (new YAHOO.widget.Tab({
+		label: 'Page 1',
+		dataSrc: 'framework/simple/item1.php',
+		active: true
+	}), tabView);
+			
+	YAHOO.plugin.Dispatcher.delegate (new YAHOO.widget.Tab({
+		label: 'Page 2',
+		dataSrc: 'framework/simple/item1.php',
+		cacheData: true
+	}), tabView);
+	
+	YAHOO.util.Event.onDOMReady(function() {
+		tabView.appendTo('doc');
+		// registering the tabs into the navigation line-up
+		YAHOO.plugin.Navigation.tabView (tabView);
+	});
+	
+	window.loadContentWithDispatcher = function (uri) {
+		YAHOO.plugin.Dispatcher.fetch ( 'demo1dispatcher', uri );
+		return false;
+	}
+	
+	YAHOO.plugin.Navigation.setDefaultState (function(){
+	    // resetting the dynamic areas
+		YAHOO.util.Dom.get ('demo1dispatcher').innerHTML = '';
+		// selecting the first tab
+		tabView.set("activeIndex", 0);
+	});
+	
+})();
+</script>
+<div id="doc">
+	<div class="path">
+	  <a href="../../../index.html" target="_top">Bubbling Library</a> &gt; <a href="../../../eng/examples.html" target="_top">Examples</a>
+	</div>
+
+    <h1>Dispatcher Plugin and YUI Browser History Manager</h1>
+    <p>The dispatcher plugin includes a built-in integration with the YUI Browser History Manager. Which means that you can use the extension with the tabview, layout and a simple DIV as well, and the dispatcher controls the actions in all these areas using the YUI BHM.</p>
+    [<a href="framework/simple/item1.html" onclick="return loadContentWithDispatcher(this.href);">Load page 1 content</a>]
+    [<a href="framework/simple/item2.html" onclick="return loadContentWithDispatcher(this.href);">Load page 2 content</a>]
+    [<a href="framework/simple/item3.html" onclick="return loadContentWithDispatcher(this.href);">Load page 3 content</a>]
+
+  <div id="demo1dispatcher">
+    </div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.bubbling-library.com/sandbox/bubbling/dispatcher/dispatcher-bhm.html by HTTrack Website Copier/3.x [XR&CO'2010], Wed, 04 Apr 2012 15:59:13 GMT -->
+</html>

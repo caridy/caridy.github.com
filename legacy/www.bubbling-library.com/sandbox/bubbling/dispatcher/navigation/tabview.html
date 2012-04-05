@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<title>TabView Example - Dynamically Loading Content - Emulating an IFrame</title>
+<link rel="stylesheet" type="text/css" href="../assets/example.css">
+<!-- YUI Basement Style -->
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/tabview/assets/skins/sam/tabview.css">
+<!-- YUI Library -->
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/utilities/utilities.js"></script>
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/tabview/tabview-min.js"></script>
+<!-- YUI-CMS Extension: Bubbling Library -->
+<script type="text/javascript" src="http://js.bubbling-library.com/2.1/build/bubbling/bubbling.js"></script>
+<script type="text/javascript" src="http://js.bubbling-library.com/2.1/build/dispatcher/dispatcher.js"></script>
+<style type="text/css">
+#demo {
+    width:40em; /* arbitrary width */
+}
+
+#demo .yui-content {
+    padding:1em;
+}
+</style>
+<script type="text/javascript">
+YAHOO.util.Event.onDOMReady(function() {
+    var tabView = new YAHOO.widget.TabView({id: 'demo'});
+    tabView.appendTo('doc');
+    
+    YAHOO.plugin.Dispatcher.delegate (new YAHOO.widget.Tab({
+        label: 'Tab1',
+		content: 'Loading, please wait...',
+        dataSrc: 'contents/content1.html',
+		cacheData: true,
+        active: true
+    }), tabView);
+
+    YAHOO.plugin.Dispatcher.delegate (new YAHOO.widget.Tab({
+        label: 'Tab2',
+		content: 'Loading, please wait...',
+        dataSrc: 'contents/content2.html',
+        cacheData: true
+    }), tabView);
+
+    YAHOO.plugin.Dispatcher.delegate (new YAHOO.widget.Tab({
+    	label: 'Tab3',
+		content: 'Loading, please wait...',
+        dataSrc: 'contents/content3.html',
+        cacheData: true
+    }), tabView);
+
+});
+</script>
+<script>
+  // monitoring the clicks
+  YAHOO.Bubbling.on('god', function (layer, args) {
+	  // getting the anchor and the 
+	  var el = args[1].anchor, container;
+	  if (el && (container = YAHOO.Bubbling.getAncestorByClassName(el, 'yui-dispatchable')) && (!YAHOO.Bubbling.getAncestorByClassName(el, 'external'))) {
+		  var h = el.getAttribute("href",2)+'#',
+			  r = el.getAttribute("rel"),
+			  t = el.getAttribute("target"),
+			  l = document.location+'#';
+		  h = h.substr (0, h.indexOf('#'));
+		  l = l.substr (0, l.indexOf('#'));
+		  if ((h && ((h.indexOf('#') === 0) || (h.indexOf('javascript:') === 0) || ((h.indexOf('#') > 0) && (l.indexOf(h) === 0)))) ||
+			  (r && r != '') || (t && t != '') || (h == '') || (h == l)) {
+			   return;
+		  }
+		  YAHOO.plugin.Dispatcher.fetch(container, h);
+		  args[1].stop = true;
+		  args[1].flagged = true;
+	  }
+  });
+</script>
+</head>
+<body id="cms-body" class="yui-skin-sam">
+<div id="doc">
+
+	<div class="path">
+	  <a href="http://www.bubbling-library.com/" target="_top">Bubbling Library</a> &gt; <a href="http://www.bubbling-library.com/eng/examples" target="_top">Examples</a>
+	</div>
+
+    <h1>TabView Example - Dynamically Loading Content - Emulating an IFrame within the tabs</h1>
+
+</div>
+</body>
+</html>

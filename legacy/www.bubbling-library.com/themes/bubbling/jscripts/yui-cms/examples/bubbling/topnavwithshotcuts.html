@@ -1,0 +1,228 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+        "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+    
+<!-- Mirrored from www.bubbling-library.com/themes/bubbling/jscripts/yui-cms/examples/bubbling/topnavwithshotcuts.html by HTTrack Website Copier/3.x [XR&CO'2010], Wed, 04 Apr 2012 15:56:37 GMT -->
+<head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <title>Example: MenuBar with keyboard shortcuts (YUI Library)</title>
+        <!-- Standard reset, fonts and grids -->
+        <link rel="stylesheet" type="text/css" href="../assets/example.css">
+        <!-- CSS for Menu -->
+        <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/menu/assets/skins/sam/menu.css">
+        <!-- Dependency source files -->
+        <script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/yahoo-dom-event/yahoo-dom-event.js"></script>
+        <script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/container/container_core-min.js"></script>
+        <!-- Menu source file -->
+        <script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/menu/menu-min.js"></script>
+        <script type="text/javascript" src='../../../../../../../js.bubbling-library.com/2.1/build/bubbling/bubbling.js'></script>
+        <!-- Page-specific script -->
+        <script type="text/javascript">
+
+            // Initialize and render the menu bar when it is available in the DOM
+            YAHOO.util.Event.onContentReady("productsandservices", function () {
+
+                // "beforerender" event handler for the menu bar
+                function onMenuBarBeforeRender(p_sType, p_sArgs) {
+
+                    var oSubmenuData = {
+                        "communication": [
+
+                            { text: "360", url: "http://360.yahoo.com" },
+                            { text: "Alerts", url: "http://alerts.yahoo.com" },
+                            { text: "Avatars", url: "http://avatars.yahoo.com" },
+                            { text: "Groups", url: "http://groups.yahoo.com " },
+                            { text: "Internet Access", url: "http://promo.yahoo.com/broadband" },
+                            { text: "PIM", helptext: 'Ctrl+Alt+P', submenu: { id: "pim", itemdata: [
+
+                                    { text: "Yahoo! Mail", url: "http://mail.yahoo.com" },
+                                    { text: "Yahoo! Address Book", url: "http://addressbook.yahoo.com" },
+                                    { text: "Yahoo! Calendar",  url: "http://calendar.yahoo.com" },
+                                    { text: "Yahoo! Notepad", url: "http://notepad.yahoo.com" }
+
+                                ] }
+
+                            },
+                            { text: "Member Directory", url: "http://members.yahoo.com" },
+                            { text: "Messenger", url: "http://messenger.yahoo.com" },
+                            { text: "Mobile", url: "http://mobile.yahoo.com" },
+                            { text: "Photos", url: "http://photos.yahoo.com" },
+
+                        ],
+
+                        "shopping": [
+
+                            { text: "Auctions", url: "http://auctions.shopping.yahoo.com" },
+                            { text: "Autos", url: "http://autos.yahoo.com" },
+                            { text: "Classifieds", url: "http://classifieds.yahoo.com" },
+                            { text: "Flowers & Gifts", url: "http://shopping.yahoo.com/b:Flowers%20%26%20Gifts:20146735" },
+                            { text: "Points", url: "http://points.yahoo.com" },
+                            { text: "Real Estate", url: "http://realestate.yahoo.com" },
+                            { text: "Travel", url: "http://travel.yahoo.com" },
+                            { text: "Wallet", url: "http://wallet.yahoo.com" },
+                            { text: "Yellow Pages", url: "http://yp.yahoo.com" }
+
+                        ],
+
+                        "entertainment": [
+
+                            { text: "Fantasy Sports", url: "http://fantasysports.yahoo.com" },
+                            { text: "Games", url: "http://games.yahoo.com" },
+                            { text: "Kids", url: "http://www.yahooligans.com" },
+                            { text: "Music", url: "http://music.yahoo.com" },
+                            { text: "Movies", url: "http://movies.yahoo.com" },
+                            { text: "Radio", url: "http://music.yahoo.com/launchcast" },
+                            { text: "Travel", url: "http://travel.yahoo.com" },
+                            { text: "TV", url: "http://tv.yahoo.com" }
+
+                        ],
+
+                        "information": [
+
+                            { text: "Downloads", url: "http://downloads.yahoo.com" },
+                            { text: "Finance", url: "http://finance.yahoo.com" },
+                            { text: "Health", url: "http://health.yahoo.com" },
+                            { text: "Local", url: "http://local.yahoo.com" },
+                            { text: "Maps & Directions", url: "http://maps.yahoo.com" },
+                            { text: "My Yahoo!", url: "http://my.yahoo.com" },
+                            { text: "News", url: "http://news.yahoo.com" },
+                            { text: "Search", url: "http://search.yahoo.com" },
+                            { text: "Small Business", url: "http://smallbusiness.yahoo.com" },
+                            { text: "Weather", url: "http://weather.yahoo.com" }
+
+                        ]
+
+                    };
+
+                    // Add a submenu to each of the menu items in the menu bar
+                    this.getItem(0).cfg.setProperty("submenu", { id: "communication", itemdata: oSubmenuData["communication"] });
+                    this.getItem(1).cfg.setProperty("submenu", { id: "shopping", itemdata: oSubmenuData["shopping"] });
+                    this.getItem(2).cfg.setProperty("submenu", { id: "entertainment", itemdata: oSubmenuData["entertainment"] });
+                    this.getItem(3).cfg.setProperty("submenu", { id: "information", itemdata: oSubmenuData["information"] });
+
+                }
+
+                /*
+                     Instantiate the menubar.  The first argument passed to the
+                     constructor is the id of the element in the DOM that
+                     represents the menubar; the second is an object literal
+                     representing a set of configuration properties for
+                     the menubar.
+                */
+                var oMenuBar = new YAHOO.widget.MenuBar("productsandservices", { autosubmenudisplay: true, showdelay: 250, hidedelay:  750, lazyload: true });
+
+                // Subscribe to the "beforerender" event
+                oMenuBar.beforeRenderEvent.subscribe(onMenuBarBeforeRender);
+
+                /*
+                     Call the "render" method with no arguments since the markup for
+                     this menu already exists in the DOM.
+                */
+                oMenuBar.render();
+            });
+
+            function menuManualSelection(oMenu, itemPosition) {
+                oMenu.clearActiveItem();
+                oMenu.getItem(itemPosition).cfg.setProperty("selected", true);
+                if (oMenu.cfg.getProperty("autosubmenudisplay")) {
+                    oSubmenu = oMenu.getItem(itemPosition).cfg.getProperty("submenu");
+                    if (oSubmenu) {
+                        oSubmenu.show();
+                    }
+                }
+            }
+
+            YAHOO.util.Event.onDOMReady (function (){
+                // listener for manual selection of the menubar item 2
+                YAHOO.util.Event.addListener('virtualTrigger', 'click', function(e){
+                    var oMenu = YAHOO.widget.MenuManager.getMenu('productsandservices');
+                    menuManualSelection( oMenu, 2 );
+                    YAHOO.util.Event.stopEvent(e);
+                });
+
+                // adding keyboard shortcuts (ALT - #)
+                YAHOO.Bubbling.on('key', function (layer, args) {
+            	  var o = args[1], item = null, oMenu = null;
+            	  if (!o.flagged && (o.type == 'keyup') && (o.altKey === false) && (o.shiftKey === true) && (o.ctrlKey === false)) {
+            	      if (o.keyCode === 49) { // Shortcut: Shift - 1
+            	         item = 0;
+                	  }
+            	      if (o.keyCode === 50) { // Shortcut: Shift - 2
+            	         item = 1;
+                	  }
+            	      if (o.keyCode === 51) { // Shortcut: Shift - 3
+            	         item = 2;
+                	  }
+            	      if (o.keyCode === 52) { // Shortcut: Shift - 4
+            	         item = 3;
+                	  }
+                	  if (YAHOO.lang.isNumber(item)) {
+                          oMenu = YAHOO.widget.MenuManager.getMenu('productsandservices');
+                		  menuManualSelection( oMenu, item );
+                		  // reclaiming the event & stoping the event propagation
+                	      o.flagged = true;
+                	      o.stop = true;
+                	  }
+            	  }
+                });
+
+                // adding keyboard shortcuts for subitem (ALT - P) PIM submenu
+                YAHOO.Bubbling.on('key', function (layer, args) {
+            	  var o = args[1], oMenu = null, oSubItem;
+            	  if (!o.flagged && (o.type == 'keyup') && (o.ctrlKey === true)) {
+            	      if ((o.keyCode === 80) && (o.altKey === true)) { // Shortcut: Alt - 1
+                          // selecting the first option
+                          oMenu = YAHOO.widget.MenuManager.getMenu('productsandservices');
+                		  menuManualSelection( oMenu, 0 );
+                          // selecting the PIM submenu
+                		  oSubItem = oMenu.getItem(0)._oSubmenu;
+                		  menuManualSelection( oSubItem, 5 );
+                		  // reclaiming the event & stoping the event propagation
+                	      o.flagged = true;
+                	      o.stop = true;
+                	  }
+            	  }
+                });
+            });
+
+        </script>
+    </head>
+    <body class="yui-skin-sam" id="yahoo-com">
+        <div id="doc" class="yui-t1">
+            <div id="bd">
+                <div id="yui-main">
+                        <div id="productsandservices" class="yuimenubar yuimenubarnav">
+                            <div class="bd">
+                                <ul class="first-of-type">
+                                    <li class="yuimenubaritem first-of-type"><a class="yuimenubaritemlabel" href="http://communication.yahoo.com/">Communication (Shift+1)</a></li>
+                                    <li class="yuimenubaritem"><a class="yuimenubaritemlabel" href="http://shopping.yahoo.com/">Shopping (Shift+2)</a></li>
+                                    <li class="yuimenubaritem"><a class="yuimenubaritemlabel" href="http://entertainment.yahoo.com/">Entertainment (Shift+3)</a></li>
+                                    <li class="yuimenubaritem"><a class="yuimenubaritemlabel" href="#">Information (Shift+4)</a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <p><strong>NOTE:</strong> <em>In this example you will see how to add keyboard shortcuts for submenus in a menu bar. </em></p>
+
+                        <h2>Keyboard shorcuts</h2>
+                        <p>
+                            Shift + 1: First element (Communication)<br />
+                            Shift + 2: Second element (Shopping)<br />
+                            Shift + 3: Third element (Entertainment)<br />
+                            Shift + 4: Fourth element (Information)<br />
+                        </p>
+                        <hr />
+                        <h2>Other shorcuts</h2>
+                        <p>
+                            <a href="#" id="virtualTrigger">Click here</a> to select the Third element<br />
+                        </p>
+                        <p>
+                            Ctrl + Alt + P: Select the PIM submenu inside the First element (Communication -> PIM)<br />
+                        </p>
+                </div>
+            </div>
+        </div>
+    <script type="text/javascript">var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));</script><script type="text/javascript">try { var pageTracker = _gat._getTracker("UA-2337646-1");pageTracker._trackPageview();} catch(err) {}</script></body>
+
+<!-- Mirrored from www.bubbling-library.com/themes/bubbling/jscripts/yui-cms/examples/bubbling/topnavwithshotcuts.html by HTTrack Website Copier/3.x [XR&CO'2010], Wed, 04 Apr 2012 15:56:37 GMT -->
+</html>

@@ -1,0 +1,459 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+ "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+<!-- Mirrored from www.bubbling-library.com/eng/api/docs/plugins/dispatcher by HTTrack Website Copier/3.x [XR&CO'2010], Wed, 04 Apr 2012 15:56:03 GMT -->
+<head>
+<title>YUI Plugin: Dispatcher - JavaScript Bubbling Library - YUI Library Extension for Event-Driven Applications</title>
+<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1' />
+<meta name='keywords' content=', ' />
+<meta name='description' content=' - JavaScript Bubbling Library - YUI Library Extension for Event-Driven Applications' />
+<meta name='author' content='Caridy Patino' />
+<meta name='robots' content='All' />
+<link rel="icon" href="../../../../themes/bubbling/images/favicon.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="../../../../themes/bubbling/images/favicon.ico" type="image/x-icon" />
+<link rel="alternate" type="application/rss+xml" title='Dispatcher' href='dispatcher/rss/index.html' />
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/combo?2.7.0/build/reset-fonts-grids/reset-fonts-grids.css&amp;2.7.0/build/base/base-min.css&amp;2.7.0/build/assets/skins/sam/skin.css" /> 
+<link rel="stylesheet" type="text/css" href='../../../../../js.bubbling-library.com/2.1/build/accordion/assets/accordion.css' />
+<link rel="stylesheet" type="text/css" href='../../../../themes/bubbling/css/comarq.css' />
+</head>
+<body id="tms-body" class="yui-skin-sam">
+<a name="top"></a>
+  <div id="doc4" class="yui-t3 notips">
+     <div id="hd">
+        <div>
+          <div id="session">
+            <a href='../../../../index.html' title='JavaScript Bubbling Library - YUI Library Extension for Event-Driven Applications'><img src='../../../../themes/bubbling/images/logo.gif' alt='JavaScript Bubbling Library - YUI Library Extension for Event-Driven Applications' width="290" height="85"  border="0" id="logo" /></a>
+          </div>
+          <div id="departments"><div id="general-tabs" class="yui-navset">
+    <ul class="yui-nav">
+        <li class='1'><a href="../../../../index.html"  title="Home page" ><em>Home</em></a></li><li class='1'><a href="../../../releases.html"  title="Check for releases and updates of the bubbling library components..." ><em>Releases</em></a></li><li class='selected current'><a href="../../../../sandbox/api/index.html"  title="Full API Documentation for every script related with the bubbling library..." ><em>API Doc</em></a></li><li class='1'><a href="../../../examples.html"  title="Examples related with the bubbling library..." ><em>Examples</em></a></li><li class='orange'><a href="../../../downloads.html"  title="Free download of the last versions of the Bubbling Library, as well as the plugins, behaviors  and extensions that are related with the YUI Library..." ><em>Downloads</em></a></li><li class='1'><a href="../../../faqs.html"  title="Get answers here..." ><em>FAQs</em></a></li>
+    </ul>
+</div></div>
+          <div id="quickaccess" class="yuimenubar yuimenubarnav">
+  <div class="bd">
+	<ul class="first-of-type">
+	  <li class="yuimenubaritem"><a href="../bubbling-core.html" id="yuimenubaritem88" title="">Bubbling Core</a>
+  
+</li><li class="yuimenubaritem"><a href="../plugins.html" id="yuimenubaritem26" title="">Plugins</a>
+  <div id="yuimenu26" class="yuimenu">
+		<div class="bd">
+			<ul>
+			  <li class="yuimenuitem"><a href="dispatcher.html" id="yuimenuitem102" title="">Dispatcher</a>
+  
+</li><li class="yuimenuitem"><a href="wizard.html" id="yuimenuitem105" title="">Form Manager</a>
+  
+</li><li class="yuimenuitem"><a href="lighterhtml.html" id="yuimenuitem104" title="">Lighter</a>
+  
+</li>
+			</ul>
+		</div>
+	</div>                    
+
+</li><li class="yuimenubaritem"><a href="../widgets.html" id="yuimenubaritem21" title="">Widgets</a>
+  <div id="yuimenu21" class="yuimenu">
+		<div class="bd">
+			<ul>
+			  <li class="yuimenuitem"><a href="../widgets/accordions.html" id="yuimenuitem113" title="">Accordion Manager</a>
+  
+</li><li class="yuimenuitem"><a href="../widgets/loading-mask.html" id="yuimenuitem112" title="">Loading Mask</a>
+  
+</li><li class="yuimenuitem"><a href="../widgets/tooltips.html" id="yuimenuitem110" title="">Tooltip Manager</a>
+  
+</li>
+			</ul>
+		</div>
+	</div>                    
+
+</li>
+	</ul>
+  </div>
+</div>
+        </div>
+     </div>
+     <div id="bd">
+        <div id="yui-main">
+            <div class="yui-b" id="tms-story">
+                 <a name="tms-pagination"></a>
+<div class="yui-cms-pager"><div class="barwithicon">
+  <h3>YUI Plugin: Dispatcher</h3>
+</div>
+<div class="fecha">2007-11-25</div>
+<div class="story">
+    <div class="yui-cms-categories path">
+	<a href="../../../index.html"  title=""  >Home</a>
+<a href="#" class="actionCategoriesMap"><span class="yui-cms-more">&nbsp;</span></a>
+	<a href="../../docs.html">API Documentation<span class="yui-cms-more">&nbsp;</span></a> <a href="../plugins.html">Plugins<span class="yui-cms-more">&nbsp;</span></a> <a href="dispatcher.html">Dispatcher<span class="yui-cms-more">&nbsp;</span></a>
+  </div>
+  <div class="panels">
+	<div class="yui-cms-accordion multiple fixIE">
+	    <div class="yui-cms-item yui-panel selected">
+            <div class="hd"><strong>Dispatcher Manager</strong></div>
+            <div class="bd">
+              <div class="fixed">
+				  <div class="clients">
+					<p><b>Dispatcher Information</b></p>
+					<ul class="listing">
+					  <li><a href="dispatcher-overview.html" title="After several study days, I wrote this extension of YUI library, called Dispatcher. This singleton object will be create...">YAHOO.plugin.Dispatcher - Overview</a></li>
+					  <li><a href="dispatcher-documentation.html" title="A plugin to management dynamic areas and remote scripts loading: Simple Use Case, Solutions, Key Interesting Moments, Co...">YAHOO.plugin.Dispatcher - Documentation</a></li>
+					  <li><a href="../../../../sandbox/api/module_dispatcher.html" title="YAHOO.plugin.Dispatcher - Full API Documentation">YAHOO.plugin.Dispatcher - API</a> (<em class="red">new</em>)</li>
+					  <li><a href="dispatcher-examples.html" title="">YAHOO.plugin.Dispatcher - Examples</a></li>
+					  <li><a href="dispatcher-navigation.html" title="See how the left menu load the correspo...">Dynamic Navigation Theory</a></li>
+					</ul>
+				  </div>
+				  <p>
+
+The Dispatcher plugin was created to satisfy a very common need of developers using the YUI library: dynamic execution of Ajax response content. Typical strategies to fulfill this need, like executing the innerHTML property or referencing remote scripts, are unreliable due to browser incompatibilities. The Dispatcher plugin avoids those problems.
+</p>
+<p>This component do not required the Bubbling Core Object, only YUI Core, YUI Connection Manager, YUI Dom and YUI Event. And it guarantees these three points:: </p>
+
+				  <ul>
+					<li>All of the dynamic contents (loaded thru the YUI Connection Manager) will be processed by the Dispatcher, and the javascript chunks will be executed (remote and inline scripts)</li>
+					<li>All the javascripts within a content will be executed according to the order of apparition.</li>
+					<li>All the contents will be included in the DOM's structure before beginning the execution process. This means that you can use references to an element within the container.<br />
+					</li>
+					</ul>
+				  <p>The last release of the dispatcher support cross-domains capabilities using the most common technique (proxy), also introduce two new method &quot;jsLoader&quot; and &quot;cssLoader&quot;, for remote script and CSS loading onDemand and the hashtable to discard multiple execution for the same remote file, and path-correction for remote files if you need it. </p>
+		      </div>
+            </div>
+        </div>
+	</div>
+</div>
+  
+  
+  
+  
+  
+</div>
+<h3><a href='#postcomment' title='Leave a comment'>13 Comments</a></h3>
+<div class="comments yui-cms-selector">
+	<div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars3">Minor grammar and word use comments</h4>
+  <div class="yui-cms-comment-body">
+  	<p>On the page , I noticed a couple simple grammar and word use problems that you might want to know about.</p>
+<p>First, the two sentences starting with "The Dispatcher plugin ..." are very hard to digest.</p>
+<p>The following is an attempt to rewrite this in a form I can understand (but I may be missing something you're trying tto impart):</p>
+<p>The Dispatcher plugin was created to satisfy a very common need of developers using the YUI library: dynamic execution of Ajax response content.  Typical strategies to fulfill this need, like executing the innerHTML property or referencing remote scripts, are unreliable due to browser incompatibilities. The Dispatcher plugin avoids those problems.</p>
+<p>Second, the phrase "... order of apparition" should probably be "... order of appearance". If you look up "apparition" in the dictionary, you'll see that's not quite the right word.</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	David Karr  	
+  	 - April 27, 2008
+  </div>
+</div><div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars4">Where to post specific questions</h4>
+  <div class="yui-cms-comment-body">
+  	<p>Halo all,<br />
+Which type of CMS library specific questions do we post here or should they all go through the YUI group?</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	George Aslanis  	
+  	 - September 15, 2008
+  </div>
+</div><div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars0">RE: Where to post specific questions</h4>
+  <div class="yui-cms-comment-body">
+  	<p>Hey George,</p>
+<p>You can post in the YUI Group, or just email me directly.</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	Caridy  	
+  	 - September 15, 2008
+  </div>
+</div><div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars5">Is this now compatible with YUI 2.6.0?</h4>
+  <div class="yui-cms-comment-body">
+  	<p>Have you tested this with the new YUI 2.6.0? Is it compatible?</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	Cody Burleson  	
+  	 - November 13, 2008
+  </div>
+</div><div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars0">RE: Is this now compatible with YUI 2.6.0?</h4>
+  <div class="yui-cms-comment-body">
+  	<p>Hey Cody, the dispatcher 1.5 can work on top of YUI 2.6.0 without any problem. In fact if you check this website, you will see that the bubbling library 1.5 is working on top of 2.6.0.</p>
+<p>Anyway, if you have any problem, just let me know.</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	Caridy  	
+  	 - November 13, 2008
+  </div>
+</div><div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars0">Dispatcher and Layout Manager</h4>
+  <div class="yui-cms-comment-body">
+  	<p>I've read elsewhere - on the Yahoo groups I think - that Dispatcher should also work with Layout Manger.  I know you don't have any of the specific pre-built stuff finished yet, but it is possible to use it and if so, could you send me a small example?  </p>
+<p>Thanks</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	Dennis  	
+  	 - November 18, 2008
+  </div>
+</div><div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars0">Re: Dispatcher and Layout Manager</h4>
+  <div class="yui-cms-comment-body">
+  	<p>Hey Dennins:</p>
+<p>You're right, in the YUI 2.6.0 I wrote the routines for AJAX within the layout manager (the same routines that we use in the tabview). The dispatcher can extend this functionality to execute the scripts.</p>
+<p>Unfortunately this new functionality is not documented yet in the YUI 2.6.0, and also the Bubbling 1.5 don't support it yet.</p>
+<p>But here is an example running on top of YUI 2.6.0 and Bubbling Library 2.0 beta.</p>
+<p>http://bubbling-library.com/sandbox/yui2/dispatcher/layout.html</p>
+<p>If you want more information, send me an email.</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	Caridy  	
+  	 - November 18, 2008
+  </div>
+</div><div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars1">dispatcher and uploader plugin together</h4>
+  <div class="yui-cms-comment-body">
+  	<p>Hi,</p>
+<p>I posted this message at YUI Group too.</p>
+<p>I try to use dispatcher and uploader plugin together.</p>
+<p>I use html file with javascript inside as it is described in 'Advanced Uploader Example With Additional POST Variables and Server Data Return' for Ajax call.</p>
+<p>When I try to upload I get 'uploader is not defined'.</p>
+<p>Are these two plugins compatible to each other? </p>
+<p>any help, please?</p>
+<p>Thanks</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	Gia  	
+  	 - December 16, 2008
+  </div>
+</div><div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars0">RE: dispatcher and uploader plugin together</h4>
+  <div class="yui-cms-comment-body">
+  	<p>Hey Gia, I don't see how the dispatcher can affect the uploader utility. Do you have a test case of something where I can dig a little bit?</p>
+<p>Also, the only way I see we can use it together is to using distpacher.process to process the response from the uploader. Is that the way you want to use it?</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	Caridy  	
+  	 - March 18, 2009
+  </div>
+</div><div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars4">fail to excute a js in ie with yui version 2.7.0</h4>
+  <div class="yui-cms-comment-body">
+  	<p>Hi, i have try the dispatcher with yui version 2.7.0 in ie. And found that, if the js in reponse is calling a js function already in current page. then the js with not be excuted. any ideas?</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	allen  	
+  	 - November 12, 2009
+  </div>
+</div><div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars4">fail to excute a js in ie with yui version 2.7.0</h4>
+  <div class="yui-cms-comment-body">
+  	<p>but it works in firefox</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	allen  	
+  	 - November 12, 2009
+  </div>
+</div><div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars1">fail to excute a js in ie with yui version 2.7.0</h4>
+  <div class="yui-cms-comment-body">
+  	<p>i mean, the inline js in response is executed, but not the remote one.<br />
+Thanks</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	allen  	
+  	 - November 12, 2009
+  </div>
+</div><div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars0">RE: fail to excute a js in ie with yui version 2.7.0</h4>
+  <div class="yui-cms-comment-body">
+  	<p>Hello Allen,</p>
+<p>Are you using the dispatcher latest version? If that's the case, try to verify the path, probably you will have to use path-correction option in dispatcher, or verify that all the requirements to execute that file are in place. And finally, you can try to include the external file as part of the original content just to double check that it works in IE. </p>
+<p>Also, you should check the inline block, it if fails, then dispatcher will abort the execution process and probably the remote file will never be executed.</p>
+<p>Best Regards,<br />
+Caridy</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	Caridy  	
+  	 - March 25, 2010
+  </div>
+</div>
+</div>
+<a name="postcomment"></a>
+<div id="contenttabview" class="yui-navset">
+    <ul class="yui-nav">
+        <li class="selected"><a href="#brothers"><em>More Information</em></a></li>
+        <li><a href="#linked"><em>Related Links</em></a></li>
+    </ul>
+    <div class="yui-content">
+        <div id="brothers">
+            <ul class="listing">
+	<li><a href='dispatcher.html' title=''>YUI Plugin: Dispatcher</a></li><li><a href='dispatcher-overview.html' title='After several study days, I wrote this extension of YUI library, called Dispatcher. This singleton object will be create...'>YUI Plugin: Dispatcher - Overview</a></li><li><a href='dispatcher-documentation.html' title='A plugin to management dynamic areas and remote scripts loading: Simple Use Case, Solutions, Key Interesting Moments, Co...'>YUI Plugin: Dispatcher - Documentation</a></li><li><a href='dispatcher-navigation.html' title='Dynamic Navigation Theory: Dispatcher + Bubbling Core Object = Dynamic Website.
+See how the left menu load the correspo...'>Dynamic Navigation Theory</a></li><li><a href='dispatcher-examples.html' title=''>YUI Plugin: Dispatcher - Examples</a></li>
+</ul>	  
+
+            <br />
+        </div>
+        <div id="linked">
+          	<p>
+  Links does not exist.
+</p>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+  	var tabView = new YAHOO.widget.TabView('contenttabview');
+  	tabView.addTab( new YAHOO.widget.Tab({
+        label: 'Leave a comment',
+        content: '<div id="wizardcommentfrom">Loading, please wait...</div>'
+    }));
+
+	YAHOO.plugin.WizardManager.add( 'wizardcommentfrom', {
+		uri:'/admin/interface/comments/eng.php?obj_id=217&lang_code=eng',
+		onFinish: function ( values ) { alert ('Thanks for your comment...'); }
+	});
+
+</script>
+
+</div>
+            </div>
+        </div>
+        <div class="yui-b">
+            <div class="panels">
+    <div class="yui-cms-accordion multiple fixIE">
+        <div class="yui-cms-item yui-panel selected">
+	<div class="hd">Navigation</div>
+	<div class="bd">
+	  <div class="fixed">
+		  <ul class="listing">
+			<li class=''><a href="dispatcher.html" title="">Dispatcher</a>
+
+</li><li class=''><a href="lighterhtml.html" title="">Lighter</a>
+
+</li><li class=''><a href="wizard.html" title="">Form Manager</a>
+
+</li>  		
+		  </ul>  
+	  </div>
+	</div>
+	<div class="actions">
+	  <a href="#" class="accordionToggleItem">&nbsp;</a>
+	</div>
+</div>
+<div class="yui-cms-item yui-panel selected">
+	<div class="hd">More Information</div>
+	<div class="bd">
+	  <div class="fixed">
+		  <ul class="listing">
+			<li><a href='dispatcher.html' title=''>YUI Plugin: Dispatcher</a></li><li><a href='dispatcher-overview.html' title='After several study days, I wrote this extension of YUI library, called Dispatcher. This singleton object will be create...'>YUI Plugin: Dispatcher - Overview</a></li><li><a href='dispatcher-documentation.html' title='A plugin to management dynamic areas and remote scripts loading: Simple Use Case, Solutions, Key Interesting Moments, Co...'>YUI Plugin: Dispatcher - Documentation</a></li><li><a href='dispatcher-navigation.html' title='Dynamic Navigation Theory: Dispatcher + Bubbling Core Object = Dynamic Website.
+See how the left menu load the correspo...'>Dynamic Navigation Theory</a></li><li><a href='dispatcher-examples.html' title=''>YUI Plugin: Dispatcher - Examples</a></li>
+		  </ul>	  
+	  </div>
+	</div>
+	<div class="actions">
+	  <a href="#" class="accordionToggleItem">&nbsp;</a>
+	</div>
+</div>
+        
+        <div class="yui-cms-item yui-panel selected">
+            <div class="hd"><strong>Bubbling for YUI 3.x</strong></div>
+            <div class="bd">
+              <div class="fixed">
+                    <p>
+                        <a href="http://yuilibrary.com/gallery/show/dispatcher" title="Porting Bubbling Library Dispatcher Plugin to YUI 3">Dispatcher (gallery-dispatcher)</a><br />
+                        <small>The Dispatcher satisfies a very common need of developers using the YUI library: dynamic execution of Ajax response content. (<em class="red">new</em>)</small>
+                    </p>
+                    <p>
+                        <a href="http://yuilibrary.com/gallery/show/node-accordion" title="Node Accordion Plugin is a light-weight solution (~3k) for expandable and collapsible elements.">Node Accordion (gallery-node-accordion)</a><br />
+                        <small>The Accordion Node Plugin makes it easy to transform existing markup into an accordion element with expandable and collapsible elements. Elements are easy to customize, and only require a small set of dependencies. (<em class="red">new</em>)</small><br/>
+                    </p>
+                    <p>
+                        <a href="http://yuilibrary.com/gallery/show/event-binder" title="Binding user actions until a particular YUI 3 instance become ready">Event Binder (gallery-event-binder)</a><br />
+                        <small>Binding user actions until a particular YUI instance become ready, and the listeners defined before flushing those events through a queue. This will help to catch some early user interactions due the on-demand nature of YUI 3. (<em class="red">new</em>)</small>
+                    </p>
+                    <p>
+                        <a href="http://yuilibrary.com/gallery/show/preload" title="Preload images, CSS and JavaScript files without executing them">Preload (gallery-preload)</a><br />
+                        <small>Port of Stoyan Stefanov's JavaScript preload() function. It also has built-in support for Timer Idle to preload files only when the user is idle to avoid any overhead during the initial loading process. (<em class="red">new</em>)</small>
+                    </p>
+                    <p>
+                        <a href="http://yuilibrary.com/gallery/show/parent-window" title="Parent Window Utility allow you to manipulate the parent window using YUI">Parent Window Utility (gallery-parent-window)</a><br />
+                        <small>This utility provides a set of functionalities to interact with the parent window. (<em class="red">new</em>)</small>
+                    </p>
+                    <p>
+                        <small> - <a href="http://yuilibrary.com/gallery/user/caridy">See more modules by Caridy</a>.</small>
+                    </p>
+              </div>
+            </div>
+        </div>
+        <div class="yui-cms-item yui-panel selected">
+            <div class="hd"><strong>Follow up</strong></div>
+            <div class="bd">
+              <div class="fixed">
+                <ul>
+                  <li><a href="http://github.com/caridy/">Fork Caridy on GitHub</a></li>
+                  <li><a href="http://twitter.com/caridy">Follow @caridy on Twitter</a></li>
+                  <li><a href="http://caridy.name/">Caridy's Blog</a></li>
+                  <li><a href="http://yuiblog.com/">YUI Blog</a></li>
+                  <li><a href="http://developer.yahoo.com/yui/">Yahoo! UI Library (YUI)</a></li>
+                  <li><a href="http://yuilibrary.com/forum">YUI Forums</a></li>
+                </ul>
+              </div>
+            </div>
+        </div>
+    </div>
+</div>
+        </div>
+     </div>
+     <div id="ft">
+        <div id="icons">
+            <p>Bubbling Library is free open source software under the <a href="../../../licencehtml.html" title="Bubbling Library is free open source software under the BSD License">BSD License</a></p>
+            <p>(c) 2006 - 2010 <a href="http://www.linkedin.com/in/caridy" title="View Caridy Patino's profile on LinkedIn" rel="external">Caridy Patino</a>. All Rights Reserved.</p>
+<p>This is one of my side projects, if you need something, <a href="../../../contact-us.html" title="Email me through this website...">just ask</a>!</p>
+        </div>
+     </div>
+  </div>
+<script type="text/javascript">
+//<![CDATA[
+var TMS_THEMEPATH = '../../../../themes/bubbling/index.html',
+    TMS_CURRENT_LANG = 'eng',
+    TMS_LOADING_MESSAGE = 'Loading, please wait...',
+	DEFAULT_VARS = {};
+//]]>
+</script>
+<script type="text/javascript" src="http://yui.yahooapis.com/combo?2.7.0/build/utilities/utilities.js&amp;2.7.0/build/container/container-min.js&amp;2.7.0/build/menu/menu-min.js&amp;2.7.0/build/button/button-min.js&amp;2.7.0/build/json/json-min.js&amp;2.7.0/build/tabview/tabview-min.js"></script>
+<script type="text/javascript" src='../../../../../js.bubbling-library.com/2.1/build/package/core.js'></script>
+<script type="text/javascript" src='../../../../themes/bubbling/jscripts/init.js'></script>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-2337646-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+</body>
+
+<!-- Mirrored from www.bubbling-library.com/eng/api/docs/plugins/dispatcher by HTTrack Website Copier/3.x [XR&CO'2010], Wed, 04 Apr 2012 15:56:03 GMT -->
+</html>

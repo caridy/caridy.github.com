@@ -1,0 +1,47 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>onChange - Example of Bubbling technique</title>
+<meta name='author' content='Caridy Patino (caridy at gmail.com)' />
+<link rel="stylesheet" type="text/css" href="../assets/example.css">
+<!-- YUI Basement Style -->
+<!-- Dependency source files -->
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/utilities/utilities.js"></script>
+<script type="text/javascript" src='http://js.bubbling-library.com/2.1/build/bubbling/bubbling.js'></script>
+<script type="text/javascript">
+YAHOO.Bubbling.on('change', function (layer, args) {
+	if (!args[1].flagged) {
+		var c = document.getElementById('output');
+		// identifying the target...
+		// args[1].target -> input or select 
+		// args[1].newValue
+		// args[1].oldValue
+		c.innerHTML += '<p>Element:'+args[1].target.tagName+' - OldValue: '+args[1].oldValue+' - NewValue: '+args[1].newValue+'</p>';
+	}
+});
+</script>
+</head>
+<body id="cms-body">
+<div id="doc">
+
+	<div class="path">
+	  <a href="http://www.bubbling-library.com/" target="_top">Bubbling Library</a> &gt; <a href="http://www.bubbling-library.com/eng/examples" target="_top">Examples</a>
+	</div>
+
+	<form name="formExample" id="formExample" action="" method="post">
+      Form Element:
+      <div id="dt">
+        <input type="text" name="element1" id="element1" size="30" maxlength="50" value=''/>
+        <select id="pdfa" title="default value here">
+            <option value="1">1</option>
+            <option value="2">2</option>
+        </select>
+      </div>
+    </form>
+
+</div>
+<br />
+<div id="output"></div>
+</body>
+</html>

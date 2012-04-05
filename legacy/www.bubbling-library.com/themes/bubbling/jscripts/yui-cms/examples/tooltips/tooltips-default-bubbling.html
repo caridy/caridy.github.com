@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<title>Dynamic ToolTips - Example of Bubbling technique</title>
+<meta name='author' content='Caridy Patino (caridy at gmail.com)' />
+<link rel="stylesheet" type="text/css" href="../assets/example.css">
+<!-- YUI Basement Style -->
+<link rel="stylesheet" type="text/css" href='http://yui.yahooapis.com/2.7.0/build/container/assets/container.css'/>
+<link rel="stylesheet" type="text/css" href='http://yui.yahooapis.com/2.7.0/build/button/assets/skins/sam/button.css'/>
+<style>
+.yui-cms-tt .yui-panel {
+	text-align: left;
+}
+    .yui-panel-container.yui-cms-tt.shadow .underlay {
+        top: 2px;
+        bottom: -2px;
+        right: -2px;
+        left: -2px;
+        padding-left: 4px;
+    }
+    .yui-cms-tt .yui-panel, .yui-cms-tt .yui-panel .bd {
+    	color:#333;
+    	background-color:#FDFFB4;
+    	border-color:#FCC90D;
+    }
+    .yui-cms-tt .yui-panel .hd {
+    	visible: hidden;
+    	display: none;
+    }
+</style>
+<script type="text/javascript" src='http://yui.yahooapis.com/2.7.0/build/utilities/utilities.js'></script>
+<script type="text/javascript" src='http://yui.yahooapis.com/2.7.0/build/container/container-min.js'></script>
+<script type="text/javascript" src='http://yui.yahooapis.com/2.7.0/build/button/button-min.js'></script>
+<script type="text/javascript" src='../../../../../../../js.bubbling-library.com/2.1/build/bubbling/bubbling.js'></script>
+<script type="text/javascript" src='../../../../../../../js.bubbling-library.com/2.1/build/tooltips/tooltips.js'></script>
+<script type="text/javascript">
+
+  // creating the button instance
+  YAHOO.util.Event.onContentReady('linkbutton1', function () {
+    var oLinkButton1 = new YAHOO.widget.Button("linkbutton1");
+  });
+
+</script>
+</head>
+<body id="cms-body" class="yui-skin-sam">
+
+  <div id="doc">
+
+	<div class="path">
+	  <a href="../../../../../../index.html" target="_top">Bubbling Library</a> &gt; <a href="../../../../../../eng/examples.html" target="_top">Examples</a>
+	</div>
+
+	<h2>Examples of Using the Bubbling Technique for ToolTips</h2>
+
+	<p>Benefit from the bubbling technique, include the corresponding behavior for Tooltips and all the links in your page will have a nice dynamic tooltip attach it:</p>
+	  <a href="#" title="My text was set using the 'title' attribute inside the Anchor tab...">Hover over me to see a Tooltip without URL!</a>
+	<p>
+	  <a href="http://www.yahoo.com/" title="Do You Yahoo?">Hover over me to see a Tooltip with the URL inside!</a>
+	</p>
+	<p>
+	Image inside an Anchor: <a href="../../../../../../eng/class/examples/index.html" rel="actionBookmark" title="Bookmark - Examples"><img src="images/sitemap.gif" alt="Bookmark"></a></p>
+
+	<p>
+	Button example:
+	<span id="linkbutton1"><span class="first-child"><a href="http://developer.yahoo.com/yui/" title="YUI Official Sebsite">YUI</a></span></span>
+	</p>
+
+	<p>The most common technique for apply tooltips to the complete document is the use of &quot;getElementByTagName&quot;, processing each tag and creating one instance of the ToolTips object attached to each tag. This pre-processing can freeze your browser, and create memory leaks when you are using dynamic areas. With the bubbling technique we can guarantee the success without worry about dynamic areas. Also we don&acute;t need to refer a link directly using the tabName or an unique ID to create the corresponding tooltip object, decreasing the count of links with ID included inside the XHTML code. </p>
+    <p>This implementation has only an  instance of the tooltip object for the document, decreasing the memory usage and rendering in realtime each mouseover event.</p>
+    
+    <!-- THE EXAMPLE's CODE END HERE, FROM NOW ON IS JUST THE DOCUMENTATION //-->
+  </div>
+<script type="text/javascript">var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));</script><script type="text/javascript">try { var pageTracker = _gat._getTracker("UA-2337646-1");pageTracker._trackPageview();} catch(err) {}</script></body>
+
+<!-- Mirrored from www.bubbling-library.com/themes/bubbling/jscripts/yui-cms/examples/tooltips/tooltips-default-bubbling.html by HTTrack Website Copier/3.x [XR&CO'2010], Wed, 04 Apr 2012 15:56:51 GMT -->
+</html>

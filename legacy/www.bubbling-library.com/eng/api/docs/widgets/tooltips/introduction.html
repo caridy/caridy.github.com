@@ -1,0 +1,351 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+ "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+<!-- Mirrored from www.bubbling-library.com/eng/api/docs/widgets/tooltips/introduction by HTTrack Website Copier/3.x [XR&CO'2010], Wed, 04 Apr 2012 15:57:11 GMT -->
+<head>
+<title>YUI Widget: Tooltip Manager - Introduction - JavaScript Bubbling Library - YUI Library Extension for Event-Driven Applications</title>
+<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1' />
+<meta name='keywords' content=', ' />
+<meta name='description' content='The most common technique for apply tooltips to the complete document is the use of "getElementByTagName", processing each tag and creating one instance of the ToolTips object attached to each tag. This pre-processing can freeze your browser, and create memory leaks when you are using dynamic areas. With the bubbling technique we can guarantee the success without worry about dynamic areas. - JavaScript Bubbling Library - YUI Library Extension for Event-Driven Applications' />
+<meta name='author' content='Caridy Patino' />
+<meta name='robots' content='All' />
+<link rel="icon" href="../../../../../themes/bubbling/images/favicon.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="../../../../../themes/bubbling/images/favicon.ico" type="image/x-icon" />
+<link rel="alternate" type="application/rss+xml" title='Tooltip Manager' href='rss/index.html' />
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/combo?2.7.0/build/reset-fonts-grids/reset-fonts-grids.css&amp;2.7.0/build/base/base-min.css&amp;2.7.0/build/assets/skins/sam/skin.css" /> 
+<link rel="stylesheet" type="text/css" href='../../../../../../js.bubbling-library.com/2.1/build/accordion/assets/accordion.css' />
+<link rel="stylesheet" type="text/css" href='../../../../../themes/bubbling/css/comarq.css' />
+</head>
+<body id="tms-body" class="yui-skin-sam">
+<a name="top"></a>
+  <div id="doc4" class="yui-t3 notips">
+     <div id="hd">
+        <div>
+          <div id="session">
+            <a href='../../../../../index.html' title='JavaScript Bubbling Library - YUI Library Extension for Event-Driven Applications'><img src='../../../../../themes/bubbling/images/logo.gif' alt='JavaScript Bubbling Library - YUI Library Extension for Event-Driven Applications' width="290" height="85"  border="0" id="logo" /></a>
+          </div>
+          <div id="departments"><div id="general-tabs" class="yui-navset">
+    <ul class="yui-nav">
+        <li class='1'><a href="../../../../../index.html"  title="Home page" ><em>Home</em></a></li><li class='1'><a href="../../../../releases.html"  title="Check for releases and updates of the bubbling library components..." ><em>Releases</em></a></li><li class='selected current'><a href="../../../../../sandbox/api/index.html"  title="Full API Documentation for every script related with the bubbling library..." ><em>API Doc</em></a></li><li class='1'><a href="../../../../examples.html"  title="Examples related with the bubbling library..." ><em>Examples</em></a></li><li class='orange'><a href="../../../../downloads.html"  title="Free download of the last versions of the Bubbling Library, as well as the plugins, behaviors  and extensions that are related with the YUI Library..." ><em>Downloads</em></a></li><li class='1'><a href="../../../../faqs.html"  title="Get answers here..." ><em>FAQs</em></a></li>
+    </ul>
+</div></div>
+          <div id="quickaccess" class="yuimenubar yuimenubarnav">
+  <div class="bd">
+	<ul class="first-of-type">
+	  <li class="yuimenubaritem"><a href="../../bubbling-core.html" id="yuimenubaritem88" title="">Bubbling Core</a>
+  
+</li><li class="yuimenubaritem"><a href="../../plugins.html" id="yuimenubaritem26" title="">Plugins</a>
+  <div id="yuimenu26" class="yuimenu">
+		<div class="bd">
+			<ul>
+			  <li class="yuimenuitem"><a href="../../plugins/dispatcher.html" id="yuimenuitem102" title="">Dispatcher</a>
+  
+</li><li class="yuimenuitem"><a href="../../plugins/wizard.html" id="yuimenuitem105" title="">Form Manager</a>
+  
+</li><li class="yuimenuitem"><a href="../../plugins/lighterhtml.html" id="yuimenuitem104" title="">Lighter</a>
+  
+</li>
+			</ul>
+		</div>
+	</div>                    
+
+</li><li class="yuimenubaritem"><a href="../../widgets.html" id="yuimenubaritem21" title="">Widgets</a>
+  <div id="yuimenu21" class="yuimenu">
+		<div class="bd">
+			<ul>
+			  <li class="yuimenuitem"><a href="../accordions.html" id="yuimenuitem113" title="">Accordion Manager</a>
+  
+</li><li class="yuimenuitem"><a href="../loading-mask.html" id="yuimenuitem112" title="">Loading Mask</a>
+  
+</li><li class="yuimenuitem"><a href="../tooltips.html" id="yuimenuitem110" title="">Tooltip Manager</a>
+  
+</li>
+			</ul>
+		</div>
+	</div>                    
+
+</li>
+	</ul>
+  </div>
+</div>
+        </div>
+     </div>
+     <div id="bd">
+        <div id="yui-main">
+            <div class="yui-b" id="tms-story">
+                 <a name="tms-pagination"></a>
+<div class="yui-cms-pager"><div class="barwithicon">
+  <h3>YUI Widget: Tooltip Manager - Introduction</h3>
+</div>
+<div class="fecha">2007-03-04</div>
+<div class="story">
+    <div class="yui-cms-categories path">
+	<a href="../../../../index.html"  title=""  >Home</a>
+<a href="#" class="actionCategoriesMap"><span class="yui-cms-more">&nbsp;</span></a>
+	<a href="../../../docs.html">API Documentation<span class="yui-cms-more">&nbsp;</span></a> <a href="../../widgets.html">Widgets<span class="yui-cms-more">&nbsp;</span></a> <a href="../tooltips.html">Tooltip Manager<span class="yui-cms-more">&nbsp;</span></a>
+  </div>
+  
+  <p>The most common technique for apply tooltips to the complete  document is the use of &quot;getElementByTagName&quot;, processing each tag and  creating one instance of the ToolTips object attached to each tag. This  pre-processing can freeze your browser, and create memory leaks when  you are using dynamic areas. With the bubbling technique we can  guarantee the success without worry about dynamic areas. Also we don&acute;t  need to refer a link directly using the tabName or an unique ID to  create the corresponding tooltip object, decreasing the count of links  with ID included inside the XTML code. </p>
+<p>Besides, the implementation using the bubble RollOver only has an instance of the object of the tooltip for all the document, decreasing the memory use and generating each tooltip in real time through mouseover's event on any anchor. </p>
+<p>We must include a few styles and scripts that are required to configure the tooltip's bubble. The initialization's example: </p>
+<pre>&lt;!-- YUI Basement Style --&gt;<br />&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href='/yui/build/container/assets/container.css'/&gt;<br />&lt;!-- YUI scripts --&gt;<br />&lt;script type=&quot;text/javascript&quot; src=&quot;/yui/build/yahoo/yahoo-min.js&quot;&gt;&lt;/script&gt;<br />&lt;script type=&quot;text/javascript&quot; src=&quot;/yui/build/event/event-min.js&quot; &gt;&lt;/script&gt;<br />&lt;script type=&quot;text/javascript&quot; src=&quot;/yui/build/dom/dom-min.js&quot; &gt;&lt;/script&gt;<br />&lt;script type=&quot;text/javascript&quot; src=&quot;/yui/build/container/container-min.js&quot;&gt;&lt;/script&gt;<br />&lt;!-- YUI-CMS scripts --&gt;<br />&lt;script type=&quot;text/javascript&quot; src='/yui-cms/build/bubbling/bubbling.js'&gt;&lt;/script&gt;<br />&lt;script type=&quot;text/javascript&quot; src='/yui-cms/build/tooltips/tooltips.js'&gt;&lt;/script&gt;
+</pre>
+<p>You can download this behavior, that include an singleton global object that will management this behavior, this object called &quot;TooltipManager&quot; ( YAHOO.widget.TooltipManager ) implement a few necessary optimizations for this behavior's good performance. Only include this behavior after the bubbling initialization and you will have all the tooltip's functionality in your page:</p>
+<pre>
+&lt;script type=&quot;text/javascript&quot; src='/yui-cms/build/tooltips/tooltips.js'&gt;&lt;/script&gt;
+</pre>
+<p>Besides, we'll able to modify visually the style of the tooltipses through a simple code in CSS:</p>
+<pre>.yui-cms-tt .yui-panel {<br />	text-align: left;<br />}<br />    .yui-panel-container.yui-cms-tt.shadow .underlay {<br />        top: 2px;<br />        bottom: -2px;<br />        right: -2px;<br />        left: -2px;<br />        padding-left: 4px;<br />    }<br />    .yui-cms-tt .yui-panel, .yui-cms-tt .yui-panel .bd {<br />    	color:#333;<br />    	background-color:#FDFFB4;<br />    	border-color:#FCC90D;<br />    }<br />    .yui-cms-tt .yui-panel .hd {<br />    	visible: hidden;<br />    	display: none;<br />    }
+</pre>
+<p>You can see an example of this behavior through <a title="Clich here to see an example of the tooltips behavior" target="_blank" href="../../../../../themes/bubbling/jscripts/yui-cms/examples/tooltips/index.html">this link</a>, this behavior includes several optimization techniques.</p>
+<p>This  implementation has only an instance of the tooltip object for the  document, decreasing the memory usage and rendering in realtime each  mouseover event.</p>
+
+  
+  
+  
+  
+</div>
+<h3><a href='#postcomment' title='Leave a comment'>6 Comments</a></h3>
+<div class="comments yui-cms-selector">
+	<div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars5">Tooltip Placement in Bottom Right Corner</h4>
+  <div class="yui-cms-comment-body">
+  	<p>I am finding the entire library quite useful, but I am experiencing a small problem with the tooltip manager.</p>
+<p>When a tooltip is initiated by over on an item in the extreme lower-right of the viewable page.  The tooltip often gets placed under the cursor, blocking the hover of the original element, and causing the tooltip to disappear.</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	Alex Goodwin  	
+  	 - February 16, 2009
+  </div>
+</div><div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars0">Re: Tooltip Placement in Bottom Right Corner</h4>
+  <div class="yui-cms-comment-body">
+  	<p>@Alex:</p>
+<p>This issue is an known issue, and you can implement your own<br />
+workaround. But anyway, we will try to address this issue in the<br />
+upcoming version.</p>
+<p>Here is the workaround:</p>
+<p>// customizing the tooltips compilation routine<br />
+YAHOO.widget.TooltipManager.onCompile = function ( el, o ) {<br />
+       return true; // false to prevent the tooltip render process<br />
+};</p>
+<p>You can redefine that method, analyzing the position of the element<br />
+(el), and the viewport size, and depending on that, you can prevent<br />
+the tooltip to appear in that position.</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	Caridy Patino  	
+  	 - February 16, 2009
+  </div>
+</div><div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars3">close onmouseout</h4>
+  <div class="yui-cms-comment-body">
+  	<p>I have an issue here, when I use a tooltip that contains custom content such as images etc, desirable tooltip behaviour (as I see it) is not available: when close is true. mouseout of the tooltip or link does not lead to tooltip hide. When close is false. mouseover tooltip does not lead to tooltip stay</p>
+<p>I think the behaviour should be mouse over tooltip content leads to tooltip stay and mouseout to tooltip hide, whether you have close = true or false. The close is true should just be a convenience button for users who don't understand the behaviour. How can I have a tooltip stay on mouseover content and have it hide on mouseout?</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	Marc  	
+  	 - August 21, 2009
+  </div>
+</div><div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars3">height missing</h4>
+  <div class="yui-cms-comment-body">
+  	<p>BTW, height is missing in the Panel config in tooltips.js (2.1)</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	Marc  	
+  	 - August 21, 2009
+  </div>
+</div><div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars3">Works but</h4>
+  <div class="yui-cms-comment-body">
+  	<p>On my system the finder method fires on all links on the page. What's worse, it also renders a tooltip (undefined) for all those links.<br />
+Works properly for the link that includes the required tooltip class</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	Marc  	
+  	 - August 22, 2009
+  </div>
+</div><div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars3">Fires on all links</h4>
+  <div class="yui-cms-comment-body">
+  	<p>I'm experiencing the same issue as Marc.  It's firing on all links, not just the links with the class assigned.</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	Chris  	
+  	 - November 11, 2009
+  </div>
+</div>
+</div>
+<a name="postcomment"></a>
+<div id="contenttabview" class="yui-navset">
+    <ul class="yui-nav">
+        <li class="selected"><a href="#brothers"><em>More Information</em></a></li>
+        <li><a href="#linked"><em>Related Links</em></a></li>
+    </ul>
+    <div class="yui-content">
+        <div id="brothers">
+            <ul class="listing">
+	<li><a href='introduction.html' title='The most common technique for apply tooltips to the complete document is the use of "getElementByTagName", processing ea...'>YUI Widget: Tooltip Manager - Introduction</a></li><li><a href='documentation.html' title=''>YUI Widget: Tooltip Manager - Documentation</a></li><li><a href='examples.html' title=''>YUI Widget: Tooltip Manager - Examples</a></li>
+</ul>	  
+
+            <br />
+        </div>
+        <div id="linked">
+          	<p>
+  Links does not exist.
+</p>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+  	var tabView = new YAHOO.widget.TabView('contenttabview');
+  	tabView.addTab( new YAHOO.widget.Tab({
+        label: 'Leave a comment',
+        content: '<div id="wizardcommentfrom">Loading, please wait...</div>'
+    }));
+
+	YAHOO.plugin.WizardManager.add( 'wizardcommentfrom', {
+		uri:'/admin/interface/comments/eng.php?obj_id=150&lang_code=eng',
+		onFinish: function ( values ) { alert ('Thanks for your comment...'); }
+	});
+
+</script>
+
+</div>
+            </div>
+        </div>
+        <div class="yui-b">
+            <div class="panels">
+    <div class="yui-cms-accordion multiple fixIE">
+        <div class="yui-cms-item yui-panel selected">
+	<div class="hd">Navigation</div>
+	<div class="bd">
+	  <div class="fixed">
+		  <ul class="listing">
+			<li class=''><a href="../tooltips.html" title="">Tooltip Manager</a>
+
+</li><li class=''><a href="../../plugins/tooltips.html" title="">Tooltip Manager</a>
+
+</li><li class=''><a href="../loading-mask.html" title="">Loading Mask</a>
+
+</li><li class=''><a href="../accordions.html" title="">Accordion Manager</a>
+
+</li>  		
+		  </ul>  
+	  </div>
+	</div>
+	<div class="actions">
+	  <a href="#" class="accordionToggleItem">&nbsp;</a>
+	</div>
+</div>
+<div class="yui-cms-item yui-panel selected">
+	<div class="hd">More Information</div>
+	<div class="bd">
+	  <div class="fixed">
+		  <ul class="listing">
+			<li><a href='introduction.html' title='The most common technique for apply tooltips to the complete document is the use of "getElementByTagName", processing ea...'>YUI Widget: Tooltip Manager - Introduction</a></li><li><a href='documentation.html' title=''>YUI Widget: Tooltip Manager - Documentation</a></li><li><a href='examples.html' title=''>YUI Widget: Tooltip Manager - Examples</a></li>
+		  </ul>	  
+	  </div>
+	</div>
+	<div class="actions">
+	  <a href="#" class="accordionToggleItem">&nbsp;</a>
+	</div>
+</div>
+        
+        <div class="yui-cms-item yui-panel selected">
+            <div class="hd"><strong>Bubbling for YUI 3.x</strong></div>
+            <div class="bd">
+              <div class="fixed">
+                    <p>
+                        <a href="http://yuilibrary.com/gallery/show/dispatcher" title="Porting Bubbling Library Dispatcher Plugin to YUI 3">Dispatcher (gallery-dispatcher)</a><br />
+                        <small>The Dispatcher satisfies a very common need of developers using the YUI library: dynamic execution of Ajax response content. (<em class="red">new</em>)</small>
+                    </p>
+                    <p>
+                        <a href="http://yuilibrary.com/gallery/show/node-accordion" title="Node Accordion Plugin is a light-weight solution (~3k) for expandable and collapsible elements.">Node Accordion (gallery-node-accordion)</a><br />
+                        <small>The Accordion Node Plugin makes it easy to transform existing markup into an accordion element with expandable and collapsible elements. Elements are easy to customize, and only require a small set of dependencies. (<em class="red">new</em>)</small><br/>
+                    </p>
+                    <p>
+                        <a href="http://yuilibrary.com/gallery/show/event-binder" title="Binding user actions until a particular YUI 3 instance become ready">Event Binder (gallery-event-binder)</a><br />
+                        <small>Binding user actions until a particular YUI instance become ready, and the listeners defined before flushing those events through a queue. This will help to catch some early user interactions due the on-demand nature of YUI 3. (<em class="red">new</em>)</small>
+                    </p>
+                    <p>
+                        <a href="http://yuilibrary.com/gallery/show/preload" title="Preload images, CSS and JavaScript files without executing them">Preload (gallery-preload)</a><br />
+                        <small>Port of Stoyan Stefanov's JavaScript preload() function. It also has built-in support for Timer Idle to preload files only when the user is idle to avoid any overhead during the initial loading process. (<em class="red">new</em>)</small>
+                    </p>
+                    <p>
+                        <a href="http://yuilibrary.com/gallery/show/parent-window" title="Parent Window Utility allow you to manipulate the parent window using YUI">Parent Window Utility (gallery-parent-window)</a><br />
+                        <small>This utility provides a set of functionalities to interact with the parent window. (<em class="red">new</em>)</small>
+                    </p>
+                    <p>
+                        <small> - <a href="http://yuilibrary.com/gallery/user/caridy">See more modules by Caridy</a>.</small>
+                    </p>
+              </div>
+            </div>
+        </div>
+        <div class="yui-cms-item yui-panel selected">
+            <div class="hd"><strong>Follow up</strong></div>
+            <div class="bd">
+              <div class="fixed">
+                <ul>
+                  <li><a href="http://github.com/caridy/">Fork Caridy on GitHub</a></li>
+                  <li><a href="http://twitter.com/caridy">Follow @caridy on Twitter</a></li>
+                  <li><a href="http://caridy.name/">Caridy's Blog</a></li>
+                  <li><a href="http://yuiblog.com/">YUI Blog</a></li>
+                  <li><a href="http://developer.yahoo.com/yui/">Yahoo! UI Library (YUI)</a></li>
+                  <li><a href="http://yuilibrary.com/forum">YUI Forums</a></li>
+                </ul>
+              </div>
+            </div>
+        </div>
+    </div>
+</div>
+        </div>
+     </div>
+     <div id="ft">
+        <div id="icons">
+            <p>Bubbling Library is free open source software under the <a href="../../../../licencehtml.html" title="Bubbling Library is free open source software under the BSD License">BSD License</a></p>
+            <p>(c) 2006 - 2010 <a href="http://www.linkedin.com/in/caridy" title="View Caridy Patino's profile on LinkedIn" rel="external">Caridy Patino</a>. All Rights Reserved.</p>
+<p>This is one of my side projects, if you need something, <a href="../../../../contact-us.html" title="Email me through this website...">just ask</a>!</p>
+        </div>
+     </div>
+  </div>
+<script type="text/javascript">
+//<![CDATA[
+var TMS_THEMEPATH = '../../../../../themes/bubbling/index.html',
+    TMS_CURRENT_LANG = 'eng',
+    TMS_LOADING_MESSAGE = 'Loading, please wait...',
+	DEFAULT_VARS = {};
+//]]>
+</script>
+<script type="text/javascript" src="http://yui.yahooapis.com/combo?2.7.0/build/utilities/utilities.js&amp;2.7.0/build/container/container-min.js&amp;2.7.0/build/menu/menu-min.js&amp;2.7.0/build/button/button-min.js&amp;2.7.0/build/json/json-min.js&amp;2.7.0/build/tabview/tabview-min.js"></script>
+<script type="text/javascript" src='../../../../../../js.bubbling-library.com/2.1/build/package/core.js'></script>
+<script type="text/javascript" src='../../../../../themes/bubbling/jscripts/init.js'></script>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-2337646-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+</body>
+
+<!-- Mirrored from www.bubbling-library.com/eng/api/docs/widgets/tooltips/introduction by HTTrack Website Copier/3.x [XR&CO'2010], Wed, 04 Apr 2012 15:57:11 GMT -->
+</html>

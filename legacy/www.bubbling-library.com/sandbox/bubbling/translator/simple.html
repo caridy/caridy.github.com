@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<title>Examples of Using the Translator Plugin - SIMPLE EXAMPLE</title>
+<meta name='author' content='Caridy Patino (caridy at gmail.com)' />
+<link rel="stylesheet" type="text/css" href="../assets/example.css">
+<!-- YUI Library -->
+<script type="text/javascript" src='http://yui.yahooapis.com/2.6.0/build/utilities/utilities.js'></script>
+<script type="text/javascript" src='http://yui.yahooapis.com/2.6.0/build/json/json-min.js'></script>
+<!-- YUI-CMS Extension: Bubbling Library -->
+<script type="text/javascript" src='http://js.bubbling-library.com/2.0/build/translator/translator.js'></script>
+<script type="text/javascript">
+(function() {
+// short hands
+var $L = YAHOO.lang,
+    $E = YAHOO.util.Event,
+    $T = YAHOO.plugin.Translator;
+
+  var spanishworld = {
+  	_MESSAGE: 'Mensaje',
+	_YES: 'Si',
+  	_NO: 'No'
+  };
+  var englishworld = {
+  	_MESSAGE: 'Message',
+	_YES: 'Yes',
+  	_NO: 'No'
+  };
+
+  // language initialization (spanish)
+  $T.init ({lang:'esp'});
+  $T.set ('COMMON', spanishworld);
+
+  YAHOO.example.Translation = function () {
+	// creating the english link
+	YAHOO.util.Event.addListener('loadenligsh', "click", function () {
+	  // reinitialization to english, and using silence because we don't need to load the module thru the web...
+	  $T.init ({lang:'eng', silence: true});
+	  $T.set ('COMMON', englishworld);
+	  alert ('The COMMON language module is ready. Current lang: ' + $T.getLang() );
+	});
+
+	// creating the spanish link
+	YAHOO.util.Event.addListener('loadspanish', "click", function () {
+	  // reinitialization to spanish, and using silence because we don't need to load the module thru the web...
+	  $T.init ({lang:'esp', silence: true});
+	  $T.set ('COMMON', spanishworld);
+	  alert ('The COMMON language module is ready. Current lang: ' + $T.getLang() );
+	});
+
+	// creating the example links
+	YAHOO.util.Event.addListener('showyes', "click", function () {
+	  alert ( '_MESSAGE'.translate('COMMON') + ': ' + '_YES'.translate('COMMON') );
+	});
+	YAHOO.util.Event.addListener('showno', "click", function () {
+	  alert ( '_MESSAGE'.translate() + ': ' + '_NO'.translate() );
+	});
+  };
+
+  $E.onDOMReady(YAHOO.example.Translation);
+
+})();
+</script>
+</head>
+<body id="cms-body">
+<div id="doc">
+
+	<div class="path">
+	  <a href="http://www.bubbling-library.com/" target="_top">Bubbling Library</a> &gt; <a href="http://www.bubbling-library.com/eng/examples" target="_top">Examples</a>
+	</div>
+
+  <h1>Examples of Using the Translator Plugin - SIMPLE EXAMPLE </h1>
+
+	<p>Use this package to separate the language sentences from your javascript components. In this case, the language sentences are defined in the header of the document. See other examples to learn how to use the translator plugin to load different modules or loading onDemand when you need a language module. </p>
+	<p><a href="#" id="showyes" title="Click to see the message">Click here to show the YES messege in the current language </a> </p>
+  <p>
+  <a href="#" id="showno" title="Click to see the message">Click here to how the NO messege in the current language</a></p>
+  <p>In this example, the default language is <a href="#" id="loadspanish" title="Click to switch the language to english">SPANISH</a>, but you can switch to <a href="#" id="loadenligsh" title="Click to switch the language to english">ENGLISH</a> language (click on the links). </p>
+  
+  <!-- THE EXAMPLE's CODE END HERE, FROM NOW ON IS JUST THE DOCUMENTATION //-->
+</div>
+</body>
+</html>

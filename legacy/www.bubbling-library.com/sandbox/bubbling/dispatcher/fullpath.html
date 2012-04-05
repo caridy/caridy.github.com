@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+<!-- Mirrored from www.bubbling-library.com/sandbox/bubbling/dispatcher/fullpath.html by HTTrack Website Copier/3.x [XR&CO'2010], Wed, 04 Apr 2012 15:59:14 GMT -->
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<title>Dispatcher Example - Dynamically Loading Content -  FULLPATH</title>
+<meta name='author' content='Caridy Patino (caridy at gmail.com)' />
+<!-- Reset and Fonts -->
+<link rel="stylesheet" type="text/css" href="../assets/example.css">
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/utilities/utilities.js"></script>
+<script type="text/javascript" src="../../../../js.bubbling-library.com/2.1/build/dispatcher/dispatcher.js"></script>
+<style type="text/css">
+#demo {
+    width:40em; /* arbitrary width */
+}
+.boxing {
+	float: left;
+	display: block;
+	border: 1px solid;
+	margin: 1%;
+	padding: 1%;
+}
+</style>
+</head>
+<body id="cms-body" class="yui-skin-sam">
+<div id="doc">
+
+	<div class="path">
+	  <a href="../../../index.html" target="_top">Bubbling Library</a> &gt; <a href="../../../eng/examples.html" target="_top">Examples</a>
+	</div>
+
+    <h1>Dynamic content with remote scripts (FULLPATH)</h1>
+	<p>Defining the path for the remote assets using the fullpath.</p>
+	<p>Remote script (full path): /sandbox/dispatcher/data.js</p>
+<div class="boxing">
+		<div id="boxwithremotescript">
+			<p> Class aptent taciti sociosqu ad litora torquent per conubia nostra, per  inceptos hymenaeos. Nunc gravida. Ut euismod, tortor eget convallis  ullamcorper, arcu odio egestas pede, ut ornare urna elit vitae mauris.  Aenean ullamcorper eros a lacus. Curabitur egestas tempus lectus. Donec  et lectus et purus dapibus feugiat. Sed sit amet diam. Etiam ipsum leo,  facilisis ac, rutrum nec, dignissim quis, tellus. Sed eleifend. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas sit  amet metus. Nunc quam elit, posuere nec, auctor in, rhoncus quis, dui.  Aliquam erat volutpat. Ut dignissim, massa sit amet dignissim cursus,  quam lacus feugiat dolor, id aliquam leo tortor eget odio. Pellentesque  orci arcu, eleifend at, iaculis sit amet, posuere eu, lorem. Aliquam  erat volutpat. Phasellus vulputate. Vivamus id erat. Nulla facilisi.</p>
+	  </div>
+	</div>
+<script type="text/javascript">
+YAHOO.plugin.Dispatcher.init ({relative:true});
+YAHOO.plugin.Dispatcher.fetch ( 'boxwithremotescript', 'tabs/xhtml.with.remote.scripts.fullpath.html', {action: 'add'} );
+</script>
+<!-- THE EXAMPLE's CODE END HERE, FROM NOW ON IS JUST THE DOCUMENTATION //-->
+</div>
+</body>
+
+<!-- Mirrored from www.bubbling-library.com/sandbox/bubbling/dispatcher/fullpath.html by HTTrack Website Copier/3.x [XR&CO'2010], Wed, 04 Apr 2012 15:59:14 GMT -->
+</html>

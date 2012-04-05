@@ -1,0 +1,14 @@
+/***********************************************/
+/* override CSS Rules                          */
+/***********************************************/
+body {
+    padding: 5px;
+}
+#demo ul li.first-child,
+#demo ul li.last-child {
+    background: #ce3000;
+}
+    #demo ul li.first-child a,
+    #demo ul li.last-child a {
+        color: #ffffff;
+    }

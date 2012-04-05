@@ -1,0 +1,36 @@
+<div>
+	<p>Dynamic tab with an tabview control within...</p>
+	<p><strong>Facts in this example:</strong><br />
+	- This tab haven't autonomy (the owner tabview must initialize it after the loading process).<br />
+	</p>
+    <div id="childtabview" class="yui-navset">
+        <ul class="yui-nav">
+            <li class="selected"><a href="#tab1"><em>tab1</em></a></li>
+            <li><a href="#tab2"><em>tab2</em></a></li>
+            <li><a href="#tab3"><em>tab3</em></a></li>
+        </ul>
+        <div class="yui-content">
+            <div id="tab1">
+                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat.</p>
+            </div>
+            <div id="tab2">
+                <ul>
+                    <li><a href="#">Lorem ipsum dolor sit amet.</a></li>
+                    <li><a href="#">Lorem ipsum dolor sit amet.</a></li>
+
+                    <li><a href="#">Lorem ipsum dolor sit amet.</a></li>
+                    <li><a href="#">Lorem ipsum dolor sit amet.</a></li>
+                </ul>
+            </div>
+            <div id="tab3">
+                <form action="#">
+                    <fieldset>
+                        <legend>Lorem Ipsum</legend>
+
+                        <label for="foo"> <input id="foo" name="foo"></label>
+                        <input type="submit" value="submit">
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>

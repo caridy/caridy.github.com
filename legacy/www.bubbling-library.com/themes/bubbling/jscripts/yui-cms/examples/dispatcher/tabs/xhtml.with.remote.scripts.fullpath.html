@@ -1,0 +1,34 @@
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/datatable/assets/skins/sam/datatable.css">
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/datasource/datasource-min.js"></script>
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/datatable/datatable-min.js"></script>
+<script type="text/javascript" src="../data.js"></script>
+<div>
+	<div id="hd">
+    <h1>DataTable Widget :: Basic Table</h1>
+	<h3>Datatable: Dynamic Content with a datatable control inside</h3>
+	<p>
+  	  <strong>Facts:</strong><br />
+		- The datatable.js and the datatsource.js were loaded by the dispacher and executed on the fly.<br />
+		- The datatable.css was also loaded by the dispatcher using the CSS injection feature.<br />
+  </div>
+  <div id="bd">
+    <div id="basic" class="example"></div>
+  </div>
+  <script type="text/javascript">
+		var myColumnHeaders = [
+		    {key:"id", sortable:true, resizeable:true},
+		    {key:"quantity", type:"number", sortable:true, resizeable:true},
+		    {key:"amount", type:"currency", sortable:true, resizeable:true},
+		    {key:"title", type:"html", sortable:true, resizeable:true}
+		];
+
+		var myColumnSet = new YAHOO.widget.ColumnSet(myColumnHeaders);
+
+		var myDataSource = new YAHOO.util.DataSource(YAHOO.example.Data.bookorders);
+		myDataSource.responseType = YAHOO.util.DataSource.TYPE_JSARRAY;
+		myDataSource.responseSchema = {
+		    fields: ["id","quantity","amount","title"]
+		};
+		var myDataTable = new YAHOO.widget.DataTable("basic", myColumnSet, myDataSource,{caption:"Example: Basic Table"});
+  </script>
+</div>

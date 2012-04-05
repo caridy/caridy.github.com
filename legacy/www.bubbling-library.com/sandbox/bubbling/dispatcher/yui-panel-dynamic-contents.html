@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<title>Dispatcher Example - YUI Panels - Loading BODY with script inside</title>
+<meta name='author' content='Caridy Patino (caridy at gmail.com)' />
+<!-- Reset and Fonts -->
+<link rel="stylesheet" type="text/css" href="../assets/example.css">
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/container/assets/skins/sam/container.css" />
+<!-- YUI Library -->
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/utilities/utilities.js"></script>
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/container/container-min.js"></script>
+<!-- YUI-CMS Extension: Bubbling Library -->
+<script type="text/javascript" src="http://js.bubbling-library.com/2.1/build/dispatcher/dispatcher.js"></script>
+
+<style type="text/css">
+#demo {
+    width:40em; /* arbitrary width */
+}
+.yui-panel {
+	text-align: left;
+}
+</style>
+<script>
+YAHOO.util.Event.onDOMReady(function() {
+	// Instantiate a Panel from script
+	panel2 = new YAHOO.widget.Panel("panel2", { width:"400px", visible:false } );
+	panel2.setHeader("Panel #2 from Script");
+	panel2.setBody("Loading, please wait...");
+	panel2.setFooter("End of Panel #2");
+	panel2.render(document.body);
+
+	YAHOO.util.Event.addListener("show2", "click", function(){
+		// removing the old listeners, running the destroyer rules, and setting the loading message
+		YAHOO.plugin.Dispatcher.process ( panel2.body, "Loading, please wait..." );
+		// displaying the panel
+		panel2.show();
+		/* loading the content */
+		YAHOO.plugin.Dispatcher.fetch ( panel2.body, 'tabs/xhtml.with.inline.scripts.html' );
+	});
+	YAHOO.util.Event.addListener("hide2", "click", function(){
+		panel2.hide();
+	});
+});
+</script>
+</head>
+<body id="cms-body" class="yui-skin-sam">
+<div id="doc">
+
+	<div class="path">
+	  <a href="http://www.bubbling-library.com/" target="_top">Bubbling Library</a> &gt; <a href="http://www.bubbling-library.com/eng/examples" target="_top">Examples</a>
+	</div>
+
+    <h1>Dispatcher Example - YUI Panels - Loading BODY with script inside</h1>
+    <p>The Dispatcher controls the loading process using the YUI Connection Manager, and it will display the response within the Panel's Body,  executing the remote and inline scripts.</p>
+<div class="container">
+		<div>
+			<button id="show2">Show panel</button> 
+			<button id="hide2">Hide panel</button>
+
+		</div>
+		
+	</div>
+
+</div>
+</body>
+</html>

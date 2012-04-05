@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+<!-- Mirrored from www.bubbling-library.com/sandbox/bubbling/tooltips/tooltips-using-ajax.html by HTTrack Website Copier/3.x [XR&CO'2010], Wed, 04 Apr 2012 15:59:16 GMT -->
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<title>Remote ToolTips - Example of Bubbling technique</title>
+<meta name='author' content='Caridy Patino (caridy at gmail.com)' />
+<link rel="stylesheet" type="text/css" href="../assets/example.css">
+<!-- YUI Basement Style -->
+<link rel="stylesheet" type="text/css" href='http://yui.yahooapis.com/2.7.0/build/container/assets/container.css'/>
+<style>
+.yui-cms-tt .yui-panel {
+	text-align: left;
+}
+    .yui-panel-container.yui-cms-tt.shadow .underlay {
+        top: 2px;
+        bottom: -2px;
+        right: -2px;
+        left: -2px;
+        padding-left: 4px;
+    }
+    .yui-cms-tt .yui-panel, .yui-cms-tt .yui-panel .bd {
+    	color:#333;
+    	background-color:#FDFFB4;
+    	border-color:#FCC90D;
+    }
+    .yui-cms-tt .yui-panel .hd {
+    	visible: hidden;
+    	display: none;
+    }
+</style>
+<!-- YUI Library -->
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/utilities/utilities.js"></script>
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/container/container-min.js"></script>
+<!-- YUI-CMS Extension: Bubbling Library -->
+<script type="text/javascript" src='../../../../js.bubbling-library.com/2.1/build/bubbling/bubbling.js'></script>
+<script type="text/javascript" src='../../../../js.bubbling-library.com/2.1/build/tooltips/tooltips.js'></script>
+<script type="text/javascript">
+(function() {
+// short hands
+var $B = YAHOO.Bubbling,
+    $L = YAHOO.lang,
+    $E = YAHOO.util.Event,
+    $C = YAHOO.util.Connect;
+
+  YAHOO.widget.TooltipManager.config ({
+        close: false,
+        width: 250
+  });
+
+  // customizing the tooltips for ajax requesting process
+  YAHOO.widget.TooltipManager.onCompile = function ( el, o ) {
+  	var id = el.getAttribute('id'), obj = this;
+  	if ($L.isString(id) && (id !== '')) {
+  		// the anchor have an id defined, we must send the ajax request
+		if ($L.isObject(this.handle)) {
+  			$C.abort(this.handle);
+  		}
+  		var callback = {
+			success: function(o) {
+				// process the response here...
+				obj.body = o.responseText;
+				// if the tip was already render, set the body directly
+				if ($L.isObject(obj.handleOverlay)) {
+				  obj.handleOverlay.setBody (o.responseText);
+			    }
+			},
+			failure: function(o) {
+			}
+		};
+		var uri = '../../../themes/bubbling/jscripts/yui-cms/examples/PHP/tooltips5445.html?id='+id;
+		if (this.handle = $C.asyncRequest('GET', uri, callback)) {
+  		  this.body = 'Loading, please wait...';
+  		  return true;
+  	    }
+  	}
+  	return false;
+  };
+})();
+</script>
+</head>
+<body id="cms-body">
+
+  <div id="doc">
+
+	<div class="path">
+	  <a href="../../../index.html" target="_top">Bubbling Library</a> &gt; <a href="../../../eng/examples.html" target="_top">Examples</a>
+	</div>
+
+	<h1>Examples of Using the Bubbling Technique for AJAX ToolTips</h1>
+
+	<p>Benefit from the bubbling technique, include the corresponding behavior for Tooltips and all the links in your page will have a nice dynamic tooltip attach it:</p>
+	  <a href="#" id="tt1" title="My text was set using the 'title' attribute inside the Anchor tab...">Hover over me to see a Tooltip without URL!</a>
+	<p>
+	  <a href="http://www.yahoo.com/" title="Do You Yahoo?">Hover over me to see a Tooltip with the URL inside!</a>
+	</p>
+	<p>
+	Image inside an Anchor: <a href="../../../eng/class/examples/index.html" id="tt3" rel="actionBookmark" title="Bookmark - Examples"><img src="images/sitemap.gif" alt="Bookmark"></a></p>
+
+<!-- THE EXAMPLE's CODE END HERE, FROM NOW ON IS JUST THE DOCUMENTATION //-->
+  </div>
+</body>
+
+<!-- Mirrored from www.bubbling-library.com/sandbox/bubbling/tooltips/tooltips-using-ajax.html by HTTrack Website Copier/3.x [XR&CO'2010], Wed, 04 Apr 2012 15:59:17 GMT -->
+</html>

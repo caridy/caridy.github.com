@@ -1,0 +1,50 @@
+<div>
+  <h3>Dynamic tab without cache</h3>
+  <div id="hd">
+  	<h4>Facts:</h4>
+	<p>- The script tag will be executed when this tab is activated.<br />
+	  - The dynamic links will be created on the fly.<br />
+	</p>
+  </div>
+  <div id="bd">
+    <h4>Static and Dynamic links:</h4>
+    <div id="dynamic-content-with-script">
+		<br />
+		<a title="This is the static link number 1" href="../../../../index.html"  target="_top" id="link1">1.  Static link</a><br>
+		<br />
+		<a title="This is the static link number 2" href="../../../../index.html"  target="_top" id="link2">2.  Static link</a><br>
+		<br />
+		<a title="This is the static link number 3" href="../../../../index.html"  target="_top" id="link3">3.  Static link</a><br>
+		<br />
+		<a title="This is the static link number 4" href="../../../../index.html"  target="_top" id="link4">4.  Static link</a><br>
+		<br />
+		<a title="This is the static link number 5" href="../../../../index.html"  target="_top" id="link5">5.  Static link</a><br>
+		<br />
+	</div>
+  </div>
+  <div id="ft">
+  </div>	
+</div>
+<script>
+
+    // Creating dynamic links...
+	function createDynamicLinks() {
+        var p = YAHOO.util.Dom.get ("dynamic-content-with-script");
+		for (var i=6;i<=10;i++) {
+			var a = document.createElement("a");
+			a.id = "link" + i;
+			a.href = "../../../../index.html";
+			a.title = "This is the dynamic link number " + i;
+			a.innerHTML = i + ".  Dynamic link";
+
+			p.appendChild(a);
+			p.appendChild(document.createElement("br"));
+			p.appendChild(document.createElement("br"));
+
+		}
+	}
+
+	createDynamicLinks();
+	alert ('Dynamic Script Execution: TAB "Inline Scripts" was executed successful...');
+
+</script>

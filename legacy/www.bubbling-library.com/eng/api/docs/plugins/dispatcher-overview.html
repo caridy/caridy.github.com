@@ -1,0 +1,472 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+ "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+<!-- Mirrored from www.bubbling-library.com/eng/api/docs/plugins/dispatcher-overview.html by HTTrack Website Copier/3.x [XR&CO'2010], Wed, 04 Apr 2012 15:57:10 GMT -->
+<head>
+<title>YUI Plugin: Dispatcher - Overview - JavaScript Bubbling Library - YUI Library Extension for Event-Driven Applications</title>
+<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1' />
+<meta name='keywords' content=', ' />
+<meta name='description' content='After several study days, I wrote this extension of YUI library, called Dispatcher. This singleton object will be created during the page load, and require only the "utilities" package of the YUI library, and will guarantee several important points: All of the contents that will be loaded thru the dispatcher will be executed even if the script are remote. All the script inside a content will be executed according to the order of apparition. All the contents will be included in the DOM's structure before beginning the execution. This means that you can references an element inside this structure. - JavaScript Bubbling Library - YUI Library Extension for Event-Driven Applications' />
+<meta name='author' content='Caridy Patino' />
+<meta name='robots' content='All' />
+<link rel="icon" href="../../../../themes/bubbling/images/favicon.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="../../../../themes/bubbling/images/favicon.ico" type="image/x-icon" />
+<link rel="alternate" type="application/rss+xml" title='Dispatcher' href='dispatcher/rss/index.html' />
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/combo?2.7.0/build/reset-fonts-grids/reset-fonts-grids.css&amp;2.7.0/build/base/base-min.css&amp;2.7.0/build/assets/skins/sam/skin.css" /> 
+<link rel="stylesheet" type="text/css" href='../../../../../js.bubbling-library.com/2.1/build/accordion/assets/accordion.css' />
+<link rel="stylesheet" type="text/css" href='../../../../themes/bubbling/css/comarq.css' />
+</head>
+<body id="tms-body" class="yui-skin-sam">
+<a name="top"></a>
+  <div id="doc4" class="yui-t3 notips">
+     <div id="hd">
+        <div>
+          <div id="session">
+            <a href='../../../../index.html' title='JavaScript Bubbling Library - YUI Library Extension for Event-Driven Applications'><img src='../../../../themes/bubbling/images/logo.gif' alt='JavaScript Bubbling Library - YUI Library Extension for Event-Driven Applications' width="290" height="85"  border="0" id="logo" /></a>
+          </div>
+          <div id="departments"><div id="general-tabs" class="yui-navset">
+    <ul class="yui-nav">
+        <li class='1'><a href="../../../../index.html"  title="Home page" ><em>Home</em></a></li><li class='1'><a href="../../../releases.html"  title="Check for releases and updates of the bubbling library components..." ><em>Releases</em></a></li><li class='selected current'><a href="../../../../sandbox/api/index.html"  title="Full API Documentation for every script related with the bubbling library..." ><em>API Doc</em></a></li><li class='1'><a href="../../../examples.html"  title="Examples related with the bubbling library..." ><em>Examples</em></a></li><li class='orange'><a href="../../../downloads.html"  title="Free download of the last versions of the Bubbling Library, as well as the plugins, behaviors  and extensions that are related with the YUI Library..." ><em>Downloads</em></a></li><li class='1'><a href="../../../faqs.html"  title="Get answers here..." ><em>FAQs</em></a></li>
+    </ul>
+</div></div>
+          <div id="quickaccess" class="yuimenubar yuimenubarnav">
+  <div class="bd">
+	<ul class="first-of-type">
+	  <li class="yuimenubaritem"><a href="../bubbling-core.html" id="yuimenubaritem88" title="">Bubbling Core</a>
+  
+</li><li class="yuimenubaritem"><a href="../plugins.html" id="yuimenubaritem26" title="">Plugins</a>
+  <div id="yuimenu26" class="yuimenu">
+		<div class="bd">
+			<ul>
+			  <li class="yuimenuitem"><a href="dispatcher.html" id="yuimenuitem102" title="">Dispatcher</a>
+  
+</li><li class="yuimenuitem"><a href="wizard.html" id="yuimenuitem105" title="">Form Manager</a>
+  
+</li><li class="yuimenuitem"><a href="lighterhtml.html" id="yuimenuitem104" title="">Lighter</a>
+  
+</li>
+			</ul>
+		</div>
+	</div>                    
+
+</li><li class="yuimenubaritem"><a href="../widgets.html" id="yuimenubaritem21" title="">Widgets</a>
+  <div id="yuimenu21" class="yuimenu">
+		<div class="bd">
+			<ul>
+			  <li class="yuimenuitem"><a href="../widgets/accordions.html" id="yuimenuitem113" title="">Accordion Manager</a>
+  
+</li><li class="yuimenuitem"><a href="../widgets/loading-mask.html" id="yuimenuitem112" title="">Loading Mask</a>
+  
+</li><li class="yuimenuitem"><a href="../widgets/tooltips.html" id="yuimenuitem110" title="">Tooltip Manager</a>
+  
+</li>
+			</ul>
+		</div>
+	</div>                    
+
+</li>
+	</ul>
+  </div>
+</div>
+        </div>
+     </div>
+     <div id="bd">
+        <div id="yui-main">
+            <div class="yui-b" id="tms-story">
+                 <a name="tms-pagination"></a>
+<div class="yui-cms-pager"><div class="barwithicon">
+  <h3>YUI Plugin: Dispatcher - Overview</h3>
+</div>
+<div class="fecha">2007-04-02</div>
+<div class="story">
+    <div class="yui-cms-categories path">
+	<a href="../../../index.html"  title=""  >Home</a>
+<a href="#" class="actionCategoriesMap"><span class="yui-cms-more">&nbsp;</span></a>
+	<a href="../../docs.html">API Documentation<span class="yui-cms-more">&nbsp;</span></a> <a href="../plugins.html">Plugins<span class="yui-cms-more">&nbsp;</span></a> <a href="dispatcher.html">Dispatcher<span class="yui-cms-more">&nbsp;</span></a>
+  </div>
+  
+  <p>One of the most requested functionalities for the developers that work with <strong>YUI Library</strong> is the dynamic execution of the <strong>Ajax's</strong> response content, principally when we utilized the <strong>TabView</strong> component. The incompatibilities of the browsers, cause that the execution of the code inserted in the pages using the <strong>innerHTML</strong> property is not a standard mechanism, neither if you try to use a reference to a remote script ( Ej.  <script type="text/javascript" src="../../../../yui/build/button/button-beta.html"></script>).  I decided to study in depth this subject.</p>
+<p>After several study days, I made out in the light this extension of <strong>YUI library</strong>, that we will call <strong>Dispatcher</strong>. This singleton object will be created during the page load, and require only the "utilities" package of the <strong>YUI library</strong>, and will guarantee several important points:</p>
+<ul>
+    <li>All of the contents that will be loaded  thru the dispatcher will be executed even if the script are remote. </li>
+    <li>All the script inside a content will be executed according to the order of apparition.</li>
+    <li>All the contents will be included in the <strong>DOM's</strong> structure before beginning the execution. This means that you can references an element inside this structure.</li>
+</ul>
+<p>The dispatcher is able to manipulate three difference type of execution, and several execution children at the same time, so the global object  represented by "YAHOO.plugin.Dispatcher" can be utilized without no restriction of threads, achieving thus manipulating several dynamic areas in the same page. Below, you can see the three modes for this object:</p>
+<ul>
+    <li>Request a remote URL, substitution on the <strong>DOM's</strong> elements (also aggregation for accumulative contents) and automatic execution.</li>
+    <li>Processing a content that was provided by another script, in this case the dispatcher will do the substitution and execution process.</li>
+    <li>Dynamic management of contents provided by an<strong> Tabview YUI object</strong>, so the dispatcher will pre-process the content before the substitution mechanism of the "<strong>Tab</strong>" object, and then start the execution of the scripts after the <strong>Tab</strong> object had concluded the operation, in this case the process is  transparent for the "<strong>TabView</strong>" object.</li>
+</ul>
+<p>The graphic below represents the <strong>UML activity diagram</strong> for the general process:</p>
+<p><img width="550" alt="Activities Diagrama de Actividades" src="../../../../sites/bubbling-library.com/files/image/dispatcher.gif" /> </p>
+<p>I  will describe a couple of examples of how utilize the dispatcher. In the first example we point out an association of the dispatcher and a tabview object.</p>
+<p><strong>The dispatcher's general initialization and the tabview:</strong></p>
+<pre>
+&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;../jscripts/yui/build/tabview/assets/tabview.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;../jscripts/yui/build/tabview/assets/border_tabs.css&quot;&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;../jscripts/yui/build/utilities/utilities.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;../jscripts/yui/build/element/element-beta-min.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;../jscripts/yui/build/tabview/tabview-min.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;../jscripts/yui-cms/build/dispatcher/dispatcher.js&quot;&gt;&lt;/script&gt;
+</pre>
+<p>The only difference between a common tabview implementation and this one is the inclution of the dispatcher script ("/yui-cms/build/dispatcher/dispatcher.js").  This script create automatically the dispatcher singleton object through the namespace <strong>YAHOO.plugin.Dispatcher.</strong></p>
+<p>Next during the tab's initialization process you need to interconnect every tab of the tabview with the <strong>dispatcher</strong> object through one simple code line:</p>
+<pre>var tabView = new YAHOO.widget.TabView({id: 'demo'}); <br />YAHOO.plugin.Dispatcher.delegate (new YAHOO.widget.Tab({ label: 'Inline Scripts', dataSrc: 'tabs/xhtml.with.inline.scripts.html', active: true }), tabView);
+YAHOO.plugin.Dispatcher.delegate (new YAHOO.widget.Tab({ label: 'Remote Scripts', dataSrc: 'tabs/xhtml.with.remote.scripts.html', cacheData: true }), tabView);</pre>
+<p>The method "<strong>delegate</strong>" of the <strong>dispatcher</strong> will modifying the charging methods of every tab in order that the dispatcher may accomplish his work, the first parameter of this method is the new tab's object reference, and as a second parameter (optional) is the tabview object reference, and will be used by the <strong>dispatcher</strong> for adding the new tab to the tabview object, although that can be done manually.</p>
+<p><strong>Tthe dispatcher's general initialization:</strong></p>
+<p>It&acute;s very similar to the previous example.</p>
+<pre>&lt;script type=&quot;text/javascript&quot; src=&quot;../jscripts/yui/build/utilities/utilities.js&quot;&gt;&lt;/script&gt;<br />&lt;script type=&quot;text/javascript&quot; src=&quot;../jscripts/yui-cms/build/dispatcher/dispatcher.js&quot;&gt;&lt;/script&gt;</pre>
+<p>Unlike the previous example, where the object tab inside the tabview does the <strong>fetch</strong> process for every tab, in that case we can request the remote <strong>URL</strong> thru the dispatcher directly:</p>
+<pre>YAHOO.plugin.Dispatcher.fetch ( 'boxwithinlinescript', 'tabs/xhtml.with.inline.scripts.html' );<br />YAHOO.plugin.Dispatcher.fetch ( 'boxwithremotescript', 'tabs/xhtml.with.remote.scripts.html', {action: 'add'} ); </pre>
+<p>This code guarantees that the dispatcher goes to accomplish all the process, beginning from the request, the contents' parsing, the scritp tags processing, inclusion of the contents without script inside the element reference, and finally, the execution of the scripts.</p>
+  
+  
+  
+  
+</div>
+<h3><a href='#postcomment' title='Leave a comment'>11 Comments</a></h3>
+<div class="comments yui-cms-selector">
+	<div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars5">super good</h4>
+  <div class="yui-cms-comment-body">
+  	<p>thank you for your contribution</p>
+<p>Jerry</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	Jerry Zhang  	
+  	 - November 5, 2008
+  </div>
+</div><div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars4">Dispatcher.fetch method with YUI tab</h4>
+  <div class="yui-cms-comment-body">
+  	<p>Hi,<br />
+how can we use YAHOO.plugin.Dispatcher.fetch<br />
+method to load the tab contents.<br />
+Coluld you please post an example for me.<br />
+Thanks in advance.</p>
+<p>Javed</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	Javed  	
+  	 - February 3, 2009
+  </div>
+</div><div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars0">Re: Dispatcher.fetch method with YUI tab</h4>
+  <div class="yui-cms-comment-body">
+  	<p>Hello Javed,</p>
+<p>Normally, if you want to use the dispatcher with a tabview, you can use the "delegate" routine, which is easier. But anyway, if you want to use the "fetch" routine directly you can do it like this:</p>
+<p>// mytab is a reference to the tab object<br />
+YAHOO.plugin.Dispatcher.fetch(mytab.get("contentEl"), '/my-remote-resource.html');</p>
+<p>This chunk: mytab.get("contentEl") return a DOM reference for the tab container element. More info here:<br />
+http://developer.yahoo.com/yui/tabview/#tabviewconfigref</p>
+<p>This feature is particular useful when you have a tabview from markup and you want to refresh the content of the tab from outside.</p>
+<p>In case you want to use delegate, here is the example list:<br />
+http://bubbling-library.com/sandbox/dispatcher/index.html</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	Caridy  	
+  	 - February 3, 2009
+  </div>
+</div><div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars0">How to reload/refresh a particular tab?</h4>
+  <div class="yui-cms-comment-body">
+  	<p>Hi,<br />
+lets assume we have 3 tabs and the contents are getting loaded using dispatcher routine, now when i click a button on tab-1,  tab-2 should reload/refresh its contents.<br />
+can anyone please help me with this?<br />
+thanks in advance<br />
+Javed</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	Javed  	
+  	 - March 18, 2009
+  </div>
+</div><div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars0">RE: How to reload/refresh a particular tab?</h4>
+  <div class="yui-cms-comment-body">
+  	<p>Hey Javed, </p>
+<p>Check this post:</p>
+<p>http://tech.groups.yahoo.com/group/ydn-javascript/message/35784</p>
+<p>I think that example will fit you.</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	Caridy  	
+  	 - March 18, 2009
+  </div>
+</div><div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars0">RE:RE: How to reload/refresh a particular tab?</h4>
+  <div class="yui-cms-comment-body">
+  	<p>Thanks Caridy for the reply but exmple available on the post is simply switching the tabs and displaying the CACHED contents, instead of RELOADING the contents.<br />
+when i switch the tabs it should display the CACHED contents (achieved in your example) but<br />
+when i click on the link or button it should fetch<br />
+the fresh contents and replace the cached contents (not there in the example).<br />
+Please help me with this.<br />
+Thanks<br />
+Javed</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	Javed  	
+  	 - March 19, 2009
+  </div>
+</div><div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars0">RE:RE: How to reload/refresh a particular tab?</h4>
+  <div class="yui-cms-comment-body">
+  	<p>Hey Caridy,<br />
+I got a solution...<br />
+tab.set('cacheData', false);    YAHOO.plugin.Dispatcher.delegate(tab, tabView);</p>
+<p>and to cache the contents again i have used -<br />
+YAHOO.util.Event.onDOMReady(function() {<br />
+tab.set('cacheData', true);<br />
+}</p>
+<p>Please keep me posted if you have any other idea/solution...<br />
+Thanks</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	Javed  	
+  	 - March 19, 2009
+  </div>
+</div><div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars0">RE:RE:RE: How to reload/refresh a particular tab?</h4>
+  <div class="yui-cms-comment-body">
+  	<p>@Javed:</p>
+<p>Yes, it's responsibility of the tab itself to define the cache rules, independently of the way the tab get active.</p>
+<p>So, that's the correct solution.</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	Caridy  	
+  	 - March 19, 2009
+  </div>
+</div><div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars0">tab loading image bug :-(</h4>
+  <div class="yui-cms-comment-body">
+  	<p>Hi,<br />
+I am using YUI-2.6 with the dispatcher plugin for tabbed pane, the problem is when you have 2 Tabs and you<br />
+select the second one and get back to the other one again, it will load some<br />
+weird stuff (most of the times loading images all over).<br />
+I am using the following CSS code to display loading image-</p>
+<p>.yui-navset div.loading div {<br />
+background-image: url( ../images/loading.gif );<br />
+background-position:center center;<br />
+background-repeat:no-repeat;<br />
+height: 8em; /* hold some space while loading */<br />
+}</p>
+<p>please help me with this?</p>
+<p>Thanks.</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	Javed  	
+  	 - April 1, 2009
+  </div>
+</div><div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars0">RE: tab loading image bug :-(</h4>
+  <div class="yui-cms-comment-body">
+  	<p>@Javed:</p>
+<p>This issue is not directly related with the dispatcher, but with the tabview itself. </p>
+<p>If you user a dataSrc for a tab, without cache, tabview will try to load the dataSrc every time the tab become active. And of course the dispatcher will process the info again. The issue that you have here is this:</p>
+<p>The rule that you have: ".yui-navset div.loading div" affects all the div elements within the active tab. So every single div will get a loading image and an specific height according to the css rules that you have.</p>
+<p>Solutions? you have 3 solutions here:</p>
+<p>1. apply cache for your tabs (cacheData: true), this means that when you re-active the first tab it will not apply the class "loading" because it was already loaded.<br />
+2. remove the loading css rule.<br />
+3. set the content to empty before the loading process.</p>
+<p>More info here:<br />
+http://developer.yahoo.com/yui/docs/YAHOO.widget.Tab.html#config_cacheData<br />
+http://developer.yahoo.com/yui/docs/YAHOO.widget.Tab.html#event_beforeActiveChange</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	Caridy  	
+  	 - April 3, 2009
+  </div>
+</div><div class="yui-cms-item">
+  <h4 class="yui-cms-comment-score stars4">catching errors</h4>
+  <div class="yui-cms-comment-body">
+  	<p>I thought I saw somewhere a way to catch errors but now I can't find it.  Sometimes I get 500 errors when loading a tab or maybe another error like that.  I'm using the delegate method.  The problem is that the loading screen gets stuck and there's no way for me to give the user an error.  How do I catch the 500 error?</p>
+
+  </div>
+  <div class="yui-cms-comment-info">
+  	Comment by 
+  	Craig  	
+  	 - November 22, 2009
+  </div>
+</div>
+</div>
+<a name="postcomment"></a>
+<div id="contenttabview" class="yui-navset">
+    <ul class="yui-nav">
+        <li class="selected"><a href="#brothers"><em>More Information</em></a></li>
+        <li><a href="#linked"><em>Related Links</em></a></li>
+    </ul>
+    <div class="yui-content">
+        <div id="brothers">
+            <ul class="listing">
+	<li><a href='dispatcher.html' title=''>YUI Plugin: Dispatcher</a></li><li><a href='dispatcher-overview.html' title='After several study days, I wrote this extension of YUI library, called Dispatcher. This singleton object will be create...'>YUI Plugin: Dispatcher - Overview</a></li><li><a href='dispatcher-documentation.html' title='A plugin to management dynamic areas and remote scripts loading: Simple Use Case, Solutions, Key Interesting Moments, Co...'>YUI Plugin: Dispatcher - Documentation</a></li><li><a href='dispatcher-navigation.html' title='Dynamic Navigation Theory: Dispatcher + Bubbling Core Object = Dynamic Website.
+See how the left menu load the correspo...'>Dynamic Navigation Theory</a></li><li><a href='dispatcher-examples.html' title=''>YUI Plugin: Dispatcher - Examples</a></li>
+</ul>	  
+
+            <br />
+        </div>
+        <div id="linked">
+          	<p>
+  Links does not exist.
+</p>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+  	var tabView = new YAHOO.widget.TabView('contenttabview');
+  	tabView.addTab( new YAHOO.widget.Tab({
+        label: 'Leave a comment',
+        content: '<div id="wizardcommentfrom">Loading, please wait...</div>'
+    }));
+
+	YAHOO.plugin.WizardManager.add( 'wizardcommentfrom', {
+		uri:'/admin/interface/comments/eng.php?obj_id=161&lang_code=eng',
+		onFinish: function ( values ) { alert ('Thanks for your comment...'); }
+	});
+
+</script>
+
+</div>
+            </div>
+        </div>
+        <div class="yui-b">
+            <div class="panels">
+    <div class="yui-cms-accordion multiple fixIE">
+        <div class="yui-cms-item yui-panel selected">
+	<div class="hd">Navigation</div>
+	<div class="bd">
+	  <div class="fixed">
+		  <ul class="listing">
+			<li class=''><a href="dispatcher.html" title="">Dispatcher</a>
+
+</li><li class=''><a href="lighterhtml.html" title="">Lighter</a>
+
+</li><li class=''><a href="wizard.html" title="">Form Manager</a>
+
+</li>  		
+		  </ul>  
+	  </div>
+	</div>
+	<div class="actions">
+	  <a href="#" class="accordionToggleItem">&nbsp;</a>
+	</div>
+</div>
+<div class="yui-cms-item yui-panel selected">
+	<div class="hd">More Information</div>
+	<div class="bd">
+	  <div class="fixed">
+		  <ul class="listing">
+			<li><a href='dispatcher.html' title=''>YUI Plugin: Dispatcher</a></li><li><a href='dispatcher-overview.html' title='After several study days, I wrote this extension of YUI library, called Dispatcher. This singleton object will be create...'>YUI Plugin: Dispatcher - Overview</a></li><li><a href='dispatcher-documentation.html' title='A plugin to management dynamic areas and remote scripts loading: Simple Use Case, Solutions, Key Interesting Moments, Co...'>YUI Plugin: Dispatcher - Documentation</a></li><li><a href='dispatcher-navigation.html' title='Dynamic Navigation Theory: Dispatcher + Bubbling Core Object = Dynamic Website.
+See how the left menu load the correspo...'>Dynamic Navigation Theory</a></li><li><a href='dispatcher-examples.html' title=''>YUI Plugin: Dispatcher - Examples</a></li>
+		  </ul>	  
+	  </div>
+	</div>
+	<div class="actions">
+	  <a href="#" class="accordionToggleItem">&nbsp;</a>
+	</div>
+</div>
+        
+        <div class="yui-cms-item yui-panel selected">
+            <div class="hd"><strong>Bubbling for YUI 3.x</strong></div>
+            <div class="bd">
+              <div class="fixed">
+                    <p>
+                        <a href="http://yuilibrary.com/gallery/show/dispatcher" title="Porting Bubbling Library Dispatcher Plugin to YUI 3">Dispatcher (gallery-dispatcher)</a><br />
+                        <small>The Dispatcher satisfies a very common need of developers using the YUI library: dynamic execution of Ajax response content. (<em class="red">new</em>)</small>
+                    </p>
+                    <p>
+                        <a href="http://yuilibrary.com/gallery/show/node-accordion" title="Node Accordion Plugin is a light-weight solution (~3k) for expandable and collapsible elements.">Node Accordion (gallery-node-accordion)</a><br />
+                        <small>The Accordion Node Plugin makes it easy to transform existing markup into an accordion element with expandable and collapsible elements. Elements are easy to customize, and only require a small set of dependencies. (<em class="red">new</em>)</small><br/>
+                    </p>
+                    <p>
+                        <a href="http://yuilibrary.com/gallery/show/event-binder" title="Binding user actions until a particular YUI 3 instance become ready">Event Binder (gallery-event-binder)</a><br />
+                        <small>Binding user actions until a particular YUI instance become ready, and the listeners defined before flushing those events through a queue. This will help to catch some early user interactions due the on-demand nature of YUI 3. (<em class="red">new</em>)</small>
+                    </p>
+                    <p>
+                        <a href="http://yuilibrary.com/gallery/show/preload" title="Preload images, CSS and JavaScript files without executing them">Preload (gallery-preload)</a><br />
+                        <small>Port of Stoyan Stefanov's JavaScript preload() function. It also has built-in support for Timer Idle to preload files only when the user is idle to avoid any overhead during the initial loading process. (<em class="red">new</em>)</small>
+                    </p>
+                    <p>
+                        <a href="http://yuilibrary.com/gallery/show/parent-window" title="Parent Window Utility allow you to manipulate the parent window using YUI">Parent Window Utility (gallery-parent-window)</a><br />
+                        <small>This utility provides a set of functionalities to interact with the parent window. (<em class="red">new</em>)</small>
+                    </p>
+                    <p>
+                        <small> - <a href="http://yuilibrary.com/gallery/user/caridy">See more modules by Caridy</a>.</small>
+                    </p>
+              </div>
+            </div>
+        </div>
+        <div class="yui-cms-item yui-panel selected">
+            <div class="hd"><strong>Follow up</strong></div>
+            <div class="bd">
+              <div class="fixed">
+                <ul>
+                  <li><a href="http://github.com/caridy/">Fork Caridy on GitHub</a></li>
+                  <li><a href="http://twitter.com/caridy">Follow @caridy on Twitter</a></li>
+                  <li><a href="http://caridy.name/">Caridy's Blog</a></li>
+                  <li><a href="http://yuiblog.com/">YUI Blog</a></li>
+                  <li><a href="http://developer.yahoo.com/yui/">Yahoo! UI Library (YUI)</a></li>
+                  <li><a href="http://yuilibrary.com/forum">YUI Forums</a></li>
+                </ul>
+              </div>
+            </div>
+        </div>
+    </div>
+</div>
+        </div>
+     </div>
+     <div id="ft">
+        <div id="icons">
+            <p>Bubbling Library is free open source software under the <a href="../../../licencehtml.html" title="Bubbling Library is free open source software under the BSD License">BSD License</a></p>
+            <p>(c) 2006 - 2010 <a href="http://www.linkedin.com/in/caridy" title="View Caridy Patino's profile on LinkedIn" rel="external">Caridy Patino</a>. All Rights Reserved.</p>
+<p>This is one of my side projects, if you need something, <a href="../../../contact-us.html" title="Email me through this website...">just ask</a>!</p>
+        </div>
+     </div>
+  </div>
+<script type="text/javascript">
+//<![CDATA[
+var TMS_THEMEPATH = '../../../../themes/bubbling/index.html',
+    TMS_CURRENT_LANG = 'eng',
+    TMS_LOADING_MESSAGE = 'Loading, please wait...',
+	DEFAULT_VARS = {};
+//]]>
+</script>
+<script type="text/javascript" src="http://yui.yahooapis.com/combo?2.7.0/build/utilities/utilities.js&amp;2.7.0/build/container/container-min.js&amp;2.7.0/build/menu/menu-min.js&amp;2.7.0/build/button/button-min.js&amp;2.7.0/build/json/json-min.js&amp;2.7.0/build/tabview/tabview-min.js"></script>
+<script type="text/javascript" src='../../../../../js.bubbling-library.com/2.1/build/package/core.js'></script>
+<script type="text/javascript" src='../../../../themes/bubbling/jscripts/init.js'></script>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-2337646-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+</body>
+
+<!-- Mirrored from www.bubbling-library.com/eng/api/docs/plugins/dispatcher-overview.html by HTTrack Website Copier/3.x [XR&CO'2010], Wed, 04 Apr 2012 15:57:11 GMT -->
+</html>

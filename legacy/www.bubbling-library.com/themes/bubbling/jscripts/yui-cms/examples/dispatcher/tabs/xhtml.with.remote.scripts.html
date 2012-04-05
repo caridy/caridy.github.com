@@ -1,0 +1,59 @@
+<!--
+   NOTE: this page must be loaded using the relative:true for the dispatcher plugin
+         because the resources (css/js) are relative to the file path...
+//-->
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/button/assets/skins/sam/button.css" />
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/button/button-min.js"></script>
+<script type="text/javascript" src="../test.js"></script>
+<div id="dynamic-tab-with-remote-script">
+	<p>Dynamic tab with cache and remote script inside the content</p>
+	<p><strong>Facts in this example:</strong><br />
+	  - The content of the box was changed on the fly (you can reference elements in dynamic area inside the script tags).<br />
+    - The YUI button component (/yui/build/button/button.js) was loaded dynamically during the tab loading process.<br />
+    - The YUI button skin (/yui/build/button/assets/sam/button.css) was loaded dynamically during the tab loading process and injected into the current page style set.<br />
+    - The dynamic link buttons was created on the fly using an inline script inside the tab content.
+    - Path Correction for this content, which means that the resources in this content (js/css) was loaded usign relative path.</p>
+</div>
+
+<h3>Dynamic Box</h3>
+<div id="dynamicbox1">
+	<p>Default box content... blablabla... <a href="http://www.yahoo.com/"></a></p>
+</div>
+
+<script type="text/javascript">
+	var oLinkButton1 = new YAHOO.widget.Button("linkbutton1");
+	oLinkButton1.addClass ('tbutton');
+	var oLinkButton2 = new YAHOO.widget.Button("linkbutton2");
+	oLinkButton2.addClass ('tbutton');
+	var oLinkButton3 = new YAHOO.widget.Button("linkbutton3");
+	oLinkButton3.addClass ('tbutton');
+
+	var oLinkButton4 = new YAHOO.widget.Button({ type:"link", id:"linkbutton4", label:"Yahoo!", href:"http://www.yahoo.com", container:"linkbuttonsfromjavascript" });
+	oLinkButton4.addClass ('tbutton');
+	var oLinkButton5 = new YAHOO.widget.Button({ type:"link", id:"linkbutton5", label:"Yahoo!", href:"http://www.yahoo.com", container:"linkbuttonsfromjavascript" });
+	oLinkButton5.addClass ('tbutton');
+	var oLinkButton6 = new YAHOO.widget.Button({ type:"link", id:"linkbutton6", label:"Yahoo!", href:"http://www.yahoo.com", container:"linkbuttonsfromjavascript" });
+	oLinkButton6.addClass ('tbutton');
+</script>
+
+<h3>Dynamic Link Buttons (YUI Library)</h3>
+<div id="linkbuttonsfrommarkup">
+	<h2>From Markup</h2>
+	<span id="linkbutton1"><span class="first-child"><a href="http://www.yahoo.com/">Yahoo!</a></span></span>
+	<span id="linkbutton2"><span class="first-child"><a href="http://www.yahoo.com/">Yahoo!</a></span></span>
+	<span id="linkbutton3"><span class="first-child"><a href="http://www.yahoo.com/">Yahoo!</a></span></span>
+</div>
+<div id="linkbuttonsfromjavascript">
+	<h2>From JavaScript</h2>
+</div>
+
+
+
+<script>
+
+	var box = YAHOO.util.Dom.get ('dynamicbox1');
+	box.innerHTML = '<p>Dynamic box content... uhuhuhuh... <a href="../../../../../../../index.html"></a></p>';
+
+	alert ('Dynamic Script Execution: TAB "Remote Scripts" was executed successful...');
+
+</script>

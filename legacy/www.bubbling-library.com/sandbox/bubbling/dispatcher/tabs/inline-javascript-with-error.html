@@ -1,0 +1,31 @@
+<div>
+  <p>Dynamic content with JS Errors...</p>
+<script>
+/* undefined object and property */
+window._abcObj_._abcProperty = 1;
+</script>
+
+<script>
+/* defining globals variables */
+var abc1 = 1;
+YAHOO.example.abc2 = 2;
+window.abc3 = 3;
+/* no errors here... */
+var r = abc1 * YAHOO.example.abc2 * abc3;
+</script>
+
+<script>
+/* error: undefine variable abc1 */
+var r = abc1 * YAHOO.example.abc2 * abc3;
+</script>
+
+<script>
+/* IE array: undefine variable abc1 */
+var arr = [1,2,3,,7], i;
+var i, r = 0;
+/* you should remove the , after the last element */
+for (i=0;i<arr.length;i++) {
+	r = r * arr[i];
+}
+</script>
+

@@ -1,0 +1,75 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+<!-- Mirrored from www.bubbling-library.com/themes/bubbling/jscripts/yui-cms/examples/bubbling/behavior-actionprompt-anchor-button.html by HTTrack Website Copier/3.x [XR&CO'2010], Wed, 04 Apr 2012 15:56:36 GMT -->
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>Global Behaviors - Example of Bubbling technique</title>
+<meta name='author' content='Caridy Patino (caridy at gmail.com)' />
+<link rel="stylesheet" type="text/css" href="../assets/example.css">
+<!-- YUI Basement Style -->
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/button/assets/skins/sam/button.css">
+<!-- Dependency source files -->
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/utilities/utilities.js"></script>
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/button/button-min.js"></script>
+<script type="text/javascript" src='../../../../../../../js.bubbling-library.com/2.1/build/bubbling/bubbling.js'></script>
+<script type="text/javascript">
+    // defining the global behavior... (in this case a navigation behavior)
+    YAHOO.Bubbling.addDefaultAction('actionGlobalBahavior',
+	    function (layer, args) {
+	      alert ('Behavior {actionGlobalBahavior}');
+	      // arguments
+	      // args[1].target  - Target element
+	      // args[1].target  - Target element
+	      // reclaiming the event and stop the propagation
+	      return true;
+	    }
+	);
+
+    // this method is not important, his only function is the creation of the YUI buttons and the adition of the correct className to every button...
+	YAHOO.example.init = function () {
+		// "contentready" event handler for the "pushbuttonsfrommarkup" <fieldset>
+		YAHOO.util.Event.onContentReady("pushbuttonsfrommarkup", function () {
+			// Create Buttons using existing <input> elements as a data source
+			var oPushButton1 = new YAHOO.widget.Button("pushbutton1src", { id:"pushbutton1", className:'actionGlobalBahavior' });
+
+			// Create Buttons using the YUI Button markup
+			var oPushButton2 = new YAHOO.widget.Button("pushbutton2");
+		});
+
+		// Create Buttons without using existing markup
+		var oPushButton3 = new YAHOO.widget.Button({ id:"pushbutton3", className:'actionGlobalBahavior', label:"Button From JavaScript", container:"pushbuttonsfromjavascript" });
+	}();
+
+</script>
+</head>
+<body id="cms-body" class="yui-skin-sam">
+<div id="doc">
+
+	<div class="path">
+	  <a href="../../../../../../index.html" target="_top">Bubbling Library</a> &gt; <a href="../../../../../../eng/examples.html" target="_top">Examples</a>
+	</div>
+
+	<h1>Examples of Using the Bubbling Technique: Global Behaviors</h1>
+	<p>In this example you will see how to define a global behavior called &quot;actionGlobalBahavior&quot;, and every link or button in this page that has a className equal to &quot;actionGlobalBahavior&quot; will fire this behavior, even when the element is created from JavaScript or by another component in the page, even before or after the definition of the global behavior. </p>
+	<fieldset id="pushbuttonsfrommarkup">
+		<legend>From Markup</legend>
+
+		<a href="#" class="actionGlobalBahavior">Link with behavior</a>
+
+		<input type="button" id="pushbutton1src" name="button1" value="Button From Input">
+
+		<span id="pushbutton2" class="yui-button actionGlobalBahavior"><span class="first-child"><button type="button" name="button2">Button From YUI markup</button></span></span>
+
+	</fieldset>
+
+	<fieldset id="pushbuttonsfromjavascript">
+		<legend>From JavaScript</legend>
+		<a href="#">Link without behavior</a>
+	</fieldset>
+
+</div>
+<script type="text/javascript">var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));</script><script type="text/javascript">try { var pageTracker = _gat._getTracker("UA-2337646-1");pageTracker._trackPageview();} catch(err) {}</script></body>
+
+<!-- Mirrored from www.bubbling-library.com/themes/bubbling/jscripts/yui-cms/examples/bubbling/behavior-actionprompt-anchor-button.html by HTTrack Website Copier/3.x [XR&CO'2010], Wed, 04 Apr 2012 15:56:36 GMT -->
+</html>

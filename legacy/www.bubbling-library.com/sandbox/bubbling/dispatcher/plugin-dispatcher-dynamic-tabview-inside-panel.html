@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<title>Panel, TabView and Dispatcher Integration - Loading tabviews inside a YUI Panel</title>
+<meta name='author' content='Caridy Patino (caridy at gmail.com)' />
+<link rel="stylesheet" type="text/css" href="../assets/example.css">
+<!-- YUI Basement Style -->
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/tabview/assets/skins/sam/tabview.css">
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/container/assets/skins/sam/container.css" />
+<!-- YUI Library -->
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/utilities/utilities.js"></script>
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/tabview/tabview-min.js"></script>
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/container/container-min.js"></script>
+<!-- YUI-CMS Extension: Bubbling Library -->
+<script type="text/javascript" src="http://js.bubbling-library.com/2.1/build/dispatcher/dispatcher.js"></script>
+<style type="text/css">
+#demo {
+    width:40em; /* arbitrary width */
+}
+
+#demo .yui-content {
+    padding:1em;
+}
+
+#demo .loading {
+    background-image:url(../images/loading.gif);
+    background-position:center center;
+    background-repeat:no-repeat;
+}
+
+#demo .loading * {
+    display:none;
+}
+</style>
+<script type="text/javascript">
+YAHOO.example.tabview = function( container ) {
+    var tabView = new YAHOO.widget.TabView({id: 'demo'});
+
+	YAHOO.plugin.Dispatcher.delegate (new YAHOO.widget.Tab({
+	    label: 'Simple TabView',
+        dataSrc: 'tabs/xhtml.with.tabview.html',
+        cacheData: true,
+        active: true
+	  }),
+	  tabView,
+	  { before: function() {
+	      // before the loading...
+	    },
+	    onLoad: function() {
+	      // after the execution...
+	      var mySimpleTab = new YAHOO.widget.TabView('childtabview');
+	    }
+	  }
+	);
+
+    YAHOO.plugin.Dispatcher.delegate (new YAHOO.widget.Tab({
+    	label: 'Autonomous Tabview',
+        dataSrc: 'tabs/xhtml.with.autonomous.tabview.html',
+        cacheData: true
+    }), tabView);
+
+    tabView.appendTo(container);
+
+};
+
+function init() {
+	// Build overlay1 based on markup
+	YAHOO.example.overlay1 = new YAHOO.widget.Panel("overlay1", { visible:false, width: '550px' });
+	YAHOO.example.overlay1.setHeader('Overlay 1');
+	YAHOO.example.overlay1.setBody('');
+    YAHOO.example.overlay1.render(document.body);
+
+    YAHOO.util.Event.addListener("show1", "click", function() {
+        YAHOO.example.overlay1.show ();
+        YAHOO.example.tabview(YAHOO.example.overlay1.body);
+    });
+}
+
+YAHOO.util.Event.onDOMReady(init);
+
+</script>
+</head>
+<body id="cms-body" class="yui-skin-sam">
+<div id="doc">
+
+	<div class="path">
+	  <a href="http://www.bubbling-library.com/" target="_top">Bubbling Library</a> &gt; <a href="http://www.bubbling-library.com/eng/examples" target="_top">Examples</a>
+	</div>
+
+    <h1>Panel, TabView and Dispatcher Integration - Loading tabviews inside a YUI Panel</h1>
+    <p>This is an example of the DISPATCHER feature over the YUI tabview component, you can use the dispatcher to managing the "child tabview" inside each tab.</p>
+
+    <p>
+        Displaying the YUI Panel.
+        <br/>
+        <button id="show1">Show</button>
+    </p>
+
+<!-- THE EXAMPLE's CODE END HERE, FROM NOW ON IS JUST THE DOCUMENTATION //-->
+</div>
+</body>
+</html>

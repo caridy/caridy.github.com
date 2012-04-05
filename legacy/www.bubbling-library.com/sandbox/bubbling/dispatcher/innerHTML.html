@@ -1,0 +1,51 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+<!-- Mirrored from www.bubbling-library.com/sandbox/bubbling/dispatcher/innerHTML.html by HTTrack Website Copier/3.x [XR&CO'2010], Wed, 04 Apr 2012 15:59:14 GMT -->
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<title>Dispatcher Example - Dynamically Loading Content -  FULLPATH</title>
+<meta name='author' content='Caridy Patino (caridy at gmail.com)' />
+<link rel="stylesheet" type="text/css" href="../assets/example.css">
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/utilities/utilities.js"></script>
+<script type="text/javascript" src="../../../../js.bubbling-library.com/2.1/build/dispatcher/dispatcher.js"></script>
+<style type="text/css">
+#demo {
+    width:40em; /* arbitrary width */
+}
+.boxing {
+	float: left;
+	display: block;
+	border: 1px solid;
+	margin: 1%;
+	padding: 1%;
+}
+</style>
+<script type="text/javascript">
+function myLoading() {
+    YAHOO.plugin.Dispatcher.process( "boxwithinlinescript", "<div id='tst'>Sample text</div><script>document.getElementById('tst').innerHTML='New text';<\/script>" );
+};
+YAHOO.util.Event.onDOMReady(myLoading);
+</script>
+
+</head>
+<body id="cms-body" class="yui-skin-sam">
+<div id="doc">
+
+	<div class="path">
+	  <a href="../../../index.html" target="_top">Bubbling Library</a> &gt; <a href="../../../eng/examples.html" target="_top">Examples</a>
+	</div>
+
+    <h1>Dynamic content with inline scripts</h1>
+    <p>You can also use the dispatcher to execute inline JS code without using AJAX to load the content.</p>
+<div class="boxing">
+		<div id="boxwithinlinescript">
+			Old text
+	    </div>
+	</div>
+<!-- THE EXAMPLE's CODE END HERE, FROM NOW ON IS JUST THE DOCUMENTATION //-->
+</div>
+</body>
+
+<!-- Mirrored from www.bubbling-library.com/sandbox/bubbling/dispatcher/innerHTML.html by HTTrack Website Copier/3.x [XR&CO'2010], Wed, 04 Apr 2012 15:59:14 GMT -->
+</html>

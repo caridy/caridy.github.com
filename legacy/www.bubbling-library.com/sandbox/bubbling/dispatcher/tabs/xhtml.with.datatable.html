@@ -1,0 +1,46 @@
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/datatable/assets/skins/sam/datatable.css">
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/datasource/datasource-min.js"></script>
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/datatable/datatable-min.js"></script>
+<script type="text/javascript" src="./data.js"></script>
+<div>
+  <h3>Datatable: Dynamic Content with a datatable control inside</h3>
+  <div id="hd">
+  	<h4>Facts:</h4>
+	<p>
+		- The datatable.js and the datatsource.js were loaded by the dispacher and executed on the fly.<br />
+	  - The datatable.css was also loaded by the dispatcher using the CSS injection feature.
+	  <br />
+	- The destruction's rules will destroy the datatable on content's change.. </p>
+  </div>
+  <div id="bd">
+    <h4>DataTable Control:</h4>
+    <div id="basic" class="example"></div>
+    <script type="text/javascript">
+		var myColumnHeaders = [
+		    {key:"id", sortable:true, resizeable:true},
+		    {key:"quantity", type:"number", sortable:true, resizeable:true},
+		    {key:"amount", type:"currency", sortable:true, resizeable:true},
+		    {key:"title", type:"html", sortable:true, resizeable:true}
+		];
+
+		var myColumnSet = new YAHOO.widget.ColumnSet(myColumnHeaders);
+
+		var myDataSource = new YAHOO.util.DataSource(YAHOO.example.Data.bookorders);
+		myDataSource.responseType = YAHOO.util.DataSource.TYPE_JSARRAY;
+		myDataSource.responseSchema = {
+		    fields: ["id","quantity","amount","title"]
+		};
+		var myDataTable = new YAHOO.widget.DataTable("basic", myColumnSet, myDataSource,{caption:"Example: Basic Table"});
+
+		// setting the destruction's rules
+		YAHOO.plugin.Dispatcher.destroyer.subscribe (function(el, config){
+		    myDataTable.destroy ();
+		});
+
+    </script>
+  </div>
+  <div id="ft">
+  	<h4>Source code for datatable creation:</h4>
+	<pre>var myColumnHeaders = [<br />    {key:&quot;id&quot;, sortable:true, resizeable:true},<br />    {key:&quot;quantity&quot;, type:&quot;number&quot;, sortable:true, resizeable:true},<br />    {key:&quot;amount&quot;, type:&quot;currency&quot;, sortable:true, resizeable:true},<br />    {key:&quot;title&quot;, type:&quot;html&quot;, sortable:true, resizeable:true}<br />];<br />var myColumnSet = new YAHOO.widget.ColumnSet(myColumnHeaders);<br />var myDataSource = new YAHOO.util.DataSource(YAHOO.example.Data.bookorders);<br />myDataSource.responseType = YAHOO.util.DataSource.TYPE_JSARRAY;<br />myDataSource.responseSchema = {<br />    fields: [&quot;id&quot;,&quot;quantity&quot;,&quot;amount&quot;,&quot;title&quot;]<br />};<br />var myDataTable = new YAHOO.widget.DataTable(&quot;basic&quot;, myColumnSet, myDataSource,{caption:&quot;Example: Basic Table&quot;});<br />// setting the destruction's rules<br />YAHOO.plugin.Dispatcher.destroyer.subscribe (function(el, config){<br />    myDataTable.destroy ();<br />});</pre>
+  </div>
+</div>

@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<title>Bubbling Library (YUI Extension) - Tutorials - Dispatcher (YUI-CMS:YAHOO.plugin.Dispatcher)</title>
+<meta name='author' content='Caridy Patino (caridy at gmail.com)' />
+<!-- Reset and Fonts -->
+<link rel="stylesheet" type="text/css" href="../assets/example.css">
+</head>
+<body id="cms-body">
+<div id="doc">
+
+	<div class="path">
+	  <a href="http://www.bubbling-library.com/" target="_top">Bubbling Library</a> &gt; <a href="http://www.bubbling-library.com/eng/examples" target="_top">Examples</a>
+	</div>
+
+	<h1>Dispatcher (YAHOO.plugin.Dispatcher): Tutorials</h1>
+<br />
+	<h3><a href="framework/index.php">Dynamic Navigation Theory: Dispatcher + Bubbling Core Object = Dynamic Website</a></h3>
+	<p>
+	   See how the left menu loads the corresponding content in the central area of the page.<br />
+	</p>
+
+	<h3><a href="framework/advanced.php">Dynamic Navigation Theory: Dispatcher + Bubbling Core Object = Dynamic Website (<strong><em>ADVANCED</em></strong>)</a> - NEW</h3>
+	<p>
+	   This is a more advanced example. Learn how to include external components that will be loaded onDemand in the main area of the page.</p>
+
+	<h3><a href="framework/mask.php">Dynamic Navigation Theory: Loading Mask + Dispatcher + Bubbling Core Object = Dynamic Website (<strong><em>WITH LOADING MASK</em></strong>)</a> - NEW</h3>
+<p>
+	   The same example, but this time including a <a href="http://bubbling-library.com/eng/api/docs/widgets/loading-mask" target="_top">LOADING MASK</a> to block user actions during the loading process.    </p>
+
+	<h3><a href="navigation/tabview.html">TabView Example - Dynamically Loading Content - Emulating an IFrame within the tabs</a> - NEW</h3>
+	<p>
+	   Each tab controls the actions within its own area using <a href="http://bubbling-library.com/eng/api/docs/bubbling-core" target="_top">Bubbling Core</a>, and it loads the new content demand using dispatcher.    </p>
+
+       
+  <h3><a href="yui-panel-dynamic-contents.html">Dispatcher + YUI Panels: Loading the BODY using AJAX (content with script tags)</a></h3>
+
+	<p>The Dispatcher controls the loading process using the YUI Connection Manager, and it will display the response within the Panel's Body,  executing the remote and inline scripts.</p>
+
+   
+       
+  <h3><a href="plugin-dispatcher-dynamic-contents.html">Dispatcher Example - Dynamically loading content with script inside</a></h3>
+	<p>This is an example of the DISPATCHER feature over two DIV tags. You can use the dispatcher to manage the content inside each DIV. This feature will guarantee the execution of the scripts (remote and inline "script" tags) during the URI request.</p>
+
+	<h3><a href="plugin-dispatcher-dynamic-tabs.html">TabView and Dispatcher Example - Dynamically loading content with script inside</a></h3>
+	<p>This is an example of the DISPATCHER feature over the YUI tabview component, you can use the dispatcher to manage the content inside the tab. This feature will guarantee the execution of the scripts (remote and inline "script" tags) during the dataSrc request.</p>
+
+  <h3><a href="plugin-dispatcher-dynamic-tabview-inside-tabview.html">TabView and Dispatcher Example - Dynamically loading content with child tabview inside</a></h3>
+	<p>This is an example of the DISPATCHER feature over the YUI tabview component. You can use the dispatcher to manage the "child tabview" inside each tab.</p>
+
+	<h3><a href="plugin-dispatcher-dynamic-tabs-with-datatable-inside.html">TabView, Datatable and Dispatcher Example - Dynamically loading content with datatable inside</a></h3>
+	<p>This is an example of the DISPATCHER feature over the YUI tabview component. You can use the dispatcher to manage the content inside the tab, and include another YUI component (YUI Datatable) during the dataSrc request.</p>
+
+	<h3><a href="plugin-dispatcher-dynamic-tabs-with-accordion-inside.html">TabView, Accordion and Dispatcher Example - Dynamically loading content with accordion inside</a></h3>
+	<p>This is an example of the DISPATCHER feature over the YUI tabview component. You can use the dispatcher to manage the content inside the tab, and include another tabview with accordion layout.</p>
+
+	<h3><a href="plugin-dispatcher-reloading-tab.html">TabView and Dispatcher Example - Autoloading process to refresh tab every 30 sec</a></h3>
+  <p>This is an example of the DISPATCHER feature over the YUI tabview component.  If the first tab is active then the content will be reloaded every 30 seconds otherwise don&acute;t do nothing to prevent unnecessary traffic.</p>
+  <h3><a href="dispatcher-bhm.html">Dispatcher Plugin and YUI Browser History Manager</a></h3>
+    <p>The dispatcher plugin includes a built-in integration with the YUI Browser History Manager. Which means that you can use the extension with the tabview, layout and a simple DIV as well, and the dispatcher controls the actions in all these areas using the YUI BHM.</p>
+    
+  <h3><a href="passing-params.html">How to pass parameters thru the dispatcher</a></h3>
+	<p>In this example, you will see how to pass parameters in the initialization process, and then use these parameters in the different moments during the loading process.</p>
+
+	<h3><a href="ondestroy-utility.html">How to avoid memory leaks</a></h3>
+	<p>In this example, you can see how the first tab "Datatable Control"  defines the rules to destroy the YUI Datatable before changing the content  of the tab (which means that every time you click on the first tab, the  dispatcher will destroy the DataTable control, releasing the memory and  then will display the new content). Also, by default, the dispatcher  will release all the listeners defined for a dynamic area before  displaying the new content (YAHOO.util.Event.purgeElement).</p>
+
+	<h3><a href="innerHTML.html">Dynamic content with inline scripts</a></h3>
+	<p>You can also use the dispatcher to execute inline JS code without using AJAX to load the content.</p>
+
+  <h3><a href="injecting-css.html">CSS Injection Example</a></h3>
+	<p>Using the dispatcher plugin you will be able  to inject CSS rules on demand in your application. The rules can be  written in line or thru a remote file loaded thru AJAX using the YUI  connection manager.</p>
+
+	<h3><a href="fullpath.html">Dynamic content with remote scripts (FULLPATH)</a></h3>
+	<p>Defining the path for the remote assets using the fullpath.</p>
+
+  <h3><a href="customizing-inline-execution.html">Dispatcher Example - Customizing the script inline execution</a></h3>
+	<p> By default, dispatcher injects inline scripts using an script tag. If you want to pre-process the scripts and inject those scripts using eval or any other execution routine, you can re-define the evaluation routine (&quot;evalRoutine&quot;) for a certain dynamic area.</p>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<title>Dynamic ToolTips - Example of Bubbling technique</title>
+<meta name='author' content='Caridy Patino (caridy at gmail.com)' />
+<link rel="stylesheet" type="text/css" href="../assets/example.css">
+<!-- YUI Basement Style -->
+<link rel="stylesheet" type="text/css" href='http://yui.yahooapis.com/2.7.0/build/container/assets/container.css'/>
+<link rel="stylesheet" type="text/css" href='http://yui.yahooapis.com/2.7.0/build/button/assets/skins/sam/button.css'/>
+<style>
+.yui-cms-tt .yui-panel {
+	text-align: left;
+}
+    .yui-panel-container.yui-cms-tt.shadow .underlay {
+        top: 2px;
+        bottom: -2px;
+        right: -2px;
+        left: -2px;
+        padding-left: 4px;
+    }
+    .yui-cms-tt .yui-panel, .yui-cms-tt .yui-panel .bd {
+    	color:#333;
+    	background-color:#FDFFB4;
+    	border-color:#FCC90D;
+    }
+    .yui-cms-tt .yui-panel .hd {
+    	visible: hidden;
+    	display: none;
+    }
+</style>
+<script type="text/javascript" src='http://yui.yahooapis.com/2.7.0/build/utilities/utilities.js'></script>
+<script type="text/javascript" src='http://yui.yahooapis.com/2.7.0/build/container/container-min.js'></script>
+<script type="text/javascript" src='http://yui.yahooapis.com/2.7.0/build/button/button-min.js'></script>
+<script type="text/javascript" src='../../../../js.bubbling-library.com/2.1/build/bubbling/bubbling.js'></script>
+<script type="text/javascript" src='../../../../js.bubbling-library.com/2.1/build/tooltips/tooltips.js'></script>
+<script type="text/javascript">
+YAHOO.widget.TooltipManager.init();
+YAHOO.widget.TooltipManager.config ({
+	width: '250px'
+});
+YAHOO.util.Event.onContentReady('linkbutton1', function () {
+    // Create a Button without using existing markup
+    var oLinkButton1 = new YAHOO.widget.Button("linkbutton1");
+});
+</script>
+</head>
+<body id="cms-body" class="yui-skin-sam">
+
+  <div id="doc">
+
+	<div class="path">
+	  <a href="../../../index.html" target="_top">Bubbling Library</a> &gt; <a href="../../../eng/examples.html" target="_top">Examples</a>
+	</div>
+
+	<h2>Examples of Using the Bubbling Technique for ToolTips</h2>
+
+	<p>Include the corresponding behavior for Tooltips and a bunch of elements in your page will show a nice dynamic tooltip:</p>
+	<p>The most common technique for apply tooltips to the complete document is the use of &quot;getElementByTagName&quot;, processing each tag and creating one instance of the ToolTips object attached to each tag. This pre-processing can freeze your browser, and create memory leaks when you are using dynamic areas. With the bubbling technique we can guarantee the success without worry about dynamic areas. Also we don&acute;t need to refer a link directly using the tabName or an unique ID to create the corresponding tooltip object, decreasing the count of links with ID included inside the XHTML code. </p>
+    <p>This implementation has only an instance of the tooltip object for the document, decreasing the memory usage and rendering in realtime with each mouseover event.</p>
+
+    <h4>Facts:</h4>
+    <p>
+        All the elements with title and className equal to "yui-tip" will show a tooltip on rollover event.
+    </p>
+
+	<h4>Anchor Element:</h4>
+	<p>
+	   <a href="#" title="My text was set using the 'title' attribute inside the Anchor...">Anchor: Hover over me to see a Tooltip without URL!</a>
+	</p>
+
+	<h4>Span Element:</h4>
+	<p>
+	  <span title="Do You Yahoo?" class="yui-tip">SPAN: Hover over me to see a Tooltip!</span>
+	</p>
+
+	<h4>IMG Element:</h4>
+	<p>
+	  <img src="images/sitemap.gif" alt="Bookmark" class="yui-tip" title="Image with class name yui-tip...">
+	</p>
+
+	<h4>YUI Button:</h4>
+	<p>
+	  <span id="linkbutton1"><span class="first-child"><a href="http://developer.yahoo.com/yui/" title="YUI Official Website">YUI</a></span></span>
+	</p>
+
+	<h4>TextArea Form Element:</h4>
+	<p>
+	  <textarea type="textarea" title="Please, write your note in this textarea..." class="yui-tip">write your note here...</textarea>
+	</p>
+
+	<h4>Inputs Form Element:</h4>
+	<p>
+	  &nbsp; Username: <input type="text" title="Please, enter your username here..." class="yui-tip" value="username" /><br />
+	  &nbsp; Password: <input type="password" title="Please, enter your password here..." class="yui-tip" value="password"/><br />
+	  <input type="submit" title="Click here to login..." class="yui-tip" value="Ok" />
+	</p>
+
+	<h4>Extending the features:</h4>
+    <p>
+       Also you can redefine the "finder" method to determine if an element has a tooltip:
+<pre>
+YAHOO.widget.TooltipManager.finder = function ( el ) {
+  // this method will be executed every time the mouse go over a new element...
+  // el - represent the DOM reference..
+  return YAHOO.Bubbling.getOwnerByClassName( el, 'yui-my-tip' );
+};
+</pre>
+    </p>
+<!-- THE EXAMPLE's CODE END HERE, FROM NOW ON IS JUST THE DOCUMENTATION //-->  </div>
+</body>
+
+<!-- Mirrored from www.bubbling-library.com/sandbox/bubbling/tooltips/tooltips-other-elements.html by HTTrack Website Copier/3.x [XR&CO'2010], Wed, 04 Apr 2012 15:59:17 GMT -->
+</html>

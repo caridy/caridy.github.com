@@ -1,0 +1,44 @@
+<script type="text/javascript" src="http://js.bubbling-library.com/2.1/build/bubbling/bubbling.js"></script>
+<div>
+  <h3>Dynamic tab with an "action" within</h3>
+  <div id="hd">
+  	<h4>Facts:</h4>
+	<p>- The script tag will be executed when this tab is activated.<br />
+	  - The new "action" (actionONE) will be available before the new xhtml chunk become visible.<br />
+	  - One or more links can have the "action" (actionONE) attached.<br />
+	</p>
+  </div>
+  <div id="bd">
+    <h4>Static links with an action attached:</h4>
+    <div id="dynamic-content-with-script">
+		<br />
+		<a href="#" class="actionONE">1.  Static link</a><br>
+		<br />
+		<a href="#" class="actionONE">2.  Static link</a><br>
+		<br />
+		<a href="#" class="actionONE">3.  Static link</a><br>
+		<br />
+		<a href="#" class="actionONE">4.  Static link</a><br>
+		<br />
+		<a href="#" class="actionONE">5.  Static link</a><br>
+		<br />
+	</div>
+  </div>
+  <div id="ft">
+  </div>	
+</div>
+<script>
+// defininition of global behavior... (navigation behavior)
+YAHOO.Bubbling.addDefaultAction('actionONE',
+	function (layer, args) {
+	  alert ('Action ONE...');
+	  // arguments
+	  // args[1].target  - Target element
+	  // args[0]         - Event object
+	  // args[1].anchor  - if the target was an anchor (dom reference)
+	  // args[1].button  - if the target was a YUI button (dom reference or YUI button reference)
+	  // reclaiming the event and stop the propagation
+	  return true; // is equivalent to: args[1].decrepitate = true; args[1].stop = true;
+	}
+);
+</script>

@@ -1,0 +1,192 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+<!-- Mirrored from www.bubbling-library.com/sandbox/bubbling/bubbling/bubbling.html by HTTrack Website Copier/3.x [XR&CO'2010], Wed, 04 Apr 2012 15:59:03 GMT -->
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>Global Behaviors - Example of Bubbling technique</title>
+<meta name='author' content='Caridy Patino (caridy at gmail.com)' />
+<link rel="stylesheet" type="text/css" href="../assets/example.css">
+<!-- YUI Basement Style -->
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/button/assets/skins/sam/button.css">
+<!-- Dependency source files -->
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/utilities/utilities.js"></script>
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/button/button-min.js"></script>
+<script type="text/javascript" src='../../../../js.bubbling-library.com/2.1/build/bubbling/bubbling.js'></script>
+<script type="text/javascript">
+
+// defininition of global behavior... (navigation behavior)
+YAHOO.Bubbling.addDefaultAction('actionGlobalBahaviorONE',
+	function (layer, args) {
+	  alert ('Behavior ONE {actionGlobalBahaviorONE}');
+	  // arguments
+	  // args[1].target  - Target element
+	  // args[0]         - Event object
+	  // args[1].anchor  - if the target was an anchor (dom reference)
+	  // args[1].button  - if the target was a YUI button (dom reference or YUI button reference)
+	  // args[1].value   - 
+	  // args[1].input   -  
+	  // reclaiming the event and stop the propagation
+	  return true; // is equivalent to: args[1].flagged = true; args[1].stop = true;
+	}
+);
+
+// defining the global behavior ActiveBehaviorTWO... (navigation behavior)
+// The ActiveBehaviorTWO is a behavior that will define a new behavior "behavior two"
+YAHOO.Bubbling.addDefaultAction('actionActiveBehaviorTWO',
+	function (layer, args) {
+	    // defining the global behavior TWO... (navigation behavior)
+		YAHOO.Bubbling.addDefaultAction('actionGlobalBahaviorTWO', function (layer, args) {
+		  if (!args[1].flagged) {
+			  // nobody adopt this event yet...
+			  // do your stuff here...
+			  alert ('Behavior TWO {actionGlobalBahaviorTWO}');
+		  	  // reclaiming the event and stop the propagation
+			  return true; // is equivalent to: args[1].flagged = true; args[1].stop = true;
+		  } else {
+			  // the event was already adopted by another behavior
+		  }
+		});
+		// removing the link to avoid multiples subscription for the same behavior
+		YAHOO.util.Dom.get('generatingnewbehaviortwo').innerHTML = 'The behavior #2 is now available... Enjoy it!!!';
+		return true; // is equivalent to: args[1].flagged = true; args[1].stop = true;
+	}
+);
+
+// defining the global behavior ActiveBehaviorTHREE... (navigation behavior)
+// The ActiveBehaviorTHREE is a behavior that will define a new behavior "behavior three"
+YAHOO.Bubbling.addDefaultAction('actionActiveBehaviorTHREE',
+	function (layer, args) {
+	    // defining the global behavior THREE... : lowlevel definition
+		YAHOO.Bubbling.on('god', function (layer, args) {
+			alert ('Behavior #3: Processing...');
+			if (!args[1].flagged && (args[1].anchor || args[1].button)) {
+				// The target was an anchor or a button, and nobody have claim this event yet.
+				// here your stuff
+				alert ("Behavior #3: The target was an anchor or a button, and nobody have claim this event yet.");
+				// reclaiming the event
+			    args[1].flagged = true;
+				// stoping the event propagation
+			    args[1].stop = true;
+			}
+		});
+		// removing the link to avoid more subscription of the same behavior
+		YAHOO.util.Dom.get('generatingnewbehaviorthree').innerHTML = 'The behavior #3 is now available... Enjoy it!!!';
+		return true; // is equivalent to: args[1].flagged = true; args[1].stop = true;
+	}
+);
+
+function _creatingPanel2() {
+	// Create Buttons without using existing markup
+	// button3: push button with actionGlobalBehavior behavior linked
+	var oPushButton3 = new YAHOO.widget.Button({ label:"Button From JavaScript with BEHAVIOR #2", container:"pushbuttonsfromjavascript", className: 'actionGlobalBahaviorTWO' });
+	// button4: push button without behavior
+	var oPushButton4 = new YAHOO.widget.Button({ label:"Button From JavaScript without behavior", container:"pushbuttonsfromjavascript" });
+	// button5: push button without behavior
+	var oPushButton5 = new YAHOO.widget.Button({ label:"Button From JavaScript with BEHAVIOR #1", container:"pushbuttonsfromjavascript", className: 'actionGlobalBahaviorONE' });
+	// inserting HR element... separator
+	YAHOO.util.Dom.get("pushbuttonsfromjavascript").appendChild (document.createElement("hr"));
+}
+
+YAHOO.util.Event.onDOMReady (function(){
+	// this behavior will be ready only after onDOMReady to prevent the IE malfunction during the DOM expanding process
+	YAHOO.Bubbling.addDefaultAction('actionGenerateMore',
+		function (layer, args) {
+			// Create Buttons without using existing markup
+			_creatingPanel2();
+			return true; // is equivalent to: args[1].flagged = true; args[1].stop = true;
+		}
+	);
+});
+
+
+// this method is not important, his only function is the creation of the YUI buttons and the adition of the correct className for each button...
+YAHOO.example.init = function () {
+	// "contentready" event handler for the "pushbuttonsfrommarkup" <fieldset>
+	YAHOO.util.Event.onContentReady("pushbuttonsfrommarkup", function () {
+		// Create Buttons using existing <input> elements as a data source
+		var oPushButton1 = new YAHOO.widget.Button("pushbutton1src", { id:"pushbutton1", className: 'actionGlobalBahaviorONE' });
+		// Create Buttons using the YUI Button markup
+		var oPushButton2 = new YAHOO.widget.Button("pushbutton2");
+		var oPushButton10 = new YAHOO.widget.Button("pushbutton10src", { id:"pushbutton10src", className: 'actionGlobalBahaviorONE' });
+	});
+}();
+
+</script>
+</head>
+<body id="cms-body" class="yui-skin-sam">
+<div id="doc">
+
+	<div class="path">
+	  <a href="../../../index.html" target="_top">Bubbling Library</a> &gt; <a href="../../../eng/examples.html" target="_top">Examples</a>
+	</div>
+
+	<h1>Examples of Using the Bubbling Technique: Global Behaviors</h1>
+	<p>In this example you will see how to define global behaviors for anchors and buttons.</p>
+	<p><strong>Facts: </strong></p>
+	<ul class="listing">
+       <li> Zero or more elements can fire the same behavior (DOM's elements &quot;anchor&quot; or &quot;buttons&quot; with the same classname) (<em> see the panel 1 </em>)</li>
+       <li>The position of the elements inside the DOM is not important, neither the moment when a certain element is added to the DOM, once the element is available the behavior will be available too ( <em>see the panel 2</em> ).</li>
+	   <li> If a certain behavior is not available or is undefined, the event will pass thru the DOM's elements even when the target element has the classname applied ( <em>see the panel 3</em> ).</li>
+	   <li>	     If a certain DOM element has more than one behavior (classname applied), all the behaviors will be audited using the definition priority (inclusion order), but as soon as one of the behaviors reclaim the event, the others will be notified and can decide if the event will pass thru or will be reclaimed as a secondary behavior ( <em>see panel 4</em> )</li>
+	   <li>As you can see in the source, in this page we don't use addListener, or any other event definition utility, we are using the event bubbling technique to catch each event in the top level (document.body) in the DOM.</li>
+	</ul>
+
+	<fieldset id="pushbuttonsfrommarkup">
+	   <legend><strong>Panel 1: Static elements</strong></legend>
+	   <a href="#" class="actionGlobalBahaviorONE">Link with behavior</a>
+       <input type="button" id="pushbutton1src" name="button1" value="Button From Input with Behavior">
+  </fieldset>
+
+	<fieldset>
+		<legend><strong>Panel 2: Dynamic elements</strong></legend>
+		<p>Note: <a href="#" class="actionGenerateMore">Click here</a> to generate a set of elements dynamically.</p>
+		<div id="pushbuttonsfromjavascript"></div>
+		<p>-
+        Remember that the <strong>BEHAVIOR TWO </strong>can be activated in the panel 3.<br>
+        -
+        Keep in mind that non of this buttons have an addlistener, neither an ID or a reference, keeping the memory as low as posible. </p>
+		<p>See the code below:</p>
+		<pre>// button3: push button with actionGlobalBehaviorTWO behavior linked<br>var oPushButton3 = new YAHOO.widget.Button({ label:&quot;Button From JavaScript with <strong>BEHAVIOR #2</strong>&quot;, container:&quot;pushbuttonsfromjavascript&quot;, className:&quot;actionGlobalBahaviorTWO&quot; });
+// button4: push button without behavior<br>var oPushButton4 = new YAHOO.widget.Button({ label:&quot;Button From JavaScript without behavior&quot;, container:&quot;pushbuttonsfromjavascript&quot; });
+<br>// button5: push button with actionGlobalBehaviorONE behavior linked<br>var oPushButton5 = new YAHOO.widget.Button({ label:&quot;Button From JavaScript with <strong>BEHAVIOR #1</strong>&quot;, container:&quot;pushbuttonsfromjavascript&quot;, className:&quot;actionGlobalBahaviorONE&quot; });</pre>
+	    <p>The vars oPushButton3, oPushButton4 and oPushButton5 are locally, and will be freezed as soom as the function execution finish.
+		And note that the <strong><em>&quot;class&quot;
+		is used as a wrapper</em></strong> to a certain behavior.</p>
+	</fieldset>
+
+
+  <fieldset>
+		<legend><strong>Panel 3: Dynamic behaviors</strong></legend>
+	  <p id="generatingnewbehaviortwo">Note: <a href="#" class="actionActiveBehaviorTWO">Click here</a> to generate a define dynamically a new behavior &quot;<strong>BEHAVIOR #2</strong>&quot;.</p>
+	  <pre>YAHOO.Bubbling.addDefaultAction('actionGlobalBahaviorTWO', function (layer, args) {<br>    if (!args[1].flagged) {<br>        // the behavior have not be adopted yet...<br>        // do your stuff here...<br>        alert ('Behavior TWO {actionGlobalBahaviorTWO}');<br>        // reclaiming the behavior<br>        return true; // is equivalent to: args[1].flagged = true; args[1].stop = true;<br>    } else {<br>        // the event was already adopted by another behavior<br>    }<br>});</pre>
+  </fieldset>
+
+	<fieldset>
+	    <legend><strong>Panel 4: Mutiples behaviors</strong></legend>
+	    <p><a href="#" class="actionGlobalBahaviorONE actionGlobalBahaviorTWO">Link with behavior ONE and TWO</a>
+	        <input type="button" id="pushbutton10src" name="button10" value="Button with Behaviors ONE and TWO">
+    </p>
+	    <p>- Even when the behavior #2 is available, will not be fired when you click on this buttons, because the behavior #1 claim the event first. <br>
+	      - Nevertheless, you can avoid this restriction. <br>
+	      -
+        Remember that the <strong>BEHAVIOR TWO </strong>can be activated in the panel 3.</p>
+	    <p>	      Each behavior can know if a certain event was adopted by another behavior or not. The example code below represent a variation of the Behavior #2, in this case the behavior #2 will be triggered even if the event was adopted by another behavior.</p>
+	    <pre>YAHOO.Bubbling.addDefaultAction('actionGlobalBahaviorTWO', function (layer, args) {<br>      // don't worry if the the behavior was already adopted by another behavior...<br>      // do your stuff here... anyway<br>      alert ('Behavior TWO {actionGlobalBahaviorTWO}');<br>      // reclaiming the behavior<br>     return true; // this is only necesary if you want to reclaim this event<br>});</pre>
+	</fieldset>
+
+	<fieldset>
+	    <legend>Panel 5: Lowlevel behavior definition</legend>
+	  <p id="generatingnewbehaviorthree">Note: <a href="#" class="actionActiveBehaviorTHREE">Click here</a> to define a low level behavior (&quot;<strong>BEHAVIOR #3</strong>&quot;).</p>
+	  <p>- When the behavior #3 becomes available, all the events on anchors, inputs and buttons will be catches by this behavior if nobody has claimed this event before. <br>
+	  - See what happen when you click in buttons without behaviors. <br>
+	  - If the behavior #3 becomes available before the behavior #2, you will see what happen when you click in buttons with the behavior two. </p>
+	  <p>See the code below:</p>
+	  <pre>YAHOO.Bubbling.on('god', function (layer, args) {<br>    alert ('Behavior #3: Processing...'); // this message will be displayed everytime you click...<br>    if (!args[1].flagged &amp;&amp; (args[1].anchor || args[1].button)) {<br>        // The target was an anchor or a button, and nobody have claim this event yet.<br>        // here your stuff<br>        alert (&quot;Behavior #3: The target was an anchor or a button, and nobody have claim this event yet.&quot;);<br>        // reclaiming the event<br>        args[1].flagged = true;<br>    }<br>});</pre>
+	</fieldset>
+
+</div>
+</body>
+
+<!-- Mirrored from www.bubbling-library.com/sandbox/bubbling/bubbling/bubbling.html by HTTrack Website Copier/3.x [XR&CO'2010], Wed, 04 Apr 2012 15:59:03 GMT -->
+</html>

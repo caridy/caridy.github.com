@@ -1,0 +1,25 @@
+<div>
+  <h3>Area #2: Passing thru the execution's scope (this)</h3>
+  <div id="hd">
+  	<h4>Dispatcher Initialization: </h4>
+  	<pre>YAHOO.plugin.Dispatcher.fetch ('myCustomPort2', 'tabs/getting-params2.html', <br />  // configuration object<br />  {<br />	onLoad: function(area) {<br />	   myRemoteMethod2.apply(this, []);<br />	},<br />	foo: 'param1',<br />	boo: 'param2',<br />	obj: {tee:1, loo: 2}<br />  }<br />);</pre>
+  </div>
+  <div id="bd">
+    <h4>Source Code:</h4>
+    <pre>// using the window.myFunction you can force to define a global function, avoid it...<br />// instead you can use the yahoo namespace, for example (YAHOO.example.myFunction)<br />window.myRemoteMethod2 = function() {<br />    console.log ('Function: myRemoteMethod2');<br />    console.log ('Scope: ', this);<br />    // in this case the method will be executed under the same scope of the after method,<br />    // allowing you to access to the configuration object<br />    alert (this.foo);<br />    alert (this.boo);<br />}</pre>
+  </div>
+  <div id="ft">
+  </div>
+</div>
+<script>
+	// using the window.myFunction you can force to define a global function, avoid it...
+	// instead you can use the yahoo namespace, for example (YAHOO.example.myFunction)
+	window.myRemoteMethod2 = function() {
+		// console.log ('Function: myRemoteMethod2');
+		// console.log ('Scope: ', this);
+		// in this case the method will be executed under the same scope of the after method,
+		// allowing you to access to the configuration object
+		alert (this.foo);
+		alert (this.boo);
+	}
+</script>

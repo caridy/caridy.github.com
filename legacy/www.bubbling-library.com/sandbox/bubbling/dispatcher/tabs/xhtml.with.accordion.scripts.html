@@ -1,0 +1,144 @@
+<link rel="stylesheet" type="text/css" href="../assets/accordion.css">
+<style>
+#accordiontabs {
+    margin: 0;
+}
+
+#accordiontabs .yui-content {
+    border:1px solid #ccc;
+    border-top: none;
+    padding: 0 1em;
+    overflow: hidden;
+    color: #999;
+}
+
+#accordiontabs .yui-content div {
+    height: 10em;
+    width: 100%;
+}
+
+#accordiontabs h3 {
+    border-bottom: 1px dashed #ccc;
+    padding: .25em;
+    margin-bottom: .25em;
+    font-weight: bold;
+    color: #18397C;
+}
+
+#accordiontabs li {
+    padding: 0;
+    margin: 0;
+    text-align: left;
+}
+
+#accordiontabs li.selected {
+    font-weight: bold;
+}
+
+#accordiontabs li a {
+    background: transparent url(graphics/tabs_back.gif) repeat scroll 0 -22pt;
+    text-decoration: none;
+    color: #18397C;
+    padding: 3px;
+    display: block;
+    border: 1px solid #ccc;
+    font-size: 80%;
+}
+
+#accordiontabs li.selected a {
+    background: transparent url(graphics/tabs_back.gif) repeat scroll 0pt -133pt;
+    color: #CC6633;
+}
+
+#accordiontabs li a:hover {
+    text-decoration: underline;
+    color: #18397C;
+}
+
+#accordiontabs em {
+    padding: .25em;
+}
+
+#accordiontabs li div {
+    overflow: hidden;
+    color: #999;
+    border-right: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    font-weight: normal;
+    padding: 0 1em;
+    font-size: 100%;
+}
+</style>
+<div>
+	<p>Dynamic tab with an accordion control within...</p>
+	<p>Original example by Dav Glass (http://blog.davglass.com/files/yui/class/f2e/example3/solution2.php)</p>
+	<p><strong>Facts in this example:</strong><br />
+	- This tab's content have autonomy (the script inside the content prepare the accordion control).<br />
+	- The dispatcher execute the script block (initialization:YAHOO.example.dispatcherAccordion).<br />
+	</p>
+	<div id="accordiontabs" class="yui-navset">
+        <ul class="yui-nav">
+            <li id="nav1"><a href="#"><em>Mail</em></a></li>
+            <li id="nav2"><a href="#"><em>Addresses</em></a></li>
+            <li id="nav3"><a href="#"><em>News</em></a></li>
+            <li id="nav4"><a href="#"><em>Sports</em></a></li>
+            <li id="nav5" class="selected"><a href="#"><em>Weather</em></a></li>
+        </ul>
+        <div class="yui-content">
+            <div id="nav1_tab" style="display: none;">
+                <h3>Mail</h3>
+                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas sit amet metus. Nunc quam elit, posuere nec, auctor in, rhoncus quis, dui. Aliquam erat volutpat. Ut dignissim, massa sit amet dignissim cursus, quam lacus feugiat.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas sit amet metus. Nunc quam elit, posuere nec, auctor in, rhoncus quis, dui. </p>
+            </div>
+            <div id="nav2_tab" style="display: none;">
+                <h3>Addresses</h3>
+                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas sit amet metus. Nunc quam elit, posuere nec, auctor in, rhoncus quis, dui. Aliquam erat volutpat. Ut dignissim, massa sit amet dignissim cursus, quam lacus feugiat.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas sit amet metus. Nunc quam elit, posuere nec, auctor in, rhoncus quis, dui. </p>
+            </div>
+
+            <div id="nav3_tab" style="display: none;">
+                <h3>News</h3>
+                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas sit amet metus. Nunc quam elit, posuere nec, auctor in, rhoncus quis, dui. Aliquam erat volutpat. Ut dignissim, massa sit amet dignissim cursus, quam lacus feugiat.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas sit amet metus. Nunc quam elit, posuere nec, auctor in, rhoncus quis, dui. </p>
+            </div>
+            <div id="nav4_tab" style="display: none;">
+                <h3>Sports</h3>
+                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas sit amet metus. Nunc quam elit, posuere nec, auctor in, rhoncus quis, dui. Aliquam erat volutpat. Ut dignissim, massa sit amet dignissim cursus, quam lacus feugiat.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas sit amet metus. Nunc quam elit, posuere nec, auctor in, rhoncus quis, dui. </p>
+            </div>
+            <div id="nav5_tab">
+                <h3>Weather</h3>
+                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas sit amet metus. Nunc quam elit, posuere nec, auctor in, rhoncus quis, dui. Aliquam erat volutpat. Ut dignissim, massa sit amet dignissim cursus, quam lacus feugiat.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas sit amet metus. Nunc quam elit, posuere nec, auctor in, rhoncus quis, dui. </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+YAHOO.example.dispatcherAccordion = function() {
+var myTabs = new YAHOO.widget.TabView('accordiontabs');
+    myTabs.contentTransition = function(newTab, oldTab) {
+        if ( newTab.anim && newTab.anim.isAnimated() ) {
+            newTab.anim.stop(true);
+        }
+
+        var newTabCont = YAHOO.util.Dom.get(newTab.get('id') + '_tab');
+        if (newTabCont.parentNode != newTab.get('parentNode')) {
+            newTabCont.parentNode.removeChild(newTabCont);
+            newTab.appendChild(newTabCont);
+        }
+
+        YAHOO.util.Dom.setStyle(newTab.get('contentEl'), 'height', 0);
+        newTab.set('contentVisible', true);
+        newTab.anim = newTab.anim || new YAHOO.util.Anim( newTab.get('contentEl') );
+        newTab.anim.attributes.height = { from: 0, to: 10, unit: 'em' };
+        var hideContent = function() {
+            oldTab.set('contentVisible', false);
+            oldTab.anim.onComplete.unsubscribe(hideContent);
+        };
+        oldTab.anim = oldTab.anim || new YAHOO.util.Anim( oldTab.get('contentEl') );
+        oldTab.anim.onComplete.subscribe(hideContent, this, true);
+        oldTab.anim.attributes.height = { to: 0, from: 10, unit: 'em' };
+        oldTab.anim.animate();
+        newTab.anim.animate();
+    };
+}();
+
+</script>

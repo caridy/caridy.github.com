@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>Multiple Actions - Example of Bubbling technique</title>
+<meta name='author' content='Caridy Patino (caridy at gmail.com)' />
+<link rel="stylesheet" type="text/css" href="../assets/example.css">
+<!-- YUI Basement Style -->
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/button/assets/skins/sam/button.css">
+<!-- Dependency source files -->
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/utilities/utilities.js"></script>
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/button/button-min.js"></script>
+
+<script type="text/javascript" src="http://js.bubbling-library.com/2.1/build/bubbling/bubbling.js"></script>
+
+
+<script type="text/javascript">
+var myMultipleActions = {
+	'actionGlobalBehaviorONE': function (layer, args) {
+		  alert ('Behavior ONE {actionGlobalBehaviorONE}');
+		  // arguments
+		  // args[1].target  - Target element
+		  // args[0]         - Event object
+		  // args[1].anchor  - if the target was an anchor (dom reference)
+		  // args[1].button  - if the target was a YUI button (dom reference or YUI button reference)
+		  // args[1].value   - 
+		  // args[1].input   -  
+		  
+		  // stop the propagation (the parent node will not receive the event)
+		  args[1].stop = true;
+	},
+	'actionGlobalBehaviorTWO': function (layer, args) {
+		  alert ('Behavior Two {actionGlobalBehaviorTWO}');
+		  // arguments
+		  // args[1].target  - Target element
+		  // args[0]         - Event object
+		  // args[1].anchor  - if the target was an anchor (dom reference)
+		  // args[1].button  - if the target was a YUI button (dom reference or YUI button reference)
+		  // args[1].value   - 
+		  // args[1].input 
+		  
+		  // invisible behavior (this one doesn't stop or flag the event);
+	},
+	'actionAnotherBehavior': function (layer, args) {
+		  alert ('Another Behavior {actionAnotherBehavior}');
+		  // arguments
+		  // args[1].target  - Target element
+		  // args[0]         - Event object
+		  // args[1].anchor  - if the target was an anchor (dom reference)
+		  // args[1].button  - if the target was a YUI button (dom reference or YUI button reference)
+		  // args[1].value   - 
+		  // args[1].input   -  
+		  
+		  // reclaiming the event and stop the propagation
+		  args[1].flagged = true; 
+		  args[1].stop = true;
+	}
+};
+
+YAHOO.Bubbling.on('navigate', function (layer, args) {
+	  var behaviors, i, t;
+	  if (!(args[1].flagged)) {
+	  	  // checking for anchor, input or button
+		  t = args[1].anchor || args[1].button || args[1].input || args[1].select;
+		  if (t) {
+			behaviors = YAHOO.Bubbling.getAllActions ( t, myMultipleActions );
+			args[1].el = t;
+		  }
+		  // executing the actions
+		  for (i = 0; i < behaviors.length; ++i) {
+		    if (!args[1].flagged) {
+				myMultipleActions[behaviors[i]].apply(args[1], [layer, args]);
+		 	}
+		  }
+		  // stopping the event if needed 
+		  if (args[1].stop) {
+			 YAHOO.util.Event.stopEvent(args[0]);
+		  }
+	  }
+});
+
+</script>
+</head>
+<body id="cms-body" class="yui-skin-sam">
+<div id="doc">
+
+	<div class="path">
+	  <a href="http://www.bubbling-library.com/" target="_top">Bubbling Library</a> &gt; <a href="http://www.bubbling-library.com/eng/examples" target="_top">Examples</a>
+	</div>
+
+	<h1>Examples of Using the Bubbling Technique: Mulitple Behaviors</h1>
+	<p>In this example you will see how to define multiple behaviors for anchors, inputs and buttons.</p>
+	
+    <p><a href="http://bubbling-library.com/eng/examples" class="actionGlobalBehaviorONE actionAnotherBehavior">Link with behaviors: actionGlobalBehaviorONE actionAnotherBehavior</a><br>
+    Two actions in a row, the last one stop the propagation.</p>
+    
+    <p><a href="http://bubbling-library.com/eng/examples" class="actionGlobalBehaviorONE actionGlobalBehaviorTWO actionAnotherBehavior">Link with behaviors: actionGlobalBehaviorONE actionGlobalBehaviorTWO actionAnotherBehavior</a><br>
+    Three actions in a row, the last one stop the propagation.</p>
+    
+  <p><a href="http://bubbling-library.com/eng/examples" class="actionGlobalBehaviorTWO">Link with behaviors: actionGlobalBehaviorTWO</a><br>
+  This link will alert action TWO and <span style="color: red;">will navigate to an external page</span>, because the action doesn't stop the propagation.</p>
+    
+    <p><a href="http://bubbling-library.com/eng/examples" class="actionAnotherBehavior actionGlobalBehaviorTWO">Link with behaviors: actionAnotherBehavior actionGlobalBehaviorTWO</a><br>
+   The order of the classes in the DOM element does not affect the execution. The action will be executed in the order defined in the &quot;Action List&quot; (myMultipleActions)</p>
+
+</div>
+</body>
+</html>

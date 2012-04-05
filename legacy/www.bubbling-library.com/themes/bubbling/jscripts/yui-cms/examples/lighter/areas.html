@@ -1,0 +1,145 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+<!-- Mirrored from www.bubbling-library.com/themes/bubbling/jscripts/yui-cms/examples/lighter/areas.html by HTTrack Website Copier/3.x [XR&CO'2010], Wed, 04 Apr 2012 15:56:51 GMT -->
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<title>Bubbling Library (YUI Extension) - Plugin Lighter - Example - Management your areas (YAHOO-CMS:  YAHOO.plugin.Lighter)</title>
+<meta name='author' content='Caridy Patino (caridy at gmail.com)' />
+<link rel="stylesheet" type="text/css" href="../assets/example.css">
+<style type="text/css">
+.boxing {
+	float: left;
+	display: block;
+	border: 1px solid;
+	margin: 1%;
+	padding: 1%;
+}
+
+.area-horizontal {
+  clear: both;
+  display: block;
+  text-align: right;
+}
+    .area-horizontal .yui-cms-background {
+        width: 500px;
+        height: 150px;
+        background-color:#ededed;
+        background-repeat: no-repeat;
+        background-image: url(images/bg.gif);
+    }
+    .area-horizontal ul li {
+    	padding: 5px;
+    	margin: 5px;
+    	border: 1px solid #cccccc;
+    	float: right;
+    	clear: both;
+    	list-style-type: none;
+    }
+    .area-horizontal.yui-cms-selector.selected .yui-cms-item.selected {
+    	border: 1px solid #333333;
+    	background-color: #cccccc;
+    }
+.area-vertical ul li {
+	float: left;
+	padding: 5px;
+	margin: 5px;
+	border: 1px solid #cccccc;
+	list-style-type: none;
+}
+    .area-vertical .yui-cms-background {
+        clear: both;
+        width: 500px;
+        height: 150px;
+        background-color:#ededed;
+        background-repeat: no-repeat;
+        background-image: url(images/bg.gif);
+    }
+    .area-vertical.yui-cms-selector.selected .yui-cms-item.selected {
+    	font-weight: bold;
+    	color: #ff0000;
+    	border: 1px solid #ffffff;
+    }
+        .area-vertical.yui-cms-selector.selected .yui-cms-item.selected a {
+        	color: #ff0000;
+        }
+</style>
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/utilities/utilities.js"></script>
+<script type="text/javascript" src="../../../../../../../js.bubbling-library.com/2.1/build/bubbling/bubbling.js"></script>
+<script type="text/javascript" src="../../../../../../../js.bubbling-library.com/2.1/build/lighter/lighter.js"></script>
+<script type="text/javascript">
+(function() {
+
+  var showBackground = function (el, area) {
+	    // finding if the yui-cms-selector element has a child with class yui-cms-background
+	    var s = YAHOO.util.Dom.getElementsByClassName( 'yui-cms-background', '*', area );
+	    // searching for the selected item in the collection to set the correct background.
+	    var items = YAHOO.util.Dom.getElementsByClassName( 'yui-cms-item', '*', area );
+	    if ((s.length > 0) && (items.length > 0) && (s = s[0])) {
+	       for (var i = 0; i < items.length; i++) {
+	           if (items[i] === el) {
+        	        YAHOO.util.Dom.setStyle ( s, 'background-image', 'url(images/bg'+i+'.gif)');
+	           }
+	       }
+	    }
+  };
+  var resetBackground = function (area) {
+	    // finding if the yui-cms-selector element has a child with class yui-cms-background
+	    var s = YAHOO.util.Dom.getElementsByClassName( 'yui-cms-background', '*', area );
+	    if ((s.length > 0) && (s = s[0])) {
+	       // resetting the default background image.
+	       YAHOO.util.Dom.setStyle ( s, 'background-image', 'url(images/bg.gif)');
+	    }
+  };
+
+   YAHOO.plugin.Lighter.add( 'area-vertical', {
+    persistent: false, // false if you don't want to keep an item selected when the mouse go out of the area
+	onReset: resetBackground,
+	onSelect: showBackground
+  });
+   YAHOO.plugin.Lighter.add( 'area-horizontal', {
+    persistent: true, // true if you want to keep an item selected even when the mouse go out of the area
+	onSelect: showBackground
+  });
+}());
+</script>
+</head>
+<body id="cms-body">
+<div id="doc">
+
+	<div class="path">
+	  <a href="../../../../../../index.html" target="_top">Bubbling Library</a> &gt; <a href="../../../../../../eng/examples.html" target="_top">Examples</a>
+	</div>
+
+  <h1>Plugin Lighter - Example - Management your areas (YAHOO.plugin.Lighter)</h1>
+  <p>The important moments can offer a gateway for load or modify certain elements.</p>
+  <div class="boxing">
+	<div class="area-vertical yui-cms-selector">
+    	<ul>
+    		<li class='yui-cms-item'><a href='#'  title="" >Option #1</a></li>
+    		<li class='yui-cms-item'><a href='#'  title="" >Option #2</a></li>
+    		<li class='yui-cms-item'><a href='#'  title="" >Option #3</a></li>
+    	</ul>
+	  <div class="yui-cms-background">
+	     &nbsp;
+      </div>
+    </div>
+  </div>
+
+  <div class="boxing">
+	<div class="area-horizontal yui-cms-selector">
+	  <div class="yui-cms-background">
+    	<ul>
+    		<li class='yui-cms-item'><a href='#'  title="" >Option #1</a></li>
+    		<li class='yui-cms-item'><a href='#'  title="" >Option #2</a></li>
+    		<li class='yui-cms-item'><a href='#'  title="" >Option #3</a></li>
+    	</ul>
+      </div>
+    </div>
+  </div>
+<!-- THE EXAMPLE's CODE END HERE, FROM NOW ON IS JUST THE DOCUMENTATION //-->
+</div>
+<script type="text/javascript">var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));</script><script type="text/javascript">try { var pageTracker = _gat._getTracker("UA-2337646-1");pageTracker._trackPageview();} catch(err) {}</script></body>
+
+<!-- Mirrored from www.bubbling-library.com/themes/bubbling/jscripts/yui-cms/examples/lighter/areas.html by HTTrack Website Copier/3.x [XR&CO'2010], Wed, 04 Apr 2012 15:56:52 GMT -->
+</html>

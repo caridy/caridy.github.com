@@ -1,0 +1,304 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<!-- Mirrored from www.bubbling-library.com/sandbox/bubbling/index.html by HTTrack Website Copier/3.x [XR&CO'2010], Wed, 04 Apr 2012 15:57:54 GMT -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Bubbling Library (YUI Extension) - Index of Official Examples</title>
+<link rel="stylesheet" type="text/css" href='assets/example.css'/>
+</head>
+<body>
+<h1 class="firstContent">Bubbling Library (YUI Extension): Index of Official Examples</h1>
+<p>Every control and plugin of the bubbling library ships with a series of examples that illustrate its implementation. These examples can serve as starting points for your exploration of the <a href="../../index.html">Bubbling Library</a>, as code snippets to get you started in your own programming. <em>Some of these examples use XHR request, which means that may not work if you don't use a webserver, <a href="../../eng/examples.html">you can see these examples directly in the official website</a>. </em></p>
+<p>Also, you can navigate through the <a href="../../eng/api/docs.html">API documentation</a> in the official library website, and you will be able to explore these examples component-by-component; on this page you'll find the full index of library examples with a link to and short description of each one.</p>
+<h1>Core</h1>
+<h3>Bubbling Core <code>YAHOO.Bubbling</code> </h3>
+<table class='examplesTable'>
+  <tbody>
+    <tr class='odd'>
+      <td class='title'><a href="bubbling/behavior-actionprompt-bubbling.html">Examples of Using the Bubbling Technique: Simple Actions</a><a target="blank" href="bubbling/behavior-actionprompt-bubbling.html"></a></td>
+      <td class='description'>Untied your XHTML code from the javascript listeners, no more addListener in your code. Just define the class of each link, and the corresponding behavior for each link&acute;s class.</td>
+    </tr>
+    <tr class='even'>
+      <td class='title'><a href="bubbling/behavior-actionprompt-anchor-button.html">How to define a global behavior using the Bubbling Technique: Global Behaviors</a><a target="blank" href="bubbling/behavior-actionprompt-anchor-button.html"></a></td>
+      <td class='description'>In this example you will see how to define a global behavior called &quot;actionGlobalBahavior&quot;, and every link or button in this page that have a className equal to &quot;actionGlobalBahavior&quot; will fire this behavior, even when the element is created form JavaScript or by another component in the page, even before or after the definition of the global behavior</td>
+    </tr>
+    <tr class='odd'>
+      <td class='title'><a target="blank" href="bubbling/bubbling.html">Global Behaviors Definition: See this advanced example to learn more about the global behaviors</a></td>
+      <td class='description'>In this example you  will see a full explanation, step by step, of the possibilities of this  technique, including dynamic behaviors (behaviors can be activated onDemand).</td>
+    </tr>
+    <tr class='even'>
+      <td class='title'><a target="blank" href="bubbling/behavior-shortcuts-anchor-button.html">How to define keyboard shortcuts using the Bubbling Technique: Behaviors' shortcuts</a></td>
+      <td class='description'>In this example you will see how to define keyboard shortcuts that will fire a certain behaviors.</td>
+    </tr>
+    <tr class='odd'>
+      <td class='title'><a target="blank" href="bubbling/behavior-dynamic-focus-bubbling.html">Bubbling Technique: actionSetFocus</a></td>
+      <td class='description'>Define links to set the focus in each field in a form.</td>
+    </tr>
+    <tr class='even'>
+      <td class='title'><a target="blank" href="bubbling/topnavwithshotcuts.html">Defining keyboard shorcuts for YUI Menus </a></td>
+      <td class='description'>In this example you will see how to add keyboard shortcuts for menu items and submenus in a YUI Menu bar.</td>
+    </tr>
+    <tr class='odd'>
+      <td class='title'><a target="blank" href="bubbling/repainting-resize-scroll.html">Dealing with floating elements (repainting the viewport)</a></td>
+      <td class='description'>In this example you will see how to use the bubbling core to repaint certain elements when something change in the viewport using the &quot;repaint&quot; behaviors layer. The  bubbling CORE will define a set of listeners to monitoring the browser  (font size, scrolling, browser resize, etc), creating   pipes to take certain actions.</td>
+    </tr>
+    <tr class='even'>
+      <td class='title'><a target="blank" href="dispatcher/framework/index.html">Processing all the clicks on the page</a></td>
+      <td class='description'>See how  to use a global behavior to create a dynamic navigable website. All the clicks are wrapped by the global behavior,  and certain actions will be fired, depending of the target of the event.</td>
+    </tr>
+    <tr class='odd'>
+      <td class='title'><a href="../../themes/bubbling/jscripts/yui-cms/examples/tooltips/tooltips-for-many-elements.html">Rollover and Rollout behaviors layers</a></td>
+      <td class='description'>The  previous  examples, were related with the navigation behaviors (click), now we can see  how to use the mouseover/mouseout events to fire certain behaviors, getting as  a result a nice dynamic &quot;tooltips&quot;, even to dynamic elements created  on the fly.</td>
+    </tr> 
+  </tbody>
+</table>
+    <h1>Plugins</h1>
+    <h3>Dispatcher <code>YAHOO.plugin.Dispatcher</code></h3>
+    <table class='examplesTable'>
+  <tr>
+    <th class='title' colspan='2'>Dispatcher - General approach </th>
+  </tr>
+  <tr class='odd'>
+    <td class='title'><a target="blank" href="dispatcher/plugin-dispatcher-dynamic-contents.html">Dynamically loading content with script inside</a></td>
+    <td class='description'>This is an example of the DISPATCHER feature over two DIV tags, you can use the dispatcher to managing the content inside each DIV. This feature will warranty the execution of the scripts (remote and inline &quot;script&quot; tags) during the URI request.</td>
+    <tr class='even'>
+    <td class='title'><a target="blank" href="dispatcher/customizing-inline-execution.html">Dispatcher Example - Customizing the script inline execution</a></td>
+    <td class='description'>By default, the dispatcher will use the javascript eval method, wrapping the code inside an anonymous function. Some  javascript frameworks will require to be executed in the global scope, defining  variables as global.  The dispatcher will loose the global variables definition if you don't use namespacing.</td>
+  </tr>
+  <tbody>
+    <tr>
+      <th class='title' colspan='2'>Dispatcher for Tabview &amp; external components </th>
+    </tr>
+    <tr class='even'>
+      <td class='title'><a target="blank" href="dispatcher/plugin-dispatcher-dynamic-tabs.html">Delegate the loading mechanism for a TabView to the dispatcher to content with script inside</a></td>
+      <td class='description'>This is an example of the DISPATCHER feature over the YUI tabview component, you can use the dispatcher to managing the content inside the tab. This feature will warranty the execution of the scripts (remote and inline &quot;script&quot; tags) during the dataSrc request.</td>
+    </tr>
+    <tr class='odd'>
+      <td class='title'><a target="blank" href="dispatcher/plugin-dispatcher-dynamic-tabview-inside-tabview.html">TabView and Dispatcher Example - Dynamically loading content with child tabview inside</a></td>
+      <td class='description'>This is an example of the DISPATCHER feature over the YUI tabview component, you can use the dispatcher to managing the &quot;child tabview&quot; inside each tab.</td>
+    </tr>
+    <tr class='even'>
+      <td class='title'><a target="blank" href="dispatcher/plugin-dispatcher-dynamic-tabs-with-datatable-inside.html">TabView, Datatable and Dispatcher Example - Dynamically loading content with datatable inside</a></td>
+      <td class='description'>This is an example of the DISPATCHER feature over the YUI tabview component, you can use the dispatcher to managing the content inside the tab, and including another YUI component (YUI Datatable) during the dataSrc request.</td>
+    </tr>
+    <tr class='odd'>
+      <td class='title'><a target="blank" href="dispatcher/plugin-dispatcher-dynamic-tabs-with-accordion-inside.html">TabView, Accordion and Dispatcher Example - Dynamically loading content with accordion inside</a></td>
+      <td class='description'>This is an example of the DISPATCHER feature over the YUI tabview component, you can use the dispatcher to managing the content inside the tab, and including another tabview with accordion layout.</td>
+    </tr>
+    <tr class='even'>
+      <td class='title'><a target="blank" href="dispatcher/plugin-dispatcher-reloading-tab.html">TabView and Dispatcher Example - Dynamically loading content with script inside</a></td>
+      <td class='description'>This is an example of the DISPATCHER feature over the YUI tabview component, you can use the dispatcher to managing the content inside the tab. This feature will warranty the execution of the scripts (remote and inline &quot;script&quot; tags) during the dataSrc request.</td>
+    </tr>
+    <tr>
+      <th class='title' colspan='2'>Dispatcher for JavaScript and CSS injection </th>
+    </tr>
+    <tr class='odd'>
+      <td class='title'><a target="blank" href="dispatcher/injecting-css.html">CSS Injection (cssLoader and applyCSS) </a></td>
+      <td class='description'>In this example you will see how  to inject CSS rules on demand in your application, the rules can be  written in line or thru a remote file loaded thru AJAX using the YUI  connection manager.</td>
+    </tr>
+    <tr>
+      <th class='title' colspan='2'>Dynamic Navegation Theory </th>
+    </tr>
+    <tr class='odd'>
+      <td class='title'><a target="blank" href="dispatcher/framework/simple.html">Dynamically loading simple contents </a></td>
+      <td class='description'>See how the left menu load the corresponding content in the central area of the page.</td>
+    </tr>
+    <tr class='even'>
+      <td class='title'><a target="blank" href="dispatcher/framework/advanced.html">Dynamically loading content with YUI controls inside the area </a></td>
+      <td class='description'>See how the left menu load the corresponding content in the central area of the page. In this example the main of the page also include external components that will be loaded onDemand (ex. <em>Datatable</em> and <em>Tabview</em>).</td>
+    </tr>
+    <tr class='odd'>
+      <td class='title'><a target="blank" href="dispatcher/framework/yui-menu.html">Combining the YUI MenuBar with the dispatcher</a></td>
+      <td class='description'>See how the YUI MenuBar load the corresponding content in the central area of the page.</td>
+    </tr>
+    <tr class='even'>
+      <td class='title'><a target="blank" href="dispatcher/dispatcher-bhm.html">Dispatcher Plugin and YUI Browser History Manager</a></td>
+      <td class='description'>The dispatcher plugin have build-in integration with the YUI Browser History Manager. Which means that you can use the extension with the tabview, layout and a simple DIV as well, and the dispatcher controls the actions in all these areas using the YUI BHM.</td>
+    </tr>
+    <tr>
+      <th class='title' colspan='2'>Advanced configuration options</th>
+    </tr>
+    <tr class='odd'>
+      <td class='title'><a target="blank" href="dispatcher/passing-params.html">How to pass parameters thru the dispatcher</a></td>
+      <td class='description'>In this example, you will see how to pass parameters in the initialization process, and then use these parameters in the different moments during the loading process.</td>
+    </tr>
+    <tr class='even'>
+      <td class='title'><a target="blank" href="dispatcher/ondestroy-utility.html">How to avoid memory leaks</a></td>
+      <td class='description'>In this example, you can see how the first tab &quot;Datatable Control&quot;  define the rules to destroy the YUI Datatable before change the content  of the tab.</td>
+    </tr>
+    <tr class='odd'>
+      <td class='title'><a target="blank" href="dispatcher/innerHTML.html">Dynamic content with inline scripts</a></td>
+      <td class='description'>You can also use the dispatcher to execute inline JS code without using AJAX to load the content.</td>
+    </tr>
+    <tr class='even'>
+      <td class='title'><a target="blank" href="dispatcher/fullpath.html">Dynamic content with remote scripts (FULLPATH)</a></td>
+      <td class='description'>Defining the path for the remote assets using the fullpath.</td>
+    </tr>
+  </tbody>
+</table>
+
+  <h3>Lighter (former Selector): <code>YAHOO.plugin.Lighter</code></h3>
+  <table class='examplesTable'>
+  <tbody>
+    <tr class='odd'>
+      <td class='title'><a target="blank" href="lighter/opacity.html">Plugin Lighter - Example -  Extending the CSS functionalities</a></td>
+      <td class='description'>These examples will show you how to use the lighter plugin to highlighting areas within the document when the mouse goes into each area.</td>
+    </tr>
+    <tr>
+      <td class='title'><a target="blank" href="lighter/areas.html">Using the lighter plugin to define different backgrounds for an area</a></td>
+      <td class='description'>The important moments can offer a gateway for load or modify certain elements. </td>
+    </tr>
+  </tbody>
+</table>
+
+  <h3>Wizard:  <code>YAHOO.plugin.WizardManager</code></h3>
+  <table class='examplesTable'>
+  <tbody>
+    <tr class='odd'>
+      <td class='title'><a target="blank" href="wizard/different-approachs.html">PEAR Wizard using Javascript</a></td>
+      <td class='description'>This example show you how to create and manage simple forms using the wizard plugin. In this case, using the PEAR:DBObject:Wizard in the backend...</td>
+    </tr>
+    <tr>
+      <td><a href="wizard/multiple-forms/index.html">Multiple Forms - Installer</a></td>
+      <td>Using the wizard along with different components to create an installer (mutiple forms).</td>
+    </tr>
+    <tr class='odd'>
+      <td class='odd'><a href="wizard/login/simple.html">Wizard plugin for a login forms</a></td>
+      <td class='odd'>In this example you will see how the wizard can adopt an area, and how it will manage the submition events for login thru the YUI connection manager.</td>
+    </tr>
+    <tr class='even'>
+      <td class='title'><a href="wizard/login/dynamic.php">Wizard plugin for a login forms - Loading the form dynamically</a></td>
+      <td class='description'>In this example you will see how the wizard can add a new area, and how it will manage the submition events for login thru the YUI connection manager.</td>
+    </tr>
+  </tbody>
+</table>
+
+  <h1>Widgets</h1>
+	<h3>Tooltips &amp; Helphint:  <code>YAHOO.widget.TooltipManager</code></h3>
+    <table class='examplesTable'>
+      <tbody>
+        <tr class='odd'>
+          <td class='title'><a target="blank" href="tooltips/tooltips-for-many-elements.html">ToolTips for every link in the page</a></td>
+          <td class='description'>See  how to use the mouseover/mouseout events to fire certain behaviors, getting as  a result a nice dynamic &quot;tooltips&quot;, even to dynamic elements created  on the fly.</td>
+        </tr>
+        <tr class='even'>
+          <td class='title'><a target="blank" href="tooltips/tooltips-default-bubbling.html">Dynamic ToolTips for different kind of elements (YUI Buttons, images, links)</a></td>
+          <td class='description'>Dynamic ToolTips - This is a customization of the previous example, attaching tooltips to dynamic and static elements based on the title of the anchor.</td>
+        </tr>
+        <tr class='odd'>
+          <td class='title'><a target="blank" href="tooltips/tooltips-without-link.html">ToolTips without the link information (new)</a></td>
+          <td class='description'>This is a customization of the previous example, redefining the method "onCompile" to display whatever we want into the tooltip's overlay.</td>
+        </tr>
+        <tr class='even'>
+          <td class='title'><a target="blank" href="tooltips/tooltips-pseudo-code.html">Parsing the tooltip's content and applying a pseudo code (new)</a></td>
+          <td class='description'>Creating a pseudo code to apply styles to the title.</td>
+        </tr>
+        <tr class='odd'>
+          <td class='title'><a target="blank" href="tooltips/tooltips-statics-with-close.html">HelpHints with images and links inside (flickr images and thumbnails)</a></td>
+          <td class='description'>This is a tooltip customization to display thumbnail images on mouse over based on the HREF of the anchor. <a href="http://www.wait-till-i.com/index.php?p=465" target="_blank">This implementation is based on the technique described by Chris Heilmann</a>.</td>
+        </tr>
+        <tr class='even'>
+          <td class='title'><a target="blank" href="tooltips/tooltips-statics-with-close-anim.html">Animated and dragable ToolTips with &quot;close&quot; button and persistent (keeping one instance visible)</a></td>
+          <td class='description'>You can use this control to display information related with the target element, and this information can be an common xhtml full text, allow you to use this control to keep this information visible until the user close the panel or rollover another element with tooltip attached. In this case the panel will be displayed using an animation effect (FADE In/Out).</td>
+        </tr>
+        <tr class='odd'>
+          <td class='title'><a target="blank" href="tooltips/tooltips-using-ajax.html">AJAX ToolTips (Get the tooltip's content remotely) </a></td>
+          <td class='description'>If you're using a lot of dynamic links, and every link has a custom text for the tooltip element, you can use a simple ajax application for fetch the content on the fly using <a href='http://developer.yahoo.com/yui/connection'>the YUI Connection Manager</a>.</td>
+        </tr>
+        <tr class='even'>
+          <td class='title'><a target="blank" href="tooltips/tooltips-other-elements.html">ToolTips for different type of elements in the page using the className</a></td>
+          <td class='description'>Include the corresponding behavior for Tooltips and a bunch of elements in your page will show a nice dynamic tooltip. All the elements with title and className equal to &quot;yui-tip&quot; will show a tooltip on rollover event. Also, learn how to extend the method &quot;finder&quot; to apply the dynamic tooltip to other kind of elements.</td>
+        </tr>
+      </tbody>
+</table>
+
+  <h3>Accordion Control: <code>YAHOO.widget.AccordionManager</code> (<span style="color: red;">New</span>) </h3>
+  <small>These examples will show you how to create the correct HTML's markup  and the CSS's rules to create expandable and collapsible areas.</small>
+  <table width="73%" class='examplesTable'>
+    
+  <tbody>
+    
+    <tr class='odd'>
+      <td class='title'><a target="blank" href="accordion/clicks.html">Accordion Menu (click to toggle)</a></td>
+      <td class='description'>The elements will be expanded or collapsed when you click in the  area that represent the element. You don't need to define a particular trigger element. As you can see in this example, the elements with the class &quot;trigger&quot; fires the toggle method.</td>
+    </tr>
+    <tr class='even'>
+      <td class='title'><a target="blank" href="accordion/rollover.html">Accordion Menu (action on rollover)</a></td>
+      <td class='description'>The accordion can handle clicks on each item to expand or collapse the item, depending of the target, but also supports mousein/mouseout (rollover approach). In this case depending of the position of the mouse, the accordion's items will be toggle.</td>
+    </tr>
+    <tr class='odd'>
+      <td class='title'><a target="blank" href="accordion/ajax.html">AJAX Accordion Menu (open on click)</a></td>
+      <td class='description'>The content of each  element will be loaded using YUI Dispacher plugins.</td>
+    </tr>
+    <tr class='even'>
+      <td class='title'><a target="blank" href="accordion/left-slide.html">Hidden Left Panel (Accordion Menu) (open on rollover)</a></td>
+      <td class='description'>The accordion widget is a very extensible component, to expand and collapse DOM elements, you can use it to create hidden panels, horizontal or vertical panels.</td>
+    </tr>
+    <tr class='odd'>
+      <td class='title'><a target="blank" href="accordion/dragdrop-panels.html">Accordion Panels: Using Drag and Drop to Reorder the Panels</a></td>
+      <td class='description'>In this example, we used the YUI Drag and Drop utility and the YUI Container Skin to create accordion items and these items can be drag and drop between different accordion instances.</td>
+    </tr>
+    <tr class='even'>
+      <td class='title'><a target="blank" href="accordion/panels.html">Accordion Panels using the YUI Panel Skin</a></td>
+      <td class='description'>The accordion is very flexible in terms of markup. Basically you can accomodate the accordion's classes to any HTML markup. In this example we use the YUI Panel Skin to create the accordion's items.</td>
+    </tr>
+    <tr class='odd'>
+      <td class='title'><a target="blank" href="accordion/manager.html">Accordion Menu and how to handle it from outside (open on click)</a></td>
+      <td class='description'>It's really easy to handle the states of the items using JS, you only need a reference to a DOM element within an accordion item, and you can modify the state for that particular item, collapsing or expanding it. Also you can control the accordion as a single object.</td>
+    </tr>
+    <tr class='even'>
+      <td class='title'><a target="blank" href="accordion/inject.html">Creating items on the fly for existing accordions (Injecting Elements)</a></td>
+      <td class='description'>The accordion widget do not use listeners for the trigger elements, which means that you can extend your current HTML markup, and the new elements can be handle by the accordion control automatically. In the same way, you can remove elements from the DOM without worry about memory leaks.</td>
+    </tr>
+    <tr class='odd'>
+      <td class='title'><a target="blank" href="accordion/nested.html">Nested Accordions Menus</a></td>
+      <td class='description'>The accordion works based on the HTML markup, catching the events and fires the corresponding behavior. This technique allows us to use complex markups easily. This example describes how to create nested accordions. Note: the child accordion is persistent, which means that only one element can be opened at the same time.</td>
+    </tr>
+    <tr class='odd'>
+      <td width="33%" class='title'><a target="blank" href="accordion/multiple.html">Accordion Control - Expandable items</a></td>
+      <td width="67%" class='description'>The accordion widget allow us to create expandable or collapsable elements. We have two different approach, all the elements can be expanded at the same time, or only one of them can be opened. This example show the first approach.</td>
+    </tr>
+    <tr class='even'>
+      <td class='title'><a href="accordion/yui-collapsable-panel.html">YUI Accordion Widget to create Collapsable and Expandable YUI Panels</a></td>
+      <td class='description'>The accordion widget use the HTML code (DOM structure) to create the accordion's effects, which means that you can use it with some of the YUI Widgets. This example shows how to use the YUI Panel / Dialog with the accordion control, and also creating dependencies between some of the panels.</td>
+    </tr>
+    <tr class='odd'>
+      <td class='title'><a target="blank" href="accordion/vertical.html">Vertical Accordion Menu</a></td>
+      <td class='description'>The accordion also supports vertical items. This approach is not widely extended, but in case you need it, there it goes... :-)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>Loading Mask: <code>YAHOO.widget.Loading</code></h3>
+  <table class='examplesTable'>
+  <tbody>
+    <tr class='odd'>
+      <td class='title'><a target="blank" href="loading/static.html">Simple Loading Mask</a></td>
+      <td class='description'>See how to use the &quot;Loading Mask&quot; in an overloaded webpage to avoid the quirks during the displaying process. </td>
+    </tr>
+    <tr class='even'>
+      <td class='title'><a target="blank" href="loading/animated.html">Animated Loading Mask</a></td>
+      <td class='description'>The same loading mask but now with a fade In/Out animation.</td>
+    </tr>
+    <tr class='odd'>
+      <td class='title'><a href="loading/opacity.html" target="_blank">Simple Loading Mask with Opacity</a><a target="blank" href="dispatcher/framework/mask.html"></a></td>
+      <td class='description'>See how to use the &quot;Loading Mask&quot; in an overloaded webpage to avoid the quirks during the displaying process. This example also apply alpha opacity to the mask to get the transparence effect.
+      </td>
+    </tr>
+     <tr class='even'>
+      <td class='title'><a href="loading/preconfiguration.html" target="_blank">Preconfigured - Loading Mask</a><a target="blank" href="loading/animated.html"></a></td>
+      <td class='description'>Also, you can setup the mask before display it, in order to customize the way the the mask should be displayed.</td>
+    </tr>
+    <tr class='odd'>
+      <td class='title'><a target="blank" href="dispatcher/framework/mask.html">Loading Mask: advanced example</a></td>
+      <td class='description'>Every time you click on a dynamic link, the loading mask will be displayed and will be hiding at the loading process end (Integration with <a href='http://developer.yahoo.com/yui/connection'>the YUI Connection Manager</a>). </td>
+    </tr>
+  </tbody>
+</table>
+
+
+</body>
+
+<!-- Mirrored from www.bubbling-library.com/sandbox/bubbling/index.html by HTTrack Website Copier/3.x [XR&CO'2010], Wed, 04 Apr 2012 15:58:12 GMT -->
+</html>

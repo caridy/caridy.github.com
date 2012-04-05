@@ -1,0 +1,155 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+<!-- Mirrored from www.bubbling-library.com/themes/bubbling/jscripts/yui-cms/examples/wizard/different-approachs.html by HTTrack Website Copier/3.x [XR&CO'2010], Wed, 04 Apr 2012 15:58:15 GMT -->
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<title>Bubbling Library (YUI Extension) - Wizard Example - Management your forms (YAHOO-CMS: YAHOO.plugin.WizardManager)</title>
+<meta name='author' content='Caridy Patino (caridy at gmail.com)' />
+<link rel="stylesheet" type="text/css" href="../assets/example.css">
+<!-- YUI Basement Style -->
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/button/assets/skins/sam/button.css">
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/container/assets/skins/sam/container.css">
+<!-- YUI Library -->
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/utilities/utilities.js"></script>
+<script type="text/javascript" src='http://yui.yahooapis.com/2.7.0/build/json/json-min.js'></script>
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/button/button-min.js"></script>
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/container/container-min.js"></script>
+<!-- YUI-CMS Extension: Bubbling Library -->
+<script type="text/javascript" src="../../../../../../../js.bubbling-library.com/2.1/build/bubbling/bubbling.js"></script>
+<script type="text/javascript" src="../../../../../../../js.bubbling-library.com/2.1/build/dispatcher/dispatcher.js"></script>
+<script type="text/javascript" src="../../../../../../../js.bubbling-library.com/2.1/build/wizard/wizard.js"></script>
+<script type="text/javascript">
+(function() {
+  YAHOO.example.init = function( ){
+  	/* DIALOG ------- */
+  	var showwizarddialog = new YAHOO.widget.Button("show-dialog-btn");
+		showwizarddialog.on("click", function() {
+			var dialog = new YAHOO.widget.Panel("simpledialog",
+						{ width : "500px",
+						  fixedcenter : true,
+						  visible : false,
+						  draggable: true,
+                          close: true,
+                          modal : true,
+						  constraintoviewport : true,
+						  postmethod: 'none'
+						 });
+			// Render the Dialog
+	        dialog.setHeader('Wizard...');
+	        dialog.setBody('<div id="simple-dialog-wizard">Loading...</div>');
+            dialog.render(document.body);
+			dialog.show(); //make dialog visible
+			YAHOO.util.Event.onContentReady('simple-dialog-wizard', function() {
+				YAHOO.plugin.WizardManager.add( 'simple-dialog-wizard', {
+					uri:'/admin/wizards/example.php',
+					onFinish: function ( values ) { alert ('Everything works fine...'); }
+				});
+			});
+		});
+
+  	/* DIV ------- */
+  	var showwizarddiv    = new YAHOO.widget.Button("show-div-btn");
+		showwizarddiv.on("click", function() {
+			YAHOO.plugin.WizardManager.add( 'mywizarddiv', {
+				uri:'/admin/wizards/example.php',
+				onFinish: function ( values ) { alert ('Everything works fine...'); }
+			});
+		});
+
+  	/* IFRAME ------- */
+  	var showwizardiframe = new YAHOO.widget.Button("show-iframe-btn");
+		showwizardiframe.on("click", function() {
+			YAHOO.util.Dom.get ('mywizardiframe').src = '../../../../../../admin/wizards/example.html';
+		});
+
+  	/* FROM MARKUP ------- */
+  	var showwizardmarkup = new YAHOO.widget.Button("show-markup-btn");
+		showwizardmarkup.on("click", function() {
+			YAHOO.plugin.WizardManager.adopt( 'mywizardmarkup', {
+				onFinish: function ( values ) { alert ('Everything works fine...'); }
+			});
+		});
+  };
+  YAHOO.util.Event.onDOMReady(YAHOO.example.init);
+}());
+</script>
+<style type="text/css">
+.boxing {
+	float: left;
+	width: 45%;
+	height: 350px;
+	border: 1px solid;
+	margin: 1%;
+	padding: 1%;
+	overflow: auto;
+}
+</style>
+</head>
+<body class="yui-skin-sam">
+<div id="doc">
+
+	<div class="path">
+	  <a href="../../../../../../index.html" target="_top">Bubbling Library</a> &gt; <a href="../../../../../../eng/examples.html" target="_top">Examples</a>
+	</div>
+
+  <h1>Wizard Example - Management your forms (YAHOO.plugin.WizardManager)</h1>
+  <p>These examples will show you how to create and management simple forms using the wizard plugin.</p>
+
+  <div class="boxing">
+	<p>Display a form inside a dialog and supervice the submition process using the Wizard Manager.</p>
+	<input type="button" value="Show Dialog" id="show-dialog-btn" /><br /><br />
+	<div id="mywizarddialog">&nbsp;</div>
+  </div>
+
+  <div class="boxing">
+	<p>Display the form inside a DIV as dynamic area (the same as the dialog demo).</p>
+	<p>NOTE: If the YUI button widget is included (button.js), the wizard  will transform the input buttons into YUI buttons.</p>
+	<input type="button" value="Show Wizard inside DIV" id="show-div-btn" /><br /><br />
+	<div id="mywizarddiv">&nbsp;</div>
+  </div>
+
+  <div class="boxing">
+	<p>Display the form inside the dialog (the form will run independent of the current page).</p>
+	<input type="button" value="Load the form inside the iframe" id="show-iframe-btn" /><br /><br />
+	<iframe id="mywizardiframe" src="#" width="98%">&nbsp;</iframe>
+  </div>
+
+  <div class="boxing">
+	<p>Process and Management a markup form that was already displayed in the page (the wizard will process each form entry and will supervice the submition process).</p>
+	<p>NOTE: You must press the button "Process markup form" before use the form to process the form, as you will see, the wizard will tranform the form's buttons into YUI buttons.</p>
+	<input type="button" value="Process markup form" id="show-markup-btn" /><br /><br />
+	<div id="mywizardmarkup">
+
+		<form action="http://www.bubbling-library.com/admin/wizards/example.php" method="post" name="A" id="A">
+			<div>
+				<input name="_qf_default" type="hidden" value="A:next" />
+				<table border="0">
+					<tr>
+						<td style="white-space: nowrap; background-color: #CCCCCC;" align="left" valign="top" colspan="2"><b>Wizard page 1 of 3 (A)</b></td>
+					</tr>
+					<tr>
+						<td align="right" valign="top"><span style="color: #ff0000">*</span><b>Are you absolutely sure?</b></td>
+
+						<td valign="top" align="left"><input value="Y" type="radio" id="qf_aebce3" name="iradYesNo" /><label for="qf_aebce3">Yes</label>&nbsp;<input value="N" type="radio" id="qf_ef4e82" name="iradYesNo" /><label for="qf_ef4e82">No</label></td>
+					</tr>
+					<tr>
+						<td align="right" valign="top"><b></b></td>
+						<td valign="top" align="left"><input name="_qf_A_next" value="Next &gt;&gt;" type="submit" /></td>
+					</tr>
+					<tr>
+					    <td></td>
+					    <td align="left" valign="top"><span style="font-size:80%; color:#ff0000;">*</span><span style="font-size:80%;"> denotes required field</span></td>
+					</tr>
+				</table>
+			</div>
+		</form>
+
+	</div>
+  </div>
+<!-- THE EXAMPLE's CODE END HERE, FROM NOW ON IS JUST THE DOCUMENTATION //-->
+</div>
+<script type="text/javascript">var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));</script><script type="text/javascript">try { var pageTracker = _gat._getTracker("UA-2337646-1");pageTracker._trackPageview();} catch(err) {}</script></body>
+
+<!-- Mirrored from www.bubbling-library.com/themes/bubbling/jscripts/yui-cms/examples/wizard/different-approachs.html by HTTrack Website Copier/3.x [XR&CO'2010], Wed, 04 Apr 2012 15:58:16 GMT -->
+</html>

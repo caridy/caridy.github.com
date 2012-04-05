@@ -1,0 +1,333 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>Creating a Resizable Panel</title> 
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/fonts/fonts-min.css" />
+
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/container/assets/skins/sam/container.css" />
+
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/resize/assets/skins/sam/resize.css" /> 
+
+    <script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/utilities/utilities.js"></script>
+
+    <script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/container/container-min.js"></script>
+
+    <script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/resize/resize-min.js"></script> 
+
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/fonts/fonts-min.css" />
+
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/datatable/assets/skins/sam/datatable.css" />
+
+    <script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/yahoo-dom-event/yahoo-dom-event.js"></script>
+
+    <script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/dragdrop/dragdrop-min.js"></script>
+
+    <script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/element/element-min.js"></script>
+
+    <script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/datasource/datasource-min.js"></script>
+
+    <script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/datatable/datatable-min.js"></script>
+
+   
+
+    <link rel="stylesheet" type="text/css" href="http://js.bubbling-library.com/2.1/build/accordion/assets/accordion.css" />
+
+    <script type="text/javascript" src="http://js.bubbling-library.com/2.1/build/bubbling/bubbling.js"></script>
+
+    <script type="text/javascript" src="http://js.bubbling-library.com/2.1/build/accordion/accordion.js"></script>
+
+    <style type="text/css">
+
+    body {
+
+        margin:0;
+
+        padding:0;
+
+    }
+
+    .yui-skin-sam .yui-dt-liner { white-space:nowrap; }  
+
+    </style> 
+ 
+
+    <style type="text/css">
+
+    #examplecontainer {
+
+        padding:10px;
+
+    } 
+
+    #resizablepanel .bd {
+
+        overflow:auto;
+
+        background-color:#fff;
+
+        padding:10px;
+
+    } 
+
+    #resizablepanel .ft {
+
+        height:15px;
+
+        padding:0;
+
+    } 
+
+    #resizablepanel .yui-resize-handle-br {
+
+        right:0;
+
+        bottom:0;
+
+        height: 8px;
+
+        width: 8px;
+
+        position:absolute;
+
+    } 
+
+    /* 
+
+        The following CSS is added to prevent scrollbar bleedthrough on
+
+        Gecko browsers (e.g. Firefox) on MacOS.
+
+    */ 
+
+    /*
+
+        PLEASE NOTE: It is necessary to toggle the "overflow" property
+
+        of the body element between "hidden" and "auto" in order to
+
+        prevent the scrollbars from remaining visible after the the
+
+        Resizable Panel is hidden.  For more information on this issue,
+
+        read the comments in the "container-core.css" file.
+
+      
+
+        We use the #reziablepanel_c id based specifier, so that the rule
+
+        is specific enough to over-ride the .bd overflow rule above.
+
+    */ 
+
+    #resizablepanel_c.hide-scrollbars .yui-resize .bd {
+
+        overflow: hidden;
+
+    } 
+
+    #resizablepanel_c.show-scrollbars .yui-resize .bd {
+
+        overflow: auto;
+
+    } 
+
+    /*
+
+        PLEASE NOTE: It is necessary to set the "overflow" property of
+
+        the underlay element to "visible" in order for the
+
+        scrollbars on the body of a Resizable Panel instance to be
+
+        visible.  By default the "overflow" property of the underlay
+
+        element is set to "auto" when a Panel is made visible on
+
+        Gecko for Mac OS X to prevent scrollbars from poking through
+
+        it on that browser + platform combintation.  For more
+
+        information on this issue, read the comments in the
+
+        "container-core.css" file.
+
+    */ 
+
+    #resizablepanel_c.show-scrollbars .underlay {
+
+        overflow: visible;
+
+    }
+
+    </style> 
+
+    <script type="text/javascript">
+	YAHOO.util.Event.onDOMReady( 
+
+        function() { 
+
+            // Create a panel Instance, from the 'resizablepanel' DIV standard module markup
+
+            var panel = new YAHOO.widget.Panel("panel1", {
+
+                draggable: true,
+
+                width: "500px",
+
+                autofillheight: "body", // default value, specified here to highlight its use in the example
+
+                constraintoviewport:false,
+
+                context: ["showbtn", "tl", "bl"]
+
+            });
+
+            panel.render(); 
+
+            // Create Resize instance, binding it to the 'resizablepanel' DIV
+
+            var resize = new YAHOO.util.Resize("panel1", {
+
+                autoRatio: false,
+
+                minWidth: 300,
+
+                minHeight: 100,
+
+                status: false
+
+            }); 
+
+            // Setup startResize handler, to constrain the resize width/height
+
+            // if the constraintoviewport configuration property is enabled.
+
+            resize.on("startResize", function(args) { 
+
+          if (this.cfg.getProperty("constraintoviewport")) {
+
+                    var D = YAHOO.util.Dom; 
+
+                    var clientRegion = D.getClientRegion();
+
+                    var elRegion = D.getRegion(this.element); 
+
+                    resize.set("maxWidth", clientRegion.right - elRegion.left - YAHOO.widget.Overlay.VIEWPORT_OFFSET);
+
+                    resize.set("maxHeight", clientRegion.bottom - elRegion.top - YAHOO.widget.Overlay.VIEWPORT_OFFSET);
+
+                  } else {
+
+                    resize.set("maxWidth", null);
+
+                    resize.set("maxHeight", null);
+
+               } 
+
+            }, panel, true); 
+
+            // Setup resize handler to update the Panel's 'height' configuration property
+
+            // whenever the size of the 'resizablepanel' DIV changes. 
+
+            // Setting the height configuration property will result in the
+
+            // body of the Panel being resized to fill the new height (based on the
+
+            // autofillheight property introduced in 2.6.x) and the iframe shim and
+
+            // shadow being resized also if required (for IE6 and IE7 quirks mode).
+
+            resize.on("resize", function(args) {
+
+              if (args.height > 0) {
+
+                    var panelHeight = args.height;
+
+                    this.cfg.setProperty("height", panelHeight + "px");
+
+              }
+
+          }, panel, true);
+
+      
+
+            YAHOO.util.Event.on("showbtn", "click", panel.show, panel, true);
+
+        }
+
+    );
+
+	YAHOO.Bubbling.on('accordionOpenItem', function (layer, args) {
+	  YAHOO.util.Dom.addClass(args[1].el, 'yui-resize');
+	});
+	
+	YAHOO.Bubbling.on('accordionCloseItem', function (layer, args) {
+	  YAHOO.util.Dom.removeClass(args[1].el, 'yui-resize');
+	  YAHOO.util.Dom.setStyle(args[1].el, 'height', 'auto');
+	});
+	
+</script>
+
+  
+
+    
+
+</head>
+
+<body class="yui-skin-sam">
+
+<div class="yui-cms-accordion multiple fast fixIE">
+
+<div id="panel1" class="yui-cms-item yui-panel selected">
+
+      <div class="hd">Panel #1 from Markup</div>
+
+      <div class="bd">
+
+            <div class="fixed">
+
+                 
+                  <p>
+
+                  Consectetuer adipiscing elit. Maecenas sit amet metus. Nunc quam elit, posuere nec, auctor in, rhoncus quis, dui. Aliquam erat volutpat. Ut dignissim, massa sit amet dignissim cursus, quam lacus feugiat.Consectetuer adipiscing elit. Maecenas sit amet metus. Nunc quam elit, posuere nec, auctor in, rhoncus quis, dui.
+
+                  </p>
+
+            
+
+                  <p>
+
+                  Consectetuer adipiscing elit. Maecenas sit amet metus. Nunc quam elit, posuere nec, auctor in, rhoncus quis, dui. Aliquam erat volutpat. Ut dignissim, massa sit amet dignissim cursus, quam lacus feugiat.Consectetuer adipiscing elit. Maecenas sit amet metus. Nunc quam elit, posuere nec, auctor in, rhoncus quis, dui.
+
+                  </p>
+
+           
+                  <p>
+
+                  Consectetuer adipiscing elit. Maecenas sit amet metus. Nunc quam elit, posuere nec, auctor in, rhoncus quis, dui. Aliquam erat volutpat. Ut dignissim, massa sit amet dignissim cursus, quam lacus feugiat.Consectetuer adipiscing elit. Maecenas sit amet metus. Nunc quam elit, posuere nec, auctor in, rhoncus quis, dui.
+
+                  </p>
+
+       
+            </div>
+
+      </div>
+
+      <div class="ft"></div>
+
+      <div class="actions">
+
+             <a href="#" class="accordionToggleItem">&nbsp;</a>
+
+            <a href="#" class="accordionRemoveItem">&nbsp;</a>
+
+      </div>
+
+</div>
+
+</div> 
+
+</body>
+</html>

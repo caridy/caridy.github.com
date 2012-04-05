@@ -1,0 +1,48 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+<!-- Mirrored from www.bubbling-library.com/sandbox/bubbling/bubbling/behavior-actionprompt-bubbling.html by HTTrack Website Copier/3.x [XR&CO'2010], Wed, 04 Apr 2012 15:59:03 GMT -->
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>actionPrompt - Example of Bubbling technique</title>
+<meta name='author' content='Caridy Patino (caridy at gmail.com)' />
+<link rel="stylesheet" type="text/css" href="../assets/example.css">
+<!-- Dependency source files -->
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/utilities/utilities.js"></script>
+<script type="text/javascript" src='../../../../js.bubbling-library.com/2.1/build/bubbling/bubbling.js'></script>
+<script type="text/javascript">
+  YAHOO.Bubbling.addDefaultAction('actionPrompt',
+	    function (layer, args) {
+	      alert ('Behavior {actionPrompt}, define the functionality here using the reference of the event target: ' + args[1].target.href);
+	      // reclaiming the event and stop the propagation
+	      return true;
+	    }
+	);
+</script>
+<!-- YUI Basement Style -->
+<style>
+	.linking { color: red; }
+</style>
+</head>
+<body id="cms-body">
+<div id="doc">
+
+	<div class="path">
+	  <a href="../../../index.html" target="_top">Bubbling Library</a> &gt; <a href="../../../eng/examples.html" target="_top">Examples</a>
+	</div>
+
+	<h1>Examples of Using the Bubbling Technique: Simple Actions </h1>
+
+	<p>Benefits from the bubbling up technique: Untied your XHTML code from the javascript listeners, no more addListener in your  code. Just define the class of each link, and the corresponding behavior for  each link&acute;s class:</p>
+    <ul>
+		<li>- Link with &quot;rel&quot; actionPrompt: <a href="../../../index.html" rel="actionPrompt">click here</a></li>
+		<li>- Link with &quot;class&quot; actionPrompt: <a href="../../../index.html" class="actionPrompt">click here</a></li>
+		<li>- Link with more than one &quot;class&quot; including actionPrompt: <a href="../../../index.html" class="linking actionPrompt">click here</a></li>
+		<li>- Link without &quot;rel&quot; and &quot;class&quot;: <a href="../../../index.html" target="_top">click here</a></li>
+	 </ul>
+
+</div>
+</body>
+
+<!-- Mirrored from www.bubbling-library.com/sandbox/bubbling/bubbling/behavior-actionprompt-bubbling.html by HTTrack Website Copier/3.x [XR&CO'2010], Wed, 04 Apr 2012 15:59:03 GMT -->
+</html>

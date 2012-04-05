@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+<!-- Mirrored from www.bubbling-library.com/themes/bubbling/jscripts/yui-cms/examples/bubbling/behavior-dynamic-focus-bubbling.html by HTTrack Website Copier/3.x [XR&CO'2010], Wed, 04 Apr 2012 15:56:36 GMT -->
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>Dynamic Focus - Example of Bubbling technique</title>
+<meta name='author' content='Caridy Patino (caridy at gmail.com)' />
+<link rel="stylesheet" type="text/css" href="../assets/example.css">
+<!-- Dependency source files -->
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/utilities/utilities.js"></script>
+<script type="text/javascript" src='../../../../../../../js.bubbling-library.com/2.1/build/bubbling/bubbling.js'></script>
+<script type="text/javascript">
+
+  YAHOO.Bubbling.addDefaultAction ('actionSetFocus',
+	function (layer, args) {
+	  var el = args[1].anchor;
+	  if (el && el.getAttribute('rel') && (el.getAttribute('rel').length > 0)) {
+		// calculating the form field ID
+		var field = YAHOO.util.Dom.get(el.getAttribute('rel'));
+		if (field) {
+		  field.focus();
+		  // reclaiming the event and stop the propagation
+	      return true;
+		}
+	  }
+	}
+  );
+
+</script>
+</head>
+<body id="cms-body">
+
+<div id="doc">
+
+	<div class="path">
+	  <a href="../../../../../../index.html" target="_top">Bubbling Library</a> &gt; <a href="../../../../../../eng/examples.html" target="_top">Examples</a>
+	</div>
+
+	<h1> Bubbling Technique: actionSetFocus</h1>
+
+  <p> We can define links to set the focus in each field in a form:</p>
+<p>
+	  Please, enter the <a href="#" class="actionSetFocus" rel="username">username</a> and <a href="#" class="actionSetFocus" rel="password">password</a> to login...
+	</p>
+	<p>
+  	  Username: <input name="username" id="username" size="20" maxlength="25" value="" type="text">
+	</p>
+	<p>
+  	  Password: <input name="password" id="password" size="20" maxlength="25" value="" type="text">
+	</p>
+</div>
+<script type="text/javascript">var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));</script><script type="text/javascript">try { var pageTracker = _gat._getTracker("UA-2337646-1");pageTracker._trackPageview();} catch(err) {}</script></body>
+
+<!-- Mirrored from www.bubbling-library.com/themes/bubbling/jscripts/yui-cms/examples/bubbling/behavior-dynamic-focus-bubbling.html by HTTrack Website Copier/3.x [XR&CO'2010], Wed, 04 Apr 2012 15:56:36 GMT -->
+</html>

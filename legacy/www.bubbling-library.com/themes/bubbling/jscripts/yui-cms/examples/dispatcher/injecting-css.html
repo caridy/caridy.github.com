@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+<!-- Mirrored from www.bubbling-library.com/themes/bubbling/jscripts/yui-cms/examples/dispatcher/injecting-css.html by HTTrack Website Copier/3.x [XR&CO'2010], Wed, 04 Apr 2012 15:56:42 GMT -->
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<title>CSS Injection Example - Dispatcher Plugin</title>
+<meta name='author' content='Caridy Patino (caridy at gmail.com)' />
+<link rel="stylesheet" type="text/css" href="../assets/example.css">
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/utilities/utilities.js"></script>
+<script type="text/javascript" src="../../../../../../../js.bubbling-library.com/2.1/build/dispatcher/dispatcher.js"></script>
+<script type="text/javascript">
+
+YAHOO.example.Injector = function() {
+   return {
+     init: function () {
+     },
+     loadStyle: function (n) {
+        switch (n)
+        {
+        	case 1:
+        		YAHOO.plugin.Dispatcher.cssLoader( 'css-injection-default.css', {
+        		  override: false // this css file will be loaded only once...
+        		});
+            	break;
+        	case 2:
+        		YAHOO.plugin.Dispatcher.applyCSS (
+        		  "#demo {border: 1px solid #ff0000;padding: 10px;}"+
+        		  "#demo ul {width: auto;text-align: center;}"+
+        		  "#demo ul li {padding: 0 5px; display: inline;border-left:1px solid #333333;background-color: transparent;}#demo ul li.first-child {border-left: 0px;}"+
+        		  "#demo ul li a {}"
+        		);
+            	break;
+        	case 3:
+        		YAHOO.plugin.Dispatcher.cssLoader( 'css-injection-example.css', {
+        		  override: true // this css file will be loaded when need it...
+        		});
+            	break;
+        	case 4:
+        		YAHOO.plugin.Dispatcher.applyCSS (
+        		  "#demo {border: 0px;}"+
+        		  "#demo ul {width: 250px;}"+
+        		  "#demo ul li {display: block;text-align: right; padding: 5px; margin: 5px; border: 0px; background-color: #cdcdcd;}"+
+        		  "#demo ul li a {}"
+        		);
+        	   break;
+        	default:
+        	   break;
+        }
+     }
+   }
+}();
+
+YAHOO.example.Injector.init();
+</script>
+
+</head>
+<body id="cms-body" class="yui-skin-sam">
+<div id="doc">
+
+	<div class="path">
+	  <a href="../../../../../../index.html" target="_top">Bubbling Library</a> &gt; <a href="../../../../../../eng/examples.html" target="_top">Examples</a>
+	</div>
+
+    <h1>CSS Injection Example - Dispatcher Plugin</h1>
+    <p>Using the dispatcher plugin you will be able  to inject CSS rules on demand in your application. The rules can be  written in line or thru a remote file loaded thru AJAX using the YUI  connection manager. See the source code to learn how to use the dispatcher plugin for the CSS injection.</p>
+  <p>Click in the links below to see the CSS injection in action:</p>
+
+    <div id="demo">
+        <ul>
+            <li class="first-child"><a href="javascript:YAHOO.example.Injector.loadStyle(1);">CSS Initialization (one time CSS definition)</a></li>
+            <li><a href="javascript:YAHOO.example.Injector.loadStyle(2);">Apply CSS rules (inline CSS)</a></li>
+            <li><a href="javascript:YAHOO.example.Injector.loadStyle(3);">Override CSS (onDemand CSS)</a></li>
+            <li class="last-child"><a href="javascript:YAHOO.example.Injector.loadStyle(4);">Change CSS rules (inline CSS)</a></li>
+        </ul>
+    </div>
+    <!-- THE EXAMPLE's CODE END HERE, FROM NOW ON IS JUST THE DOCUMENTATION //-->
+</div>
+<script type="text/javascript">var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));</script><script type="text/javascript">try { var pageTracker = _gat._getTracker("UA-2337646-1");pageTracker._trackPageview();} catch(err) {}</script></body>
+
+<!-- Mirrored from www.bubbling-library.com/themes/bubbling/jscripts/yui-cms/examples/dispatcher/injecting-css.html by HTTrack Website Copier/3.x [XR&CO'2010], Wed, 04 Apr 2012 15:56:42 GMT -->
+</html>

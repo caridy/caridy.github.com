@@ -1,0 +1,132 @@
+<style type="text/css">
+.rest {
+    width: 250px;
+    float: left;
+}
+.iphone {
+    width: 220px;
+    float: right;
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.anim-slides li {
+    border: 1px solid #cccccc;
+    margin: 5px 0;
+    padding: 5px;
+    list-style-type: none;
+}
+    .anim-slides.yui-cms-selector .yui-cms-item .yui-cms-slide {
+        height: 0px;
+        overflow: hidden;
+    }
+
+/* selected */
+.anim-slides.yui-cms-selector .yui-cms-item.selected {
+    border: 1px solid #333333;
+}
+    .anim-slides.yui-cms-selector .yui-cms-item.selected .yui-cms-slide {
+        height: 0px;
+    }
+
+</style>
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/animation/animation-min.js"></script>
+<script type="text/javascript" src="http://js.bubbling-library.com/2.1/build/bubbling/bubbling.js"></script>
+<script type="text/javascript" src="http://js.bubbling-library.com/2.1/build/lighter/lighter.js"></script>
+<script type="text/javascript">
+(function() {
+
+  var closeSlide = function (area) {
+       // this method will be executed under the area's scope,
+       // which means that you can store values in the scope and get it later in another execution (like this.anim)
+       var s = this.slide || null;
+       if (s) {
+	        // if there is an animation underway, stop it.
+    	    if ((this.anim) && (this.anim.isAnimated())) { this.anim.stop(); }
+	        // starting a new animation to close the openned element
+    		this.anim = new YAHOO.util.Anim(s, { height: { to: 0} }, 1.5, YAHOO.util.Easing.easeOutStrong);
+    		this.anim.animate();
+    		this.slide = null;
+	   }
+  };
+  var openSlide = function (el, area) {
+       // this method will be executed under the area's scope,
+       // which means that you can store values in the scope and get it later in another execution (like this.anim)
+	    var s = null;
+	    // if there is an animation underway, stop it.
+	    if ((this.slide) && (this.anim) && (this.anim.isAnimated())) { this.anim.stop(); }
+	    // finding the selected yui-cms-item has a child with class yui-cms-slide
+	    s = YAHOO.util.Dom.getElementsByClassName( 'yui-cms-slide', '*', el );
+	    if ((s.length > 0) && (s = s[0])) {
+	        // starting a new animation to open the element: .yui-cms-item .yui-cms-slide
+    		this.anim = new YAHOO.util.Anim(s, { height: { to: s.scrollHeight } }, 1.5, YAHOO.util.Easing.easeOutStrong);
+    		this.anim.animate();
+    		this.slide = s;
+	    }
+  };
+
+   YAHOO.plugin.Lighter.add( 'anim-slides', {
+    persistent: true, // true if you want to keep an item selected even when the mouse go out of the area
+	onReset: closeSlide,
+	onSelect: openSlide
+  });
+}());
+</script>
+<div>
+      <div class="iphone">
+	    <p style="color:red;"><em>(Deprecated in favor of the new AccordionManager Widget)</em></p>
+		<ul class="anim-slides yui-cms-selector">
+			<li class="yui-cms-item">
+			    <strong>Accessories</strong>
+			    <div class="yui-cms-slide">
+				  <a href="http://www.apple.com/iphone/accessories/"><img src="../lighter/images/iphone_galleryaccess_20070628.jpg" alt="iPhone accessories" class="photo" height="176" width="178"></a>
+			    </div>
+				<div>
+					Apple accessories help you get the most out of your iPhone. <a href="http://www.apple.com/iphone/accessories/" class="more">Find out more</a>
+				</div>
+			</li>
+			<li class="yui-cms-item">
+			    <strong>Photos</strong>
+			    <div class="yui-cms-slide">
+				  <a href="http://www.apple.com/iphone/gallery/"><img src="../lighter/images/iphone_galleryphotos_20070622.jpg" alt="iPhone w/ earbuds" class="photo" height="180" width="178"></a>
+				</div>
+				<div>
+					No matter how you look at it, the iPhone design is incredible. <a href="http://www.apple.com/iphone/gallery/" class="more">View photos</a>
+				</div>
+			</li>
+			<li class="yui-cms-item">
+				<strong>360 View</strong>
+			    <div class="yui-cms-slide">
+				  <a href="http://www.apple.com/iphone/gallery/360/"><img src="../lighter/images/iphone_gallery360s_20070622.jpg" alt="iPhone with earbuds" class="photo" height="180" width="178"></a>
+				</div>
+				<div>
+					Want to take iPhone for a spin? <a href="http://www.apple.com/iphone/gallery/360/" class="more">Watch this</a>
+				</div>
+			</li>
+			<li class="yui-cms-item">
+				<strong>TV Ads</strong>
+			    <div class="yui-cms-slide">
+				  <a href="http://www.apple.com/iphone/ads/"><img src="../lighter/images/iphone_galleryads_20070622.jpg" alt="iPhone w/ earbuds" class="photo" height="180" width="178"></a>
+				</div>
+				<div>
+					iPhone shows what it can do in these TV commercials. <a href="http://www.apple.com/iphone/ads/" class="more">View video</a>
+				</div>
+			</li>
+		</ul>
+  </div>
+  <div class="rest">
+	<h1>Plugin Lighter - Example - Management your areas (YAHOO-CMS:  YAHOO.plugin.Lighter)</h1>
+	<p>Dynamic tab with an accordion control within...</p>
+	<p>This example is based on the lighter plugin ( YAHOO.plugin.Lighter)</p>
+	<p><strong>Facts in this example:</strong><br />
+	- This content have autonomy.<br />
+	- The dispatcher load the resources onDemand (YUI Animation, YUI Bubbling, YUI-CMS Lighter).<br />
+	- The inline script block inside the content prepare the accordion control.<br />
+	- The dispatcher inject the corresponding CSS (inline style tag).<br />
+	- The dispatcher execute the script block to initialization the accordion.<br />
+	</p>
+	<h2>Showcase</h2>
+	<p>Note: Displaying the images on mouseover with an animation, also keeping the last elected item actived...</p>
+  </div>
+  <div style="clear: both;">&nbsp;</div>
+</div>

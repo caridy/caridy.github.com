@@ -1,0 +1,181 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+<!-- Mirrored from www.bubbling-library.com/sandbox/bubbling/lighter/opacity.html by HTTrack Website Copier/3.x [XR&CO'2010], Wed, 04 Apr 2012 15:59:14 GMT -->
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<title>Bubbling Library (YUI Extension) - Plugin Lighter - Example - Management your areas (YAHOO-CMS:  YAHOO.plugin.Lighter)</title>
+<meta name='author' content='Caridy Patino (caridy at gmail.com)' />
+<link rel="stylesheet" type="text/css" href="../assets/example.css">
+<style type="text/css">
+.boxing {
+	float: left;
+	width: 45%;
+	border: 1px solid;
+	margin: 1%;
+	padding: 1%;
+}
+.end {
+  clear: both;
+  display: block;
+}
+
+.listing.yui-cms-selector .yui-cms-item.selected {
+	background-color:#cccccc;
+	padding-left: 15px;
+}
+
+.selector2.yui-cms-selector .yui-cms-item {
+	-moz-opacity: 0.4;
+    opacity:0.4;
+    filter: alpha(opacity=40);
+	border: 1px solid #cccccc;
+	background-color:#fff;
+	color: #000000;
+	float: left;
+	width: 200px;
+	margin: 5px;
+	padding: 5px;
+}
+	.selector2.yui-cms-selector .yui-cms-item.selected {
+		background-color:#cccccc;
+		color:#000000;
+		border: 1px solid #333333;
+		-moz-opacity: 1;
+	    opacity:1;
+	    filter: alpha(opacity=100);
+	}
+</style>
+<!-- Dependency source files -->
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/utilities/utilities.js"></script>
+<script type="text/javascript" src="../../../../js.bubbling-library.com/2.1/build/bubbling/bubbling.js"></script>
+<script type="text/javascript" src="../../../../js.bubbling-library.com/2.1/build/lighter/lighter.js"></script>
+</head>
+<body id="cms-body">
+<div id="doc">
+
+	<div class="path">
+	  <a href="../../../index.html" target="_top">Bubbling Library</a> &gt; <a href="../../../eng/examples.html" target="_top">Examples</a>
+	</div>
+
+  <h1>Plugin Lighter - Example -  Extending the CSS functionalities (YAHOO.plugin.Lighter)</h1>
+  <p>These examples will show you how to use the lighter plugin to highlighting areas within the document when the mouse goes into each area.</p>
+  <p>As you can see in the source code, this plugin don't need initialization process, working over the markup extending the CSS functionalities. <br />
+  </p>
+
+  <div class="boxing">
+    <p>In this case, we use a simple CSS rule to modify the background, and add 15 pixel of left padding to each element in the list.</p>
+	<ul class="listing yui-cms-selector">
+		<li class='yui-cms-item'><a href='#'  title="" >Quienes Somos</a></li>
+		<li class='yui-cms-item'><a href='#'  title="" >Que Ofrecemos</a></li>
+		<li class='yui-cms-item'><a href='#'  title="" >Formas de Pago</a></li>
+		<li class='yui-cms-item'><a href='#'  title="" >Documentos Oficiales</a></li>
+		<li class='yui-cms-item'><a href='#'  title="" >¿Necesita Ayuda?</a></li>
+	</ul>
+  </div>
+
+  <div class="boxing">
+	<p>Here we have a more complex example, using the opacity (40%) as a default status, and when the mouse over the element, the area will become visible (opacity 100%), background gray and border black.</p>
+	<div class="selector2 yui-cms-selector">
+	  <div class="yui-cms-item">
+	  	<h2>Lastest Releases</h2>
+	  	<p>
+	  		<a href="../../../eng/api/docs/plugins/wizard.html" title="YUI plugin to management wizard controls.">YAHOO.plugin.WizardManager</a><br />
+	  		<small>YUI plugin to management wizard controls. (<em class="red">new</em>)</small>
+	  	</p>
+	  </div>
+
+	  <div class="yui-cms-item">
+
+	  	<h2>Hot Components</h2>
+	  	<p>
+	  		<a href="../../../eng/api/docs/plugins/dispatcher.html" title="YUI plugin to management dynamic areas within the document">YAHOO.plugin.Dispatcher</a><br />
+	  		<small>YUI plugin to management dynamic areas within the document (loading remote contents with scripts tags inside).</small>
+	  	</p>
+	  </div>
+
+	  <div class="yui-cms-item">
+	  	<h2>Comming Soon</h2>
+	  	<p>
+	  		<a href="../../../eng/api/docs/plugins/dispatcher.html" title="YUI plugin to management dynamic areas within the document">YAHOO.plugin.Dispatcher</a><br />
+	  		<small>The new dispatcher will support cross-domains capabilities using the most common techniques (both: proxy and iframe). (<em class="red">update comming soon</em>)</small>
+	  	</p>
+	  </div>
+
+	  <div class="yui-cms-item">
+	  	<h2>Lastest Releases</h2>
+	  	<p>
+	  		<a href="../../../eng/api/docs/plugins/selectorhtml.html" title="YUI plugin to highlighting areas within the document when the mouse goes into each area."> YAHOO.plugin.Lighter</a><br />
+	  		<small>YUI plugin to highlighting areas within the document when the mouse goes into each area. (<em class="red">new</em>)</small>
+	  	</p>
+	  </div>
+
+	</div>
+	<div class="end">&nbsp;</div>
+  </div>
+  <div class="end">&nbsp;</div>
+  <div>
+	<p>In this case, the only diference is that we use another container to display the same class of elements (selector2), and the four elements are in the same row. As you can see, the lighter allow to use the same type for diferent areas, and you can customize each area using the container ID/CLASS.</p>
+
+	<p>Example: <br />#yourcontainer .yourselector.yui-cms-selector .yui-cms-item.selected {}
+		<br />#othercontainer .yourselector.yui-cms-selector .yui-cms-item.selected {}</p>
+
+	<div id="simplerow" class="selector2 yui-cms-selector">
+	  <div class="yui-cms-item">
+	  	<h2>Lastest Releases</h2>
+	  	<p>
+	  		<a href="../../../eng/api/docs/plugins/wizard.html" title="YUI plugin to management wizard controls.">YAHOO.plugin.WizardManager</a><br />
+	  		<small>YUI plugin to management wizard controls. (<em class="red">new</em>)</small>
+	  	</p>
+
+	  	<p>
+	  		<a href="../../../eng/api/docs/plugins/selectorhtml.html" title="YUI plugin to highlighting areas within the document when the mouse goes into each area."> YAHOO.plugin.Lighter</a><br />
+	  		<small>YUI plugin to highlighting areas within the document when the mouse goes into each area. (<em class="red">new</em>)</small>
+	  	</p>
+	  </div>
+
+	  <div class="yui-cms-item">
+
+	  	<h2>Hot Components</h2>
+	  	<p>
+	  		<a href="../../../eng/api/docs/plugins/dispatcher.html" title="YUI plugin to management dynamic areas within the document">YAHOO.plugin.Dispatcher</a><br />
+	  		<small>YUI plugin to management dynamic areas within the document (loading remote contents with scripts tags inside).</small>
+	  	</p>
+	  	<p>
+	  		<a href="../../../eng/api/docs/widgets/tooltips.html" title="YUI-CMS widget to apply tooltips to the whole document, including dynamic areas.">YAHOO.widget.TooltipManager</a><br />
+
+	  		<small>YUI-CMS widget to apply tooltips to the whole document, including dynamic areas.</small>
+	  	</p>
+	  </div>
+	  <div class="yui-cms-item">
+	  	<h2>Comming Soon</h2>
+	  	<p>
+	  		<a href="../../../eng/api/docs/plugins/dispatcher.html" title="YUI plugin to management dynamic areas within the document">YAHOO.plugin.Dispatcher</a><br />
+	  		<small>The new dispatcher will support cross-domains capabilities using the most common techniques (both: proxy and iframe). (<em class="red">update comming soon</em>)</small>
+	  	</p>
+	  	<p>
+	  		<a href="../../../eng/api/docs/widgets/tooltips.html" title="YUI-CMS widget to apply tooltips to the whole document, including dynamic areas.">YAHOO.widget.TooltipManager</a><br />
+	  		<small>The new tooltip manager will support dynamic tips (fetching the information remotely using ajax). (<em class="red">update comming soon</em>)</small>
+	  	</p>
+	  </div>
+	  <div class="yui-cms-item">
+	  	<h2>Comming Soon</h2>
+	  	<p>
+	  		<a href="../../../eng/api/docs/plugins/dispatcher.html" title="YUI plugin to management dynamic areas within the document">YAHOO.plugin.Dispatcher</a><br />
+	  		<small>The new dispatcher will support cross-domains capabilities using the most common techniques (both: proxy and iframe). (<em class="red">update comming soon</em>)</small>
+	  	</p>
+	  	<p>
+	  		<a href="../../../eng/api/docs/widgets/tooltips.html" title="YUI-CMS widget to apply tooltips to the whole document, including dynamic areas.">YAHOO.widget.TooltipManager</a><br />
+	  		<small>The new tooltip manager will support dynamic tips (fetching the information remotely using ajax). (<em class="red">update comming soon</em>)</small>
+	  	</p>
+	  </div>
+
+	</div>
+	<div class="end">&nbsp;</div>
+  </div>
+  <!-- THE EXAMPLE's CODE END HERE, FROM NOW ON IS JUST THE DOCUMENTATION //-->
+</div>
+</body>
+
+<!-- Mirrored from www.bubbling-library.com/sandbox/bubbling/lighter/opacity.html by HTTrack Website Copier/3.x [XR&CO'2010], Wed, 04 Apr 2012 15:59:14 GMT -->
+</html>

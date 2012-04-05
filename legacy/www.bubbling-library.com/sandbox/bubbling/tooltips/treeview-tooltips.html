@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+	<title>POSM Inventory</title>
+	<style type="text/css">
+
+		.yui-cms-tt .yui-panel { text-align: left; }
+		.yui-panel-container.yui-cms-tt.shadow .underlay {
+			top: 2px;
+			bottom: -2px;
+			right: -2px;
+			left: -2px;
+			padding-left: 4px;
+		}
+		.yui-cms-tt .yui-panel, .yui-cms-tt .yui-panel .bd {
+			color:#333;
+			background-color:#FDFFB4;
+			border-color:#FCC90D;
+		}
+		.yui-cms-tt .yui-panel .hd {
+			visible: hidden;
+			display: none;
+		}
+
+	</style>
+
+	<!--Script and CSS includes for YUI dependencies on this page-->
+	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/treeview/assets/skins/sam/treeview.css" />
+	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/container/assets/container.css" />
+
+	<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/yahoo/yahoo-min.js"></script>
+	<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/event/event-min.js"></script>
+	<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/treeview/treeview-min.js"></script>
+	<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/dom/dom-min.js"></script>
+	<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/element/element-beta-min.js"></script>
+	<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/connection/connection-min.js"></script>
+	<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/container/container-min.js"></script>
+
+	<!-- YUI-CMS Scripts -->
+	<script type="text/javascript" src="http://js.bubbling-library.com/2.1/build/bubbling/bubbling-min.js"></script>
+	<script type="text/javascript" src="http://js.bubbling-library.com/2.1/build/tooltips/tooltips.js"></script>
+
+	<script type="text/javascript">
+
+	TOOLTIPS = {
+		labels: {},
+		resetToolTips: function() {this.labels = {};},
+		addContextId: function( id, label) { this.labels[id] = label; }
+	}
+
+	// Customizing the tooltips for internal array requesting process
+	YAHOO.CMS.widget.Tips.onCompile = function( el, o) {
+		var id = el.getAttribute('id');
+		if (YAHOO.lang.isString(id) && (id != '') && TOOLTIPS.labels.hasOwnProperty( id )) {
+			// anchore have an id defined, use the title in the internal array
+			this.body = TOOLTIPS.labels[ id ];
+			return true;
+		}
+		return false;
+	}
+
+	YAHOO.CMS.widget.Tips.finder = function( el ) {
+		  return YAHOO.CMS.Bubble.getOwnerByClassName( el, "ygtvlabel");
+	}
+
+    ShowTree = function() {
+    	var tree = new YAHOO.widget.TreeView("PSOMTreeView");
+    	var rootobj = { label: "root", id: "root", type: "root" };
+    	var rootNode = new YAHOO.widget.TextNode ( rootobj, tree.getRoot (), false );
+    	TOOLTIPS.addContextId(rootNode.labelElId, "Root Tip");
+
+    	var node1obj = { label: "node1", id: "node1", type: "level2" };
+    	var newNode1 = new YAHOO.widget.TextNode ( node1obj, rootNode, false);
+    	TOOLTIPS.addContextId(newNode1.labelElId, "Node#1 Tip");
+
+    	var node2obj = { label: "node2", id: "node2", type: "level3" };
+    	var newNode2 = new YAHOO.widget.TextNode ( node2obj, newNode1, false);
+    	TOOLTIPS.addContextId(newNode2.labelElId, "Node#2 Tip");
+
+    	tree.draw();
+    	return "";
+	}
+
+</script>
+</head>
+
+<body onload=ShowTree()>
+	<div id="PSOMTreeView"></div>
+</body>
+</html>

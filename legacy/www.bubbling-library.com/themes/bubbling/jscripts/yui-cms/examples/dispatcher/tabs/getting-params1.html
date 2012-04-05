@@ -1,0 +1,25 @@
+<div>
+  <h3>Area #1: Passing thru function's parameters (arguments)</h3>
+  <div id="hd">
+  	<h4>Dispatcher Initialization: </h4>
+  	<pre>YAHOO.plugin.Dispatcher.fetch ('myCustomPort1', 'tabs/getting-params1.html', <br />  // configuration object<br />  {<br />	onLoad: function( area ) {<br />	   var foo = 'param1',<br />		   boo = 'param2';<br />	   myRemoteMethod1( foo, boo, {tee:1, loo: 2});<br />	}<br />  }<br />);</pre>
+  </div>
+  <div id="bd">
+    <h4>Dynamic Content - Source Code:</h4>
+    <pre>// using the window.myFunction you can force to define a global function, avoid it...<br />// instead you can use the yahoo namespace, for example (YAHOO.example.myFunction)<br />window.myRemoteMethod1 = function(foo, boo, obj) {<br />    console.log ('Function: myRemoteMethod1');<br />    console.log ('Scope: ', this);<br />    // in this case the method will be executed under the window scope,<br />    // but will receive a list of arguments.<br />    alert (foo);<br />    alert (boo);<br />}</pre>
+  </div>
+  <div id="ft">
+  </div>
+</div>
+<script>
+    // using the window.myFunction you can force to define a global function, avoid it...
+    // instead you can use the yahoo namespace, for example (YAHOO.example.myFunction)
+	window.myRemoteMethod1 = function(foo, boo, obj) {
+	    // console.log ('Function: myRemoteMethod1');
+	    // console.log ('Scope: ', this);
+	    // in this case the method will be executed under the window scope,
+	    // but will receive a list of arguments.
+	    alert (foo);
+	    alert (boo);
+	}
+</script>

@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<title>Bubbling Library (YUI Extension) - Accordion Control</title>
+<meta name='author' content='Caridy Patino (caridy at gmail.com)' />
+<link rel="stylesheet" type="text/css" href="../assets/example.css">
+<style type="text/css">
+.iphone {
+    width: 230px;
+    float: left;
+}
+.accordion-slides li {
+    border: 1px solid #cccccc;
+    list-style-type: none;
+}
+    .accordion-slides li h3 {
+        margin: 0px;
+    }
+    .accordion-slides li h3 a {
+        display: block;
+    }
+    .accordion-slides .yui-cms-item .yui-cms-slide {
+        height: 0px;
+        overflow: hidden;
+    }
+        .accordion-slides .yui-cms-item .yui-cms-slide p {
+            padding: 5px;
+        }
+</style>
+<!-- Dependency source files -->
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/utilities/utilities.js"></script>
+<script type="text/javascript" src="http://js.bubbling-library.com/2.1/build/bubbling/bubbling.js"></script>
+<script type="text/javascript">
+(function() {
+  var $L = YAHOO.lang,
+      $D = YAHOO.util.Dom;
+  YAHOO.Bubbling.addDefaultAction('actionAccordion', function (layer, args) {
+    var closing = [],
+        opening = null;
+    if (!args[1].flagged) {
+        // searching the slide element
+        opening = $D.getElementsByClassName('yui-cms-slide','div',$D.getAncestorByClassName (args[1].target, 'yui-cms-item'))[0];
+        // searching the opened elements (can be more that one element)
+        $D.batch ($D.getElementsByClassName('yui-cms-slide','div',$D.getAncestorByClassName (args[1].target, 'accordion-slides')), function(el){
+          var h = parseInt($D.getStyle(el, 'height'), 10);
+          // if the element is not the active and is opened
+          if ((el !== opening) && (!$L.isNumber(h) || (h > 0))) {
+            if (!$L.isNumber(h)) {
+                // forcing to number... to avoid misbehavior on "auto" height...
+                $D.setStyle(el, 'height', el.scrollHeight+'px');
+            }
+            closing.push(el);
+          }
+        });
+        // starting a new animation to open the element: .yui-cms-item .yui-cms-slide
+        if ($L.isObject(opening)) {
+		  var anim1 = new YAHOO.util.Anim(opening, { height: { to: opening.scrollHeight } }, 0.3, YAHOO.util.Easing.easeInStrong);
+		  anim1.animate();
+	    }
+		if (closing.length > 0) {
+		  var anim2 = new YAHOO.util.Anim(closing, { height: { to: 0 } }, 0.3, YAHOO.util.Easing.easeInStrong);
+		  anim2.animate();
+		}
+        // reclaiming the behavior
+        return true;
+    }
+  });
+}());
+</script>
+</head>
+<body id="cms-body">
+<div id="doc">
+
+	<div class="path">
+	  <a href="http://www.bubbling-library.com/" target="_top">Bubbling Library</a> &gt; <a href="http://www.bubbling-library.com/eng/examples" target="_top">Examples</a>
+	</div>
+
+  <h1>Accordion Menu (open on click)</h1>
+
+  <p>Using the bubbling core (6kb) to extend the YUI functionalities to create a simple and extensible Accordion Menu...</p>
+  <p style="color: red;"> <em>(Deprecated in favor of the new AccordionManager Widget)</em></p>
+  <div class="iphone">
+	<ul class="accordion-slides">
+		<li class="yui-cms-item selected">
+		    <h3><a href="#" class="actionAccordion">Accessories</a></h3>
+		    <div class="yui-cms-slide" style="height: auto;">
+		      <p>
+    			  <a href="http://www.apple.com/iphone/accessories/"><img src="../lighter/images/iphone_galleryaccess_20070628.jpg" alt="iPhone accessories" class="photo" height="176" width="178"></a>
+    			  Apple accessories help you get the most out of your iPhone. <a href="http://www.apple.com/iphone/accessories/" class="more">Find out more</a>
+		      </p>
+			</div>
+		</li>
+		<li class="yui-cms-item">
+		    <h3><a href="#" class="actionAccordion">Photos</a></h3>
+		    <div class="yui-cms-slide">
+		      <p>
+    			  <a href="http://www.apple.com/iphone/gallery/"><img src="../lighter/images/iphone_galleryphotos_20070622.jpg" alt="iPhone w/ earbuds" class="photo" height="180" width="178"></a>
+    			  No matter how you look at it, the iPhone design is incredible. <a href="http://www.apple.com/iphone/gallery/" class="more">View photos</a>
+		      </p>
+			</div>
+		</li>
+		<li class="yui-cms-item">
+			<h3><a href="#" class="actionAccordion">360 View</a></h3>
+		    <div class="yui-cms-slide">
+		      <p>
+    			  <a href="http://www.apple.com/iphone/gallery/360/"><img src="../lighter/images/iphone_gallery360s_20070622.jpg" alt="iPhone with earbuds" class="photo" height="180" width="178"></a>
+    			  Want to take iPhone for a spin? <a href="http://www.apple.com/iphone/gallery/360/" class="more">Watch this</a>
+		      </p>
+			</div>
+		</li>
+		<li class="yui-cms-item">
+			<h3><a href="#" class="actionAccordion">TV Ads</a></h3>
+		    <div class="yui-cms-slide">
+		      <p>
+    			  <a href="http://www.apple.com/iphone/ads/"><img src="../lighter/images/iphone_galleryads_20070622.jpg" alt="iPhone w/ earbuds" class="photo" height="180" width="178"></a>
+    			  iPhone shows what it can do in these TV commercials. <a href="http://www.apple.com/iphone/ads/" class="more">View video</a>
+		      </p>
+			</div>
+		</li>
+	</ul>
+  </div>
+
+<!-- THE EXAMPLE's CODE END HERE, FROM NOW ON IS JUST THE DOCUMENTATION //-->
+
+</div>
+</body>
+</html>

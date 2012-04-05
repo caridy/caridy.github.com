@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+<!-- Mirrored from www.bubbling-library.com/sandbox/bubbling/tooltips/tooltips-statics-with-close.html by HTTrack Website Copier/3.x [XR&CO'2010], Wed, 04 Apr 2012 15:59:16 GMT -->
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<title>Dynamic ToolTips - Example of Bubbling technique</title>
+<meta name='author' content='Caridy Patino (caridy at gmail.com)' />
+<link rel="stylesheet" type="text/css" href="../assets/example.css">
+<!-- YUI Basement Style -->
+<link rel="stylesheet" type="text/css" href='http://yui.yahooapis.com/2.7.0/build/container/assets/skins/sam/container.css'/>
+<!-- YUI Library -->
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/utilities/utilities.js"></script>
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/container/container-min.js"></script>
+<!-- YUI-CMS Extension: Bubbling Library -->
+<script type="text/javascript" src='../../../../js.bubbling-library.com/2.1/build/bubbling/bubbling.js'></script>
+<script type="text/javascript" src='../../../../js.bubbling-library.com/2.1/build/tooltips/tooltips.js'></script>
+<script type="text/javascript">
+// customizing the tooltips - this code chunk is not necesary...
+YAHOO.widget.TooltipManager.config ({
+    close: true
+});
+(function() {
+// short hands
+var $D = YAHOO.util.Dom,
+    $L = YAHOO.lang,
+    $E = YAHOO.util.Event,
+    $C = YAHOO.util.Connect;
+
+  // customizing the tooltips for ajax requesting process
+  YAHOO.widget.TooltipManager.onCompile = function ( el, o ) {
+    var reImg = /.*#/,
+        reLink = /#.*/,
+        l = el.getAttribute('href',2),
+        t = this.backup.title || '',
+        img = null;
+  	if ($D.hasClass(el, 'showThumbnail') && (l.indexOf('#') != -1)) {
+  	    // preloading the image... very useful to prevent dialog painting trash
+  	    img = new Image; img.setAttribute('src', l.replace(reLink,''));
+  	    // setting the panel header
+        this.header = t + ' &nbsp; &nbsp; ';
+        this.body = '<img src="'+l.replace(reImg,'')+'" alt="Loading Image..." />';
+        // setting the panel footer for external links
+        if ($L.isString(el.getAttribute('target')) && (el.getAttribute('target') != '')) {
+           this.footer = '<a href="'+l.replace(reLink,'')+'" class="notips">External Link</a>';
+        }
+        // returning true (prevent default behavior)
+  		return true;
+  	}
+  	return false;
+  };
+})();
+</script>
+</head>
+<body id="cms-body" class="yui-skin-sam">
+
+  <div id="doc">
+
+	<div class="path">
+	  <a href="../../../index.html" target="_top">Bubbling Library</a> &gt; <a href="../../../eng/examples.html" target="_top">Examples</a>
+	</div>
+
+	<h2>Examples of Using the Bubbling Technique for ToolTips</h2>
+
+    <p>Dynamic ToolTips - This is a tooltip customization to display thumbnail images on mouse over based on the HREF of the anchor.</p>
+
+	<a title="My wife and me..." href="http://www.yahoo.com/#images/yare.jpg" class="showThumbnail">Using Local Photo</a><br><br>
+
+	<a title="This is a simple link" href="../../../index.html">Hover over me to see my Tooltip</a><br><br>
+
+	<a title="Yahoo! Hack Day" href="http://developer.yahoo.com/yui/#http://farm1.static.flickr.com/95/256133445_5a5e9d758b.jpg?v=0" class="showThumbnail" target="_blank">Using a Flickr as thumbnail</a><br><br>
+
+	<a title="" href="../../../index.html#http://farm2.static.flickr.com/1023/897009192_17ba947300.jpg?v=0" class="showThumbnail">Hover over me to see an small image without text from Flickr</a><br><br>
+
+	<a title="Big Eye" href="http://www.flickr.com/#http://farm1.static.flickr.com/26/39538170_c2409be8c5_m.jpg" class="showThumbnail">Another flickr image, now with info</a><br><br>
+
+	<a title="This is a simple link without hint" href="../../../index.html" class="notips">Hover over me and you will see nothing</a><br><br>
+
+	<a title="Oh, big picture here..." href="http://www.flickr.com/#http://farm1.static.flickr.com/124/391481718_91eb5b3df9.jpg?v=0" class="showThumbnail">Hover over me to see a BIG Image</a><br><br>
+    
+<!-- THE EXAMPLE's CODE END HERE, FROM NOW ON IS JUST THE DOCUMENTATION //-->
+  </div>
+</body>
+
+<!-- Mirrored from www.bubbling-library.com/sandbox/bubbling/tooltips/tooltips-statics-with-close.html by HTTrack Website Copier/3.x [XR&CO'2010], Wed, 04 Apr 2012 15:59:16 GMT -->
+</html>

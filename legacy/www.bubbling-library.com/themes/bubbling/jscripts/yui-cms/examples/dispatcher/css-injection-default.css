@@ -1,0 +1,14 @@
+/***********************************************/
+/* default CSS Rules                           */
+/***********************************************/
+body {
+    padding: 50px;
+}
+#demo ul li.first-child,
+#demo ul li.last-child {
+    background: #00ce30;
+}
+    #demo ul li.first-child a,
+    #demo ul li.last-child a {
+        color: #ffffff;
+    }
