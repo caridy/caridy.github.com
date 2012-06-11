@@ -27,6 +27,7 @@ YUI.add('cl', function (Y, NAME) {
         this._APPREADY          = 'appready';
         this._BUFFER_TIMEOUT    = config.bufferTimeout    || 10000;
         this._CALLBACK_TIMEOUT  = config.callbackTimeout  || 10000;
+        this._GUID              = Y.guid();
 
         // Lookup for event targets that act as internal proxies.
         this._proxyFor = {};
@@ -55,79 +56,144 @@ YUI.add('cl', function (Y, NAME) {
             this._initParentConnection();
         },
 
+        /**
+         * Initializes the window message handler for incoming CL
+         * messages, dropping messages that don't look like CL
+         * messages and routing the ones that do.
+         *
+         * @method _initWindowMessageHandler
+         */
         _initWindowMessageHandler: function () {
-            var self = this;
-
             Y.log('Initializing handler for window messages', INFO, NAME);
 
-            self._addListener(self._WIN, 'message', function (e) {
-                var source = e.source,
-                    origin = e.origin,
-                    parsed,
-                    name,
+            this._addListener(this._WIN, 'message', Y.bind(function (e) {
+                var parsed,
+                    proxy,
                     data;
 
                 try {
                     parsed = Y.JSON.parse(e.data);
-                    name   = parsed && parsed.name;
-                } catch (err) {
+                }
+                catch (err) {
                     Y.log('Invalid data structure as part of the message, discarded message.', INFO, NAME);
                 }
 
-                Y.log('Received window message: '+e.data+' from '+origin, DEBUG, NAME);
+                Y.log('Received window message: '+e.data+' from '+e.origin, DEBUG, NAME);
 
-                if (! name) {
-                    Y.log('Dropping window message since it does not fulfill the requirements of a CL message', DEBUG, NAME);
-                    return;
-                }
+                if (this._validateCLEvent(parsed)) {
+                    data  = this._createCLEventData(e, parsed);
+                    proxy = this._proxyRouter(e, parsed);
 
-                data = {
-                    data: parsed.data,
-                    origin: origin,
-                    source: source
-                };
-
-                if (parsed.cbid) {
-                    /**
-                     * A callback facade that transparently invokes a callback
-                     * associated with another CL instance.
-                     */
-                    data.callback = function () {
-                        self._postMessage(source, {
-                            name: parsed.cbid,
-                            data: {
-                                args: Array.prototype.slice.call(arguments)
-                            }
-                        }, origin);
-                    };
+                    if (proxy) {
+                        proxy.fire(parsed.name, data);
+                    }
                 }
-
-                // If there is a proxy associated with the event name, it is a
-                // dedicated handshake proxy and we assume we are in the middle
-                // of a handshake.
-                if (self._proxyFor[name]) {
-                    Y.log('Firing "'+name+'" on dedicated handshake proxy', DEBUG, NAME);
-                    self._proxyFor[name].fire(name, data);
-                }
-                // If there is a proxy associated with the origin, we fire the
-                // message on it to notify any subscribers.
-                else if (self._proxyFor[origin]) {
-                    Y.log('Firing "'+name+'" on dedicated proxy for '+origin, DEBUG, NAME);
-                    self._proxyFor[origin].fire(name, data);
-                }
-                // We should never reach this point unless we receive a window
-                // message that resembles a CL message.
                 else {
-                    Y.log('Proxy lookup failed. This should never happen!', WARN, NAME);
+                    Y.log('Dropping window message since it does not fulfill the requirements of a CL message', DEBUG, NAME);
                 }
-            });
+            }, this));
         },
 
+        /**
+         * CL event data validator.
+         *
+         * @method _validateCLEvent
+         * @param data {Object} The application event data
+         * @return {Boolean}
+         */
+        _validateCLEvent: function (data) {
+            return !!(data && data.name && data.guid);
+        },
+
+        /**
+         * Selects the proxy associated with the event.
+         *
+         * @method _proxyRouter
+         * @param {Object} The window message event data
+         * @param {Object} The application event data
+         * @return {EventTarget}
+         */
+        _proxyRouter: function (evtData, appData) {
+            var name   = appData.name,
+                guid   = appData.guid,
+                origin = evtData.origin,
+                proxy  = null;
+
+            // If there is a proxy associated with the event name, it
+            // is a dedicated handshake proxy and we assume we are in
+            // the middle of a handshake.
+            if (this._proxyFor[name]) {
+                Y.log('Proxy found for event name "'+name+'"; assuming a dedicated handshake proxy', DEBUG, NAME);
+                proxy = this._proxyFor[name];
+            }
+            // If there is a proxy associated with the origin, we fire
+            // the message on it to notify any subscribers.
+            else if (this._proxyFor[guid+origin]) {
+                Y.log('Proxy found for guid "'+guid+'" and origin "'+origin+'"', DEBUG, NAME);
+                proxy = this._proxyFor[guid+origin];
+            }
+            // We should never reach this point unless we receive a
+            // window message that resembles a CL message.
+            else {
+                Y.log('Proxy lookup failed. This should never happen!', ERROR, NAME);
+            }
+
+            return proxy;
+        },
+
+        /**
+         * Transforms the window message event data and the application
+         * event data into an internally expected format.
+         *
+         * @method _createCLEventData
+         * @param {Object} The window message event data
+         * @param {Object} The application event data
+         * @return {Object} The CL event data
+         */
+        _createCLEventData: function (evtData, appData) {
+            var clEventData = {
+                data: appData.data,
+                guid: appData.guid,
+                origin: evtData.origin,
+                source: evtData.source
+            };
+
+            if (appData.cbid) {
+                /**
+                 * A callback facade that transparently invokes a
+                 * callback associated with another CL instance.
+                 */
+                clEventData.callback = Y.bind(function () {
+                    this._postMessage(clEventData.source, {
+                        name: appData.cbid,
+                        guid: this._GUID,
+                        data: {
+                            args: Y.Array(arguments)
+                        }
+                    }, clEventData.origin);
+                }, this);
+            }
+
+            return clEventData;
+        },
+
+        /**
+         * Kicks off the handshake sequence with the parent
+         * application.
+         *
+         * @method _initParentConnection
+         */
         _initParentConnection: function () {
             var self = this,
                 win  = self._WIN,
                 href = win.location.href,
                 token;
+
+            // Intentionally using `==` to accommodate IE quirksmode
+            if (win.parent == win) {
+                Y.log('Detected self as top-level window; aborting parent connection routine', INFO, NAME);
+                return;
+            }
 
             if (href) {
                 token = self._getHandshakeToken(href);
@@ -142,9 +208,10 @@ YUI.add('cl', function (Y, NAME) {
 
                     self._parentSource = e.source;
                     self._parentOrigin = e.origin;
+                    self._parentGuid   = e.guid;
 
-                    // We record the parent event proxy under the actual origin.
-                    self._proxyFor[e.origin] = self._parentProxy;
+                    // We record the parent event proxy under the actual guid + origin.
+                    self._proxyFor[e.guid+e.origin] = self._parentProxy;
 
                     Y.log('Connection established with parent '+self._parentOrigin, INFO, NAME);
 
@@ -154,7 +221,10 @@ YUI.add('cl', function (Y, NAME) {
 
                 // We don't specify the parent origin here because it is
                 // unknown until the connection is established.
-                self._postMessage(win.parent, {name: token}, '*');
+                self._postMessage(win.parent, {
+                    name: token,
+                    guid: self._GUID
+                }, '*');
                 Y.log('SYN sent to parent', INFO, NAME);
             }
         },
@@ -180,12 +250,24 @@ YUI.add('cl', function (Y, NAME) {
             self._createEventProxy(token).once(token, function (e) {
                 var origin = e.origin,
                     source = e.source,
-                    proxy  = self._createEventProxy(origin);
+                    guid   = e.guid,
+                    proxy,
+                    clProxy;
 
                 Y.log('SYN received from child '+origin, INFO, NAME);
 
+                // If there is a callback to receive the CL proxy, we pass it.
                 if (Y.Lang.isFunction(cb)) {
-                    var clProxy = self._createCLProxy(iframe, proxy, origin, source);
+                    proxy = self._createEventProxy(guid+origin);
+                    clProxy = self._createCLProxy(proxy, {
+                        origin: origin,
+                        source: source,
+                        guid: guid
+                    });
+
+                    // Save a reference to the iframe on the proxy
+                    clProxy.iframe = iframe;
+
                     cb(clProxy);
                 }
 
@@ -193,38 +275,58 @@ YUI.add('cl', function (Y, NAME) {
                 self._deleteEventProxy(token);
 
                 Y.log('Connection established with child '+origin, INFO, NAME);
-                self._postMessage(source, {name: token}, origin);
+                self._postMessage(source, {
+                    name: token,
+                    guid: self._GUID
+                }, origin);
+
                 Y.log('ACK sent to child '+origin, INFO, NAME);
             });
         },
 
-        _createCLProxy: function (iframe, proxy, origin, source) {
-            var self = this;
+        _createCLProxy: function (proxy, winMeta) {
+            var self = this,
+                source = winMeta.source,
+                origin = winMeta.origin,
+                guid = winMeta.guid;
 
             return {
-                iframe: iframe,
                 on: function (name, handler) {
-                    return proxy.on(name, function (e) {
+                    var args = Y.Array(arguments);
+
+                    // Replace the event handler with a wrapped version
+                    // that checks the origin of the window message.
+                    args.splice(1, 1, function (e) {
                         if (origin === e.origin) {
                             handler(e);
                         }
                     });
+
+                    return proxy.on.apply(proxy, args);
                 },
                 once: function (name, handler) {
-                    return proxy.once(name, function (e) {
+                    var args = Y.Array(arguments);
+
+                    // Replace the event handler with a wrapped version
+                    // that checks the origin of the window message.
+                    args.splice(1, 1, function (e) {
                         if (origin === e.origin) {
                             handler(e);
                         }
                     });
+
+                    return proxy.once.apply(proxy, args);
                 },
                 fire: function (name, data, cb) {
                     self._fireWindowMessageEvent(name, source, origin, {
                         data: data,
+                        guid: guid,
                         callback: cb
                     });
                 },
                 open: function (name, cb) {
                     return self._createConnectionObject(name, cb, {
+                        guid: guid,
                         source: source,
                         origin: origin
                     });
@@ -237,12 +339,21 @@ YUI.add('cl', function (Y, NAME) {
                  * @param cb {Function} A callback
                  * @public
                  */
-                ready: function (cb) {
+                ready: function (cb, context) {
                     Y.log('Registering a callback to execute when the child is ready', DEBUG, NAME);
-                    return proxy.on(self._APPREADY, cb);
+                    return proxy.on(self._APPREADY, cb, context);
                 },
                 purge: function () {
+                    Y.Object.each(self._proxyFor, function (value, key) {
+                        if (value === proxy) {
+                            Y.log('Deleting internal event proxy found in the lookup table under key: '+key, INFO, NAME);
+                            self._deleteEventProxy(key);
+                        }
+                    });
+
                     proxy.detachAll();
+                    proxy = null;
+
                     Y.log('All listeners have been detached', DEBUG, NAME);
                 }
             };
@@ -261,15 +372,21 @@ YUI.add('cl', function (Y, NAME) {
         },
 
         on: function (name, handler) {
-            if (name && handler) {
-                return this._onParentMessageEvent(name, handler);
-            }
+            var args = Y.Array(arguments);
+            args.unshift({
+                once: false
+            });
+
+            return this._onParentMessageEvent.apply(this, args);
         },
 
         once: function (name, handler) {
-            if (name && handler) {
-                return this._onParentMessageEvent(name, handler, once);
-            }
+            var args = Y.Array(arguments);
+            args.unshift({
+                once: true
+            });
+
+            return this._onParentMessageEvent.apply(this, args);
         },
 
         fire: function (name, data, cb) {
@@ -289,9 +406,16 @@ YUI.add('cl', function (Y, NAME) {
          * @public
          */
         open: function (name, cb) {
-            return this._createConnectionObject(name, cb, {
-                origin: this._PARENT_ORIGIN_ALIAS
-            }, true);
+            if (this._parentAppIsReady()) {
+                return this._createConnectionObject(name, cb, {
+                    guid: this._parentGuid,
+                    source: this._parentSource,
+                    origin: this._parentOrigin
+                });
+            }
+            else {
+                Y.log('A connection with the parent cannot be opened until the handshake has completed', WARN, NAME);
+            }
         },
 
         /**
@@ -300,20 +424,19 @@ YUI.add('cl', function (Y, NAME) {
          * @method _createConnectionObject
          * @param name {String} The connection name
          * @param cb {Function} A callback
-         * @param win {Object} Window metadata used to fire the event (e.g., source and origin)
-         * @param connectingToParent {Boolean} Indicates that we are connecting to the parent
+         * @param winMeta {Object} Window metadata used to fire the event (e.g., source, origin, and guid)
          * @private
          */
-        _createConnectionObject: function (name, cb, win, connectingToParent) {
+        _createConnectionObject: function (name, cb, winMeta) {
             var self = this,
                 cbid,
                 sub;
 
-            if (! (name && Y.Lang.isFunction(cb) && win)) {
+            if (! (name && Y.Lang.isFunction(cb) && winMeta.origin && winMeta.guid)) {
                 return null;
             }
 
-            cbid = self._registerCallback(cb, win.origin, name);
+            cbid = self._registerCallback(cb, winMeta.origin, winMeta.guid, name);
 
             Y.log('Creating a connection bound to the event name "'+name+'" and the callback "'+cbid+'"', INFO, NAME);
 
@@ -326,19 +449,11 @@ YUI.add('cl', function (Y, NAME) {
 
                     Y.log('Writing data to the open "'+name+'" connection', DEBUG, NAME);
 
-                    // If we're connecting with the parent we need to go
-                    // through _fireParentMessageEvent to account for the case
-                    // where the handshake has not yet completed and we need to
-                    // buffer the write.
-                    if (connectingToParent) {
-                        self._fireParentMessageEvent(name, data, cbid);
-                    }
-                    else {
-                        self._fireWindowMessageEvent(name, win.source, win.origin, {
-                            data: data,
-                            callback: cbid
-                        });
-                    }
+                    self._fireWindowMessageEvent(name, winMeta.source, winMeta.origin, {
+                        data: data,
+                        guid: winMeta.guid,
+                        callback: cbid
+                    });
                 },
                 close: function () {
                     sub = self._subscriptionFor[name];
@@ -349,12 +464,6 @@ YUI.add('cl', function (Y, NAME) {
                     }
                 }
             };
-        },
-
-        _onParentMessageEvent: function (name, handler, once) {
-            return this._onWindowMessageEvent(
-                name, this._PARENT_ORIGIN_ALIAS, handler, { once: once }
-            );
         },
 
         /**
@@ -379,6 +488,7 @@ YUI.add('cl', function (Y, NAME) {
             fireParentMessageEvent = function () {
                 self._fireWindowMessageEvent(name, self._parentSource, self._parentOrigin, {
                     data: data,
+                    guid: self._parentGuid,
                     callback: cb
                 });
             };
@@ -427,8 +537,8 @@ YUI.add('cl', function (Y, NAME) {
             return href.replace(/[?].*$/, '').replace(/[#].*$/, '');
         },
 
-        _registerCallback: function (cb, origin, name, timeout) {
-            var proxy = this._proxyFor[origin],
+        _registerCallback: function (cb, origin, guid, name, timeout) {
+            var proxy = this._proxyFor[guid+origin],
                 cbid  = Y.stamp(cb),
                 timer,
                 sub;
@@ -468,44 +578,54 @@ YUI.add('cl', function (Y, NAME) {
             return cbid;
         },
 
-        _createEventProxy: function (origin) {
-            if (origin) {
-                Y.log('Creating event proxy for '+origin, DEBUG, NAME);
+        /**
+         * Handles the creation of event proxies which are used to
+         * namespace CL events internally.
+         *
+         * @method _createEventProxy
+         * @param key {String} The key to store the proxy under
+         * @return {EventTarget} The proxy
+         */
+        _createEventProxy: function (key) {
+            if (key) {
+                Y.log('Creating event proxy for '+key, DEBUG, NAME);
                 var proxy = new Y.EventTarget();
 
                 proxy.publish(this._APPREADY, {
                     fireOnce: true
                 });
-                this._proxyFor[origin] = proxy;
+                this._proxyFor[key] = proxy;
 
                 return proxy;
             }
         },
 
-        _deleteEventProxy: function (origin) {
-            Y.log('Deleting event proxy for '+origin, DEBUG, NAME);
-            if (this._proxyFor[origin]) {
-                this._proxyFor[origin].detachAll();
-                delete this._proxyFor[origin];
+        /**
+         * Handles the deletion of event proxies which are used to
+         * namespace CL events internally.
+         *
+         * @method _deleteEventProxy
+         * @param key {String} The key to store the proxy under
+         */
+        _deleteEventProxy: function (key) {
+            Y.log('Deleting event proxy for '+key, DEBUG, NAME);
+            if (this._proxyFor[key]) {
+                this._proxyFor[key].detachAll();
+                this._proxyFor[key] = null;
             }
         },
 
-        _onWindowMessageEvent: function (name, origin, handler, o) {
-            if (name && origin && handler) {
-                var proxy = this._proxyFor[origin];
-                o = o || {};
+        _onParentMessageEvent: function () {
+            var args   = Y.Array(arguments),
+                config = args.shift(),
+                method = config.once ? 'once' : 'on',
+                proxy  = this._parentProxy;
 
-                if (! proxy) {
-                    Y.log('The proxy lookup for '+origin+' failed; creating one now..', DEBUG, NAME);
-                    proxy = this._createEventProxy(origin);
-                }
-
-                return proxy[o.once ? 'once' : 'on'](name, handler);
-            }
+            return proxy[method].apply(proxy, args);
         },
 
         /**
-         * Fires a CL message event at a window.
+         * Fires a CL message at a window.
          *
          * Transforms the outgoing message into a structure that can be
          * understood by the CL message event handler on the other end.
@@ -524,14 +644,17 @@ YUI.add('cl', function (Y, NAME) {
             if (name && source && origin) {
                 o   = o || {};
                 cb  = o.callback;
-                msg = { name: name };
+                msg = {
+                    name: name,
+                    guid: this._GUID
+                };
 
                 if (o.data) {
                     msg.data = o.data;
                 }
 
                 if (Y.Lang.isFunction(cb)) {
-                    msg.cbid = this._registerCallback(cb, origin, name, this._CALLBACK_TIMEOUT);
+                    msg.cbid = this._registerCallback(cb, origin, o.guid, name, this._CALLBACK_TIMEOUT);
                 }
                 else if (Y.Lang.isString(cb)) {
                     msg.cbid = cb;
@@ -562,6 +685,7 @@ YUI.add('cl', function (Y, NAME) {
          * Initializes debug mode where you can hook into communication between
          * the current application and its parent.
          *
+         * @method _initDebugMode
          * @private
          */
         _initDebugMode: function () {
@@ -570,27 +694,32 @@ YUI.add('cl', function (Y, NAME) {
 
             Y.log('Initializing debug mode', WARN, NAME);
 
-            // Global methods which can be used to simulate parent interaction.
+            // Global methods which can be used to simulate parent
+            // interaction.
             YUI.CL = {
+                // The method used to simulate incoming events
                 fire: function (name, data) {
                     proxy.fire(name, {
                         data: data
                     });
                 },
-                on: function (name, handler) {
-                    return proxy.on(name, handler);
+                // The method used to subscribe to outgoing events
+                on: function () {
+                    return proxy.on.apply(proxy, arguments);
                 },
-                once: function (name, handler) {
-                    return proxy.once(name, handler);
+                // The method used to subscribe to an outgoing event once
+                once: function () {
+                    return proxy.once.apply(proxy, arguments);
                 }
             };
 
             // Wrapping some methods on this CL instance so that we can
-            // leak incoming/outgoing events through to the debug event proxy.
+            // leak incoming/outgoing events through to the debug event
+            // proxy.
             Y.Array.each(['fire', 'on', 'once'], function (name) {
                 var orig = self[name]; // save original
                 self[name] = function () {
-                    var args = Array.prototype.slice.call(arguments);
+                    var args = Y.Array(arguments);
                     proxy[name].apply(proxy, args);
                     orig.apply(self, args);
                 };
