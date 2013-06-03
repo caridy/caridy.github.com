@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="performance,javascript">
+    <meta name="robots" content="index,follow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PostMessage performance analysis - Nodejs, Javascript, AJAX and Advanced Web Apps</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.1.0/pure-min.css">
+    <link rel="stylesheet" href="/blog/static/blog.css">
+    <link rel="alternate" type="application/rss+xml", title="Caridy - Random Bubbles » rss", href="/blog/index.xml">
+    <script src="http://use.typekit.net/ajf8ggy.js"></script>
+    <script>try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+    <div class="pure-g-r " id="layout">
+        <div class="pure-u" id="main">
+            <div class="header pure-u-1">
+                <h1 class="pure-u-1"><a href="http://caridy.name/">Caridy Patiño</a></h1>
+            </div>
+            <div class="content pure-u-1">
+    <h1 class="pure-u-1"><a href="/blog/2012/06/postmessage-perf-analysis/">PostMessage performance analysis</a></h1>
+    <p><h3>What is a <code>postMessage</code>?</h3>
+</p>
+<p><code>window.postMessage</code>&nbsp;is the de facto mechanism for enabling cross-origin communication at the browser level. In other words, it allows you to send a message (in the form of a string) from one document instance to another in a secure way. It exposes an API to send bi-directional messages between two windows, making this feature ideal for mash-up implementations where you can have two completely isolated documents (running on different domains) and still have a way to keep them in sync. All you need is a reference to the receiver window to post a message to it, e.g.:</p>
+<pre>receiverWindow.postMessage(message, targetOrigin);</pre>
+<p>Since the&nbsp;purpose&nbsp;of this post is to do a performance analysis, I will leave the basic introduction at that. Mozilla has an extensive description of <code>postMessage</code> <sup>[1]</sup>, and since all major browsers already implement this feature using the same API, this should be enough to move on to the main topic.</p>
+<h3>What is a round trip <code>postMessage</code> and how does it work?</h3>
+<p>We can have a regular page that includes an <code>iframe</code> from a different domain, and we want to notify the <code>iframe</code> whenever a user interacts with the page so the <code>iframe</code> can execute some code and callback with the result of the operation. We are assuming the <code>iframe</code> doesn’t have any UI, but that’s not a requirement, we can do it backwards as well, where the user interacts with the <code>iframe</code> UI, and it has to notify the parent window about the interaction, and wait for some command. Both scenarios are valid, and perfectly doable with <code>postMessage</code>.</p>
+<p>In the context of this analysis, we define a roundtrip message as a message that is sent from a parent document to a child document, and a response to that message sent from the child document to the parent document. Both documents belong to different domains and all messages are delivered via <code>postMessage</code>. The whole workflow works in an&nbsp;asynchronous&nbsp;way.</p>
+<h3>Why <code>Y.CL</code>?</h3>
+<p><code>Y.CL</code> is a sugar layer on top of <code>postMessage</code> to facilitate the use of <code>YUI Custom Events</code> to wrap the low level implementation. On top of that, it facilitates the hand-shaking process between two windows to avoid any race conditions and queues messages until both sides are ready to receive them. We will be talking more about <code>Y.CL</code> very soon.</p>
+<h3>What are we testing here?</h3>
+<p>The purpose of the test <sup>[2]</sup> is to understand how fast browsers can deliver a message via <code>postMessage</code>, in a roundtrip fashion, and see how this technique is suitable for a NRT (near-realtime) implementation. The test is an echo-like roundtrip implementation where the parent document messages the child document with the <code>string</code> “marco” and the child document responds with the <code>string</code> “polo”.</p>
+<h3>Results</h3>
+<p>These are the results <sup>[3]</sup>, specifically, the number of roundtrip messages that we can send <i>per second</i>:</p>
+<p><iframe src="http://www.browserscope.org/user/tests/table/agt1YS1wcm9maWxlcnINCxIEVGVzdBjq_vMQDA" width="100%" height="850" frameborder="0"></iframe></p>
+<p><i>Note</i>: Although <code>postMessage</code> is faster than <code>Y.CL</code>, the difference is not significant. Considering the overhead of using <code>YUI Custom Events</code> and <code>JSON.stringify()</code>, it delivers a consistent and adequate abstraction for this functionality. Again, we will be talking more in details about <code>Y.CL</code> in the upcoming days.</p>
+<h3>Conclusions</h3>
+<p><code>window.postMessage</code> is a mature feature, supported on all major browsers, including mobile browsers. It works pretty fast, and it is getting faster with every release. You should be able to send hundred of messages <i>per second</i>, and that should be good enough for the majority of the cases, including near-realtime applications.</p>
+<p>In my opinion, it is better to isolate and maintain a consistent API through <code>postMessage</code> between two independent logical pieces in a complex application than trying to couple the two pieces into the same context. And <code>postMessage</code> could be really useful for creating mash-ups and decoupled web applications.</p>
+<h3>References</h3>
+<p>1. <a href="https://developer.mozilla.org/en/DOM/window.postMessage" target="_blank">Mozilla Developer Network – <code>window.postMessage</code> API Doc</a></p>
+<p>2. <a href="http://jsperf.com/iframe-perf-postmessage-vs-cl/3"><code>postMessage</code> test suite on jsperf.com</a></p>
+<p>3. <a href="http://www.browserscope.org/user/tests/table/agt1YS1wcm9maWxlcnINCxIEVGVzdBjq_vMQDA">Browserscope result page</a></p>
+</div>
+<div class="pure-g-r meta">
+    <div class="pure-u-1">
+        <div class="l-box">
+            <span class="article-date">June 13, 2012</span>
+            <span class="article-all"><a href="/blog/archives/">More Articles</a></span>
+            
+                <span class="article-tags">
+                Tags:
+                
+                    <a href="/blog/tag/performance/">performance</a>,
+                
+                    <a href="/blog/tag/javascript/">javascript</a>,
+                
+                <a href="/blog/archives/">all</a>
+                </span>
+            
+        </div>
+    </div>
+</div>
+
+
+            <div class="pure-u-1 footer">
+                <div class="l-box footer-centered">
+                    <div class="pure-g-r">
+                        <div class="pure-u-2-3">
+                            <h1>require("caridy").info</h1>
+                            <p>
+                                I work for Yahoo! as principal FE at YUI Team. Some of my work includes <a href="http://github.com/yahoo/mojito">mojito</a>, <a href="http://github.com/yahoo/express-yui">express-yui</a>, <a href="http://github.com/yui/yui3">yui</a>, <a href="http://yuilibrary.com/gallery/user/caridy">a bunch of yui gallery modules</a>, and <a href="http://caridy.github.io/legacy/www.bubbling-library.com/">bubbling library</a>.
+                            </p>
+                            <p>
+                                You can check some of my code at <a href="http://github.com/caridy">GitHub</a>, you can follow me at <a href="http://twitter.com/caridy">Twitter</a> or just email me at <a href="mailto:caridy@caridy.com">caridy@gmail.com</a>.
+                            </p>
+                        </div>
+                        <div class="pure-u-1-3">
+                            <div class="l-box">
+                                <div id="pic">
+                                    <img alt="Caridy" src="https://secure.gravatar.com/avatar/fef48709416e18e4ccb263b248fd88e1?s=420&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pure-g-r legal">
+                <div class="pure-u-1">
+                    <div class="l-box">
+                        <p class="legal-license">
+                            This site is built using <a href="http://purecss.io/">Pure</a> and <a href="https://github.com/caridy/flipflop">FlipFlop</a>. <a href="/blog/archives/">Archives</a> and <a href="/blog/index.xml">Entries (RSS)</a> for your convenience.
+                        </p>
+                        <p class="legal-license">
+                            All code and content on this site is licensed under <a href="http://creativecommons.org/licenses/by/3.0/us/">Creative Commons</a> unless stated otherwise.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

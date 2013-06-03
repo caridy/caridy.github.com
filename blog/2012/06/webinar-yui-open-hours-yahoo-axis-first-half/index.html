@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="mojito,javascript,webinar">
+    <meta name="robots" content="index,follow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webinar: “YUI Open Hours: Yahoo! Axis” (first half) - Nodejs, Javascript, AJAX and Advanced Web Apps</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.1.0/pure-min.css">
+    <link rel="stylesheet" href="/blog/static/blog.css">
+    <link rel="alternate" type="application/rss+xml", title="Caridy - Random Bubbles » rss", href="/blog/index.xml">
+    <script src="http://use.typekit.net/ajf8ggy.js"></script>
+    <script>try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+    <div class="pure-g-r " id="layout">
+        <div class="pure-u" id="main">
+            <div class="header pure-u-1">
+                <h1 class="pure-u-1"><a href="http://caridy.name/">Caridy Patiño</a></h1>
+            </div>
+            <div class="content pure-u-1">
+    <h1 class="pure-u-1"><a href="/blog/2012/06/webinar-yui-open-hours-yahoo-axis-first-half/">Webinar: “YUI Open Hours: Yahoo! Axis” (first half)</a></h1>
+    <p>Yesterday <a href="http://twitter.com/ekashida">@ekashida</a> and I did a quick walkthrough on the technical part of Yahoo! Axis, specifically the front end and the web components. Here is the recorded session:</p>
+<p><iframe width="608" height="456" src="http://www.youtube.com/embed/vIvFbJo1Fj8" frameborder="0" allowfullscreen=""></iframe><br>
+
+ * <a href="http://www.youtube.com/watch?v=vIvFbJo1Fj8&amp;hd=1">http://www.youtube.com/watch?v=vIvFbJo1Fj8&amp;hd=1</a>
+
+<p>These are some of the bullets we covered during this first half:</p>
+<h3>Yahoo! axis architecture</h3>
+<ul>
+<li>(caridy) why native (performance, stability, etc)</li>
+<li>(caridy) why web (reusable pieces, transparent updates, fine grained layouts using css, buckets, experimentation, etc)</li>
+<li>(caridy) why hybrid (why BM is native, why SL is web, why Omni bar is native)</li>
+<li>(keugene) why hybrid (how we mimic some of the native pieces for web)</li>
+<li>(keugene) creating/destroying apps as needed to avoid memory leak issues altogether</li>
+<li>(caridy / keugene) why independent apps and how it works</li>
+</ul>
+<h3>YUI Components used and extended in Yahoo! Axis</h3>
+<ul>
+<li>(keugene) [yui core infrastructure] extensions vs plugins (registration, race conditions, configs, etc)</li>
+<li>(keugene) communication layer Y.CL overview (we show both perf analysis, and the post for postmessage vs Y.CL)</li>
+<li>(caridy) smart localstorage (cache-offline-smart) and how we extend yui cache-offline for better performance and manageability</li>
+<li>(keugene) [scrollview-hack] hooking into scrollview-paginator to implement our own anchoring process to avoid cutting cards</li>
+<li>(keugene) [scrollview-hack] optimization</li>
+<li>(caridy) [scrollview-hack] defining points of interest as new events (pulling)</li>
+</ul>
+<p>Next week we plan to talk about “Mojito” in the context of Yahoo! Axis.</p>
+</div>
+<div class="pure-g-r meta">
+    <div class="pure-u-1">
+        <div class="l-box">
+            <span class="article-date">June 15, 2012</span>
+            <span class="article-all"><a href="/blog/archives/">More Articles</a></span>
+            
+                <span class="article-tags">
+                Tags:
+                
+                    <a href="/blog/tag/mojito/">mojito</a>,
+                
+                    <a href="/blog/tag/javascript/">javascript</a>,
+                
+                    <a href="/blog/tag/webinar/">webinar</a>,
+                
+                <a href="/blog/archives/">all</a>
+                </span>
+            
+        </div>
+    </div>
+</div>
+
+
+            <div class="pure-u-1 footer">
+                <div class="l-box footer-centered">
+                    <div class="pure-g-r">
+                        <div class="pure-u-2-3">
+                            <h1>require("caridy").info</h1>
+                            <p>
+                                I work for Yahoo! as principal FE at YUI Team. Some of my work includes <a href="http://github.com/yahoo/mojito">mojito</a>, <a href="http://github.com/yahoo/express-yui">express-yui</a>, <a href="http://github.com/yui/yui3">yui</a>, <a href="http://yuilibrary.com/gallery/user/caridy">a bunch of yui gallery modules</a>, and <a href="http://caridy.github.io/legacy/www.bubbling-library.com/">bubbling library</a>.
+                            </p>
+                            <p>
+                                You can check some of my code at <a href="http://github.com/caridy">GitHub</a>, you can follow me at <a href="http://twitter.com/caridy">Twitter</a> or just email me at <a href="mailto:caridy@caridy.com">caridy@gmail.com</a>.
+                            </p>
+                        </div>
+                        <div class="pure-u-1-3">
+                            <div class="l-box">
+                                <div id="pic">
+                                    <img alt="Caridy" src="https://secure.gravatar.com/avatar/fef48709416e18e4ccb263b248fd88e1?s=420&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pure-g-r legal">
+                <div class="pure-u-1">
+                    <div class="l-box">
+                        <p class="legal-license">
+                            This site is built using <a href="http://purecss.io/">Pure</a> and <a href="https://github.com/caridy/flipflop">FlipFlop</a>. <a href="/blog/archives/">Archives</a> and <a href="/blog/index.xml">Entries (RSS)</a> for your convenience.
+                        </p>
+                        <p class="legal-license">
+                            All code and content on this site is licensed under <a href="http://creativecommons.org/licenses/by/3.0/us/">Creative Commons</a> unless stated otherwise.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="yui,javascript,events">
+    <meta name="robots" content="index,follow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YUI3: Controlling key strokes events (keyup, keydown, keypress) - Nodejs, Javascript, AJAX and Advanced Web Apps</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.1.0/pure-min.css">
+    <link rel="stylesheet" href="/blog/static/blog.css">
+    <link rel="alternate" type="application/rss+xml", title="Caridy - Random Bubbles » rss", href="/blog/index.xml">
+    <script src="http://use.typekit.net/ajf8ggy.js"></script>
+    <script>try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+    <div class="pure-g-r " id="layout">
+        <div class="pure-u" id="main">
+            <div class="header pure-u-1">
+                <h1 class="pure-u-1"><a href="http://caridy.name/">Caridy Patiño</a></h1>
+            </div>
+            <div class="content pure-u-1">
+    <h1 class="pure-u-1"><a href="/blog/2009/03/yui3-keystroke-events/">YUI3: Controlling key strokes events (keyup, keydown, keypress)</a></h1>
+    <p>In this post I want to cover the general specifications related with keystrokes in YUI3. Basically you will see few examples and a bunch of links to the <a title="YUI3 Official Documentation" href="http://developer.yahoo.com/yui/3/">YUI Library official documentation</a>.</p>
+<p><strong>There are two different ways to define a keylistener in <a title="YUI Library Official Website" href="http://yuilibrary.com/projects/yui3/wiki">YUI3</a>:</strong></p>
+<p>Considering that in YUI3 most of the DOM references are YUI Node objects, using the ‘on’ method for a node object is the most reasonable approach for all kind of listeners, including keylistener.</p>
+
+<div class="wp_syntax"><div class="code"><pre class="javascript" style="font-family:monospace;">YUI<span style="color: #009900;">(</span><span style="color: #009900;">)</span>.<span style="color: #003366; font-weight: bold;">use</span><span style="color: #009900;">(</span><span style="color: #3366CC;">&quot;node&quot;</span><span style="color: #339933;">,</span> <span style="color: #003366; font-weight: bold;">function</span><span style="color: #009900;">(</span>Y<span style="color: #009900;">)</span> <span style="color: #009900;">{</span>
+    Y.<span style="color: #660066;">get</span><span style="color: #009900;">(</span><span style="color: #3366CC;">&#39;#my-input-element&#39;</span><span style="color: #009900;">)</span>.<span style="color: #660066;">on</span><span style="color: #009900;">(</span><span style="color: #3366CC;">&quot;keypress&quot;</span><span style="color: #339933;">,</span>  <span style="color: #003366; font-weight: bold;">function</span><span style="color: #009900;">(</span>e<span style="color: #009900;">)</span> <span style="color: #009900;">{</span>
+        console.<span style="color: #660066;">log</span><span style="color: #009900;">(</span><span style="color: #3366CC;">&#39;keypress when the focus is on the input element&#39;</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+    <span style="color: #009900;">}</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">}</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span></pre></div></div>
+
+<p>We can use ‘keydown’ or ‘keyup’ to be more specific in the definition.</p>
+<a href="http://developer.yahoo.com/yui/3/api/Node.html#method_on">http://developer.yahoo.com/yui/3/api/Node.html#method_on</a>
+<p>Also, we can use the traditional way:</p>
+
+<div class="wp_syntax"><div class="code"><pre class="javascript" style="font-family:monospace;">YUI<span style="color: #009900;">(</span><span style="color: #009900;">)</span>.<span style="color: #003366; font-weight: bold;">use</span><span style="color: #009900;">(</span><span style="color: #3366CC;">&quot;*&quot;</span><span style="color: #339933;">,</span> <span style="color: #003366; font-weight: bold;">function</span><span style="color: #009900;">(</span>Y<span style="color: #009900;">)</span> <span style="color: #009900;">{</span>
+    Y.<span style="color: #660066;">on</span><span style="color: #009900;">(</span><span style="color: #3366CC;">&#39;keydown&#39;</span><span style="color: #339933;">,</span> <span style="color: #003366; font-weight: bold;">function</span><span style="color: #009900;">(</span>e<span style="color: #009900;">)</span> <span style="color: #009900;">{</span>
+        console.<span style="color: #660066;">log</span><span style="color: #009900;">(</span><span style="color: #3366CC;">&#39;keydown when the focus is on the input element&#39;</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+    <span style="color: #009900;">}</span><span style="color: #339933;">,</span> <span style="color: #3366CC;">&#39;#my-input-element&#39;</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">}</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span></pre></div></div>
+
+<p>or we can use the event name ‘key’ and using the 4th argument to be more specific in the event definition, check this example:</p>
+
+<div class="wp_syntax"><div class="code"><pre class="javascript" style="font-family:monospace;">YUI<span style="color: #009900;">(</span><span style="color: #009900;">)</span>.<span style="color: #003366; font-weight: bold;">use</span><span style="color: #009900;">(</span><span style="color: #3366CC;">&quot;*&quot;</span><span style="color: #339933;">,</span> <span style="color: #003366; font-weight: bold;">function</span><span style="color: #009900;">(</span>Y<span style="color: #009900;">)</span> <span style="color: #009900;">{</span>
+    Y.<span style="color: #660066;">on</span><span style="color: #009900;">(</span><span style="color: #3366CC;">&#39;key&#39;</span><span style="color: #339933;">,</span> <span style="color: #003366; font-weight: bold;">function</span><span style="color: #009900;">(</span>e<span style="color: #009900;">)</span> <span style="color: #009900;">{</span>
+        console.<span style="color: #660066;">log</span><span style="color: #009900;">(</span><span style="color: #3366CC;">&#39;keydown when the focus is on the input element&#39;</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+    <span style="color: #009900;">}</span><span style="color: #339933;">,</span> <span style="color: #3366CC;">&#39;#my-input-element&#39;</span><span style="color: #339933;">,</span>  <span style="color: #3366CC;">&#39;down&#39;</span><span style="color: #339933;">,</span> Y<span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">}</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span></pre></div></div>
+
+<p><a href="http://developer.yahoo.com/yui/3/api/YUI.html#method_on">http://developer.yahoo.com/yui/3/api/YUI.html#method_on</a>
+</p>
+<p>We can also use [press] or [up], or we can be even more specific describing which key combination we want to listen for, like this combination: [press:65,66+shift+ctrl], this event definition will fire only if keyCode 65 or 66 is detected during a keypress event while shift and control are held down.</p>
+<p>Check this advanced example:</p>
+
+<div class="wp_syntax"><div class="code"><pre class="javascript" style="font-family:monospace;">YUI<span style="color: #009900;">(</span><span style="color: #009900;">)</span>.<span style="color: #003366; font-weight: bold;">use</span><span style="color: #009900;">(</span><span style="color: #3366CC;">&quot;*&quot;</span><span style="color: #339933;">,</span> <span style="color: #003366; font-weight: bold;">function</span><span style="color: #009900;">(</span>Y<span style="color: #009900;">)</span> <span style="color: #009900;">{</span>
+    Y.<span style="color: #660066;">on</span><span style="color: #009900;">(</span><span style="color: #3366CC;">&#39;key&#39;</span><span style="color: #339933;">,</span> <span style="color: #003366; font-weight: bold;">function</span><span style="color: #009900;">(</span>e<span style="color: #339933;">,</span> myInt<span style="color: #339933;">,</span> myString<span style="color: #339933;">,</span> myArray<span style="color: #339933;">,</span> myObj<span style="color: #009900;">)</span> <span style="color: #009900;">{</span>
+        console.<span style="color: #660066;">log</span><span style="color: #009900;">(</span><span style="color: #3366CC;">&#39;keydown when the focus is on the input element&#39;</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+    <span style="color: #009900;">}</span><span style="color: #339933;">,</span> <span style="color: #3366CC;">&#39;#my-input-element&#39;</span><span style="color: #339933;">,</span>  <span style="color: #3366CC;">&#39;down:65,12,13+shift&#39;</span><span style="color: #339933;">,</span> Y<span style="color: #339933;">,</span> <span style="color: #CC0000;">1</span><span style="color: #339933;">,</span> <span style="color: #3366CC;">&#39;2&#39;</span><span style="color: #339933;">,</span> <span style="color: #009900;">[</span><span style="color: #CC0000;">3</span><span style="color: #009900;">]</span><span style="color: #339933;">,</span> <span style="color: #009900;">{</span>indx<span style="color: #339933;">:</span><span style="color: #CC0000;">4</span><span style="color: #009900;">}</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">}</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span></pre></div></div>
+
+<p>In this example, we have a definition for keydown for keyCodes 65, 12 or 13, plus the shift key held down at the same time. The 5th argument represents the execution context (Y), and the rest of the arguments will be passed thru the handler method. More information about this feature here:</p>
+<a href="http://developer.yahoo.com/yui/3/event/#keylistener">http://developer.yahoo.com/yui/3/event/#keylistener</a>
+<p>Of course, we can add this kind of event to any DOM element/tag, but it only makes sense if the event can get the focus, usually all kind of form input fields, anchors, images, buttons, etc.</p>
+<p><strong>Controlling the event propagation and the default behavior:</strong></p>
+<p>YUI3 controls all the events in the same way, wrapping the event object (variable ‘e’ passed thru the handler function) into a more consistent object. This feature allows us to control the object propagation easily. We can use preventDefault and stopPropagation directly, instead of invoking YAHOO.util.Event.stopPropagation or YAHOO.util.Event.preventDefault as we used to do in YUI2.x. Here is a very simple example:</p>
+
+<div class="wp_syntax"><div class="code"><pre class="javascript" style="font-family:monospace;">YUI<span style="color: #009900;">(</span><span style="color: #009900;">)</span>.<span style="color: #003366; font-weight: bold;">use</span><span style="color: #009900;">(</span><span style="color: #3366CC;">&quot;node&quot;</span><span style="color: #339933;">,</span> <span style="color: #003366; font-weight: bold;">function</span><span style="color: #009900;">(</span>Y<span style="color: #009900;">)</span> <span style="color: #009900;">{</span>
+    Y.<span style="color: #660066;">get</span><span style="color: #009900;">(</span><span style="color: #3366CC;">&#39;#my-input-element&#39;</span><span style="color: #009900;">)</span>.<span style="color: #660066;">on</span><span style="color: #009900;">(</span><span style="color: #3366CC;">&quot;keyup&quot;</span><span style="color: #339933;">,</span>  <span style="color: #003366; font-weight: bold;">function</span><span style="color: #009900;">(</span>e<span style="color: #009900;">)</span> <span style="color: #009900;">{</span>
+        e.<span style="color: #660066;">preventDefault</span><span style="color: #009900;">(</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+        console.<span style="color: #660066;">log</span><span style="color: #009900;">(</span><span style="color: #3366CC;">&#39;the input element never receives this event.&#39;</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+    <span style="color: #009900;">}</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">}</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span></pre></div></div>
+
+<p><a href="http://developer.yahoo.com/yui/3/api/Event.Facade.html#method_preventDefault">http://developer.yahoo.com/yui/3/api/Event.Facade.html#method_preventDefault</a>
+</p>
+<p><strong>Global keystroke events:</strong></p>
+<p>We can also listen for global events. Defining a listener for an especial element called ‘document‘, we will receive a notification for every keystroke.</p>
+
+<div class="wp_syntax"><div class="code"><pre class="javascript" style="font-family:monospace;">YUI<span style="color: #009900;">(</span><span style="color: #009900;">)</span>.<span style="color: #003366; font-weight: bold;">use</span><span style="color: #009900;">(</span><span style="color: #3366CC;">&quot;node&quot;</span><span style="color: #339933;">,</span> <span style="color: #003366; font-weight: bold;">function</span><span style="color: #009900;">(</span>Y<span style="color: #009900;">)</span> <span style="color: #009900;">{</span>
+    Y.<span style="color: #660066;">get</span><span style="color: #009900;">(</span><span style="color: #3366CC;">&#39;document&#39;</span><span style="color: #009900;">)</span>.<span style="color: #660066;">on</span><span style="color: #009900;">(</span><span style="color: #3366CC;">&quot;keyup&quot;</span><span style="color: #339933;">,</span>  <span style="color: #003366; font-weight: bold;">function</span><span style="color: #009900;">(</span>e<span style="color: #009900;">)</span> <span style="color: #009900;">{</span>
+        console.<span style="color: #660066;">log</span><span style="color: #009900;">(</span><span style="color: #3366CC;">&#39;global keyup&#39;</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+    <span style="color: #009900;">}</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">}</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span></pre></div></div>
+
+<p><a href="http://developer.yahoo.com/yui/3/api/Node.html#method_Y.get">http://developer.yahoo.com/yui/3/api/Node.html#method_Y.get</a>
+</p>
+<p><strong>Simulating keystroke events:</strong></p>
+<p>Another feature, and this one is new in YUI3, is the event simulation, which means you can simulate user actions like clicks and keystrokes. I hope you don’t need to use it, because I really think that with a good design you don’t need to use this feature other than in a js unit test, but just in case, here is an example:</p>
+
+<div class="wp_syntax"><div class="code"><pre class="javascript" style="font-family:monospace;">YUI<span style="color: #009900;">(</span><span style="color: #009900;">)</span>.<span style="color: #003366; font-weight: bold;">use</span><span style="color: #009900;">(</span><span style="color: #3366CC;">&quot;event-simulate&quot;</span><span style="color: #339933;">,</span> <span style="color: #003366; font-weight: bold;">function</span><span style="color: #009900;">(</span>Y<span style="color: #009900;">)</span> <span style="color: #009900;">{</span>
+    <span style="color: #003366; font-weight: bold;">var</span> element <span style="color: #339933;">=</span> document.<span style="color: #660066;">getElementById</span><span style="color: #009900;">(</span><span style="color: #3366CC;">&quot;custom-input-element&quot;</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+    <span style="color: #006600; font-style: italic;">//simulate a keystroke with Ctrl key down</span>
+    Y.<span style="color: #660066;">Event</span>.<span style="color: #660066;">simulate</span><span style="color: #009900;">(</span>element<span style="color: #339933;">,</span> <span style="color: #3366CC;">&quot;keyup&quot;</span><span style="color: #339933;">,</span> <span style="color: #009900;">{</span> keyCode<span style="color: #339933;">:</span> <span style="color: #CC0000;">65</span><span style="color: #339933;">,</span> ctrlKey<span style="color: #339933;">:</span> <span style="color: #003366; font-weight: bold;">true</span> <span style="color: #009900;">}</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">}</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span></pre></div></div>
+
+<p><a href="http://developer.yahoo.com/yui/3/api/Event.html#method_simulate">http://developer.yahoo.com/yui/3/api/Event.html#method_simulate</a>
+</p>
+<p><strong>Examples:</strong></p>
+<p><a title="YUI3 Key listeners - example" href="http://bubbling-library.com/sandbox/yui3/keystrokes.html">Click here to see a very simple sample of how to use all these concepts.</a></p>
+<p><em><small>One final note: some of these concepts can change in the future (examples based on YUI3 PR2).</small></em></p>
+
+</div>
+<div class="pure-g-r meta">
+    <div class="pure-u-1">
+        <div class="l-box">
+            <span class="article-date">March 20, 2009</span>
+            <span class="article-all"><a href="/blog/archives/">More Articles</a></span>
+            
+                <span class="article-tags">
+                Tags:
+                
+                    <a href="/blog/tag/yui/">yui</a>,
+                
+                    <a href="/blog/tag/javascript/">javascript</a>,
+                
+                    <a href="/blog/tag/events/">events</a>,
+                
+                <a href="/blog/archives/">all</a>
+                </span>
+            
+        </div>
+    </div>
+</div>
+
+
+            <div class="pure-u-1 footer">
+                <div class="l-box footer-centered">
+                    <div class="pure-g-r">
+                        <div class="pure-u-2-3">
+                            <h1>require("caridy").info</h1>
+                            <p>
+                                I work for Yahoo! as principal FE at YUI Team. Some of my work includes <a href="http://github.com/yahoo/mojito">mojito</a>, <a href="http://github.com/yahoo/express-yui">express-yui</a>, <a href="http://github.com/yui/yui3">yui</a>, <a href="http://yuilibrary.com/gallery/user/caridy">a bunch of yui gallery modules</a>, and <a href="http://caridy.github.io/legacy/www.bubbling-library.com/">bubbling library</a>.
+                            </p>
+                            <p>
+                                You can check some of my code at <a href="http://github.com/caridy">GitHub</a>, you can follow me at <a href="http://twitter.com/caridy">Twitter</a> or just email me at <a href="mailto:caridy@caridy.com">caridy@gmail.com</a>.
+                            </p>
+                        </div>
+                        <div class="pure-u-1-3">
+                            <div class="l-box">
+                                <div id="pic">
+                                    <img alt="Caridy" src="https://secure.gravatar.com/avatar/fef48709416e18e4ccb263b248fd88e1?s=420&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pure-g-r legal">
+                <div class="pure-u-1">
+                    <div class="l-box">
+                        <p class="legal-license">
+                            This site is built using <a href="http://purecss.io/">Pure</a> and <a href="https://github.com/caridy/flipflop">FlipFlop</a>. <a href="/blog/archives/">Archives</a> and <a href="/blog/index.xml">Entries (RSS)</a> for your convenience.
+                        </p>
+                        <p class="legal-license">
+                            All code and content on this site is licensed under <a href="http://creativecommons.org/licenses/by/3.0/us/">Creative Commons</a> unless stated otherwise.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

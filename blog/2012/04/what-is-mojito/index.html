@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="mojito,javascript,nodejs">
+    <meta name="robots" content="index,follow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What is Mojito? - Nodejs, Javascript, AJAX and Advanced Web Apps</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.1.0/pure-min.css">
+    <link rel="stylesheet" href="/blog/static/blog.css">
+    <link rel="alternate" type="application/rss+xml", title="Caridy - Random Bubbles » rss", href="/blog/index.xml">
+    <script src="http://use.typekit.net/ajf8ggy.js"></script>
+    <script>try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+    <div class="pure-g-r " id="layout">
+        <div class="pure-u" id="main">
+            <div class="header pure-u-1">
+                <h1 class="pure-u-1"><a href="http://caridy.name/">Caridy Patiño</a></h1>
+            </div>
+            <div class="content pure-u-1">
+    <h1 class="pure-u-1"><a href="/blog/2012/04/what-is-mojito/">What is Mojito?</a></h1>
+    <p>
+    <img class="alignright" title="Mojito Application Framework" src="http://ydn.zenfs.com/blogs/1/mojito_logo.png"
+    alt="" width="328" height="108">
+</p>
+<p>
+    What is Mojito? Well,
+    <em>
+        mojito
+    </em>
+    is a traditional cuban drink, and since I’m originally from Cuba, I should know
+    everything about it, and I do!, but today I want to talk about the other Mojito,
+    the one from Yahoo!, the application framework, because today it was officially announced
+    as the newest open source project.
+</p>
+<p>
+    My team and I have been using Mojito for quite some time, we were one of the early
+    adopters within the company, and we used it to build a brand new product from scratch.
+    So, I know a little bit about it, and I know you will have a lot of questions about
+    it. Today, I just want to address general questions, but eventually I want to drill
+    down on some of the topics.
+</p>
+<p>
+    <strong>
+        Is Mojito a silver bullet for web applications?
+    </strong>
+</p>
+<p>
+    There are not silver bullets in our industry. But IMHO, Mojito brings some new concepts
+    to the table, and specifically it opens a
+    <em>
+        new chapter for efficiency in the web
+    </em>
+    .
+</p>
+<p>
+    <strong>
+        How can Mojito help to create more efficient web applications?
+    </strong>
+</p>
+<p>
+    Efficiency can be achieved when you have smart software that can react to runtime
+    changes. In the context of web applications, and mobile web applications, the runtime
+    depends on numerous vectors, some of them completely out of our control. For example,
+    connection speed, battery life, traffic peaks, browser capabilities, device capabilities,
+    etc. If the application can monitor each of those vectors, and react per user, per
+    connection, per process, per routine, then you can achieve some mind blowing tricks
+    to make your application really efficient, hence to make the web more efficient.
+    Mojito has two unique features to empower you on this area.
+</p>
+<ul>
+    <li>
+        <em>
+            Runtime context
+        </em>
+        : which is a predefined set of dimensions/variables with a finite number of possibilities/values
+        that will define the state of the execution at any given time.
+    </li>
+    <li>
+        <em>
+            Environment agnostic
+        </em>
+        : the unique ability to run the same code in different runtimes. E.g.: browser,
+        server, iOS UIWebView or any other phoneGap similar runtime.
+    </li>
+</ul>
+<p>
+    When you combine these two features together, you can control how, when and where
+    each piece of logic will be executed, so, you can define very simple rules to make
+    your application to perform better under different&nbsp;circumstances&nbsp;per user,
+    per request, per&nbsp;routine, etc.
+</p>
+<p>
+    <strong>
+        What does “context” mean in Mojito?
+    </strong>
+</p>
+<p>
+    In terms of JavaScript, a context is a literal object that contains a series of
+    dimensions (properties, for example, region, device,&nbsp;connection&nbsp;speed,
+    network, environment, memory, just to name a few), and each dimension can have a
+    finite number of values. This literal object can be constructed on every request
+    at the server side, or can be defined, redefined at the client side. This literal
+    object will allow you to pick up certain pre-defined configuration that can be used
+    to trigger and execute a certain piece of logic, or can be used just like a dynamic
+    configuration hub for regular settings, language, etc.
+</p>
+<p>
+    This is a concept that we have been using for quite sometime at Yahoo!, but what
+    is new in Mojito is that this context can now travel from server-to-client and vice
+    versa, and can be modified at any given time, giving you full control over it.
+</p>
+<p>
+    <strong>
+        Can I really execute the same code in the server and in the client?
+    </strong>
+</p>
+<p>
+    Yes, you can. But it’s not magic. You have to define where you want to execute each
+    piece of logic (
+    <em>
+        javascript files
+    </em>
+    ) depending of the execution context following a very simple pattern to name your
+    files, e.g.:
+</p>
+<ul>
+    <li>
+        foo.client.js defines a piece of logic that is only available when running on the
+        client side runtime.
+    </li>
+    <li>
+        bar.server.js defines a piece of logic that is only available when running on the
+        server side runtime.
+    </li>
+    <li>
+        baz.common.js defines a piece of code that is runtime agnostic. In can run on either
+        server or client side.
+    </li>
+</ul>
+<p>
+    Now, if you have two pieces with the same name (e.g. foo.client.js and foo.server.js),
+    Mojito will switch between logics automatically depending on the execution runtime.
+    This allows you to tweak your logic easily. Keep in mind that <em>.client.js or </em>.server.js
+    will be able to require any other piece of logic that could be client, server or
+    common. This is a very powerful way to organize your code.
+</p>
+<p>
+    <strong>
+        How does Mojito compare to other framework out there?
+    </strong>
+</p>
+<p>
+    I have used and tried many other Node.JS frameworks in the last two years or so,
+    and all of them (no exceptions) suffer from the same problem, separation between
+    server and client. I think Mojito does a pretty good job&nbsp;blurring&nbsp;that
+    separation, and as a result, you will notice an increase on productivity from the
+    development point of view.
+</p>
+<p>
+    <strong>
+        Was Mojito built from scratch in Node.JS?
+    </strong>
+</p>
+<p>
+    No. Mojito was built on top of two well known/tested frameworks:
+</p>
+<ul>
+    <li>
+        <a href="http://yuilibrary.com/" target="_blank">YUI Library</a>
+        : which is the foundation of the javascript module structure and the basic abstraction
+        for most of the JavaScript pieces in Mojito. You don’t need to know YUI to use Mojito
+        though, Mojito obscures most of the YUI features, and you can use JavaScript or any
+        other JavaScript library if you want (if it can run in the server side just like
+        YUI does it).
+    </li>
+    <li>
+        <a href="http://expressjs.com/" target="_blank">Express</a>
+        : “High performance, high class web development for&nbsp;
+        <a href="http://nodejs.org/">Node.js</a>
+        “&nbsp;as the underlaying serving platform for the server side.
+    </li>
+</ul>
+<p>
+    They are both open source projects.
+</p>
+<p>
+    <strong>
+        How hard is to get up to speed on Mojito?
+    </strong>
+</p>
+<p>
+    To be honest, it will be hard. You need to be able to reach some level of abstraction
+    to really embrace the Mojito paradigm, but also to be able to squeeze every bit of
+    it. It takes time to understand how it works, and how to tweak it, but it is worth
+    the effort. Especially for those who know YUI, it will be easier to adapt to Mojito.
+</p>
+<p>
+    <strong>
+        Which types of web applications are more suitable for Mojito?
+    </strong>
+</p>
+<p>
+    Most web applications that are meant to be used in different devices can probably
+    fit into Mojito paradigm. But those that are set to scale in terms of traffic and
+    performance are more suitable for it IMHO.
+</p>
+<p>
+    <strong>
+        What kind of cool stuff can I do with Mojito?
+    </strong>
+</p>
+<p>
+    As&nbsp;
+    <a href="https://twitter.com/#!/rw0">@rw0</a>
+    &nbsp;mentioned in his post, you can create an application that can easily instrument
+    the latency and response time of every network activity within the app, and translate
+    that in changes in a dimension within the context. Let’s say we have a dimension
+    like this:
+</p>
+<p>
+    { speed: { fast: null, regular: null, slow: null, shitty: null }&nbsp;}
+</p>
+<p>
+    Based on the instrumentation, you can adjust the value of “speed” overtime. If the
+    user is using an iPhone, connected to a wifi network, and&nbsp;suddenly&nbsp;s/he
+    step out of the room, switching to a shitty 3G connection, and if we can detect that
+    change, and re-asset the “speed” dimension, that means we can easily change the way
+    we serve traffic/content for the user. Maybe we can now make a single request bundling
+    content, assets, data into a single response (JSON), putting some&nbsp;pressure&nbsp;on
+    our servers (which will do the bundling process) for that particular user in order
+    to keep s/he running without a degradation of the service.
+</p>
+<p>
+    <strong>
+        What else can I do with it?
+    </strong>
+</p>
+<p>
+    Based on the previous example, what if we instrument our servers to detect changes
+    in the level of CPU or memory usage?, and depending on a dimension, we can delegate
+    some bundling, rendering, and fetching processes to our client’s runtime in an event
+    of a traffic peak, instead of just degrading the service, or serving stale content
+    just to avoid an outage. And this is only possible because of JavaScript, and the
+    ability to run it in the server or client based on the execution context. I think
+    this is a killer feature.
+</p>
+<p>
+    <strong>
+        Where can I host a Mojito application?
+    </strong>
+</p>
+<p>
+    A Mojito application is just a Node.JS application. Ideally, if it is set to scale,
+    you should try to find an elastic cloud (maybe Amazon EC2) to host it. Internally,
+    we use Yahoo! Manhattan Cloud, which is another piece of the Yahoo! Cocktails platform,
+    and hopefully you will be able to use it too soon. Ask&nbsp;
+    <a href="https://twitter.com/#!/olympum">@olympum</a>
+    &nbsp;for more details hehehehe!
+</p>
+<p>
+    <strong>
+        Where can I download the source code?
+    </strong>
+</p>
+<p>
+    Mojito source code is hosted in&nbsp;
+    <a href="http://github.com/yahoo/mojito">github.com/yahoo/mojito</a>
+    , go and get it.&nbsp;We hope you can fork it and help us make it better by submitting
+    patches and new features.
+</p>
+<p>
+    <strong>
+        How can I use it?
+    </strong>
+</p>
+<p>
+    Check the&nbsp;
+    <a href="http://developer.yahoo.com/cocktails/mojito/docs/quickstart/">quickstart section</a>
+    &nbsp;from the official page.
+</p>
+<p>
+    That’s all for now, feel free to ask/comment!
+</p>
+<p>
+    Here are some others links to get you running on Mojito:
+</p>
+
+<ul>
+<li><a href="http://developer.yahoo.com/cocktails/mojito/">http://developer.yahoo.com/cocktails/mojito/</a></li>
+<li><a href="http://github.com/yahoo/mojito">http://github.com/yahoo/mojito</a></li>
+<li><a href="http://developer.yahoo.com/cocktails/mojito/api/">http://developer.yahoo.com/cocktails/mojito/api/</a></li>
+<li><a href="http://yuilibrary.com/">http://yuilibrary.com/</a></li>
+</ul>
+
+</div>
+<div class="pure-g-r meta">
+    <div class="pure-u-1">
+        <div class="l-box">
+            <span class="article-date">April 2, 2012</span>
+            <span class="article-all"><a href="/blog/archives/">More Articles</a></span>
+            
+                <span class="article-tags">
+                Tags:
+                
+                    <a href="/blog/tag/mojito/">mojito</a>,
+                
+                    <a href="/blog/tag/javascript/">javascript</a>,
+                
+                    <a href="/blog/tag/nodejs/">nodejs</a>,
+                
+                <a href="/blog/archives/">all</a>
+                </span>
+            
+        </div>
+    </div>
+</div>
+
+
+            <div class="pure-u-1 footer">
+                <div class="l-box footer-centered">
+                    <div class="pure-g-r">
+                        <div class="pure-u-2-3">
+                            <h1>require("caridy").info</h1>
+                            <p>
+                                I work for Yahoo! as principal FE at YUI Team. Some of my work includes <a href="http://github.com/yahoo/mojito">mojito</a>, <a href="http://github.com/yahoo/express-yui">express-yui</a>, <a href="http://github.com/yui/yui3">yui</a>, <a href="http://yuilibrary.com/gallery/user/caridy">a bunch of yui gallery modules</a>, and <a href="http://caridy.github.io/legacy/www.bubbling-library.com/">bubbling library</a>.
+                            </p>
+                            <p>
+                                You can check some of my code at <a href="http://github.com/caridy">GitHub</a>, you can follow me at <a href="http://twitter.com/caridy">Twitter</a> or just email me at <a href="mailto:caridy@caridy.com">caridy@gmail.com</a>.
+                            </p>
+                        </div>
+                        <div class="pure-u-1-3">
+                            <div class="l-box">
+                                <div id="pic">
+                                    <img alt="Caridy" src="https://secure.gravatar.com/avatar/fef48709416e18e4ccb263b248fd88e1?s=420&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pure-g-r legal">
+                <div class="pure-u-1">
+                    <div class="l-box">
+                        <p class="legal-license">
+                            This site is built using <a href="http://purecss.io/">Pure</a> and <a href="https://github.com/caridy/flipflop">FlipFlop</a>. <a href="/blog/archives/">Archives</a> and <a href="/blog/index.xml">Entries (RSS)</a> for your convenience.
+                        </p>
+                        <p class="legal-license">
+                            All code and content on this site is licensed under <a href="http://creativecommons.org/licenses/by/3.0/us/">Creative Commons</a> unless stated otherwise.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

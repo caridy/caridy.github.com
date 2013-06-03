@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="yui,javascript,loader">
+    <meta name="robots" content="index,follow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bootstrap using “YUI Loader” and “YUI Get Utility” - Nodejs, Javascript, AJAX and Advanced Web Apps</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.1.0/pure-min.css">
+    <link rel="stylesheet" href="/blog/static/blog.css">
+    <link rel="alternate" type="application/rss+xml", title="Caridy - Random Bubbles » rss", href="/blog/index.xml">
+    <script src="http://use.typekit.net/ajf8ggy.js"></script>
+    <script>try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+    <div class="pure-g-r " id="layout">
+        <div class="pure-u" id="main">
+            <div class="header pure-u-1">
+                <h1 class="pure-u-1"><a href="http://caridy.name/">Caridy Patiño</a></h1>
+            </div>
+            <div class="content pure-u-1">
+    <h1 class="pure-u-1"><a href="/blog/2009/05/bootstrap-using-yui-loader-and-yui-get-utility/">Bootstrap using “YUI Loader” and “YUI Get Utility”</a></h1>
+    <p>Everyday more and more developers use on-demand loading to improve performance and round “trip” times for web applications and even for traditional web pages that require a certain amount of JavaScript code.</p>
+<p>In YUI 2.x, we have two components that can help us to define on-demand rules. These are the <a href="http://developer.yahoo.com/yui/get/">YUI Get Utility</a>, and the <a href="http://developer.yahoo.com/yui/yuiloader/">YUI Loader</a>.</p>
+<p>YUI 3.x is a different story, this new version is based on the on-demand philosophy, and because of that, Loader and Get Utility are part of YUI Core.</p>
+<h3>About this article:</h3>
+<p>In this article, I will focus on <a href="http://developer.yahoo.com/yui/">YUI 2.x</a> and specifically, how you can design your application to use the <em>YUI on-demand capabilities</em> in such a way that the transition to <a href="http://developer.yahoo.com/yui/3/">YUI 3.x</a> will be straightforward. The main goal is to describe how we can use YUI to organize the code and learn how to deal with <em>on-demand loading processes</em> rather than focus on performance improvements. If you are looking for a performance boost, certainly this technique can help, but I will recommend you to follow the links provided at the bottom of this article.</p>
+<p>From my point of view, there are two different types of web applications or pages:</p>
+<ul>
+<li><em>Monolithic Applications</em>:<br>
+The application and all its features/behaviors are controlled by a single object/script. Modifications in the application usually impact the core and the application in general.</li>
+<li><em>Granular Applications</em>:<br>
+The application is based on regions/webparts that represent certain areas. Usually some of these regions/webparts can be switched or removed from the application without impacting the rest of the functionalities.</li>
+</ul>
+<p>I believe the second option (granular applications) is the way to go, especially for more complex applications. Also, this option will most likely make use of on-demand loading, where each region/webpart should be able to load its requirements and execute its own initialization process when it’s requirements become active and it’s DOM structure becomes available in the DOM.</p>
+<p>Note: <em>regions/webparts are atomic units used to build each page. Usually they are represented in the DOM as a simple DIV, and are contained as a granular part in the application. From now on, I will refer to these elements as “regions”.</em></p>
+<p>That said, lets see a couple of diagrams to analyze what is the gain behind the on-demand loading process. These are manually created diagrams representing the loading and execution process for a page.</p>
+<h3>Application timeline:</h3>
+<p>These two diagrams represent a page/app in which, for the sake of example,  contain only two regions (left-column-renderer and ad-renderer).</p>
+<p><strong>Traditional process</strong>: inserting tags within default DOM structure of every page.</p>
+<div class="wp-caption aligncenter" style="width: 615px"><img title="Default Browser Loader: Loading and Execution Timeline" src="http://caridy.name/imgs/browser-timeline.jpg" alt="Default Browser Loader: Loading and Execution Timeline" width="605" height="321"><p class="wp-caption-text">Default Browser Loader: Loading and Execution Timeline</p></div>
+<p><em>Notes for this diagram</em>:</p>
+<ul>
+<li>it represents a generic app timeline for a simple page with a bunch of script tags.</li>
+<li>the scripts can be at the top (in the head) or at the bottom of the page (before &lt;/body&gt;), and the sequence is more or less the same.</li>
+<li>“<a title="YUI Modules" href="http://developer.yahoo.com/yui/yuiloader/#modulenames">yui-modules</a>” represent a set of YUI modules (probably using <a title="YUI Combo Handler" href="http://yuiblog.com/blog/2008/07/16/combohandler/">YUI Combo Handler</a> to include them all using  a single call.</li>
+<li>“<a title="Bubbling Library YUI Extension" href="http://bubbling-library.com">bubbling</a>” is a 3rd party module that cannot be loaded thru the YUI Combo Handler.</li>
+<li>“swf-object” is a well-known 3rd party component to handle flash movies, and it represents another requirement.</li>
+<li>“<em>…other…</em>” represents other regions in the application.</li>
+</ul>
+<p><strong>On-demand loading process</strong>: using YUI Loader to load the requirements and YUI Get Utility to execute the initialization processes for each region.</p>
+<div class="wp-caption aligncenter" style="width: 610px"><img title="YUI Loader and Get Utility: Loading and Execution Timeline" src="http://caridy.name/imgs/yui-loader-timeline.jpg" alt="Loading and Execution Timeline" width="600" height="400"><p class="wp-caption-text">YUI Loader and Get Utility: Loading and Execution Timeline</p></div>
+<p><em>Notes for this diagram</em>:</p>
+<ul>
+<li>we use some of the elements described in the previous one.</li>
+<li>“yui-loader” is a small file (only 9.4KB) and it packages <a href="http://developer.yahoo.com/yui/yahoo/">Yahoo Global Object</a>, <a href="http://developer.yahoo.com/yui/get/">Get Utility</a>, and <a href="http://developer.yahoo.com/yui/yuiloader/">YUI Loader</a> engine.</li>
+<li>“boot” is usually a tiny file with the application logic, the definition of the 3rd party modules (swf-object and bubbling), and the list of other dependencies (initializers and renderers) that should be loaded thru YUI Get Utility (like left-column-renderer, ad-renderer, etc).</li>
+<li>items at the same level can be executed at the same time (JavaScript is a single execution thread, and so, the first to become ready will be the first to be executed).</li>
+<li>swf-object was transformed into a YUI Module to fit this example (it can be also be treated as a component if you want to).</li>
+<li>items in the 3rd block (left-column-renderer, ad-renderer, etc) will be included dynamically by the bootstrap definition.</li>
+</ul>
+<p><strong>Lets try to identify differences between these two approaches:</strong></p>
+<p>The first difference that you may notice in these two diagrams is the “domready” event. It will be more likely to arrive first in the second approach because those scripts will be injected on-demand without blocking the loading process. It could arrive even before the “bootstrap ready” mark, depending on the complexity (size) of the DOM structure.</p>
+<p>In theory, the bootstrap is responsible in defining what should be loaded and executed after the “bootstrap ready” moment occurs. This means that we can control everything at the JS level instead of depending on the default DOM structure. So all the logic will be at the JS layer and we should be able to delay certain initialization processes, or switch between them based on the user preferences, etc. All this <em>granularity</em> will be handled at the JS level.</p>
+<h3>Lets see some code:</h3>
+<p><em>Entry Point (index.html):</em></p>
+<div class="wp_syntax">
+<div class="code">
+<pre style="font-family: monospace;">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01//EN&quot;
+ &quot;<a href="http://www.w3.org/TR/html4/strict.dtd&quot;&amp;gt">http://www.w3.org/TR/html4/strict.dtd&quot;&amp;gt</a>;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Bootstrapping for a Web App using YUI 2.x&lt;/title&gt;
+    &lt;script type=&quot;text/javascript&quot; src=&quot;bootstrap.js&quot;&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body class=&quot;yui-skin-sam&quot;&gt;
+    &lt;p&gt;Web App.&lt;/p&gt;
+    &lt;div id=&quot;mod-left-column&quot;&gt;
+      ...
+    &lt;/div&gt;
+    &lt;div id=&quot;mod-content&quot;&gt;
+      ...
+    &lt;/div&gt;
+    &lt;div id=&quot;mod-ads&quot;&gt;
+      ...
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+</div>
+</div>
+<p><em>Bootstrap script (bootstrap.js):</em></p>
+
+<div class="wp_syntax"><div class="code"><pre class="javascript" style="font-family:monospace;"><span style="color: #006600; font-style: italic;">/<em>
+ </em> Encapsulation Pattern: Conjuring YUI from thin air (by Chris Heilmann)
+ <em> <a href="http://www.wait-till-i.com/2008/08/02/conjuring-yui-from-thin-air/">http://www.wait-till-i.com/2008/08/02/conjuring-yui-from-thin-air/</a>
+ </em>/</span>
+YAHOO_config <span style="color: #339933;">=</span> <span style="color: #003366; font-weight: bold;">function</span><span style="color: #009900;">(</span><span style="color: #009900;">)</span> <span style="color: #009900;">{</span>
+    <span style="color: #009966; font-style: italic;">/<em> injecting the YUI Loader in the current page </em>/</span>
+    <span style="color: #003366; font-weight: bold;">var</span> s <span style="color: #339933;">=</span> document.<span style="color: #660066;">createElement</span><span style="color: #009900;">(</span><span style="color: #3366CC;">&#39;script&#39;</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+    s.<span style="color: #660066;">setAttribute</span><span style="color: #009900;">(</span><span style="color: #3366CC;">&#39;type&#39;</span><span style="color: #339933;">,</span> <span style="color: #3366CC;">&#39;text/javascript&#39;</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+    s.<span style="color: #660066;">setAttribute</span><span style="color: #009900;">(</span><span style="color: #3366CC;">&#39;src&#39;</span><span style="color: #339933;">,</span>
+        <span style="color: #3366CC;">&#39;<a href="http://yui.yahooapis.com/2.7.0/build/yuiloader/yuiloader-min.js&#39;&lt;/span&gt;&lt;span">http://yui.yahooapis.com/2.7.0/build/yuiloader/yuiloader-min.js&#39;&lt;/span&gt;&lt;span</a> style=&quot;color: #009900;&quot;&gt;)</span><span style="color: #339933;">;</span>
+    document.<span style="color: #660066;">getElementsByTagName</span><span style="color: #009900;">(</span><span style="color: #3366CC;">&#39;head&#39;</span><span style="color: #009900;">)</span><span style="color: #009900;">[</span><span style="color: #CC0000;">0</span><span style="color: #009900;">]</span>.<span style="color: #660066;">appendChild</span><span style="color: #009900;">(</span>s<span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+    <span style="color: #000066; font-weight: bold;">return</span> <span style="color: #009900;">{</span>
+        <span style="color: #006600; font-style: italic;">// true if the library should be dynamically loaded after window.onload.</span>
+        injecting<span style="color: #339933;">:</span> <span style="color: #003366; font-weight: bold;">true</span><span style="color: #339933;">,</span>
+        listener<span style="color: #339933;">:</span> <span style="color: #003366; font-weight: bold;">function</span><span style="color: #009900;">(</span>o<span style="color: #009900;">)</span> <span style="color: #009900;">{</span>
+            <span style="color: #006600; font-style: italic;">// waiting for the loader component</span>
+            <span style="color: #000066; font-weight: bold;">if</span> <span style="color: #009900;">(</span>o.<span style="color: #000066;">name</span> <span style="color: #339933;">===</span> <span style="color: #3366CC;">&#39;get&#39;</span><span style="color: #009900;">)</span> <span style="color: #009900;">{</span>
+                window.<span style="color: #660066;">setTimeout</span><span style="color: #009900;">(</span>YAHOO_config.<span style="color: #660066;">ready</span><span style="color: #339933;">,</span> <span style="color: #CC0000;">1</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+            <span style="color: #009900;">}</span>
+        <span style="color: #009900;">}</span><span style="color: #339933;">,</span>
+        ready<span style="color: #339933;">:</span> <span style="color: #003366; font-weight: bold;">function</span><span style="color: #009900;">(</span><span style="color: #009900;">)</span> <span style="color: #009900;">{</span>
+            <span style="color: #003366; font-weight: bold;">var</span> loader <span style="color: #339933;">=</span> <span style="color: #003366; font-weight: bold;">new</span> YAHOO.<span style="color: #660066;">util</span>.<span style="color: #660066;">YUILoader</span><span style="color: #009900;">(</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+            <span style="color: #006600; font-style: italic;">// defining custom modules</span>
+            loader.<span style="color: #660066;">addModule</span><span style="color: #009900;">(</span><span style="color: #009900;">{</span>
+                <span style="color: #000066;">name</span><span style="color: #339933;">:</span> <span style="color: #3366CC;">&#39;bubbling&#39;</span><span style="color: #339933;">,</span>
+                type<span style="color: #339933;">:</span> <span style="color: #3366CC;">&#39;js&#39;</span><span style="color: #339933;">,</span>
+                fullpath<span style="color: #339933;">:</span> <span style="color: #3366CC;">&#39;bubbling/bubbling.js&#39;</span><span style="color: #339933;">,</span>
+                requires<span style="color: #339933;">:</span> <span style="color: #009900;">[</span><span style="color: #3366CC;">&#39;yahoo&#39;</span><span style="color: #339933;">,</span> <span style="color: #3366CC;">&#39;event&#39;</span><span style="color: #339933;">,</span> <span style="color: #3366CC;">&#39;dom&#39;</span><span style="color: #009900;">]</span>
+            <span style="color: #009900;">}</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+            loader.<span style="color: #660066;">addModule</span><span style="color: #009900;">(</span><span style="color: #009900;">{</span>
+                <span style="color: #000066;">name</span><span style="color: #339933;">:</span> <span style="color: #3366CC;">&#39;swfobject&#39;</span><span style="color: #339933;">,</span>
+                type<span style="color: #339933;">:</span> <span style="color: #3366CC;">&#39;js&#39;</span><span style="color: #339933;">,</span>
+                fullpath<span style="color: #339933;">:</span> <span style="color: #3366CC;">&#39;tools/swf-object.js&#39;</span>
+            <span style="color: #009900;">}</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+            loader.<span style="color: #660066;">require</span><span style="color: #009900;">(</span><span style="color: #009900;">[</span><span style="color: #3366CC;">&#39;bubbling&#39;</span><span style="color: #339933;">,</span> <span style="color: #3366CC;">&#39;swfobject&#39;</span><span style="color: #009900;">]</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+            loader.<span style="color: #660066;">combine</span> <span style="color: #339933;">=</span> <span style="color: #003366; font-weight: bold;">true</span><span style="color: #339933;">;</span>
+            loader.<span style="color: #660066;">insert</span><span style="color: #009900;">(</span><span style="color: #009900;">{</span>
+                onSuccess<span style="color: #339933;">:</span> <span style="color: #003366; font-weight: bold;">function</span><span style="color: #009900;">(</span><span style="color: #009900;">)</span> <span style="color: #009900;">{</span>
+                    <span style="color: #009966; font-style: italic;">/<em> initializers and renderers here </em>/</span>
+                    YAHOO.<span style="color: #660066;">util</span>.<span style="color: #660066;">Get</span>.<span style="color: #660066;">script</span><span style="color: #009900;">(</span><span style="color: #009900;">[</span>
+                        <span style="color: #3366CC;">&quot;left-column-renderer.js&quot;</span><span style="color: #339933;">,</span> <span style="color: #3366CC;">&quot;ad-renderer.js&quot;</span>
+                    <span style="color: #009900;">]</span><span style="color: #339933;">,</span> <span style="color: #009900;">{</span>
+                        onSuccess<span style="color: #339933;">:</span> <span style="color: #003366; font-weight: bold;">function</span><span style="color: #009900;">(</span><span style="color: #009900;">)</span> <span style="color: #009900;">{</span>
+                            <span style="color: #006600; font-style: italic;">/<em> we are ready to roll, now we can
+                               do more initializations here </em>/</span>
+                        <span style="color: #009900;">}</span>
+                    <span style="color: #009900;">}</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+                    <span style="color: #006600; font-style: italic;">/<em> more initializations here, if
+                       you don&#39;t want to use Get Utility </em>/</span>
+                <span style="color: #009900;">}</span>
+            <span style="color: #009900;">}</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+        <span style="color: #009900;">}</span>
+    <span style="color: #009900;">}</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">}</span> <span style="color: #009900;">(</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span></pre></div></div>
+
+<p>The developer should define the generic structure for the application within the bootstrap, specifying the requirements, components, and modules for the application. So, basically, the bootstrap would be different for each site, application (or even for page).</p>
+<h3>Identify what should be loaded using YUI Loader or YUI Get Utility:</h3>
+<p>The difference between the modules and components/initializers/renderers is that modules are structures based on YUI, with the corresponding registration process, and the components are simple JS files.</p>
+<p>All <a href="http://developer.yahoo.com/yui/yuiloader/#modulenames">YUI components/utilities/widgets</a> (modules) should be loaded thru the YUI Loader (along with 3rd party modules), and will be loaded on the page once.</p>
+<p>YUI Get Utility should load scripts that implement a certain initialization/renderer process for a region in your application, or some kind of delayed routine to enhance the page.</p>
+<h3><strong>Initialization and renderer processes:</strong></h3>
+<p>Loader’s “onSuccess” is the first stop in the loading process (“bootstrap ready” in the diagram). At this point we can decide if we want to put all the initialization process within that function, or if we want to load some JavaScript files, and they will carry on with the initialization process for each different region in the page, getting some granularity for each page.</p>
+<p>The initialization/renderer process should wait until the DOM structure that represent the region that we want to enhance gets available (<a href="http://developer.yahoo.com/yui/event/#onavailable">onAvailable or onContentReady</a>). If we want to extend/expand that DOM structure, just wait until DOM gets ready (<a href="http://developer.yahoo.com/yui/event/#ondomready">onDOMReady</a>) to avoid malfunctions in IE. Here is an example:</p>
+<p><em>Left Column Renderer (mod-left-column.js)</em>:</p>
+
+<div class="wp_syntax"><div class="code"><pre class="javascript" style="font-family:monospace;">YAHOO.<span style="color: #660066;">util</span>.<span style="color: #660066;">Event</span>.<span style="color: #660066;">onAvailable</span><span style="color: #009900;">(</span><span style="color: #3366CC;">&#39;mod-left-column&#39;</span><span style="color: #339933;">,</span> <span style="color: #003366; font-weight: bold;">function</span> <span style="color: #009900;">(</span>el<span style="color: #009900;">)</span> <span style="color: #009900;">{</span>
+  <span style="color: #009966; font-style: italic;">/<em> initialization process here </em>/</span>
+<span style="color: #009900;">}</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span></pre></div></div>
+
+<p>In this case, we should include all the requirements before this block is executed.</p>
+<p>In YUI 3.x, things are a lot easier. For example:</p>
+
+<div class="wp_syntax"><div class="code"><pre class="javascript" style="font-family:monospace;">YUI<span style="color: #009900;">(</span><span style="color: #009900;">{</span><span style="color: #009900;">}</span><span style="color: #009900;">)</span>.<span style="color: #003366; font-weight: bold;">use</span><span style="color: #009900;">(</span><span style="color: #3366CC;">&#39;node&#39;</span><span style="color: #339933;">,</span> <span style="color: #3366CC;">&#39;json&#39;</span><span style="color: #339933;">,</span> <span style="color: #3366CC;">&#39;io&#39;</span><span style="color: #339933;">,</span> <span style="color: #003366; font-weight: bold;">function</span><span style="color: #009900;">(</span>Y<span style="color: #009900;">)</span> <span style="color: #009900;">{</span>
+  <span style="color: #003366; font-weight: bold;">var</span> node <span style="color: #339933;">=</span> Y.<span style="color: #660066;">get</span><span style="color: #009900;">(</span><span style="color: #3366CC;">&#39;#mod-left-column&#39;</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+  <span style="color: #009966; font-style: italic;">/<em> initialization process here </em>/</span>
+<span style="color: #009900;">}</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span></pre></div></div>
+
+<p><p>Instead of including all the necessary requirements (modules) at the bootstrap level, YUI 3.x Loader will do it automatically during each region’s initialization process</p>
+</p>
+<p><h3><strong>Real examples:</strong></h3>
+</p>
+<ul>
+<li>Simple implementation of the above example:<br>
+<a href="http://bubbling-library.com/sandbox/yui2/bootstrap/index.html">http://bubbling-library.com/sandbox/yui2/bootstrap/index.html</a>
+</li>
+<li>Simple implementation (experimental) on top of YUI 3 PR1:<br>
+<a href="http://bubbling-library.com/sandbox/yui3/bootstrap/index.html">http://bubbling-library.com/sandbox/yui3/bootstrap/index.html</a>
+</li>
+</ul>
+<h3>Final notes:</h3>
+<ul>
+<li>The loader object can be used at any time, even during a region initialization part. It’s a good practice in YUI 2.x to have a single  reference for the loader. With small changes in the code, we can easily share and re-use the “loader” object thru “<em><a href="http://developer.yahoo.com/yui/yahoo/#config">YAHOO_config</a>.loader</em>“, across the application.</li>
+<li>CSS files can be loaded thru YUI Loader or YUI Get Utility in the same way as JavaScript files.</li>
+<li>For production, it’s a good practice to minimize the number of request (JavaScript files). In this case you can combine all the 3rd party modules in a single file, and even combine all the components/initializers/renderers in a single file.</li>
+<li>Using inline JavaScript blocks to initialize some of the regions is not a good option; they <a title="Positioning Inline Scripts by Steve Souders" href="http://www.stevesouders.com/blog/2009/05/06/positioning-inline-scripts/">block the rendering of everything in the page</a>.</li>
+</ul>
+<h3><strong>More Information:</strong></h3>
+<p>There are a lot of good articles about on-demand loading and how it helps to improve the performance, as well as its implications. Here are some of them:</p>
+<ul>
+<li>Conjuring YUI from thin air <em>by <span class="fn">Christian Heilmann</span></em><br>
+<a href="http://www.wait-till-i.com/2008/08/02/conjuring-yui-from-thin-air/">http://www.wait-till-i.com/2008/08/02/conjuring-yui-from-thin-air/</a>
+</li>
+<li>YUI Loader with Combo Handler <em>by Eric Miraglia</em><br>
+<a href="http://yuiblog.com/blog/2008/10/17/loading-yui/">http://yuiblog.com/blog/2008/10/17/loading-yui/</a>
+</li>
+<li>Loading Scripts Without Blocking <em>by Steve Souders</em><br>
+<a href="http://www.stevesouders.com/blog/2009/04/27/loading-scripts-without-blocking">http://www.stevesouders.com/blog/2009/04/27/loading-scripts-without-blocking</a>
+</li>
+<li>Positioning Inline Scripts <em>by Steve Souders</em><br>
+<a href="http://www.stevesouders.com/blog/2009/05/06/positioning-inline-scripts/">http://www.stevesouders.com/blog/2009/05/06/positioning-inline-scripts/</a>
+</li>
+</ul>
+</div>
+<div class="pure-g-r meta">
+    <div class="pure-u-1">
+        <div class="l-box">
+            <span class="article-date">May 7, 2009</span>
+            <span class="article-all"><a href="/blog/archives/">More Articles</a></span>
+            
+                <span class="article-tags">
+                Tags:
+                
+                    <a href="/blog/tag/yui/">yui</a>,
+                
+                    <a href="/blog/tag/javascript/">javascript</a>,
+                
+                    <a href="/blog/tag/loader/">loader</a>,
+                
+                <a href="/blog/archives/">all</a>
+                </span>
+            
+        </div>
+    </div>
+</div>
+
+
+            <div class="pure-u-1 footer">
+                <div class="l-box footer-centered">
+                    <div class="pure-g-r">
+                        <div class="pure-u-2-3">
+                            <h1>require("caridy").info</h1>
+                            <p>
+                                I work for Yahoo! as principal FE at YUI Team. Some of my work includes <a href="http://github.com/yahoo/mojito">mojito</a>, <a href="http://github.com/yahoo/express-yui">express-yui</a>, <a href="http://github.com/yui/yui3">yui</a>, <a href="http://yuilibrary.com/gallery/user/caridy">a bunch of yui gallery modules</a>, and <a href="http://caridy.github.io/legacy/www.bubbling-library.com/">bubbling library</a>.
+                            </p>
+                            <p>
+                                You can check some of my code at <a href="http://github.com/caridy">GitHub</a>, you can follow me at <a href="http://twitter.com/caridy">Twitter</a> or just email me at <a href="mailto:caridy@caridy.com">caridy@gmail.com</a>.
+                            </p>
+                        </div>
+                        <div class="pure-u-1-3">
+                            <div class="l-box">
+                                <div id="pic">
+                                    <img alt="Caridy" src="https://secure.gravatar.com/avatar/fef48709416e18e4ccb263b248fd88e1?s=420&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pure-g-r legal">
+                <div class="pure-u-1">
+                    <div class="l-box">
+                        <p class="legal-license">
+                            This site is built using <a href="http://purecss.io/">Pure</a> and <a href="https://github.com/caridy/flipflop">FlipFlop</a>. <a href="/blog/archives/">Archives</a> and <a href="/blog/index.xml">Entries (RSS)</a> for your convenience.
+                        </p>
+                        <p class="legal-license">
+                            All code and content on this site is licensed under <a href="http://creativecommons.org/licenses/by/3.0/us/">Creative Commons</a> unless stated otherwise.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>
