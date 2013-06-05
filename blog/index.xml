@@ -92,7 +92,7 @@ app.listen(<span class="number">3000</span>);</code></pre>
 </p>
 <h2>References</h2>
 <ol>
-<li><a href="http://expressjs.com">Express</a> (Official Website)</li>
+<li><a href="http://expressjs.com">Express</a> (Expressjs Official Website)</li>
 <li><a href="http://github.com/ericf/express3-handlebars">express3-handlebars</a> (GitHub)</li>
 <li><a href="http://handlebarsjs.com/">Handlebars</a> (Official Website)</li>
 <li><a href="https://gist.github.com/caridy/b925ab5f6c1023765172">Gist with sample</a></li>
