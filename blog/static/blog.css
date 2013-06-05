@@ -1,5 +1,5 @@
 body {
-    font-family: sans-serif;
+    font-family: HelveticaNeue-Light,sans-serif;
     color: #777;
 }
 
@@ -18,7 +18,7 @@ body {
 */
 
 h1,h2,h3,h4,h5,h6 {
-    font-weight: bold;
+    font-weight: lighter;
     color: rgb(75, 75, 75);
 }
 
@@ -204,8 +204,8 @@ dd {
 
 #pic {
     right: 0;
-    width: 150px;
-    height: 150px;
+    width: 200px;
+    height: 200px;
     border: 1px solid #ccc;
 }
 
@@ -305,9 +305,9 @@ code {
 }
 
 pre code {
-    padding: 0;
+    padding: 2px;
     margin: 0;
-    font-size: 0.95em;
+    font-size: 0.80em;
 }
 
 pre, code {
@@ -316,11 +316,9 @@ pre, code {
     background: rgb(250, 250, 250);
 }
 
-
 pre .comment {
     color: #999;
 }
-
 
 pre .tag, pre .tag-name, pre .support.tag-name {
     color: rgb(85, 85, 85);
