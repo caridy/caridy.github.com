@@ -32,21 +32,26 @@ async function generateImages(apiKey, model, prompt, numImages) {
         body: JSON.stringify({
             prompt,
             numberOfImages: numImages,
+            steps: 50,
             width: 512,
             height: 512,
-            steps: 50,
+            numberOfImages: 2,
+            promptStrength: 15,
+            seed: 4523184,
+            enhancePrompt: false
         }),
     });
 
-    if (!createResponse.ok) {
-        console.error('Error creating inference request:', createResponse.statusText);
+    const createData = await createResponse.json();
+
+    if (!createData || createData.status !== 'queued') {
         const errorBody = await createResponse.text();
         console.error('Error response body:', errorBody); // Log the error response body
+        console.table(createData);
         alert('An error occurred while creating the inference request');
         return;
     }
 
-    const createData = await createResponse.json();
     const inferenceId = createData.id;
 
     // Poll the API for the inference result
@@ -57,7 +62,9 @@ async function generateImages(apiKey, model, prompt, numImages) {
         await new Promise(resolve => setTimeout(resolve, pollInterval));
 
         const checkResponse = await fetch(`https://api.tryleap.ai/api/v1/images/models/${model}/inferences/${inferenceId}`, {
+            method: 'GET',
             headers: {
+                accept: 'application/json',
                 'Authorization': `Bearer ${apiKey}`,
             },
         });
@@ -69,7 +76,9 @@ async function generateImages(apiKey, model, prompt, numImages) {
         }
 
         const checkData = await checkResponse.json();
-        images = checkData.images;
+        if (checkData.images && checkData.images.length > 0) {
+            images = checkData.images;
+        }
 
     } while (!images);
 
@@ -88,7 +97,7 @@ function displayImages(carousel, images) {
         }
 
         const img = document.createElement('img');
-        img.src = image;
+        img.src = image.uri;
         img.classList.add('d-block', 'w-100');
         img.addEventListener('click', () => {
             downloadImage(image);
@@ -105,7 +114,7 @@ function displayImages(carousel, images) {
 
 function downloadImage(image) {
     const link = document.createElement('a');
-    link.href = image;
-    link.download = 'generated-image.png';
+    link.href = image.uri;
+    link.download = `generated-image-${image.id}.png`;
     link.click();
 }
