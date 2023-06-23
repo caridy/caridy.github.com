@@ -1,165 +1,40 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="keywords" content="nodejs,javascript,mojito,yui,express">
-    <meta name="robots" content="index,follow">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Caridy Patiño - caridy.name</title>
-    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.1.0/pure-min.css">
-    <link rel="stylesheet" href="/blog/static/blog.css">
-    <script src="http://use.typekit.net/ajf8ggy.js"></script>
-    <script>try{Typekit.load();}catch(e){}</script>
+    <meta name="description" content="Welcome to Caridy's Codex, a digital archive of thoughts and insights by Caridy Patiño, a Principal Architect at Salesforce, Inc., and Yahoo! Alumni.">
+    <title>Caridy's Codex</title>
+    <!-- Add your CSS file here -->
+    <link rel="stylesheet" href="/blog/styles.css">
 </head>
 <body>
-    <div class="pure-g-r">
-
-        <div class="header pure-u-1">
-            <div class="pure-menu pure-menu-open pure-menu-fixed pure-menu-horizontal">
-                <a class="pure-menu-heading" href="http://caridy.name/">caridy.name</a>
-                <ul>
-                    <li class="pure-menu-selected"><a href="/">Home</a></li>
-                    <li><a href="http://github.com/caridy">Code</a></li>
-                    <li><a href="/blog/">Blog</a></li>
-                    <li><a href="/#projects">Projects</a></li>
-                    <li><a href="/#about">About</a></li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="content pure-u-1">
-            <div class="pure-g-r">
-                <div class="pure-u-1-3">
-                    <div class="l-box splash-image">
-                        <img src="http://www.codechix.org/wp-content/uploads/2012/09/github.png"
-                             alt="All my code github.">
-                    </div>
-                </div>
-
-                <div class="pure-u-2-3">
-                    <div class="l-box splash-text">
-                        <h1><a href="http://github.com/caridy">All my code is in github.com</a></h1>
-
-                        <p>
-                            Part of my day job at Yahoo! is to contribute to a bunch of open source projects, and specifically the YUI and Mojito Projects. Aside from that, all my side projects are also hosted in github.com.
-                        </p>
-
-                        <p>
-                            <a href="http://github.com/caridy" class="pure-button primary-button">fork my code</a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="content pure-u-1">
-            <div class="pure-g-r content-ribbon">
-                <div class="pure-u-2-3">
-                    <div class="l-box">
-                        <h1><a href="http://caridy.name/blog/">All my writting and presentations</a></h1>
-
-                        <p>
-                            I don't have to much time these days, but whenever I get a chance, I try to blog about javascript. Aside from that, all my presentations and videos are also posted in my blog at caridy.name/blog/
-                        </p>
-                        <p>
-                            <a href="http://github.com/caridy" class="pure-button primary-button">check my posts</a>
-                        </p>
-                    </div>
-                </div>
-
-                <div class="pure-u-1-3">
-                    <div class="l-box">
-                        <img src="./imgs/javascript.png"
-                             alt="Javascript">
-                    </div>
-                </div>
-            </div>
-
-            <div class="pure-g-r content-ribbon">
-                <div class="pure-u-1-3">
-                    <div class="l-box">
-                        <img alt="Caridy" src="/blog/static/caridy.png">
-                    </div>
-                </div>
-
-                <div class="pure-u-2-3" id="about">
-                    <div class="l-box">
-                        <h1><a href="http://caridy.name/">About me</a></h4>
-                        <p>
-                            I work for Yahoo! as principal FE at YUI Team. Some of my work includes <a href="http://github.com/yahoo/mojito">mojito</a>, <a href="http://github.com/yahoo/express-yui">express-yui</a>, <a href="http://github.com/yui/yui3">yui</a> and <a href="http://yuilibrary.com/gallery/user/caridy">a bunch of yui gallery modules</a>. I'm also the creator of the <a href="http://caridy.github.io/legacy/www.bubbling-library.com/">bubbling library</a>.
-                        </p>
-                        <ul>
-                            <li><a href="http://twitter.com/caridy">Follow me on twitter</a></li>
-                            <li><a href="http://www.linkedin.com/in/caridy">LinkedIn connections</a></li>
-                            <li><a href="http://github.com/caridy">Fork my on GitHub</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="pure-g-r" id="projects">
-                <div class="pure-u-1">
-                    <h1><a href="http://github.com/caridy">Some of my projects</a></h1>
-                </div>
-                <div class="pure-u-1-4">
-                    <div class="l-box">
-                        <h3><a href="http://github.com/yahoo/mojito">mojito</a></h3>
-                        <p>
-                            Mojito is a mobile application framework built on top of YUI that blurs the line between <code>server</code> and <code>client</code> using nodejs to share the same logic and code between them.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="pure-u-1-4">
-                    <div class="l-box">
-                        <h3><a href="http://yuilibrary.com">yui</a></h3>
-                        <p>
-                            YUI is a free, open source JavaScript and CSS library for building richly interactive web applications. It also comes with a set of components and tools to facilitate development.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="pure-u-1-4">
-                    <div class="l-box">
-                        <h3> <a href="http://github.com/yahoo/express-yui">express-yui</a></h3>
-                        <p>
-                            As part of a new breed of components for YUI applications, we have released <code>express-yui</code> thru <code>npm</code>, which facilitate the use of YUI on the server and client thru <code>expressjs</code>.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="pure-u-1-4">
-                    <div class="l-box">
-                        <h3><a href="http://yuilibrary.com/gallery/user/caridy">yui3-gallery</a></h3>
-                        <p>
-                            Whenever I get a chance, I try to contribute to <code>yui3-gallery</code> with new yui module and extensions. Some of those componets are available thru Yahoo! CDN.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="pure-u-1">
-                    <p>
-                        <a href="http://github.com/caridy" class="pure-button primary-button">check all my projects</a>
-                    </p>
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class="pure-u-1">
-            <div class="pure-g-r legal">
-                <div class="pure-u-1">
-                    <div class="l-box">
-                        <p class="legal-license">
-                            All code and content on this site is licensed under <a href="http://creativecommons.org/licenses/by/3.0/us/">Creative Commons</a> unless stated otherwise.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
+    <header>
+        <h1>Caridy's Codex</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="/blog/#about">About</a></li>
+            <li><a href="/blog/#articles">Latest Articles</a></li>
+            <li><a href="/blog/archives/index.html">All Articles</a></li>
+        </ul>
+    </nav>
+    <main>
+        <section id="about">
+            <h2>About Caridy</h2>
+            <p>Welcome to Caridy's Codex, a digital archive of thoughts and insights by Caridy Patiño. As a Computer Scientist working as a Principal Architect at Salesforce, Inc., and a proud Yahoo! Alumni, Caridy is a passionate web enthusiast, he has dedicated his career to the evolution of JavaScript and web. His expertise lies in designing high performance and scalable platforms for the web, he is an expert in web security, and he has had the privilege to be an active participant of evolution of EcmaScript Language as a member of Ecma TC39 committee for more than a decade.</p>
+            <p>Got a question or just want to connect? Feel free to reach out on <a href="http://twitter.com/caridy">Twitter</a> or via email to caridy at gmail dot com.</p>
+        </section>
+        <section id="articles">
+            <h2>Latest Articles</h2>
+            <ul>
+                <li><a href="/blog/demo-article.html">Demo Article Title</a></li>
+                <!-- Add more articles here -->
+            </ul>
+        </section>
+    </main>
+    <footer>
+        <p>Content on Caridy's Codex reflects his personal views and not those of his employer. Unless otherwise noted, all material is shared under a <a href="http://creativecommons.org/licenses/by/3.0/us/">Creative Commons</a> license.</p>
+    </footer>
 </body>
 </html>

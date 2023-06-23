@@ -1,174 +1,40 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="keywords" content="nodejs,javascript,mojito,yui,express">
-    <meta name="robots" content="index,follow">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Caridy - Random Bubbles - Nodejs, Javascript, AJAX and Advanced Web Apps</title>
-    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.1.0/pure-min.css">
-    <link rel="stylesheet" href="/blog/static/blog.css">
-    <link rel="alternate" type="application/rss+xml", title="Caridy - Random Bubbles » rss", href="/blog/index.xml">
+    <meta name="description" content="Welcome to Caridy's Codex, a digital archive of thoughts and insights by Caridy Patiño, a Principal Architect at Salesforce, Inc., and Yahoo! Alumni.">
+    <title>Caridy's Codex</title>
+    <!-- Add your CSS file here -->
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="pure-g-r " id="layout">
-        <div class="pure-u" id="main">
-            <div class="header pure-u-1">
-                <h1 class="pure-u-1"><a href="http://caridy.name/">Caridy Patiño</a></h1>
-            </div>
-            <div class="content pure-u-1">
-    <h1 class="pure-u-1"><a href="/blog/2013/05/bending-express-to-support-synthetic-views/">Bending Express to Support Synthetic Views</a></h1>
-    <p>Express<sup>[1]</sup> is a wonderful piece of software, not because of the quality of the code and documentation--which are very good--but because of its simplicity. That simplicity, however, comes with a cost that forces users to follow certain guidelines; this is the case of views in Express, where a view has to be bound to a filesystem path. When creating complex applications, there are tricks you can use to get to the next level. Today, I want to touch on the view resolution mechanism in Express and how to tweak it to support what I call synthetic views.
-
-</p>
-<p>Express supports a variety of view engines, and you can use almost any kind of template language by simply looking for the proper engine implementation for Express. Moreover, creating a new engine is a breeze, and it works wonderfully. Here is an example of Express using @ericf&#39;s <code>express3-handlebars</code><sup>[2]</sup> package, which adds support for Handlebars<sup>[3]</sup> templates.
-
-</p>
-<pre><code><span class="keyword">var</span> app = <span class="keyword">require</span>(<span class="string">'express'</span>)();
-
-app.engine(<span class="string">'hbs'</span>, <span class="keyword">require</span>(<span class="string">'express3-handlebars'</span>)());
-app.set(<span class="string">'view engine'</span>, <span class="string">'hbs'</span>);
-
-app.get(<span class="string">'/'</span>, <span class="keyword">function</span> (req, res, next) {
-  res.render(<span class="string">'foo'</span>);
-});
-app.listen(<span class="number">3000</span>);</code></pre>
-<p>In the example above, when requesting <code>http://localhost:3000/</code>, the template <code>./views/foo.hbs</code> will be located, compiled, and rendered. As you can see, this is fairly simple, and on top of that, Express will take care of many details, including the cache mechanism for each view, error handling, and filesystem path resolution. It just works and performs remarkably well, but note that it is also bound to a filesystem path to locate <code>foo.hbs</code>.
-
-</p>
-<h2>Express&#39;s Internal View Mechanism</h2>
-<p>The very simple mechanism used by Express to resolve the view is based on few basic configurations:
-
-</p>
-<ul>
-<li><code>view cache</code> - enables view template compilation caching and is enabled in production by default.</li>
-<li><code>view engine</code> - is the default engine extension.</li>
-<li><code>views</code> - is the view directory path, which defaults to <code>process.cwd() + &#39;/views&#39;</code>.</li>
-</ul>
-<p>and, of course, the view engine registration process: 
-
-</p>
-<ul>
-<li><code>app.engine(ext, callback)</code> - registers the given template engine <code>callback</code> as <code>ext</code>.</li>
-</ul>
-<p>Based on those three settings and the registration method, Express will be able to locate, cache, and render any view within the <code>root</code> folder if there is a corresponding engine. When calling <code>res.render(name, options)</code>, Express creates a new instance of <code>View</code>, which is an internal component. As part of the constructor, the instance tries to locate the template in the filesystem based on the <code>views</code> setting (using the filename extension from <code>name</code> to detect the proper engine to render the template or the fallbacks to the default engine from <code>view engine</code> setting), and then allocates an internal property called <code>path</code>.
-
-</p>
-<h2>Express&#39; Synthetic Views</h2>
-<p>What if our templates are not in the filesystem and instead need to be accessed from somewhere else, such as a database, through a REST-like API, or even from memory in the form of compiled JavaScript? How can we gain control over the template resolution? In the end, a view instance is just an object with a <code>render</code> method that expects some <code>data</code> to produce a blob in an asynchronous fashion.
-
-</p>
-<p>By default, Express implements a <code>View</code> constructor, which takes care of the resolution mechanism. In the past, the <code>View</code> component was private, and there was no way to modify it. That has changed in the <code>express@3.2.0</code>, thanks to @tjholowaychuk for merging our pull request which allows you to a) replace the <code>View</code> constructor and b) modify the <code>View</code> constructor shipped with <code>express</code>. This is also possible through the new <code>view</code> configuration. Here is an example of how to replace the <code>View</code> component:
-
-</p>
-<pre><code><span class="keyword">var</span> app = <span class="keyword">require</span>(<span class="string">'express'</span>)();
-
-app.set(<span class="string">'view'</span>, MyNewViewConstructor);
-
-app.get(<span class="string">'/'</span>, <span class="keyword">function</span> (req, res, next) {
-  res.render(<span class="string">'foo'</span>);
-});
-app.listen(<span class="number">3000</span>);</code></pre>
-<p>On the other hand, if you just want to tweak the <code>View</code> component shipped with <code>express</code>, you can still do it by modifying the <code>prototype</code> methods. Here is an example of that:
-
-</p>
-<pre><code><span class="keyword">var</span> app = <span class="keyword">require</span>(<span class="string">'express'</span>)();
-
-app.set(<span class="string">'view'</span>).prototype.lookup = <span class="keyword">function</span>(name) {
-  <span class="comment">// and here you can do whatever you want to resolve the template by name</span>
-  <span class="keyword">return</span> myInternalResolver(path); <span class="comment">// which returns a path!</span>
-};
-
-app.get(<span class="string">'/'</span>, <span class="keyword">function</span> (req, res, next) {
-    res.render(<span class="string">'foo'</span>);
-});
-app.listen(<span class="number">3000</span>);</code></pre>
-<p>If you decide to change the <code>View</code> component&#39;s prototype, you will have to validate your implementation against new versions of Express because the implementation might change in the future. My recommendation at this point is to replace it with your own implementation as it is a fairly simple component with a very specific responsibility.
-
-</p>
-<p>In this gist, <a href="https://gist.github.com/caridy/b925ab5f6c1023765172#file-view-js">View.js</a><sup>[4]</sup> describes how to implement a <code>View</code> component that can work with a DB, a REST-like API, a global memory hash, or a compiled view accessible through <code>require()</code>. It pretty much covers all the options you have today to fetch and compile a template bound to a view instance.
-
-</p>
-<h2>Compiled Templates for Better Performance and Interoperability</h2>
-<p>At Yahoo!, we have been trying to create building blocks to help blur the line between the server and client, where sharing code and logic is critical. Knowing that compiling views on the client is just no longer an option, we pre-compiled views into JavaScript for the client runtime. Later, we thought, why not use those same pre-compiled templates on the server as well? It just made a lot of sense.
-
-</p>
-<p>This use case drove us to propose a change in Express, so we can create a custom <code>View</code> to allow templates to be required and allocated in memory during the application&#39;s boot process, when the filesystem representation for the templates is no longer needed and a memory allocation is used instead. That single twist improves performance and reduces the forking in the logic to interoperate between runtimes.
-
-</p>
-<h2>Conclusion</h2>
-<p>The new <code>view</code> setting introduced in <code>express@3.2.0</code> provides a simple way to replace or customize the internal mechanism to look up and render views in Express. This new feature can allow us to blur the line between the look up and compile processes as well as eliminate the filesystem requirements, and ultimately enables us to use remote templates, remote compilers, a pre-compiler, and even fetch templates from a database or a REST-like API, while still relying on Express to handle the view instances cache and invocation mechanism.
-
-</p>
-<h2>References</h2>
-<ol>
-<li><a href="http://expressjs.com">Express</a> (Expressjs Official Website)</li>
-<li><a href="http://github.com/ericf/express3-handlebars">express3-handlebars</a> (GitHub)</li>
-<li><a href="http://handlebarsjs.com/">Handlebars</a> (Official Website)</li>
-<li><a href="https://gist.github.com/caridy/b925ab5f6c1023765172">Gist with sample</a></li>
-</ol>
-
-</div>
-<div class="pure-g-r meta">
-    <div class="pure-u-1">
-        <div class="l-box">
-            <span class="article-date">May 21, 2013</span>
-            <span class="article-all"><a href="/blog/archives/">More Articles</a></span>
-            
-                <span class="article-tags">
-                Tags:
-                
-                    <a href="/blog/tag/expressjs/">expressjs</a>,
-                
-                    <a href="/blog/tag/javascript/">javascript</a>,
-                
-                    <a href="/blog/tag/nodejs/">nodejs</a>,
-                
-                <a href="/blog/archives/">all</a>
-                </span>
-            
-        </div>
-    </div>
-</div>
-
-
-            <div class="pure-u-1 footer">
-                <div class="l-box footer-centered">
-                    <div class="pure-g-r">
-                        <div class="pure-u-2-3">
-                            <h1>require("caridy").info</h1>
-                            <p>
-                                I work for Yahoo! as principal FE at YUI Team. Some of my work includes <a href="http://github.com/yahoo/mojito">mojito</a>, <a href="http://github.com/yahoo/express-yui">express-yui</a>, <a href="http://github.com/yui/yui3">yui</a>, <a href="http://yuilibrary.com/gallery/user/caridy">a bunch of yui gallery modules</a>, and <a href="http://caridy.github.io/legacy/www.bubbling-library.com/">bubbling library</a>.
-                            </p>
-                            <p>
-                                You can check some of my code at <a href="http://github.com/caridy">GitHub</a>, you can follow me at <a href="http://twitter.com/caridy">Twitter</a> or just email me at <a href="mailto:caridy@caridy.com">caridy@gmail.com</a>.
-                            </p>
-                        </div>
-                        <div class="pure-u-1-3">
-                            <div class="l-box">
-                                <div id="pic">
-                                    <img alt="Caridy" src="/blog/static/caridy.png">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="pure-g-r legal">
-                <div class="pure-u-1">
-                    <div class="l-box">
-                        <p class="legal-license">
-                            This site is <a href="https://github.com/caridy/blog-src">built</a> using <a href="http://purecss.io/">Pure</a> and <a href="https://github.com/caridy/flipflop">FlipFlop</a>. <a href="/blog/archives/">Archives</a> and <a href="/blog/index.xml">Entries (RSS)</a> for your convenience.
-                        </p>
-                        <p class="legal-license">
-                            All code and content on this site is licensed under <a href="http://creativecommons.org/licenses/by/3.0/us/">Creative Commons</a> unless stated otherwise.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
+    <header>
+        <h1>Caridy's Codex</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#articles">Latest Articles</a></li>
+            <li><a href="archives/index.html">All Articles</a></li>
+        </ul>
+    </nav>
+    <main>
+        <section id="about">
+            <h2>About Caridy</h2>
+            <p>Welcome to Caridy's Codex, a digital archive of thoughts and insights by Caridy Patiño. As a Computer Scientist working as a Principal Architect at Salesforce, Inc., and a proud Yahoo! Alumni, Caridy is a passionate web enthusiast, he has dedicated his career to the evolution of JavaScript and web. His expertise lies in designing high performance and scalable platforms for the web, he is an expert in web security, and he has had the privilege to be an active participant of evolution of EcmaScript Language as a member of Ecma TC39 committee for more than a decade.</p>
+            <p>Got a question or just want to connect? Feel free to reach out on <a href="http://twitter.com/caridy">Twitter</a> or via email to caridy at gmail dot com.</p>
+        </section>
+        <section id="articles">
+            <h2>Latest Articles</h2>
+            <ul>
+                <li><a href="demo-article.html">Demo Article Title</a></li>
+                <!-- Add more articles here -->
+            </ul>
+        </section>
+    </main>
+    <footer>
+        <p>Content on Caridy's Codex reflects his personal views and not those of his employer. Unless otherwise noted, all material is shared under a <a href="http://creativecommons.org/licenses/by/3.0/us/">Creative Commons</a> license.</p>
+    </footer>
 </body>
 </html>
