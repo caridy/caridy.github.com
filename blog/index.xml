@@ -5,6 +5,199 @@
         <link>http://caridy.github.io//blog/</link>
         
             <item>
+                <title>Introducing Open Schema APIs: Bridging Traditional APIs and Language Models</title>
+                <link>http://caridy.github.io//blog/2023/07/open-schema-apis/</link>
+                <pubDate>1688702400000</pubDate>
+                <description><![CDATA[<p>In the rapidly evolving landscape of AI and machine learning, language models like OpenAI&#39;s GPT-4 have shown us the incredible possibilities of natural language understanding and generation. But as developers and engineers, how do we best leverage these technologies to enhance our existing systems and create more flexible, user-friendly experiences? One promising approach lies in the intersection of traditional APIs and large language models: Open Schema APIs.
+
+</p>
+<p>Traditional APIs have been essential for systems integration, enabling data exchange in a structured, predictable way. Yet, for complex or generic services like search engines, data of interest is diverse and context-dependent, leading these APIs to deliver results in natural language. This format, while informative, lacks the structure APIs are renowned for. Furthermore, we anticipate a wave of new services based on large language models (LLMs) that will produce natural language content. This is where Open Schema APIs enter the picture, offering a potential solution to structure this rich yet unstructured data.
+
+</p>
+<h2>Understanding Open Schema APIs</h2>
+<p>Open Schema APIs are an innovative way of structuring the data delivered by APIs. This approach leverages the strengths of both structured data and modern language models, blending the two to deliver precise and tailored data in response to API calls.
+
+</p>
+<p>At the heart of an Open Schema API is a user-defined schema, which is provided along with the API request. This schema serves as a &#39;blueprint&#39; for how the user wants the returned data to be structured, allowing for a high degree of flexibility and specificity in the API&#39;s response.
+
+</p>
+<p>For instance, consider a call to a search engine API inquiring about a company, let&#39;s say Nike. With an Open Schema API, the request would also include a schema defining what data the user is interested in and how it should be structured. For example, a JSON schema could specify a data structure that includes &#39;name&#39;, &#39;founding date&#39;, &#39;CEO&#39;, &#39;headquarters&#39;, and &#39;stock price&#39;. 
+
+</p>
+<pre><code class="lang-json">{
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;,
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {
+    &quot;name&quot;: {
+      &quot;type&quot;: &quot;string&quot;
+    },
+    &quot;founding_date&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;format&quot;: &quot;date&quot;
+    },
+    &quot;CEO&quot;: {
+      &quot;type&quot;: &quot;string&quot;
+    },
+    &quot;headquarters&quot;: {
+      &quot;type&quot;: &quot;string&quot;
+    },
+    &quot;stock_price&quot;: {
+      &quot;type&quot;: &quot;number&quot;
+    }
+  },
+  &quot;required&quot;: [&quot;name&quot;, &quot;founding_date&quot;, &quot;CEO&quot;, &quot;headquarters&quot;, &quot;stock_price&quot;]
+}</code></pre>
+<p>Upon receiving this request, the API uses this schema as a guide to return a structured response matching the schema provided, using a large language model to parse and format the relevant data. The end-user sees a structured data record of Nike, formatted exactly as per their specifications.
+
+</p>
+<pre><code class="lang-json">{
+    &quot;name&quot;: &quot;Nike, Inc.&quot;,
+    &quot;founding_date&quot;: &quot;1964-01-25&quot;,
+    &quot;CEO&quot;: &quot;John Donahoe&quot;,
+    &quot;headquarters&quot;: &quot;Beaverton, OR&quot;,
+    &quot;stock_price&quot;: 105.10
+}</code></pre>
+<p>What makes these APIs &#39;open&#39; is the flexible, user-defined nature of the schemas. The data that can be extracted and its structure are dictated by the schema provided with each request, allowing users to tailor API responses to their specific needs.
+
+</p>
+<p>In addition, the inclusion of the schema in the request can help the API itself to optimize the procurement of relevant text in natural language, effectively making the schema a part of the input to the search. Thus, the Open Schema API makes full use of the potential of modern language models not just for data extraction, but also for enhancing the quality of the data being fetched.
+
+</p>
+<h2>The Power of Open Schema APIs</h2>
+<p>Open Schema APIs offer a significant advancement over traditional APIs. They bridge the gap between the unstructured data often returned by general APIs and the structured, specific data that developers need for many applications.
+
+</p>
+<p>Here are a few reasons why Open Schema APIs are a powerful tool:
+
+</p>
+<ol>
+<li><strong>Flexibility</strong>: With Open Schema APIs, the user defines the schema they want the data to match. This allows for a high degree of customization in the API&#39;s responses, enabling users to get the exact data they need in the exact format they want.</li>
+<li><strong>Efficiency</strong>: By directly returning data in the desired structure, Open Schema APIs can reduce the amount of data processing on the user&#39;s end. This streamlines the integration of API responses into existing systems and applications.</li>
+<li><strong>Enhanced Search Quality</strong>: Including the schema as part of the API request can also help in procuring more relevant natural language text, thus enhancing the quality of the data being fetched.</li>
+<li><strong>Simplicity</strong>: While an Open Schema API leverages a complex, fine-tuned language model internally, the complexity is abstracted away from the end user. The process of making a request and receiving structured data in response is simple and straightforward.</li>
+</ol>
+<p>As for the applications of Open Schema APIs, they are broad and diverse. They can be used for data extraction from generic APIs, populating databases with structured records, processing natural language responses from chatbot APIs, and much more. The possibilities are extensive and largely depend on the needs of the user.
+
+</p>
+<p>In the next section, we will take a deeper look at how an Open Schema API could be implemented in practice.
+
+</p>
+<h2>Emerging Trend: Language Model-Based APIs</h2>
+<p>As language models like GPT-4 advance, we predict a surge in APIs leveraging their capabilities, producing human-friendly, natural language responses. However, extracting specific data from these responses can be challenging. Open Schema APIs, which allow users to define their data format, can effectively address this issue, delivering structured, machine-friendly data. For developers and companies building APIs with natural language responses, incorporating Open Schema could significantly enhance usability and flexibility.
+
+</p>
+<h2>Interacting with Open Schema APIs</h2>
+<p>Now that we&#39;ve covered the concept of Open Schema APIs and how they could work in an example, let&#39;s delve into some of the more nuanced aspects, such as handling mismatches and incomplete schemas.
+
+</p>
+<h3>Handling Mismatches and Incomplete Schemas</h3>
+<p>There may be times when the provided schema cannot be fully fulfilled. For instance, the user might request information that simply isn&#39;t available, or the search engine might not find exact matches for the schema fields. In such cases, the Open Schema API could return a partial result along with metadata about which fields could not be filled and why.
+
+</p>
+<p>For example, if we don&#39;t have a stock price for Nike, Inc.:
+
+</p>
+<pre><code class="lang-json">{
+    &quot;data&quot;: {
+        &quot;name&quot;: &quot;Nike, Inc.&quot;,
+        &quot;founding_date&quot;: &quot;1964-01-25&quot;,
+        &quot;CEO&quot;: &quot;John Donahoe&quot;,
+        &quot;headquarters&quot;: &quot;Beaverton, OR&quot;
+    },
+    &quot;missing_fields&quot;: [&quot;stock_price&quot;],
+    &quot;reason&quot;: &quot;The stock price information is not available at this time.&quot;
+}</code></pre>
+<p>This approach gives the user feedback on the success of their request and transparency about what information could not be retrieved.
+
+</p>
+<h3>Implementing Open Schema APIs Using OpenAI GPT Models</h3>
+<p>If you&#39;re eager to test out the concept of Open Schema APIs today, OpenAI&#39;s GPT models with function calling capabilities provide a viable path forward.
+
+</p>
+<p>Consider you want to use a generic API, like a search engine API, but you desire the result in a structured form as per your specific schema. You can create a new wrapper API around this existing generic API. Here&#39;s the process:
+
+</p>
+<ol>
+<li>Your wrapper API receives the user&#39;s query and the desired schema.</li>
+<li>It calls the existing API with the query to retrieve information in a generic form (e.g., natural language text).</li>
+<li>Your wrapper API then post-processes the result by sending it to the GPT model along with the schema, using the function calling capability of the model.</li>
+</ol>
+<p>The function call to GPT would look like this:
+
+</p>
+<pre><code class="lang-shell">curl https://api.openai.com/v1/chat/completions -u :$OPENAI_API_KEY -H &#39;Content-Type: application/json&#39; -d &#39;{
+  &quot;model&quot;: &quot;gpt-3.5-turbo-0613&quot;,
+  &quot;temperature&quot;: 0,
+  &quot;messages&quot;: [
+    {
+      &quot;role&quot;: &quot;user&quot;,
+      &quot;content&quot;: &quot;Nike, Inc. is an American multinational corporation that is engaged in the design, development, manufacturing, and worldwide marketing and sales of footwear, apparel, equipment, accessories, and services. The company is headquartered near Beaverton, Oregon, in the Portland metropolitan area. Wikipedia\\\\n\\\\nFounders: Phil Knight, Bill Bowerman\\\\nCustomer service: 1 (800) 806-6453\\\\nHeadquarters: Beaverton, OR\\\\nStock price: NKE (NYSE) $105.10 -2.00 (-1.87%)\\\\nJul 6, 4:00 PM EDT - Disclaimer\\\\nFounded: January 25, 1964, Eugene, OR\\\\nCEO: John Donahoe (Jan 13, 2020–)\\\\nRevenue: 37.4 billion USD\\\\nSubsidiaries: Converse, Nike Thailand, Nike Korea LLC&quot;
+    }
+  ],
+  &quot;functions&quot;: [
+    {
+      &quot;name&quot;: &quot;format_output&quot;,
+      &quot;description&quot;: &quot;extracts structured data from user-provided message&quot;,
+      &quot;parameters&quot;: {
+        &quot;type&quot;: &quot;object&quot;,
+        &quot;properties&quot;: {
+          &quot;name&quot;: { &quot;type&quot;: &quot;string&quot; },
+          &quot;founding_date&quot;: { &quot;type&quot;: &quot;string&quot;, &quot;format&quot;: &quot;date&quot; },
+          &quot;CEO&quot;: { &quot;type&quot;: &quot;string&quot; },
+          &quot;headquarters&quot;: { &quot;type&quot;: &quot;string&quot; },
+          &quot;stock_price&quot;: { &quot;type&quot;: &quot;number&quot; }
+        },
+        &quot;required&quot;: [
+          &quot;name&quot;,
+          &quot;founding_date&quot;,
+          &quot;CEO&quot;,
+          &quot;headquarters&quot;,
+          &quot;stock_price&quot;
+        ]
+      }
+    }
+  ],
+  &quot;function_call&quot;: { &quot;name&quot;: &quot;format_output&quot; }
+}
+&#39;</code></pre>
+<p>In this function call, <code>format_output</code> is the function that the GPT model should fulfill. It takes the user&#39;s  message, which is the natural language text returned by the underlying API, and the parameters of the <code>format_output</code> function, which is the user-provided schema specifying the desired output format.
+
+</p>
+<p>The GPT model processes this input, extracts the relevant information from the message content based on the schema, and calls the <code>format_output</code> function with the structured data as an argument. The relevant portion of the response looks like this:
+
+</p>
+<pre><code class="lang-json">{
+  <span class="string">"role"</span>: <span class="string">"assistant"</span>,
+  <span class="string">"content"</span>: <span class="keyword">null</span>,
+  <span class="string">"function_call"</span>: {
+    <span class="string">"name"</span>: <span class="string">"format_output"</span>,
+    <span class="string">"arguments"</span>: <span class="string">"{\n  \"name\": \"Nike, Inc.\",\n  \"founding_date\": \"January 25, 1964\",\n  \"CEO\": \"John Donahoe\",\n  \"headquarters\": \"Beaverton, OR\",\n  \"stock_price\": 105.10\n}"</span>
+  }
+}</code></pre>
+<p>While this approach requires more setup and doesn&#39;t provide all the benefits of Open Schema APIs directly (as the extraction and structuring is done in another wrapping layer, not the original API itself), it showcases the potential of Open Schema APIs. It allows you to interact with existing APIs in a more structured and user-defined way, bringing us one step closer to the vision of Open Schema APIs.
+
+</p>
+<h2>Conclusion</h2>
+<p>Open Schema APIs offer an intriguing approach to enhancing the versatility, adaptability, and usability of APIs. By leveraging the powerful language comprehension and generation capabilities of large language models like OpenAI&#39;s GPT, APIs could potentially adapt dynamically to a user&#39;s specific data requirements. This could be done without requiring predefined schemas or substantial data transformations on the user&#39;s end.
+
+</p>
+<p>The concept opens the door to exciting possibilities for intuitive and powerful API usage. For instance, search APIs could return exactly structured data based on user-provided schema, potentially saving developers countless hours of data wrangling. Similarly, other types of APIs could evolve to accommodate changing requirements without necessitating extensive updates or modifications to their existing structures.
+
+</p>
+<p>Naturally, like any emerging technology, there are considerations and challenges that need to be addressed. Issues such as handling situations where the schema cannot be fulfilled, ensuring data integrity and accuracy, and training the underlying LLM to interpret and generate data accurately, all require careful thought and planning.
+
+</p>
+<p>Nonetheless, the concept of Open Schema APIs brings a new level of potential flexibility and power to the world of APIs. While it remains an exploratory concept, its potential for making API interactions more efficient, flexible, and user-centric is certainly intriguing.
+
+</p>
+<p>As of now, widespread adoption of Open Schema APIs is still a future possibility. However, developers can already begin exploring this concept using tools like OpenAI&#39;s GPT models. It&#39;s an exciting area of exploration that could potentially reshape our understanding of how APIs can work.
+
+</p>
+<p>Whether Open Schema APIs become a standard in the future or not, they certainly present a new dimension of flexibility and adaptability in our interaction with APIs. As such, they deserve attention and exploration from forward-thinking developers and technologists.</p>
+]]></description>
+            </item>
+        
+            <item>
                 <title>Prompting using Meta-Templates for LLMs</title>
                 <link>http://caridy.github.io//blog/2023/06/prompting-using-meta-templates-for-llms/</link>
                 <pubDate>1688097600000</pubDate>
@@ -270,7 +463,9 @@ Pay attention to...</code></pre>
                 <title>Standardizing Function Calling in LLMs</title>
                 <link>http://caridy.github.io//blog/2023/06/standardizing-function-calling-in-llms/</link>
                 <pubDate>1688011200000</pubDate>
-                <description><![CDATA[<h3>Introduction</h3>
+                <description><![CDATA[<p><small><i>Disclaimer: This article is a call for action on this topic.</i></small></p>
+
+<h3>Introduction</h3>
 <p>In the field of artificial intelligence, large language models (LLMs) have emerged as powerful tools capable of understanding and generating human-like text. Their applications span diverse domains, from answering questions and writing code to translating languages and creating poetry. Among these LLMs, open-source models like <a href="https://ai.facebook.com/blog/large-language-model-llama-meta-ai/">Meta&#39;s Llama</a> have democratized access to advanced AI capabilities, fueling a surge in development and deployment across various platforms.
 
 </p>
