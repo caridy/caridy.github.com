@@ -5,6 +5,206 @@
         <link>http://caridy.github.io//blog/</link>
         
             <item>
+                <title>Domain-Specific AI Agents: Harnessing Inline Functions in Planners</title>
+                <link>http://caridy.github.io//blog/2023/09/agent-planners-using-inline-functions/</link>
+                <pubDate>1694664000000</pubDate>
+                <description><![CDATA[<h2>Domain-Specific AI Agents: Harnessing Inline Functions in Planners</h2>
+<h3>Introduction</h3>
+<p>In the realm of computer science, particularly in language design and software architecture, the concept of agent planners has garnered attention. These agents, designed to interact with specific domains and private data, promise a level of interaction akin to human expertise. However, while their potential is evident, their current implementations often fall short when faced with the intricate demands of domain-specific tasks.
+
+</p>
+<p>Agent planners play a pivotal role in deciphering and executing tasks. They act as the brain, interpreting user prompts and orchestrating a series of actions to fulfill the request. Central to this orchestration are functions - predefined sets of instructions that the planner can call upon. But relying solely on static functions can be limiting. As we delve deeper, we&#39;ll explore these limitations and how inline functions can offer a more dynamic and flexible solution.
+
+</p>
+<p>This exploration isn&#39;t merely about data retrieval; it&#39;s about comprehension, processing, and meaningful interaction. The question arises: why do these domain-specific agents falter, and how can their design be refined? Let&#39;s dive in to address these challenges and propose a pragmatic approach to enhance their capabilities.
+
+</p>
+<h3>The Shortcomings of Domain-Specific Agents</h3>
+<p>In the realm of software design, we imagined domain-specific agents as the ideal intermediaries between users and complex application tasks. Tailored for distinct domains, these agents were designed to offer a streamlined interface for users to navigate intricate applications.
+
+</p>
+<p>Yet, the practical outcomes have been far from this vision. Here&#39;s why:
+
+</p>
+<ol>
+<li><strong>Limited Data Interaction</strong>: Agents can pull data, but they often stumble with complex data structures. This makes it tough to extract meaningful information or provide clear answers.</li>
+<li><strong>Data Processing Challenges</strong>: It&#39;s not just about fetching data; agents must also process it. They struggle with tasks like column aggregation or advanced computations.</li>
+<li><strong>Fixed Functionality</strong>: Many agents are bound by a set list of functions for data interaction. This lack of flexibility hampers their ability to adapt to varied user requests.</li>
+<li><strong>SQL-like Queries</strong>: Agents generating SQL-style queries face hurdles when data is spread across multiple platforms. Integrating related but separate data sources becomes a significant challenge.</li>
+</ol>
+<p>These issues underscore the gap between what we hoped domain-specific agents would achieve and their actual performance. A new strategy is clearly needed.
+
+</p>
+<h3>The Limitations of Static Functions in Handling Collections and Data Interpretation</h3>
+<p>When designing agents, a common approach is to rely on static functions, especially for tasks that involve data manipulation. However, several challenges arise:
+
+</p>
+<ol>
+<li><strong>Handling Collections</strong>: Static functions that return collections, such as arrays, pose a unique challenge for agent planners. These planners are inherently designed for sequential operations, not for complex operations on collections like filtering or reducing. To address this, developers often find themselves in a loop, constantly introducing new static functions to handle the nuances of collection operations. This leads to an ever-expanding and increasingly complex set of functions, making maintenance and scalability a concern.</li>
+<li><p><strong>Data Interpretation</strong>: Another limitation surfaces when agents need to interpret data from previous static function responses. Instead of directly accessing and manipulating the raw data, agents often make additional calls to the LLM for interpretation. This approach has several drawbacks:</p>
+<ul>
+<li>The LLM&#39;s interpretation, being in natural language, breaks the continuous data path in the plan, making subsequent operations on the data more challenging.</li>
+<li>When dealing with large or complex datasets, relying on the LLM for interpretation can be inefficient and can lead to loss of context or granularity.</li>
+<li>Multiple trips to the LLM for data interpretation not only introduce latency but also increase costs due to token consumption. This makes the entire process less efficient and more expensive.</li>
+</ul>
+</li>
+</ol>
+<p>Popular agent frameworks like <a href="https://www.langchain.com/">LangChain</a> and <a href="https://github.com/microsoft/semantic-kernel">Semantic Kernel</a> further exemplify these challenges. In both frameworks, static functions rarely describe their output format or the schema associated with their output. Instead, it&#39;s predominantly the LLM that interprets their output. This approach, as we&#39;ve outlined, presents significant issues when creating domain-specific agents, especially when the goal is to achieve efficient and context-aware data interpretation.
+
+</p>
+<p>In essence, for a plan to be truly effective, it should be executable in a zero-shot manner, without the need for continuous LLM invocations for data interpretation. Relying heavily on static functions and LLM interpretations can hinder the agent&#39;s efficiency, adaptability, and cost-effectiveness.
+
+</p>
+<h3>Exploring the Potential of Inline Pure Functions</h3>
+<p>Imagine a scenario where, instead of relying on a fixed set of predefined functions, an LLM could dynamically generate a function tailored to your specific needs. What if, based on your prompt, the LLM could craft a function like this:
+
+</p>
+<pre><code class="lang-js"><span class="keyword">function</span> sortProductsByPrice(products) {
+  <span class="keyword">return</span> products.sort((a, b) => a.price - b.price);
+}</code></pre>
+<p>Of course, this example is quite trivial. Sorting can be easily achieved with a static function. However, as user prompts become more intricate, the need for multiple functions and customization of those functions via parameters grows. This simple example is merely illustrative, showcasing the potential of inline pure functions in more complex scenarios.
+
+</p>
+<p>These aren&#39;t just static functions predefined for general use cases. They&#39;re dynamic, tailored to the specific requirements of a user&#39;s prompt, and crafted by the LLM in real-time. And here&#39;s an exciting aspect: GPT models excel at producing such pure functions, making them a perfect fit for this approach.
+
+</p>
+<p>Such a capability could change how we create domain-specific agents. But what makes this feasible? The concept of pure functions. In computer science, a pure function is one that doesn&#39;t have side effects. It doesn&#39;t perform I/O operations, mutate external state, or cause any other observable side effects. There&#39;s a wealth of research on this concept, and concrete implementations of it, e.g.: Secure EcmaScript (SES) uses this concept extensibly.
+
+</p>
+<p>With this foundation, let&#39;s delve into the potential benefits of this approach:
+
+</p>
+<ol>
+<li><strong>Flexibility and Adaptability</strong>: Inline pure functions offer dynamic solutions tailored to the user&#39;s prompt, bypassing the constraints of predefined functions.</li>
+<li><strong>Complementing Static Functions</strong>: These functions aren&#39;t meant to replace static ones but to complement them. While static functions provide a stable interface to access data sources, inline functions handle intricate, prompt-specific manipulations.</li>
+<li><strong>Safety and Security</strong>: Given their nature, pure functions generated by the LLM might not pose security risks, especially if executed in isolated environments.</li>
+<li><strong>Efficiency in Data Handling</strong>: Inline pure functions can streamline data interpretation, reducing latency and token consumption while preserving data&#39;s context and granularity.</li>
+</ol>
+<p>This conceptual framework, rooted in observations and discussions, holds promise. Yet, it awaits rigorous testing and validation.
+
+</p>
+<h3>Integrating Inline Pure Functions into Existing Systems</h3>
+<p>The beauty of the inline pure functions approach is that it doesn&#39;t necessitate a complete overhaul of existing systems. Instead, it can be integrated to enhance and simplify the current agent planner mechanisms. Here&#39;s how I envision this integration:
+
+</p>
+<ol>
+<li><strong>Data Access Layer</strong>: At the foundation, there would be a data access layer. This layer would expose static functions that allow agents to fetch data from various sources. These functions would be simple, direct, and would return data in a structured format, ready for manipulation.</li>
+<li><strong>Function Generation</strong>: Upon receiving a user&#39;s prompt, the LLM would determine if an inline pure function is required. If so, it would generate this function based on the specific needs of the prompt. This function would be designed to operate on the data fetched by the static functions.</li>
+<li><strong>Execution Environment</strong>: The generated inline pure function would be executed in a controlled environment. This could be a client-side runtime or a dedicated worker thread, ensuring isolation and security. The function would take in the required data, process it, and return the results.</li>
+<li><strong>Data Flow and Integration</strong>: The results from the inline pure function can then be integrated into the agent&#39;s plan. Since the function is pure, there&#39;s a guarantee that it won&#39;t have side effects or alter the state of the system. This makes the integration seamless and predictable.</li>
+<li><strong>Optimization and Efficiency</strong>: With the ability to generate functions on-the-fly, there&#39;s potential for optimization. The LLM can generate functions that are tailored to the specific needs of a prompt, ensuring efficient data processing. This reduces the need for overly complex static functions and can lead to faster response times.</li>
+<li><strong>Extensibility</strong>: As new data sources or functionalities are added to a system, the static functions in the data access layer can be updated or extended. The inline pure functions approach remains flexible and can adapt to these changes without major disruptions.</li>
+</ol>
+<p>In essence, this approach aims to provide a bridge between the static, predefined world of data access and the dynamic, adaptable world of user prompts. It offers a way to harness the power of the LLM in a controlled, efficient, and secure manner.
+
+</p>
+<p>The true magic behind these inline functions is rooted in the capabilities of a Large Language Model (LLM). When a user issues a prompt, the agent furnishes the LLM with type definitions for all domain-specific data structures. Armed with this information, the LLM interprets the prompt, discerning the user&#39;s intent. Based on this interpretation, it crafts a plan replete with the necessary logic, including any inline functions required for the plan&#39;s execution. This process marries natural language processing with a profound understanding of the domain at hand. Take our product sorting example: the LLM identified a need for a sorting operation on a list of products based on price. With knowledge of the data structure&#39;s schema, the LLM can generate an inline function that leverages this structure. This newly produced data structure can then be seamlessly integrated into other static functions as part of the overarching plan.
+
+</p>
+<h3>A Practical Example: Analyzing Sales Data for Visualization</h3>
+<p>In the e-commerce domain, visualizing sales trends can offer invaluable insights. For instance, a business owner using Shopify might want to visually compare sales between weekdays and weekends over a span of five weeks to evaluate weekends campaings.
+
+</p>
+<p>Given the following prompt:
+
+</p>
+<blockquote>
+<p>Can you plot the sales comparison between weekdays and weekends for the past five weeks
+
+</p>
+</blockquote>
+<p>Here&#39;s how an agent plan might look using this approach:
+
+</p>
+<pre><code class="lang-json">{
+  "@steps": [
+    {
+      "@func": "FetchProductSales",
+      "@args": [
+        {
+          "timeframe": [5, "weeks"]
+        }
+      ]
+    },
+    {
+      "@func": "InlineFunction",
+      "@args": [
+        "function (sales) { \
+          let results = { \
+            xValues: [], \
+            yValues: { 'Weekday Revenue': [], 'Weekend Revenue': [] }, \
+            labels: ['Weekday Revenue', 'Weekend Revenue'] \
+          }; \
+          let currentDate = new Date(Date.now()); \
+          for(let i = 0; i &lt; 5; i++) { \
+            let startOfWeek = new Date(currentDate - (i * 7 * 24 * 60 * 60 * 1000)); \
+            let endOfWeek = new Date(startOfWeek - (7 * 24 * 60 * 60 * 1000)); \
+            let weekdayRevenue = 0; \
+            let weekendRevenue = 0; \
+            let weekSales = sales.filter(sale => new Date(sale.date) >= endOfWeek &amp;&amp; new Date(sale.date) &lt;= startOfWeek); \
+            weekSales.forEach(sale => { \
+              if ([0, 6].includes(new Date(sale.date).getDay())) { \
+                weekendRevenue += sale.revenue; \
+              } else { \
+                weekdayRevenue += sale.revenue; \
+              } \
+            }); \
+            results.xValues.push(startOfWeek); \
+            results.yValues['Weekday Revenue'].push(weekdayRevenue); \
+            results.yValues['Weekend Revenue'].push(weekendRevenue); \
+          } \
+          return results; \
+        }",
+        {
+          "@ref": 0
+        }
+      ]
+    },
+    {
+      "@func": "ShowGraph",
+      "@args": [
+        "Sales Comparison: Weekdays vs Weekends",
+        {
+          "@ref": 1
+        }
+      ]
+    }
+  ]
+}</code></pre>
+<p>In this plan:
+
+</p>
+<ol>
+<li>We fetch the sales data for the past five weeks using the <code>FetchProductSales</code> function.</li>
+<li>An inline function processes this data. For each week, it segregates and aggregates the sales based on whether they occurred on a weekday or weekend, producing a data structure that matches the input of <code>ShowGraph</code> static function.</li>
+<li>The processed data is then passed to the <code>ShowGraph</code> function, which plots the revenue trends for weekdays and weekends over the five-week period.</li>
+</ol>
+<p>This example demonstrates the synergy between static and inline functions. The static function provides the raw data, while the inline function enables domain-specific computations. The final visualization offers a clear, concise view of sales trends without the need for multiple LLM interactions.
+
+</p>
+<p>Trying to achieve the same result with static functions alone, or even SQL-like mechanisms, would be challenging. The static functions would need to be designed to handle the nuances of data processing. Relying solely on them would necessitate the creation of more utility functions, complicating the overall system. Yet, even with these additions, it might still fall short of covering the vast range of possibilities inherent in a system designed to understand natural language and produce answers to arbitrary questions related to your data.
+
+</p>
+<h3>Challenges and Potential Issues</h3>
+<h4>1. Validation Complexity</h4>
+<p>The approach, while promising, introduces a new layer of complexity in terms of validation. Ensuring that inline functions are both safe and effective requires rigorous testing. Unlike static functions, which can be predefined and thoroughly vetted, inline functions are dynamic and can vary greatly. This makes the validation process more intricate.
+
+</p>
+<h4>2. Reliance on Advanced Frameworks</h4>
+<p>While the concept is sound, its practical implementation heavily relies on advanced frameworks like <a href="https://github.com/microsoft/TypeChat">TypeChat</a>. While TypeChat is the closest tool that aligns with this vision, it&#39;s still in its nascent stages. <a href="https://github.com/microsoft/TypeChat">TypeChat</a> does allow production of inline functions but does not validate them as part of the <a href="https://www.typescriptlang.org">TypeScript</a> analysis. This is a critical step that needs to be addressed before this approach can be fully realized.
+
+</p>
+<h4>3. Security Implications</h4>
+<p>Allowing dynamic code execution within plans can pose security risks. Ensuring that no malicious code gets executed is paramount. The transformation of the plan from a JSON string to a JS code that contains functions that were validated by <a href="https://github.com/microsoft/TypeChat">TypeChat</a> via <a href="https://www.typescriptlang.org">TypeScript</a> engine seems possible. However, this is an area that requires further exploration. Evaluation of the JS code might be done in a sandboxed environment, like a worker thread, a detached iframe, a ShadowRealm, or any similar approach, to mitigate potential threats.
+
+</p>
+<h3>Conclusion</h3>
+<p>The landscape of agent planning is evolving, and the introduction of inline functions within plans presents a promising direction. While it offers a more flexible and dynamic approach to handling user prompts, it&#39;s not without its challenges. Tools like <a href="https://github.com/microsoft/TypeChat">TypeChat</a> are pioneering this space, but the journey is just beginning. As with any innovative approach, it will require continuous refinement, adaptation, and a community of forward-thinkers to realize its full potential.
+</p>
+]]></description>
+            </item>
+        
+            <item>
                 <title>Super Browsers: A Possible Future</title>
                 <link>http://caridy.github.io//blog/2023/08/super-browsers/</link>
                 <pubDate>1690862400000</pubDate>
